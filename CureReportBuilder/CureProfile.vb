@@ -6,7 +6,8 @@ Public Class CureProfile
     Private icureDoc As String = ""
     Private icureDocRev As String = ""
 
-    'Public cureSteps() As CureStep
+    Public inCureSteps() As CureStep
+
 
     '<XmlAttribute("Name")>
     Public Property Name As String
@@ -38,22 +39,94 @@ Public Class CureProfile
         End Set
     End Property
 
+    ''<XmlAttribute("cureSteps")>
+    'Public Property CureSteps() As CureStep()
+    '    Get
+    '        Return inCureSteps
+    '    End Get
+    '    Set(value() As CureStep)
+    '        inCureSteps = value
+    '    End Set
+    'End Property
 
-    'Public Sub New(inName As String, inCureDoc As String, inCureDocRev As String)
-    '    iName = inName
-    '    icureDoc = inCureDoc
-    '    icureDocRev = inCureDocRev
 
-    '    ReDim cureSteps(0)
-    '    cureSteps(0) = New CureStep()
+    '<XmlAttribute("cureSteps")>
+    Public Property CureStep(ByVal i As Integer) As Object
+        Get
+            If inCureSteps Is Nothing Then
+                ReDim inCureSteps(0)
+            End If
 
-    '    cureSteps(0).pressureSet("negTol") = 5
+            If i <= UBound(inCureSteps) Then
+                Return inCureSteps(i)
+            Else Return Nothing
+            End If
+        End Get
 
-    'End Sub
+        Set(ByVal value As Object)
+            If inCureSteps Is Nothing Then
+                ReDim inCureSteps(0)
+            End If
+
+            If UBound(inCureSteps) <= i Then
+                ReDim Preserve inCureSteps(i)
+            End If
+
+            inCureSteps(i) = value
+        End Set
+    End Property
+
+
+
+
+    Sub addCureStep()
+        If inCureSteps Is Nothing Then
+            ReDim inCureSteps(0)
+        Else
+            ReDim Preserve inCureSteps(UBound(inCureSteps) + 1)
+        End If
+
+        inCureSteps(UBound(inCureSteps)) = New CureStep()
+    End Sub
+
+    Public Sub New(inName As String, inCureDoc As String, inCureDocRev As String)
+        iName = inName
+        icureDoc = inCureDoc
+        icureDocRev = inCureDocRev
+
+        ReDim inCureSteps(0)
+        inCureSteps(0) = New CureStep()
+
+        'cureSteps(0).pressureSet("negTol") = 5
+
+    End Sub
 End Class
 
+<Serializable()>
 Public Class CureStep
     Public stepName As String = ""
+
+    'Public pressureSetPoint As Double = 0
+    'Public pressurePosTol As Double = 0
+    'Public pressureNegTol As Double = 0
+    'Public pressureRampRate As Double = 0
+    'Public pressureRampPosTol As Double = 0
+    'Public pressureRampNegTol As Double = 0
+
+    'Public tempSetPoint As Double = 0
+    'Public tempPosTol As Double = 0
+    'Public tempNegTol As Double = 0
+    'Public tempRampRate As Double = 0
+    'Public tempRampPosTol As Double = 0
+    'Public tempRampNegTol As Double = 0
+
+    'Public vacSetPoint As Double = 0
+    'Public vacPosTol As Double = 0
+    'Public vacNegTol As Double = 0
+    'Public vacRampRate As Double = 0
+    'Public vacRampPosTol As Double = 0
+    'Public vacRampNegTol As Double = 0
+
     Public pressureSet As New Dictionary(Of String, Double) From {{"SetPoint", 0}, {"PosTol", 0}, {"NegTol", 0}, {"RampRate", 0}, {"RampPosTol", 0}, {"RampNegTol", 0}}
     Public tempSet As New Dictionary(Of String, Double) From {{"SetPoint", 0}, {"PosTol", 0}, {"NegTol", 0}, {"RampRate", 0}, {"RampPosTol", 0}, {"RampNegTol", 0}}
     Public vacSet As New Dictionary(Of String, Double) From {{"SetPoint", 0}, {"PosTol", 0}, {"NegTol", 0}, {"RampRate", 0}, {"RampPosTol", 0}, {"RampNegTol", 0}}

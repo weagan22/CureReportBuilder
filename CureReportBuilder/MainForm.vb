@@ -13,21 +13,50 @@ Public Class MainForm
         Call errorReset()
 
 
-        loadCSVin("C:\Users\Will.Eagan\Desktop\DA-18-20.csv")
-        loadCSVin("C:\Users\Will.Eagan\Desktop\BATCH 38 JOB 101573, 101574 1-23-20.CSV")
+        'loadCSVin("C:\Users\Will.Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\DA-18-20.csv")
+        'loadCSVin("C:\Users\Will.Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\BATCH 38 JOB 101573, 101574 1-23-20.CSV")
 
-        Dim cure1 = New CureProfile '("cure1", "", "-")
+        Dim cure1 = New CureProfile("cure1", "", "-")
 
-        cure1.Name = "test NameOf"
+        cure1.Name = "cure1"
         cure1.cureDoc = "test doc"
         cure1.cureDocRev = "-"
+        Dim test = cure1.CureStep(1)
+        cure1.addCureStep()
+        cure1.addCureStep()
+        cure1.addCureStep()
+        cure1.inCureSteps(0).stepName = "TEST NameOf1"
+        cure1.inCureSteps(1).stepName = "TEST NameOf2"
+        cure1.inCureSteps(2).stepName = "TEST NameOf3"
+
+        Dim cure2 = New CureProfile("cure1", "", "-")
+
+        cure2.Name = "cure2"
+        cure2.cureDoc = "test doc"
+        cure2.cureDocRev = "-"
+        'cure2.addCureStep()
+        'cure2.addCureStep()
+        'cure2.addCureStep()
+        'cure2.cureSteps(0).stepName = "TEST NameOf1"
+        'cure2.cureSteps(1).stepName = "TEST NameOf2"
+        'cure2.cureSteps(2).stepName = "TEST NameOf3"
+
+        'Dim serializer = New XmlSerializer(cure1.GetType())
 
 
-        Dim serializer = New XmlSerializer(cure1.GetType())
+        'Dim writer As IO.StreamWriter = New System.IO.StreamWriter("C:\Users\Will.Eagan\Desktop\test.xml")
 
-        Dim writer As IO.StreamWriter = New System.IO.StreamWriter("C:\Users\Will.Eagan\Desktop\test.xml")
+        'serializer.Serialize(writer, cure1)
+        'serializer.Serialize(writer, cure2)
 
-        serializer.Serialize(writer, cure1)
+        'writer.Close()
+
+
+        Dim fs As IO.FileStream = New IO.FileStream("C:\Users\Will.Eagan\Desktop\ser.dat", IO.FileMode.Create)
+        Dim bf = New Runtime.Serialization.Formatters.Binary.BinaryFormatter()
+        bf.Serialize(fs, cure1)
+        fs.Close()
+
 
 
     End Sub
