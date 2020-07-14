@@ -229,7 +229,6 @@ End Class
 
 
 
-<Serializable()>
 Public Class CureStep
     Public stepName As String = ""
 
