@@ -1,0 +1,101 @@
+﻿Public Class DataSet
+    Public Number As Integer = 0
+    Public Type As String = ""
+    Public values() As Double
+    Public ramp() As Double
+
+    Public Sub New(inNumber As Integer, inType As String)
+        Number = inNumber
+        Type = inType
+    End Sub
+
+    Public Sub calcRamp(stepRate As Integer)
+
+        ReDim ramp(UBound(values))
+
+        Dim startVal As Integer = stepRate \ 2
+        If startVal = 1 Then startVal = 2
+
+        Dim i As Integer
+        For i = startVal To UBound(values) - (stepRate \ 2)
+            ramp(i) = LinReg(MainForm.dateArr, values, i - (stepRate \ 2), i + (stepRate \ 2))
+        Next
+    End Sub
+
+    Public Function Count() As Integer
+        Return UBound(values)
+    End Function
+
+
+
+    Function LinReg(dataX() As DateTime, dataY() As Double, indexStart As Integer, indexEnd As Integer) As Double
+
+        '**Dim'd variables are 0 by default, no need to set them if this is all you need.**
+        Dim count As Long
+        Dim x As Double
+        Dim y As Double
+        Dim MeanX As Double
+        Dim MeanY As Double
+        Dim SumX As Double
+        Dim SumY As Double
+        Dim SumX2 As Double
+        Dim SumY2 As Double
+        Dim Sumy2_prime As Double
+        Dim Sumx2_prime As Double
+        Dim sumxy_prime As Double
+        Dim Sx As Double
+        Dim Sy As Double
+        Dim r As Double
+
+        '**Add error checking to make sure that data contains enough rows and cols
+        If indexStart > indexEnd Then
+            Throw New Exception("Index start must be less than index end.")
+        End If
+
+        If UBound(dataX) < indexEnd Then
+            Throw New Exception("Data array must contain at least index end number of values")
+        End If
+
+        If UBound(dataX) <> UBound(dataY) Then
+            Throw New Exception("Data x and y arrays must have the same number of values")
+        End If
+
+        Dim startTime As DateTime = dataX(indexStart)
+
+        '**Get summations for mean**
+        Dim i As Integer
+        For i = indexStart To indexEnd
+            x = (dataX(i) - startTime).TotalMinutes
+            y = dataY(i)
+            SumX = SumX + x
+            SumY = SumY + y
+            SumX2 = SumX2 + x ^ 2
+            SumY2 = SumY2 + y ^ 2
+            count = count + 1
+        Next
+
+        MeanX = SumX / count
+        MeanY = SumY / count
+
+        '**Get residuals**
+        For i = indexStart To indexEnd
+            x = (dataX(i) - startTime).TotalMinutes - MeanX
+            y = dataY(i) - MeanY
+            Sumx2_prime = Sumx2_prime + x ^ 2
+            Sumy2_prime = Sumy2_prime + y ^ 2
+            sumxy_prime = sumxy_prime + x * y
+        Next
+
+        '**Calculate linear regression**
+        If Sumy2_prime = 0 Then
+            LinReg = 0
+        Else
+            r = sumxy_prime / Math.Sqrt(Sumx2_prime * Sumy2_prime)
+            Sx = Math.Sqrt(SumX2 - (SumX ^ 2 / count)) / count
+            Sy = Math.Sqrt(SumY2 - (SumY ^ 2 / count)) / count
+
+            LinReg = r * Sy / Sx
+        End If
+
+    End Function
+End Class

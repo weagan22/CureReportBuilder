@@ -125,6 +125,10 @@ Public Class CureProfile
             inputValue(exStep.termCond2("TCNum"), readtext.ReadLine)
             If Trim(readtext.ReadLine) <> "</termCond2>" Then Throw New Exception("deserializeCure unrecognized data type")
 
+            If Trim(readtext.ReadLine) <> "<termCondOper>" Then Throw New Exception("deserializeCure unrecognized data type")
+            inputValue(exStep.termCondOper, readtext.ReadLine)
+            If Trim(readtext.ReadLine) <> "</termCondOper>" Then Throw New Exception("deserializeCure unrecognized data type")
+
             If Trim(readtext.ReadLine) <> "</Step" & i & ">" Then Throw New Exception("deserializeCure unrecognized data type")
         Next
 
@@ -203,6 +207,10 @@ Public Class CureProfile
             addToSer("TCNum," & exStep.termCond2("TCNum"), retSer, 4)
             addToSer("</" & "termCond2" & ">", retSer, 3)
 
+            addToSer("<" & "termCondOper" & ">", retSer, 3)
+            addToSer("termCondOper," & exStep.termCondOper, retSer, 4)
+            addToSer("</" & "termCondOper" & ">", retSer, 3)
+
             addToSer("</Step" & i & ">", retSer, 2)
         Next
 
@@ -238,6 +246,23 @@ Public Class CureStep
 
     Public termCond1 As New Dictionary(Of String, Object) From {{"Type", ""}, {"Condition", ""}, {"Goal", 0.0}, {"TCNum", 0}}
     Public termCond2 As New Dictionary(Of String, Object) From {{"Type", ""}, {"Condition", ""}, {"Goal", 0.0}, {"TCNum", 0}}
+    Public termCondOper As String
+
+
+    Public pressureResult As New Dictionary(Of String, Double) From {{"Max", 0}, {"Min", 0}, {"Avg", 0}, {"MaxRamp", 0}, {"MinRamp", 0}, {"AvgRamp", 0}}
+    Public tempResult As New Dictionary(Of String, Double) From {{"Max", 0}, {"Min", 0}, {"Avg", 0}, {"MaxRamp", 0}, {"MinRamp", 0}, {"AvgRamp", 0}}
+    Public vacResult As New Dictionary(Of String, Double) From {{"Max", 0}, {"Min", 0}, {"Avg", 0}, {"MaxRamp", 0}, {"MinRamp", 0}, {"AvgRamp", 0}}
+
+    Public pressurePass As Boolean = False
+    Public tempPass As Boolean = False
+    Public vacPass As Boolean = False
+
+    Public stepPass As Boolean = False
+    Public hardFail As Boolean = False
+
+    Public stepStart As Integer = 0
+    Public stepEnd As Integer = 0
+
 
     Sub setPressure(inSetPoint As Double, inPosTol As Double, inNegTol As Double, inRampRate As Double, inRampPosTol As Double, inRampNegTol As Double)
         pressureSet("SetPoint") = inSetPoint

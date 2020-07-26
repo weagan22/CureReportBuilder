@@ -3,7 +3,7 @@
 	cureDoc, doc11232
 	cureDocRev,-
 	<Steps>
-		stepCount,0
+		stepCount,2
 		<Step0>
 			stepName, 
 			<pressureSet>
@@ -15,11 +15,11 @@
 				RampNegTol,0
 			</pressureSet>
 			<tempSet>
-				setPoint,0
-				PosTol,0
-				NegTol,0
-				RampRate,0
-				RampPosTol,0
+				setPoint,425
+				PosTol,25
+				NegTol,425
+				RampRate,5
+				RampPosTol,4
 				RampNegTol,0
 			</tempSet>
 			<vacSet>
@@ -31,18 +31,105 @@
 				RampNegTol,0
 			</vacSet>
 			<termCond1>
-				Type,
+				Type,Temp
+				Condition,>
+				Goal,400
+				TCNum,Lag
+			</termCond1>
+			<termCond2>
+				Type,None
 				Condition,
 				Goal,0
 				TCNum,0
+			</termCond2>
+			<termCondOper>
+				termCondOper,OR
+			</termCondOper>
+		</Step0>
+		<Step1>
+			stepName,1
+			<pressureSet>
+				setPoint,0
+				PosTol,0
+				NegTol,0
+				RampRate,0
+				RampPosTol,0
+				RampNegTol,0
+			</pressureSet>
+			<tempSet>
+				setPoint,425
+				PosTol,25
+				NegTol,-25
+				RampRate,5
+				RampPosTol,4
+				RampNegTol,0
+			</tempSet>
+			<vacSet>
+				setPoint,0
+				PosTol,0
+				NegTol,0
+				RampRate,0
+				RampPosTol,0
+				RampNegTol,0
+			</vacSet>
+			<termCond1>
+				Type,Time
+				Condition,>
+				Goal,120
+				TCNum,0
 			</termCond1>
 			<termCond2>
-				Type,
+				Type,Temp
+				Condition,GREATER
+				Goal,400
+				TCNum,Lag
+			</termCond2>
+			<termCondOper>
+				termCondOper,AND
+			</termCondOper>
+		</Step1>
+		<Step2>
+			stepName,2
+			<pressureSet>
+				setPoint,0
+				PosTol,0
+				NegTol,0
+				RampRate,0
+				RampPosTol,0
+				RampNegTol,0
+			</pressureSet>
+			<tempSet>
+				setPoint,425
+				PosTol,25
+				NegTol,-425
+				RampRate,5
+				RampPosTol,4
+				RampNegTol,0
+			</tempSet>
+			<vacSet>
+				setPoint,0
+				PosTol,0
+				NegTol,0
+				RampRate,0
+				RampPosTol,0
+				RampNegTol,0
+			</vacSet>
+			<termCond1>
+				Type,Temp
+				Condition,LESS
+				Goal,140
+				TCNum,Lag
+			</termCond1>
+			<termCond2>
+				Type,None
 				Condition,
 				Goal,24
 				TCNum,0
 			</termCond2>
-		</Step0>
+			<termCondOper>
+				termCondOper,AND
+			</termCondOper>
+		</Step2>
 	</Steps>
 </Cure>
 ~&&&~
@@ -90,6 +177,9 @@
 				Goal,25
 				TCNum,0
 			</termCond2>
+			<termCondOper>
+				termCondOper,AND
+			</termCondOper>
 		</Step0>
 	</Steps>
 </Cure>
