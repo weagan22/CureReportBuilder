@@ -26,6 +26,109 @@
         Return UBound(values)
     End Function
 
+    Public Function Min(Optional indexStart As Integer = 0, Optional indexEnd As Integer = 0) As Double
+
+        Dim holder As Double
+
+        If indexEnd = 0 Then indexEnd = Count()
+
+        Dim i As Integer
+        For i = indexStart To indexEnd
+            If i = indexStart Then
+                holder = values(i)
+            ElseIf values(i) < holder Then
+                holder = values(i)
+            End If
+        Next
+
+        Return holder
+    End Function
+
+    Public Function Max(Optional indexStart As Integer = 0, Optional indexEnd As Integer = 0) As Double
+
+        Dim holder As Double
+
+        If indexEnd = 0 Then indexEnd = Count()
+
+        Dim i As Integer
+        For i = indexStart To indexEnd
+            If i = indexStart Then
+                holder = values(i)
+            ElseIf values(i) > holder Then
+                holder = values(i)
+            End If
+        Next
+
+        Return holder
+    End Function
+
+    Public Function Average(Optional indexStart As Integer = 0, Optional indexEnd As Integer = 0) As Double
+
+        Dim total As Double = 0
+        Dim addCnt As Integer = 0
+
+        If indexEnd = 0 Then indexEnd = Count()
+
+        Dim i As Integer
+        For i = indexStart To indexEnd
+            total = total + values(i)
+            addCnt = addCnt + 1
+        Next
+
+        Return total / addCnt
+    End Function
+
+    Public Function MinRamp(Optional indexStart As Integer = 0, Optional indexEnd As Integer = 0) As Double
+
+        Dim holder As Double
+
+        If indexEnd = 0 Then indexEnd = Count()
+
+        Dim i As Integer
+        For i = indexStart To indexEnd
+            If i = indexStart Then
+                holder = ramp(i)
+            ElseIf ramp(i) < holder Then
+                holder = ramp(i)
+            End If
+        Next
+
+        Return holder
+    End Function
+
+    Public Function MaxRamp(Optional indexStart As Integer = 0, Optional indexEnd As Integer = 0) As Double
+
+        Dim holder As Double
+
+        If indexEnd = 0 Then indexEnd = Count()
+
+        Dim i As Integer
+        For i = indexStart To indexEnd
+            If i = indexStart Then
+                holder = ramp(i)
+            ElseIf ramp(i) > holder Then
+                holder = ramp(i)
+            End If
+        Next
+
+        Return holder
+    End Function
+
+    Public Function AverageRamp(Optional indexStart As Integer = 0, Optional indexEnd As Integer = 0) As Double
+
+        Dim total As Double = 0
+        Dim addCnt As Integer = 0
+
+        If indexEnd = 0 Then indexEnd = Count()
+
+        Dim i As Integer
+        For i = indexStart To indexEnd
+            total = total + ramp(i)
+            addCnt = addCnt + 1
+        Next
+
+        Return total / addCnt
+    End Function
 
 
     Function LinReg(dataX() As DateTime, dataY() As Double, indexStart As Integer, indexEnd As Integer) As Double

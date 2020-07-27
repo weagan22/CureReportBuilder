@@ -4,6 +4,8 @@ Public Class CureProfile
     Private icureDoc As String = ""
     Private icureDocRev As String = ""
 
+    Public curePass As Boolean = True
+
 
     Public CureSteps() As CureStep
 
@@ -223,7 +225,7 @@ Public Class CureProfile
 
 
     Private Sub addToSer(addMe As String, ByRef toSerial As String, Optional tabNum As Integer = 0)
-        Dim tabSpace As String
+        Dim tabSpace As String = ""
 
         Dim i As Integer
         For i = 1 To tabNum
@@ -253,9 +255,9 @@ Public Class CureStep
     Public tempResult As New Dictionary(Of String, Double) From {{"Max", 0}, {"Min", 0}, {"Avg", 0}, {"MaxRamp", 0}, {"MinRamp", 0}, {"AvgRamp", 0}}
     Public vacResult As New Dictionary(Of String, Double) From {{"Max", 0}, {"Min", 0}, {"Avg", 0}, {"MaxRamp", 0}, {"MinRamp", 0}, {"AvgRamp", 0}}
 
-    Public pressurePass As Boolean = False
-    Public tempPass As Boolean = False
-    Public vacPass As Boolean = False
+    Public pressurePass As Boolean = True
+    Public tempPass As Boolean = True
+    Public vacPass As Boolean = True
 
     Public stepPass As Boolean = False
     Public hardFail As Boolean = False

@@ -5,7 +5,7 @@
 	<Steps>
 		stepCount,2
 		<Step0>
-			stepName, 
+			stepName,0
 			<pressureSet>
 				setPoint,0
 				PosTol,0
@@ -17,10 +17,10 @@
 			<tempSet>
 				setPoint,425
 				PosTol,25
-				NegTol,425
+				NegTol,-425
 				RampRate,5
-				RampPosTol,4
-				RampNegTol,0
+				RampPosTol,0
+				RampNegTol,-5
 			</tempSet>
 			<vacSet>
 				setPoint,0
@@ -32,7 +32,7 @@
 			</vacSet>
 			<termCond1>
 				Type,Temp
-				Condition,>
+				Condition,GREATER
 				Goal,400
 				TCNum,Lag
 			</termCond1>
@@ -43,7 +43,7 @@
 				TCNum,0
 			</termCond2>
 			<termCondOper>
-				termCondOper,OR
+				termCondOper,AND
 			</termCondOper>
 		</Step0>
 		<Step1>
@@ -60,9 +60,9 @@
 				setPoint,425
 				PosTol,25
 				NegTol,-25
-				RampRate,5
-				RampPosTol,4
-				RampNegTol,0
+				RampRate,0
+				RampPosTol,10
+				RampNegTol,-10
 			</tempSet>
 			<vacSet>
 				setPoint,0
@@ -74,13 +74,13 @@
 			</vacSet>
 			<termCond1>
 				Type,Time
-				Condition,>
+				Condition,GREATER
 				Goal,120
 				TCNum,0
 			</termCond1>
 			<termCond2>
 				Type,Temp
-				Condition,GREATER
+				Condition,LESS
 				Goal,400
 				TCNum,Lag
 			</termCond2>
@@ -102,8 +102,8 @@
 				setPoint,425
 				PosTol,25
 				NegTol,-425
-				RampRate,5
-				RampPosTol,4
+				RampRate,-5
+				RampPosTol,5
 				RampNegTol,0
 			</tempSet>
 			<vacSet>
