@@ -6,6 +6,10 @@ Public Class CureProfile
 
     Public curePass As Boolean = True
 
+    Public checkTemp As Boolean = True
+    Public checkPressure As Boolean = True
+    Public checkVac As Boolean = True
+
 
     Public CureSteps() As CureStep
 
@@ -70,6 +74,10 @@ Public Class CureProfile
         inputValue(Name, readtext.ReadLine)
         inputValue(cureDoc, readtext.ReadLine)
         inputValue(cureDocRev, readtext.ReadLine)
+
+        inputValue(checkTemp, readtext.ReadLine)
+        inputValue(checkPressure, readtext.ReadLine)
+        inputValue(checkVac, readtext.ReadLine)
 
         If Trim(readtext.ReadLine) <> "<Steps>" Then Throw New Exception("deserializeCure unrecognized data type")
 
@@ -155,6 +163,11 @@ Public Class CureProfile
         addToSer("Name," & Name, retSer, 1)
         addToSer("cureDoc," & cureDoc, retSer, 1)
         addToSer("cureDocRev," & cureDocRev, retSer, 1)
+
+        addToSer("checkTemp," & checkTemp, retSer, 1)
+        addToSer("checkPressure," & checkPressure, retSer, 1)
+        addToSer("checkVac," & checkVac, retSer, 1)
+
 
         addToSer("<Steps>", retSer, 1)
         addToSer("stepCount," & UBound(CureSteps), retSer, 2)

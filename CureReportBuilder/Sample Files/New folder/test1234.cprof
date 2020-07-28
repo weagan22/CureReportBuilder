@@ -8,7 +8,7 @@
 	<Steps>
 		stepCount,2
 		<Step0>
-			stepName,0
+			stepName, 0
 			<pressureSet>
 				setPoint,0
 				PosTol,0
@@ -50,7 +50,7 @@
 			</termCondOper>
 		</Step0>
 		<Step1>
-			stepName,1
+			stepName, 1
 			<pressureSet>
 				setPoint,0
 				PosTol,0
@@ -92,7 +92,7 @@
 			</termCondOper>
 		</Step1>
 		<Step2>
-			stepName,2
+			stepName, 2
 			<pressureSet>
 				setPoint,0
 				PosTol,0
@@ -146,7 +146,7 @@
 	<Steps>
 		stepCount,0
 		<Step0>
-			stepName, 
+			stepName,  
 			<pressureSet>
 				setPoint,0
 				PosTol,0

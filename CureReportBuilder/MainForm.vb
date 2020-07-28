@@ -10,12 +10,15 @@ Public Class MainForm
     Public loadedDataSet(,) As String
 
     Dim dataCnt As Integer = 0
+    Dim headerRow As Integer = 0
+    Dim headerCount As Integer = 2
+
     Dim cureStart As Integer = 0
     Dim cureEnd As Integer = 0
 
     Dim dateValues As New Dictionary(Of String, DateTime) From {{"startTime", Nothing}, {"endTime", Nothing}}
 
-    Public machType As String = ""
+    Public machType As String = "Unknown"
 
     Public dateArr() As DateTime
     Dim stepVal As Integer = 2
@@ -44,10 +47,14 @@ Public Class MainForm
         'loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\BATCH 38 JOB 101573, 101574 1-23-20.CSV")
         'loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\Autoclave Simple.CSV")
 
+        curePro = cureProfiles(0)
+
         Call loadCureData()
 
 
-        curePro = cureProfiles(0)
+
+
+
 
         Call runCalc()
 
@@ -63,117 +70,115 @@ Public Class MainForm
 
         Dim currentRow As Integer = 1
 
-        Call outputExcel(Excel, "Cure Name:", "'" & curePro.Name, currentRow)
-        Call outputExcel(Excel, "Cure Doc:", curePro.cureDoc, currentRow)
-        Call outputExcel(Excel, "Cure Rev", curePro.cureDocRev, currentRow)
-        Call outputExcel(Excel, "", "", currentRow)
-        Call outputExcel(Excel, "", "", currentRow)
+        Call outputExcel(Excel, "Cure Name:", "'" & curePro.Name, currentRow, 1)
+        Call outputExcel(Excel, "Cure Doc:", curePro.cureDoc, currentRow, 1)
+        Call outputExcel(Excel, "Cure Rev", curePro.cureDocRev, currentRow, 1)
+        Call outputExcel(Excel, "", "", currentRow, 1)
+        Call outputExcel(Excel, "", "", currentRow, 1)
 
         Dim i As Integer = 0
         For i = 0 To UBound(curePro.CureSteps)
             Dim currentStep As CureStep = curePro.CureSteps(i)
 
-            Call outputExcel(Excel, "Cure Step: ", currentStep.stepName, currentRow)
-            Call outputExcel(Excel, "Step Pass: ", currentStep.stepPass, currentRow)
-            Call outputExcel(Excel, "", "", currentRow)
+            Call outputExcel(Excel, "Cure Step: ", currentStep.stepName, currentRow, 1)
+            Call outputExcel(Excel, "Step Pass: ", currentStep.stepPass, currentRow, 1)
+            Call outputExcel(Excel, "", "", currentRow, 1)
 
-            Call outputExcel(Excel, "Temp", "", currentRow)
-            Call outputExcel(Excel, "Temp Pass", currentStep.tempPass, currentRow)
-            Call outputExcel(Excel, "Temp Max", currentStep.tempResult("Max"), currentRow)
-            Call outputExcel(Excel, "Temp Min", currentStep.tempResult("Min"), currentRow)
-            Call outputExcel(Excel, "Temp Avg", currentStep.tempResult("Avg"), currentRow)
-            Call outputExcel(Excel, "Temp Ramp Max", currentStep.tempResult("MaxRamp"), currentRow)
-            Call outputExcel(Excel, "Temp Ramp Min", currentStep.tempResult("MinRamp"), currentRow)
-            Call outputExcel(Excel, "Temp Ramp Avg", currentStep.tempResult("AvgRamp"), currentRow)
-            Call outputExcel(Excel, "", "", currentRow)
+            If curePro.checkTemp Then
+                Call outputExcel(Excel, "Temp", "", currentRow, 1)
+                Call outputExcel(Excel, "Temp Pass", currentStep.tempPass, currentRow, 1)
+                Call outputExcel(Excel, "Temp Max", currentStep.tempResult("Max"), currentRow, 1)
+                Call outputExcel(Excel, "Temp Min", currentStep.tempResult("Min"), currentRow, 1)
+                Call outputExcel(Excel, "Temp Avg", currentStep.tempResult("Avg"), currentRow, 1)
+                Call outputExcel(Excel, "Temp Ramp Max", currentStep.tempResult("MaxRamp"), currentRow, 1)
+                Call outputExcel(Excel, "Temp Ramp Min", currentStep.tempResult("MinRamp"), currentRow, 1)
+                Call outputExcel(Excel, "Temp Ramp Avg", currentStep.tempResult("AvgRamp"), currentRow, 1)
+                Call outputExcel(Excel, "", "", currentRow, 1)
+            End If
 
-            If machType = "Autoclave" Then
+            If curePro.checkPressure Then
+                Call outputExcel(Excel, "Pressure", "", currentRow, 1)
+                Call outputExcel(Excel, "Pressure Pass", currentStep.pressurePass, currentRow, 1)
+                Call outputExcel(Excel, "Pressure Max", currentStep.pressureResult("Max"), currentRow, 1)
+                Call outputExcel(Excel, "Pressure Min", currentStep.pressureResult("Min"), currentRow, 1)
+                Call outputExcel(Excel, "Pressure Avg", currentStep.pressureResult("Avg"), currentRow, 1)
+                Call outputExcel(Excel, "Pressure Ramp Max", currentStep.pressureResult("MaxRamp"), currentRow, 1)
+                Call outputExcel(Excel, "Pressure Ramp Min", currentStep.pressureResult("MinRamp"), currentRow, 1)
+                Call outputExcel(Excel, "Pressure Ramp Avg", currentStep.pressureResult("AvgRamp"), currentRow, 1)
+                Call outputExcel(Excel, "", "", currentRow, 1)
+            End If
 
-                Call outputExcel(Excel, "Pressure", "", currentRow)
-                Call outputExcel(Excel, "Pressure Pass", currentStep.pressurePass, currentRow)
-                Call outputExcel(Excel, "Pressure Max", currentStep.pressureResult("Max"), currentRow)
-                Call outputExcel(Excel, "Pressure Min", currentStep.pressureResult("Min"), currentRow)
-                Call outputExcel(Excel, "Pressure Avg", currentStep.pressureResult("Avg"), currentRow)
-                Call outputExcel(Excel, "Pressure Ramp Max", currentStep.pressureResult("MaxRamp"), currentRow)
-                Call outputExcel(Excel, "Pressure Ramp Min", currentStep.pressureResult("MinRamp"), currentRow)
-                Call outputExcel(Excel, "Pressure Ramp Avg", currentStep.pressureResult("AvgRamp"), currentRow)
-                Call outputExcel(Excel, "", "", currentRow)
-
-                Call outputExcel(Excel, "vac", "", currentRow)
-                Call outputExcel(Excel, "vac Pass", currentStep.vacPass, currentRow)
-                Call outputExcel(Excel, "vac Max", currentStep.vacResult("Max"), currentRow)
-                Call outputExcel(Excel, "vac Min", currentStep.vacResult("Min"), currentRow)
-                Call outputExcel(Excel, "vac Avg", currentStep.vacResult("Avg"), currentRow)
-                Call outputExcel(Excel, "", "", currentRow)
-
+            If curePro.checkVac Then
+                Call outputExcel(Excel, "vac", "", currentRow, 1)
+                Call outputExcel(Excel, "vac Pass", currentStep.vacPass, currentRow, 1)
+                Call outputExcel(Excel, "vac Max", currentStep.vacResult("Max"), currentRow, 1)
+                Call outputExcel(Excel, "vac Min", currentStep.vacResult("Min"), currentRow, 1)
+                Call outputExcel(Excel, "vac Avg", currentStep.vacResult("Avg"), currentRow, 1)
+                Call outputExcel(Excel, "", "", currentRow, 1)
             End If
 
 
-            Call outputExcel(Excel, "", "", currentRow)
+            Call outputExcel(Excel, "", "", currentRow, 1)
         Next
 
         currentRow = 6
         For i = 0 To UBound(curePro.CureSteps)
             Dim currentStep As CureStep = curePro.CureSteps(i)
 
-            Call outputExcelC2(Excel, "", "", currentRow)
-            Call outputExcelC2(Excel, "", "", currentRow)
-            Call outputExcelC2(Excel, "", "", currentRow)
+            Call outputExcel(Excel, "", "", currentRow, 4)
+            Call outputExcel(Excel, "", "", currentRow, 4)
+            Call outputExcel(Excel, "", "", currentRow, 4)
 
-            Call outputExcelC2(Excel, "", "", currentRow)
-            Call outputExcelC2(Excel, "", "", currentRow)
-            Call outputExcelC2(Excel, "Setpoint", currentStep.tempSet("SetPoint"), currentRow)
-            Call outputExcelC2(Excel, "PosTol", currentStep.tempSet("PosTol"), currentRow)
-            Call outputExcelC2(Excel, "NegTol", currentStep.tempSet("NegTol"), currentRow)
-            Call outputExcelC2(Excel, "RampSet", currentStep.tempSet("RampRate"), currentRow)
-            Call outputExcelC2(Excel, "RampPosTol", currentStep.tempSet("RampPosTol"), currentRow)
-            Call outputExcelC2(Excel, "RampNegTol", currentStep.tempSet("RampNegTol"), currentRow)
-            Call outputExcelC2(Excel, "", "", currentRow)
-
-            If machType = "Autoclave" Then
-
-                Call outputExcelC2(Excel, "", "", currentRow)
-
-                Call outputExcelC2(Excel, "Setpoint", currentStep.pressureSet("SetPoint"), currentRow)
-                Call outputExcelC2(Excel, "PosTol", currentStep.pressureSet("PosTol"), currentRow)
-                Call outputExcelC2(Excel, "NegTol", currentStep.pressureSet("NegTol"), currentRow)
-                Call outputExcelC2(Excel, "RampSet", currentStep.pressureSet("RampRate"), currentRow)
-                Call outputExcelC2(Excel, "RampPosTol", currentStep.pressureSet("RampPosTol"), currentRow)
-                Call outputExcelC2(Excel, "RampNegTol", currentStep.pressureSet("RampNegTol"), currentRow)
-                Call outputExcelC2(Excel, "", "", currentRow)
-                Call outputExcelC2(Excel, "", "", currentRow)
-
-                Call outputExcelC2(Excel, "", "", currentRow)
-                Call outputExcelC2(Excel, "", "", currentRow)
-                Call outputExcelC2(Excel, "Setpoint", currentStep.vacSet("SetPoint"), currentRow)
-                Call outputExcelC2(Excel, "PosTol", currentStep.vacSet("PosTol"), currentRow)
-                Call outputExcelC2(Excel, "NegTol", currentStep.vacSet("NegTol"), currentRow)
-                Call outputExcelC2(Excel, "RampSet", currentStep.vacSet("RampRate"), currentRow)
-                Call outputExcelC2(Excel, "", "", currentRow)
-
+            If curePro.checkTemp Then
+                Call outputExcel(Excel, "", "", currentRow, 4)
+                Call outputExcel(Excel, "", "", currentRow, 4)
+                Call outputExcel(Excel, "Setpoint", currentStep.tempSet("SetPoint"), currentRow, 4)
+                Call outputExcel(Excel, "PosTol", currentStep.tempSet("PosTol"), currentRow, 4)
+                Call outputExcel(Excel, "NegTol", currentStep.tempSet("NegTol"), currentRow, 4)
+                Call outputExcel(Excel, "RampSet", currentStep.tempSet("RampRate"), currentRow, 4)
+                Call outputExcel(Excel, "RampPosTol", currentStep.tempSet("RampPosTol"), currentRow, 4)
+                Call outputExcel(Excel, "RampNegTol", currentStep.tempSet("RampNegTol"), currentRow, 4)
+                Call outputExcel(Excel, "", "", currentRow, 4)
             End If
 
 
-            Call outputExcelC2(Excel, "", "", currentRow)
+
+            If curePro.checkPressure Then
+                Call outputExcel(Excel, "", "", currentRow, 4)
+                Call outputExcel(Excel, "Setpoint", currentStep.pressureSet("SetPoint"), currentRow, 4)
+                Call outputExcel(Excel, "PosTol", currentStep.pressureSet("PosTol"), currentRow, 4)
+                Call outputExcel(Excel, "NegTol", currentStep.pressureSet("NegTol"), currentRow, 4)
+                Call outputExcel(Excel, "RampSet", currentStep.pressureSet("RampRate"), currentRow, 4)
+                Call outputExcel(Excel, "RampPosTol", currentStep.pressureSet("RampPosTol"), currentRow, 4)
+                Call outputExcel(Excel, "RampNegTol", currentStep.pressureSet("RampNegTol"), currentRow, 4)
+                Call outputExcel(Excel, "", "", currentRow, 4)
+                Call outputExcel(Excel, "", "", currentRow, 4)
+            End If
+
+            If curePro.checkVac Then
+
+                Call outputExcel(Excel, "", "", currentRow, 4)
+                Call outputExcel(Excel, "Setpoint", currentStep.vacSet("SetPoint"), currentRow, 4)
+                Call outputExcel(Excel, "PosTol", currentStep.vacSet("PosTol"), currentRow, 4)
+                Call outputExcel(Excel, "NegTol", currentStep.vacSet("NegTol"), currentRow, 4)
+                Call outputExcel(Excel, "RampSet", currentStep.vacSet("RampRate"), currentRow, 4)
+                Call outputExcel(Excel, "", "", currentRow, 4)
+            End If
+
+            Call outputExcel(Excel, "", "", currentRow, 4)
         Next
     End Sub
 
-    Sub outputExcel(Excel As Object, desc As String, uVal As String, ByRef currentRow As Integer)
-        Excel.cells(currentRow, 1) = desc
-        Excel.cells(currentRow, 2) = uVal
-        currentRow = currentRow + 1
-    End Sub
-
-    Sub outputExcelC2(Excel As Object, desc As String, uVal As String, ByRef currentRow As Integer)
-        Excel.cells(currentRow, 4) = desc
-        Excel.cells(currentRow, 5) = uVal
+    Sub outputExcel(Excel As Object, desc As String, uVal As String, ByRef currentRow As Integer, inCol As Integer)
+        Excel.cells(currentRow, inCol) = desc
+        Excel.cells(currentRow, inCol + 1) = uVal
         currentRow = currentRow + 1
     End Sub
 
     Sub runCalc()
         Call leadlagTC()
 
-        If machType = "Autoclave" Then
+        If curePro.checkVac Then
             Call leadlagVac()
         End If
 
@@ -199,119 +204,125 @@ Public Class MainForm
             Dim indexStart As Integer = curePro.CureSteps(i).stepStart
             Dim indexEnd As Integer = curePro.CureSteps(i).stepEnd
 
-            'Calculate temp results for a given step
-
-            ''Max temp
-            If Not firstStep Then
-                If curePro.CureSteps(i - 1).tempSet("RampRate") < 0 Then
-                    indexStart = indexStart + curePro.CureSteps(i - 1).tempSet("RampRate") \ (dateArr(1) - dateArr(0)).TotalMinutes
-                End If
-            End If
-
-            If Not lastStep Then
-                If curePro.CureSteps(i + 1).tempSet("RampRate") > 0 Then
-                    indexEnd = indexEnd - curePro.CureSteps(i - 1).tempSet("RampRate") \ (dateArr(1) - dateArr(0)).TotalMinutes
-                End If
-            End If
-
-            curePro.CureSteps(i).tempResult("Max") = leadTC.Max(indexStart, indexEnd)
-
-
-            ''Min temp
-            If Not firstStep Then
-                If curePro.CureSteps(i - 1).tempSet("RampRate") > 0 Then
-                    indexStart = indexStart + curePro.CureSteps(i - 1).tempSet("RampRate") \ (dateArr(1) - dateArr(0)).TotalMinutes
-                End If
-            End If
-
-            If Not lastStep Then
-                If curePro.CureSteps(i + 1).tempSet("RampRate") < 0 Then
-                    indexEnd = indexEnd - curePro.CureSteps(i - 1).tempSet("RampRate") \ (dateArr(1) - dateArr(0)).TotalMinutes
-                End If
-            End If
-
-            curePro.CureSteps(i).tempResult("Min") = lagTC.Min(indexStart, indexEnd)
-
-
-            ''Average temp
             Dim total As Double = 0
             Dim addCnt As Integer = 0
-            indexStart = curePro.CureSteps(i).stepStart
-            indexEnd = curePro.CureSteps(i).stepEnd
 
-            For z = 0 To UBound(partTC_Arr)
-                For y = 0 To UBound(usrRunTC)
-                    If partTC_Arr(z).Number = usrRunTC(y) Then
-                        total = total + partTC_Arr(z).Average(indexStart, indexEnd)
-                        addCnt = addCnt + 1
+            'Calculate temp results for a given step
+            If curePro.checkTemp = True Then
+
+                ''Max temp
+                If Not firstStep Then
+                    If curePro.CureSteps(i - 1).tempSet("RampRate") < 0 Then
+                        indexStart = indexStart + curePro.CureSteps(i - 1).tempSet("RampRate") \ (dateArr(1) - dateArr(0)).TotalMinutes
                     End If
-                Next
-            Next
+                End If
 
-            curePro.CureSteps(i).tempResult("Avg") = total / addCnt
-
-            ''Max temp ramp
-            Dim holder As Double = 0
-            indexStart = curePro.CureSteps(i).stepStart
-            indexEnd = curePro.CureSteps(i).stepEnd
-
-            For z = 0 To UBound(partTC_Arr)
-                For y = 0 To UBound(usrRunTC)
-                    If holder = 0 Then
-                        holder = partTC_Arr(z).MaxRamp(indexStart, indexEnd)
-                    ElseIf partTC_Arr(z).MaxRamp(indexStart, indexEnd) > holder Then
-                        holder = partTC_Arr(z).MaxRamp(indexStart, indexEnd)
+                If Not lastStep Then
+                    If curePro.CureSteps(i + 1).tempSet("RampRate") > 0 Then
+                        indexEnd = indexEnd - curePro.CureSteps(i - 1).tempSet("RampRate") \ (dateArr(1) - dateArr(0)).TotalMinutes
                     End If
-                Next
-            Next
+                End If
 
-            curePro.CureSteps(i).tempResult("MaxRamp") = holder
+                curePro.CureSteps(i).tempResult("Max") = leadTC.Max(indexStart, indexEnd)
 
-            ''Min temp ramp
-            holder = 0
-            indexStart = curePro.CureSteps(i).stepStart
-            indexEnd = curePro.CureSteps(i).stepEnd
 
-            For z = 0 To UBound(partTC_Arr)
-                For y = 0 To UBound(usrRunTC)
-                    If holder = 0 Then
-                        holder = partTC_Arr(z).MinRamp(indexStart, indexEnd)
-                    ElseIf partTC_Arr(z).MinRamp(indexStart, indexEnd) < holder Then
-                        holder = partTC_Arr(z).MinRamp(indexStart, indexEnd)
+                ''Min temp
+                If Not firstStep Then
+                    If curePro.CureSteps(i - 1).tempSet("RampRate") > 0 Then
+                        indexStart = indexStart + curePro.CureSteps(i - 1).tempSet("RampRate") \ (dateArr(1) - dateArr(0)).TotalMinutes
                     End If
-                Next
-            Next
-            curePro.CureSteps(i).tempResult("MinRamp") = holder
+                End If
 
-
-            ''Average temp ramp
-            total = 0
-            addCnt = 0
-            indexStart = curePro.CureSteps(i).stepStart
-            indexEnd = curePro.CureSteps(i).stepEnd
-
-            For z = 0 To UBound(partTC_Arr)
-                For y = 0 To UBound(usrRunTC)
-                    If partTC_Arr(z).Number = usrRunTC(y) Then
-                        total = total + partTC_Arr(z).AverageRamp(indexStart, indexEnd)
-                        addCnt = addCnt + 1
+                If Not lastStep Then
+                    If curePro.CureSteps(i + 1).tempSet("RampRate") < 0 Then
+                        indexEnd = indexEnd - curePro.CureSteps(i - 1).tempSet("RampRate") \ (dateArr(1) - dateArr(0)).TotalMinutes
                     End If
+                End If
+
+                curePro.CureSteps(i).tempResult("Min") = lagTC.Min(indexStart, indexEnd)
+
+
+                ''Average temp
+                total = 0
+                addCnt = 0
+                indexStart = curePro.CureSteps(i).stepStart
+                indexEnd = curePro.CureSteps(i).stepEnd
+
+                For z = 0 To UBound(partTC_Arr)
+                    For y = 0 To UBound(usrRunTC)
+                        If partTC_Arr(z).Number = usrRunTC(y) Then
+                            total = total + partTC_Arr(z).Average(indexStart, indexEnd)
+                            addCnt = addCnt + 1
+                        End If
+                    Next
                 Next
-            Next
 
-            curePro.CureSteps(i).tempResult("AvgRamp") = total / addCnt
+                curePro.CureSteps(i).tempResult("Avg") = total / addCnt
 
-            'Check temp for passing
-            If curePro.CureSteps(i).tempResult("Min") < curePro.CureSteps(i).tempSet("SetPoint") + curePro.CureSteps(i).tempSet("NegTol") Then curePro.CureSteps(i).tempPass = False
-            If curePro.CureSteps(i).tempResult("Max") > curePro.CureSteps(i).tempSet("SetPoint") + curePro.CureSteps(i).tempSet("PosTol") Then curePro.CureSteps(i).tempPass = False
-            If curePro.CureSteps(i).tempResult("MinRamp") < curePro.CureSteps(i).tempSet("RampRate") + curePro.CureSteps(i).tempSet("RampNegTol") Then curePro.CureSteps(i).tempPass = False
-            If curePro.CureSteps(i).tempResult("MaxRamp") > curePro.CureSteps(i).tempSet("RampRate") + curePro.CureSteps(i).tempSet("RampPosTol") Then curePro.CureSteps(i).tempPass = False
+                ''Max temp ramp
+                Dim holder As Double = 0
+                indexStart = curePro.CureSteps(i).stepStart
+                indexEnd = curePro.CureSteps(i).stepEnd
 
+                For z = 0 To UBound(partTC_Arr)
+                    For y = 0 To UBound(usrRunTC)
+                        If holder = 0 Then
+                            holder = partTC_Arr(z).MaxRamp(indexStart, indexEnd)
+                        ElseIf partTC_Arr(z).MaxRamp(indexStart, indexEnd) > holder Then
+                            holder = partTC_Arr(z).MaxRamp(indexStart, indexEnd)
+                        End If
+                    Next
+                Next
+
+                curePro.CureSteps(i).tempResult("MaxRamp") = holder
+
+                ''Min temp ramp
+                holder = 0
+                indexStart = curePro.CureSteps(i).stepStart
+                indexEnd = curePro.CureSteps(i).stepEnd
+
+                For z = 0 To UBound(partTC_Arr)
+                    For y = 0 To UBound(usrRunTC)
+                        If holder = 0 Then
+                            holder = partTC_Arr(z).MinRamp(indexStart, indexEnd)
+                        ElseIf partTC_Arr(z).MinRamp(indexStart, indexEnd) < holder Then
+                            holder = partTC_Arr(z).MinRamp(indexStart, indexEnd)
+                        End If
+                    Next
+                Next
+                curePro.CureSteps(i).tempResult("MinRamp") = holder
+
+
+                ''Average temp ramp
+                total = 0
+                addCnt = 0
+                indexStart = curePro.CureSteps(i).stepStart
+                indexEnd = curePro.CureSteps(i).stepEnd
+
+                For z = 0 To UBound(partTC_Arr)
+                    For y = 0 To UBound(usrRunTC)
+                        If partTC_Arr(z).Number = usrRunTC(y) Then
+                            total = total + partTC_Arr(z).AverageRamp(indexStart, indexEnd)
+                            addCnt = addCnt + 1
+                        End If
+                    Next
+                Next
+
+                curePro.CureSteps(i).tempResult("AvgRamp") = total / addCnt
+
+                'Check temp for passing
+                If curePro.CureSteps(i).tempResult("Min") < curePro.CureSteps(i).tempSet("SetPoint") + curePro.CureSteps(i).tempSet("NegTol") Then curePro.CureSteps(i).tempPass = False
+                If curePro.CureSteps(i).tempResult("Max") > curePro.CureSteps(i).tempSet("SetPoint") + curePro.CureSteps(i).tempSet("PosTol") Then curePro.CureSteps(i).tempPass = False
+                If curePro.CureSteps(i).tempResult("MinRamp") < curePro.CureSteps(i).tempSet("RampRate") + curePro.CureSteps(i).tempSet("RampNegTol") Then curePro.CureSteps(i).tempPass = False
+                If curePro.CureSteps(i).tempResult("MaxRamp") > curePro.CureSteps(i).tempSet("RampRate") + curePro.CureSteps(i).tempSet("RampPosTol") Then curePro.CureSteps(i).tempPass = False
+            Else
+                curePro.CureSteps(i).tempPass = True
+            End If
 
             'Check autoclave only features
-            If machType = "Autoclave" Then
-                'Calculate pressure results for a given step
 
+            'Calculate pressure results for a given step
+            If curePro.checkPressure Then
                 ''Max pressure
                 If Not firstStep Then
                     If curePro.CureSteps(i - 1).pressureSet("RampRate") < 0 Then
@@ -357,10 +368,12 @@ Public Class MainForm
                 If curePro.CureSteps(i).pressureResult("Max") > curePro.CureSteps(i).pressureSet("SetPoint") + curePro.CureSteps(i).pressureSet("PosTol") Then curePro.CureSteps(i).pressurePass = False
                 If curePro.CureSteps(i).pressureResult("MinRamp") < curePro.CureSteps(i).pressureSet("RampRate") + curePro.CureSteps(i).pressureSet("RampNegTol") Then curePro.CureSteps(i).pressurePass = False
                 If curePro.CureSteps(i).pressureResult("MaxRamp") > curePro.CureSteps(i).pressureSet("RampRate") + curePro.CureSteps(i).pressureSet("RampPosTol") Then curePro.CureSteps(i).pressurePass = False
+            Else
+                curePro.CureSteps(i).pressurePass = True
+            End If
 
-
-
-                'Calculate vac results for a given step
+            'Calculate vac results for a given step
+            If curePro.checkVac Then
                 curePro.CureSteps(i).vacResult("Max") = maxVac.Max(indexStart, indexEnd)
                 curePro.CureSteps(i).vacResult("Min") = minVac.Min(indexStart, indexEnd)
 
@@ -384,24 +397,19 @@ Public Class MainForm
                 'Check vacuum for passing
                 If curePro.CureSteps(i).vacResult("Min") < curePro.CureSteps(i).vacSet("SetPoint") + curePro.CureSteps(i).vacSet("NegTol") Then curePro.CureSteps(i).vacPass = False
                 If curePro.CureSteps(i).vacResult("Max") > curePro.CureSteps(i).vacSet("SetPoint") + curePro.CureSteps(i).vacSet("PosTol") Then curePro.CureSteps(i).vacPass = False
-
-                'Check for all passing
-                If curePro.CureSteps(i).vacPass And curePro.CureSteps(i).tempPass And curePro.CureSteps(i).pressurePass Then
-                    curePro.CureSteps(i).stepPass = True
-                Else
-                    curePro.CureSteps(i).stepPass = False
-                    curePro.curePass = False
-                End If
-
-            ElseIf machType = "Omega" Then
-                If curePro.CureSteps(i).tempPass Then
-                    curePro.CureSteps(i).stepPass = True
-                Else
-                    curePro.CureSteps(i).stepPass = False
-                    curePro.curePass = False
-                End If
+            Else
+                curePro.CureSteps(i).vacPass = True
             End If
 
+
+
+            'Check for all passing
+            If curePro.CureSteps(i).vacPass And curePro.CureSteps(i).tempPass And curePro.CureSteps(i).pressurePass Then
+                curePro.CureSteps(i).stepPass = True
+            Else
+                curePro.CureSteps(i).stepPass = False
+                curePro.curePass = False
+            End If
 
         Next
     End Sub
@@ -439,155 +447,8 @@ Public Class MainForm
 
     Function meetTerms(cureStep As CureStep, currentStep As Integer) As Boolean
 
-        Dim pass1 As Boolean = False
-        Dim pass2 As Boolean = False
-
-
-        'Test term cond #1
-        If cureStep.termCond1("Type") = "None" Then
-            pass1 = True
-
-        ElseIf cureStep.termCond1("Type") = "Time" Then
-            Dim stepDuration As TimeSpan = dateArr(currentStep) - dateArr(cureStep.stepStart)
-
-            If cureStep.termCond1("Condition") = "GREATER" Then
-                If stepDuration.TotalMinutes > cureStep.termCond1("Goal") Then
-                    pass1 = True
-                End If
-            End If
-
-        ElseIf cureStep.termCond1("Type") = "Temp" Then
-
-            If cureStep.termCond1("Condition") = "GREATER" Then
-                If cureStep.termCond1("TCNum") = "Lag" Then
-                    Dim test = lagTC.values(currentStep)
-                    If lagTC.values(currentStep) > cureStep.termCond1("Goal") Then
-                        pass1 = True
-                    End If
-                End If
-
-                If cureStep.termCond1("TCNum") = "Lead" Then
-                    If lagTC.values(currentStep) > cureStep.termCond1("Goal") Then
-                        pass1 = True
-                    End If
-                End If
-
-                If cureStep.termCond1("TCNum") = "Air" Then
-                    If vessel_TC.values(currentStep) > cureStep.termCond1("Goal") Then
-                        pass1 = True
-                    End If
-                End If
-
-            ElseIf cureStep.termCond1("Condition") = "LESS" Then
-                If cureStep.termCond1("TCNum") = "Lag" Then
-                    If lagTC.values(currentStep) < cureStep.termCond1("Goal") Then
-                        pass1 = True
-                    End If
-                End If
-
-                If cureStep.termCond1("TCNum") = "Lead" Then
-                    If lagTC.values(currentStep) < cureStep.termCond1("Goal") Then
-                        pass1 = True
-                    End If
-                End If
-
-                If cureStep.termCond1("TCNum") = "Air" Then
-                    If vessel_TC.values(currentStep) < cureStep.termCond1("Goal") Then
-                        pass1 = True
-                    End If
-                End If
-            End If
-
-        ElseIf cureStep.termCond1("Type") = "Press" Then
-            If cureStep.termCond1("Condition") = "GREATER" Then
-                If vesselPress.values(currentStep) > cureStep.termCond1("Goal") Then
-                    pass1 = True
-                End If
-            ElseIf cureStep.termCond1("Condition") = "LESS" Then
-
-                If vesselPress.values(currentStep) < cureStep.termCond1("Goal") Then
-                    pass1 = True
-                End If
-            End If
-
-        ElseIf cureStep.termCond1("Type") = "Vac" Then
-            'Might need this???
-        End If
-
-
-
-
-
-        'Test term cond #2
-        If cureStep.termCond2("Type") = "None" Then
-            pass2 = True
-
-        ElseIf cureStep.termCond2("Type") = "Time" Then
-            Dim stepDuration As TimeSpan = dateArr(currentStep) - dateArr(cureStep.stepStart)
-
-            If cureStep.termCond2("Condition") = "GREATER" Then
-                If stepDuration.TotalMinutes > cureStep.termCond2("Goal") Then
-                    pass2 = True
-                End If
-            End If
-
-        ElseIf cureStep.termCond2("Type") = "Temp" Then
-
-            If cureStep.termCond2("Condition") = "GREATER" Then
-                If cureStep.termCond2("TCNum") = "Lag" Then
-                    If lagTC.values(currentStep) > cureStep.termCond2("Goal") Then
-                        pass2 = True
-                    End If
-                End If
-
-                If cureStep.termCond2("TCNum") = "Lead" Then
-                    If lagTC.values(currentStep) > cureStep.termCond2("Goal") Then
-                        pass2 = True
-                    End If
-                End If
-
-                If cureStep.termCond2("TCNum") = "Air" Then
-                    If vessel_TC.values(currentStep) > cureStep.termCond2("Goal") Then
-                        pass2 = True
-                    End If
-                End If
-
-            ElseIf cureStep.termCond2("Condition") = "LESS" Then
-                If cureStep.termCond2("TCNum") = "Lag" Then
-                    If lagTC.values(currentStep) < cureStep.termCond2("Goal") Then
-                        pass2 = True
-                    End If
-                End If
-
-                If cureStep.termCond2("TCNum") = "Lead" Then
-                    If lagTC.values(currentStep) < cureStep.termCond2("Goal") Then
-                        pass2 = True
-                    End If
-                End If
-
-                If cureStep.termCond2("TCNum") = "Air" Then
-                    If vessel_TC.values(currentStep) < cureStep.termCond2("Goal") Then
-                        pass2 = True
-                    End If
-                End If
-            End If
-
-        ElseIf cureStep.termCond2("Type") = "Press" Then
-            If cureStep.termCond2("Condition") = "GREATER" Then
-                If vesselPress.values(currentStep) > cureStep.termCond2("Goal") Then
-                    pass2 = True
-                End If
-            ElseIf cureStep.termCond2("Condition") = "LESS" Then
-
-                If vesselPress.values(currentStep) < cureStep.termCond2("Goal") Then
-                    pass2 = True
-                End If
-            End If
-
-        ElseIf cureStep.termCond2("Type") = "Vac" Then
-            'Might need this???
-        End If
-
+        Dim pass1 As Boolean = termTest(cureStep.termCond1, currentStep, cureStep)
+        Dim pass2 As Boolean = termTest(cureStep.termCond2, currentStep, cureStep)
 
         If cureStep.termCondOper = "OR" Then
             If pass1 Or pass2 Then
@@ -598,37 +459,125 @@ Public Class MainForm
             If pass1 And pass2 Then
                 Return True
             End If
+        Else
+            Throw New Exception("Terminating condition operator for step " & cureStep.stepName & " is not valid")
         End If
 
         Return False
     End Function
 
+    Function termTest(termCond As Dictionary(Of String, Object), currentStep As Integer, cureStep As CureStep) As Boolean
+        If termCond("Type") = "None" Then
+            Return True
+
+        ElseIf termCond("Type") = "Time" Then
+            Dim stepDuration As TimeSpan = dateArr(currentStep) - dateArr(cureStep.stepStart)
+
+            If termCond("Condition") = "GREATER" Then
+                If stepDuration.TotalMinutes > termCond("Goal") Then
+                    Return True
+                End If
+            Else
+                Throw New Exception("Terminating condition Condition for step " & cureStep.stepName & " is not valid")
+            End If
+
+        ElseIf termCond("Type") = "Temp" Then
+
+            If termCond("Condition") = "GREATER" Then
+                If termCond("TCNum") = "Lag" Then
+                    Dim test = lagTC.values(currentStep)
+                    If lagTC.values(currentStep) > termCond("Goal") Then
+                        Return True
+                    End If
+                ElseIf termCond("TCNum") = "Lead" Then
+                    If lagTC.values(currentStep) > termCond("Goal") Then
+                        Return True
+                    End If
+                ElseIf termCond("TCNum") = "Air" Then
+                    If vessel_TC.values(currentStep) > termCond("Goal") Then
+                        Return True
+                    End If
+                Else
+                    Throw New Exception("Terminating condition TCNum for step " & cureStep.stepName & " is not valid")
+                End If
+
+            ElseIf termCond("Condition") = "LESS" Then
+                If termCond("TCNum") = "Lag" Then
+                    If lagTC.values(currentStep) < termCond("Goal") Then
+                        Return True
+                    End If
+                ElseIf termCond("TCNum") = "Lead" Then
+                    If lagTC.values(currentStep) < termCond("Goal") Then
+                        Return True
+                    End If
+                ElseIf termCond("TCNum") = "Air" Then
+                    If vessel_TC.values(currentStep) < termCond("Goal") Then
+                        Return True
+                    End If
+                Else
+                    Throw New Exception("Terminating condition TCNum for step " & cureStep.stepName & " is not valid")
+                End If
+            Else
+                Throw New Exception("Terminating condition Condition for step " & cureStep.stepName & " is not valid")
+            End If
+
+        ElseIf termCond("Type") = "Press" Then
+            If termCond("Condition") = "GREATER" Then
+                If vesselPress.values(currentStep) > termCond("Goal") Then
+                    Return True
+                End If
+            ElseIf termCond("Condition") = "LESS" Then
+
+                If vesselPress.values(currentStep) < termCond("Goal") Then
+                    Return True
+                End If
+            Else
+                Throw New Exception("Terminating condition Condition for step " & cureStep.stepName & " is not valid")
+            End If
+
+        ElseIf termCond("Type") = "Vac" Then
+            'Might need this???
+        Else
+            Throw New Exception("Terminating condition type for step " & cureStep.stepName & " is not valid")
+        End If
+    End Function
+
 
     Sub startEndTime()
+        Dim start_end_temp As Double = 140
+
         Dim i As Integer
         For i = 0 To dataCnt
-            If leadTC.values(i) > 140 And dateValues("startTime") = Nothing Then
+            If leadTC.values(i) > start_end_temp And dateValues("startTime") = Nothing Then
                 dateValues("startTime") = dateArr(i)
                 cureStart = i
                 Exit For
             End If
         Next
+        If cureStart = 0 Then
+            dateValues("startTime") = dateArr(0)
+        End If
 
         Dim runStart As Boolean = False
         For i = 0 To dataCnt
-            If lagTC.values(i) > 140 And runStart = False Then
+            If lagTC.values(i) > start_end_temp And runStart = False Then
                 runStart = True
                 i = i + 5
             End If
 
             If runStart = True Then
-                If lagTC.values(i) < 140 Then
+                If lagTC.values(i) < start_end_temp Then
                     dateValues("endTime") = dateArr(i)
                     cureEnd = i
                     Exit For
                 End If
             End If
         Next
+
+        If cureEnd = 0 Then
+            dateValues("endTime") = dateArr(dataCnt)
+            cureEnd = dataCnt
+        End If
     End Sub
 
     Sub leadlagTC()
@@ -700,103 +649,85 @@ Public Class MainForm
         stepVal = 5 / ((dateArr(1) - dateArr(0)).TotalMinutes)
         If stepVal = 1 Then stepVal = 2
 
-        Call getTC(stepVal)
+        If curePro.checkTemp = True Then
+            Dim searchVal As String = ""
+            If machType = "Omega" Then
+                searchVal = "Channel "
+            ElseIf machType = "Autoclave" Then
+                searchVal = "{Part_"
+            Else
+                searchVal = "TC"
+            End If
+
+            Call getDataMulti(searchVal, partTC_Arr, "TC")
+        End If
+
+        If curePro.checkPressure Then
+            Call getDataSearch("{Vessel_Pressure}", vesselPress)
+        End If
+
+        If curePro.checkVac Then
+            Call getDataMulti("{VacGroup_", vac_Arr, "VAC")
+        End If
 
         If machType = "Autoclave" Then
-            Call getVac()
-            Call getPress(stepVal)
-            Call getvessTC(stepVal)
+            Call getDataSearch("{Air_TC}", vessel_TC)
         End If
     End Sub
 
-    Sub getPress(stepRate As Integer)
-        For i = 0 To UBound(loadedDataSet, 1)
-            Dim searchVal As String = "{Vessel_Pressure}"
-            Dim searchRow As Integer = 0
-
-            If InStr(loadedDataSet(i, searchRow), searchVal, 0) <> 0 Then
-
-                Dim row As Integer
-                For row = searchRow + 2 To UBound(loadedDataSet, 2)
-                    If IsNumeric(loadedDataSet(i, row)) Then
-                        vesselPress.values.AddValArr(loadedDataSet(i, row))
-                    Else
-                        vesselPress.values.AddValArr(0)
-                    End If
-                Next
-
-                vesselPress.calcRamp(stepRate)
-            End If
-        Next
-    End Sub
-
-    Sub getvessTC(stepRate As Integer)
-        For i = 0 To UBound(loadedDataSet, 1)
-            Dim searchVal As String = "{Air_TC}"
-            Dim searchRow As Integer = 0
-
-            If InStr(loadedDataSet(i, searchRow), searchVal, 0) <> 0 Then
-
-                Dim row As Integer
-                For row = searchRow + 2 To UBound(loadedDataSet, 2)
-                    If IsNumeric(loadedDataSet(i, row)) Then
-                        vessel_TC.values.AddValArr(loadedDataSet(i, row))
-                    Else
-                        vessel_TC.values.AddValArr(0)
-                    End If
-                Next
-
-                vessel_TC.calcRamp(stepRate)
-            End If
-        Next
-    End Sub
-
-    Sub getTC(stepRate As Integer)
+    Sub getDataSearch(searchVal As String, ByRef loadTo As DataSet)
         Dim i As Integer
-        Dim searchVal As String = ""
-        Dim searchRow As Integer = 0
-
-        If machType = "Omega" Then
-            searchVal = "Channel "
-            searchRow = 2
-        ElseIf machType = "Autoclave" Then
-            searchVal = "{Part_"
-            searchRow = 0
-        End If
-
         For i = 0 To UBound(loadedDataSet, 1)
-            If InStr(loadedDataSet(i, searchRow), searchVal, 0) <> 0 Then
+            If InStr(loadedDataSet(i, headerRow), searchVal, 0) <> 0 Then
+                getData(i, loadTo)
+            End If
+        Next
 
-                If TC_Used(i, searchRow + 2) Then
-                    If partTC_Arr Is Nothing Then
-                        ReDim partTC_Arr(0)
-                        partTC_Arr(0) = New DataSet(0, "")
+        If loadTo.values Is Nothing Then
+            Throw New Exception("Failed to find data for " & loadTo.Type & " | " & loadTo.Number)
+        End If
+    End Sub
+
+    Sub getData(inCol As Integer, ByRef loadTo As DataSet)
+        Dim row As Integer
+        For row = headerRow + headerCount To UBound(loadedDataSet, 2)
+            If IsNumeric(loadedDataSet(inCol, row)) Then
+                loadTo.values.AddValArr(loadedDataSet(inCol, row))
+            Else
+                loadTo.values.AddValArr(0)
+            End If
+        Next
+
+        loadTo.calcRamp(stepVal)
+    End Sub
+
+    Sub getDataMulti(searchVal As String, ByRef inArr() As DataSet, type As String)
+        Dim i As Integer
+        For i = 0 To UBound(loadedDataSet, 1)
+            If InStr(loadedDataSet(i, headerRow), searchVal, 0) <> 0 Then
+                If dataUsed(i, headerRow + headerCount) Then
+                    If inArr Is Nothing Then
+                        ReDim inArr(0)
+                        inArr(0) = New DataSet(0, "")
                     Else
-                        ReDim Preserve partTC_Arr(UBound(partTC_Arr) + 1)
-                        partTC_Arr(UBound(partTC_Arr)) = New DataSet(0, "")
+                        ReDim Preserve inArr(UBound(inArr) + 1)
+                        inArr(UBound(inArr)) = New DataSet(0, "")
                     End If
 
 
-                    partTC_Arr(UBound(partTC_Arr)).Number = Integer.Parse(System.Text.RegularExpressions.Regex.Replace(loadedDataSet(i, searchRow), "[^\d]", ""))
-                    partTC_Arr(UBound(partTC_Arr)).Type = "TC"
+                    inArr(UBound(inArr)).Number = Integer.Parse(System.Text.RegularExpressions.Regex.Replace(loadedDataSet(i, headerRow), "[^\d]", ""))
+                    inArr(UBound(inArr)).Type = type
 
-                    Dim row As Integer
-                    For row = searchRow + 2 To UBound(loadedDataSet, 2)
-                        If IsNumeric(loadedDataSet(i, row)) Then
-                            partTC_Arr(UBound(partTC_Arr)).values.AddValArr(loadedDataSet(i, row))
-                        Else
-                            partTC_Arr(UBound(partTC_Arr)).values.AddValArr(0)
-                        End If
-                    Next
-
-                    partTC_Arr(UBound(partTC_Arr)).calcRamp(stepRate)
+                    getData(i, inArr(UBound(inArr)))
                 End If
-
             End If
         Next
+        If inArr Is Nothing Then
+            Throw New Exception("Failed to find data for " & type)
+        End If
     End Sub
 
-    Function TC_Used(chkCol As Integer, chkRowStart As Integer) As Boolean
+    Function dataUsed(chkCol As Integer, chkRowStart As Integer) As Boolean
         Dim r As Integer
         For r = chkRowStart To UBound(loadedDataSet, 2)
             If IsNumeric(loadedDataSet(chkCol, r)) AndAlso loadedDataSet(chkCol, r) <> 0 Then
@@ -805,72 +736,33 @@ Public Class MainForm
         Next
 
         Return False
-    End Function
-
-    Sub getVac()
-        Dim i As Integer
-        Dim searchVal As String = "{VacGroup_"
-        Dim searchRow As Integer = 0
-
-
-        For i = 0 To UBound(loadedDataSet, 1)
-            If InStr(loadedDataSet(i, searchRow), searchVal, 0) <> 0 Then
-
-                If vac_Used(i, searchRow + 2) Then
-                    If vac_Arr Is Nothing Then
-                        ReDim vac_Arr(0)
-                        vac_Arr(0) = New DataSet(0, "")
-                    Else
-                        ReDim Preserve vac_Arr(UBound(vac_Arr) + 1)
-                        vac_Arr(UBound(vac_Arr)) = New DataSet(0, "")
-                    End If
-
-
-                    vac_Arr(UBound(vac_Arr)).Number = Integer.Parse(System.Text.RegularExpressions.Regex.Replace(loadedDataSet(i, searchRow), "[^\d]", ""))
-                    vac_Arr(UBound(vac_Arr)).Type = "VAC"
-
-                    Dim row As Integer
-                    For row = searchRow + 2 To UBound(loadedDataSet, 2)
-                        If IsNumeric(loadedDataSet(i, row)) Then
-                            vac_Arr(UBound(vac_Arr)).values.AddValArr(loadedDataSet(i, row))
-                        Else
-                            vac_Arr(UBound(vac_Arr)).values.AddValArr(0)
-                        End If
-
-                    Next
-
-                End If
-
-            End If
-        Next
-    End Sub
-
-    Function vac_Used(chkCol As Integer, chkRowStart As Integer) As Boolean
-        Dim r As Integer
-        For r = chkRowStart To UBound(loadedDataSet, 2)
-            Dim test1 = loadedDataSet(chkCol, r)
-
-            If IsNumeric(loadedDataSet(chkCol, r)) AndAlso loadedDataSet(chkCol, r) <> 0 Then
-                Return True
-            End If
-        Next
-
-        Return False
-
     End Function
 
     Sub getTime()
+        'Use type to determine date column and load that column into dateArr
         Dim i As Integer
-
         If machType = "Omega" Then
-            For i = 4 To UBound(loadedDataSet, 2)
+            For i = headerRow + headerCount To UBound(loadedDataSet, 2)
                 dateArr.AddValArr(Convert.ToDateTime(loadedDataSet(0, i)))
             Next
-
         ElseIf machType = "Autoclave" Then
-            For i = 2 To UBound(loadedDataSet, 2)
+            For i = headerRow + headerCount To UBound(loadedDataSet, 2)
                 dateArr.AddValArr(Convert.ToDateTime(loadedDataSet(1, i) & " " & loadedDataSet(2, i) & "." & loadedDataSet(3, i)))
             Next
+        ElseIf machType = "Unknown" Then
+            Dim dateFnd As Boolean = False
+            For z = 0 To UBound(loadedDataSet, 1)
+                Dim fill As DateTime
+                If DateTime.TryParse(loadedDataSet(z, headerRow + headerCount), fill) Then
+                    dateFnd = True
+                    For i = headerRow + headerCount To UBound(loadedDataSet, 2)
+                        dateArr.AddValArr(Convert.ToDateTime(loadedDataSet(z, i)))
+                    Next
+                End If
+            Next
+            If dateFnd = False Then
+                Throw New Exception("Failed to find dates in the specified cure document. Check formatting.")
+            End If
         End If
     End Sub
 
@@ -923,8 +815,13 @@ Public Class MainForm
                         'Finds file type
                         If InStr(currentRow(0), "Omega", 0) <> 0 Then
                             machType = "Omega"
+                            headerRow = 2
+                            headerCount = 2
+
                         ElseIf currentRow(0) = "No." AndAlso InStr(currentRow(1), "Date", 0) <> 0 AndAlso InStr(currentRow(2), "Time", 0) <> 0 AndAlso InStr(currentRow(3), "Millitm", 0) <> 0 AndAlso InStr(currentRow(4), "{Air_TC}", 0) <> 0 Then
                             machType = "Autoclave"
+                            headerRow = 0
+                            headerCount = 2
                         End If
 
                     Catch ex As Microsoft.VisualBasic.FileIO.MalformedLineException
