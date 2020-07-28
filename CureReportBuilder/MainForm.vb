@@ -779,7 +779,7 @@ Public Class MainForm
 
 
         'Reset machType to null
-        machType = ""
+        machType = "Unknown"
 
         'Reset partValues to nothing
         partValues("JobNum") = String.Empty
@@ -817,6 +817,8 @@ Public Class MainForm
                             machType = "Omega"
                             headerRow = 2
                             headerCount = 2
+                            curePro.checkPressure = False
+                            curePro.checkVac = False
 
                         ElseIf currentRow(0) = "No." AndAlso InStr(currentRow(1), "Date", 0) <> 0 AndAlso InStr(currentRow(2), "Time", 0) <> 0 AndAlso InStr(currentRow(3), "Millitm", 0) <> 0 AndAlso InStr(currentRow(4), "{Air_TC}", 0) <> 0 Then
                             machType = "Autoclave"
