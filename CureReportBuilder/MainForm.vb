@@ -3,7 +3,7 @@
 Public Class MainForm
 
     Public cureProfiles() As CureProfile
-    Dim curePro As CureProfile = New CureProfile
+    Dim curePro As CureProfile = New CureProfile("null")
 
     Public partValues As New Dictionary(Of String, String) From {{"JobNum", ""}, {"PONum", ""}, {"PartNum", ""}, {"PartRev", ""}, {"PartNom", ""}, {"ProgramNum", ""}, {"PartQty", ""}, {"DataPath", ""}}
 
@@ -43,9 +43,12 @@ Public Class MainForm
 
         Call loadCureProfiles("C:\Users\Will Eagan\Source\Repos\CureReportBuilder\CureReportBuilder\Sample Files") '\test.cprof")
 
-        loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\DA-18-20.csv")
+        loadCSVin("C:\Users\Will Eagan\Source\Repos\CureReportBuilder\CureReportBuilder\Sample Files\DA-18-20 - Copy.csv")
+        'loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\DA-18-20.csv")
         'loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\BATCH 38 JOB 101573, 101574 1-23-20.CSV")
         'loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\Autoclave Simple.CSV")
+
+        Call loadCureData()
 
         curePro = cureProfiles(0)
 
@@ -433,7 +436,8 @@ Public Class MainForm
             End If
         Next
 
-        If UBound(curePro.CureSteps) > currentStep Then
+        'Final step hard fails if TC does not reach terminating temp
+        If UBound(curePro.CureSteps) >= currentStep Then
             For i = currentStep To UBound(curePro.CureSteps)
                 curePro.CureSteps(i).hardFail = True
                 curePro.CureSteps(i).pressurePass = False
@@ -740,6 +744,8 @@ Public Class MainForm
 
     Sub getTime()
         'Use type to determine date column and load that column into dateArr
+        dateArr.clearArr
+
         Dim i As Integer
         If machType = "Omega" Then
             For i = headerRow + headerCount To UBound(loadedDataSet, 2)
@@ -759,6 +765,8 @@ Public Class MainForm
                         dateArr.AddValArr(Convert.ToDateTime(loadedDataSet(z, i)))
                     Next
                 End If
+
+                If dateFnd = True Then Exit Sub
             Next
             If dateFnd = False Then
                 Throw New Exception("Failed to find dates in the specified cure document. Check formatting.")
@@ -817,8 +825,13 @@ Public Class MainForm
                             machType = "Omega"
                             headerRow = 2
                             headerCount = 2
-                            curePro.checkPressure = False
-                            curePro.checkVac = False
+                            If curePro.Name = "null" Then
+                                curePro.checkPressure = False
+                                curePro.checkVac = False
+                            ElseIf curePro.checkPressure <> False And curePro.checkVac <> False Then
+                                Throw New Exception("Omega TC reader data cannot be used to check this cure profile as is contains either pressure or vacuum requirements.")
+                            End If
+
 
                         ElseIf currentRow(0) = "No." AndAlso InStr(currentRow(1), "Date", 0) <> 0 AndAlso InStr(currentRow(2), "Time", 0) <> 0 AndAlso InStr(currentRow(3), "Millitm", 0) <> 0 AndAlso InStr(currentRow(4), "{Air_TC}", 0) <> 0 Then
                             machType = "Autoclave"
