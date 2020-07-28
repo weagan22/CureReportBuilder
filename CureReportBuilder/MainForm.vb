@@ -436,8 +436,7 @@ Public Class MainForm
             End If
         Next
 
-        'Final step hard fails if TC does not reach terminating temp
-        If UBound(curePro.CureSteps) >= currentStep Then
+        If UBound(curePro.CureSteps) > currentStep Then
             For i = currentStep To UBound(curePro.CureSteps)
                 curePro.CureSteps(i).hardFail = True
                 curePro.CureSteps(i).pressurePass = False
@@ -446,6 +445,10 @@ Public Class MainForm
                 curePro.CureSteps(i).stepPass = False
                 curePro.curePass = False
             Next
+        ElseIf UBound(curePro.CureSteps) = currentStep Then
+            curePro.CureSteps(currentStep).stepPass = False
+            curePro.curePass = False
+            MsgBox("Failed to reach terminating conditions.")
         End If
     End Sub
 
