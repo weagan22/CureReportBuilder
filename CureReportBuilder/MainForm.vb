@@ -39,14 +39,16 @@ Public Class MainForm
 
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Call errorReset()
+        'Call errorReset()
 
-        Call loadCureProfiles("C:\Users\Will Eagan\Source\Repos\CureReportBuilder\CureReportBuilder\Sample Files") '\test.cprof")
+        Txt_Technician.Text = Replace(Environment.UserName, ".", " ")
+
+        Call loadCureProfiles(Txt_CureProfilesPath.Text) '\test.cprof")
 
         loadCSVin("C:\Users\Will Eagan\Source\Repos\CureReportBuilder\CureReportBuilder\Sample Files\DA-18-20 - Copy.csv")
-        'loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\DA-18-20.csv")
-        'loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\BATCH 38 JOB 101573, 101574 1-23-20.CSV")
-        'loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\Autoclave Simple.CSV")
+        ''loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\DA-18-20.csv")
+        'loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\BATCH 38 JOB 101573, 101574 1-23-20 - Copy.CSV")
+        ''loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\Autoclave Simple.CSV")
 
         Call loadCureData()
 
@@ -54,16 +56,65 @@ Public Class MainForm
 
         Call loadCureData()
 
+        'Call runCalc()
 
-
-
-
-
-        Call runCalc()
-
-        Call outputResults()
+        ' Call outputResultsNew()
 
     End Sub
+#Region "Output"
+    Sub formatFont(inCell As Object, checkStr As String, Optional fontSize As Double = 11, Optional bold As Boolean = False, Optional italic As Boolean = False, Optional underline As Boolean = False, Optional color As Color = Nothing)
+
+        Dim startPos As Integer = InStr(inCell.value, checkStr)
+
+        If startPos = 0 Then
+            Throw New Exception("Format font failed to locate the desired string within the specified cell.")
+        End If
+
+        inCell.Characters(Start:=startPos, Length:=Len(checkStr)).Font.Size = fontSize
+        inCell.Characters(Start:=startPos, Length:=Len(checkStr)).Font.Bold = bold
+        inCell.Characters(Start:=startPos, Length:=Len(checkStr)).Font.Italic = italic
+        inCell.Characters(Start:=startPos, Length:=Len(checkStr)).Font.Underline = underline
+
+        If color = Nothing Then color = Color.Black
+        inCell.Characters(Start:=startPos, Length:=Len(checkStr)).Font.Color = color
+
+
+
+    End Sub
+
+    Sub outputResultsNew()
+        Dim Excel As Object
+        Excel = CreateObject("Excel.Application")
+        Excel.Visible = True
+        Excel.workbooks.open("C:\Users\Will Eagan\Source\repos\CureReportBuilder\CureReportBuilder\Sample Files\Cure Report_Template.xlsx")
+
+
+        Excel.cells(2, 1) = "Job" & vbNewLine & partValues("JobNum") & vbNewLine & "Program" & vbNewLine & partValues("PONum")
+        formatFont(Excel.cells(2, 1), "Job", 14, True, False, True)
+        formatFont(Excel.cells(2, 1), "Program", 14, True, False, True)
+
+        Excel.cells(2, 4) = "Part" & vbNewLine & partValues("PartNum") & vbNewLine & "Rev. " & partValues("PartRev") & vbNewLine & partValues("PartNom") & vbNewLine & "Qty: " & partValues("PartQty")
+        formatFont(Excel.cells(2, 4), "Part", 14, True, False, True)
+
+        Excel.cells(2, 8) = "Cure" & vbNewLine & "Start: " & dateArr(cureStart).ToString("dd-MMM-yyyy h:mm tt") & vbNewLine & "End: " & dateArr(cureEnd).ToString("dd-MMM-yyyy h:mm tt") & vbNewLine & "Duration: " & (dateArr(cureEnd) - dateArr(cureStart)).TotalMinutes & " min"
+        formatFont(Excel.cells(2, 8), "Cure", 14, True, False, True)
+
+        Excel.cells(5, 1) = "Equipment" & vbNewLine & machType & " | " & Me.Txt_DataRecorder.Text
+        formatFont(Excel.cells(5, 1), "Equipment", 14, True, False, True)
+
+        If curePro.curePass Then
+            Excel.cells(6, 4) = "PASS"
+            formatFont(Excel.cells(6, 4), "PASS", 24, True, False, True, Color.Green)
+        Else
+            Excel.cells(6, 4) = "FAIL"
+            formatFont(Excel.cells(6, 4), "FAIL", 24, True, False, True, Color.Red)
+        End If
+
+        Excel.cells(5, 8) = "Cure Document" & vbNewLine & curePro.cureDoc & vbNewLine & "Rev. " & curePro.cureDocRev & vbNewLine & "Profile: " & curePro.Name
+        formatFont(Excel.cells(5, 8), "Cure Document", 14, True, False, True)
+
+    End Sub
+
 
     Sub outputResults()
         Dim Excel As Object
@@ -177,7 +228,9 @@ Public Class MainForm
         Excel.cells(currentRow, inCol + 1) = uVal
         currentRow = currentRow + 1
     End Sub
+#End Region
 
+#Region "Data test against cure definition"
     Sub runCalc()
         Call leadlagTC()
 
@@ -548,8 +601,9 @@ Public Class MainForm
             Throw New Exception("Terminating condition type for step " & cureStep.stepName & " is not valid")
         End If
     End Function
+#End Region
 
-
+#Region "Derived arrays from data"
     Sub startEndTime()
         Dim start_end_temp As Double = 140
 
@@ -646,7 +700,9 @@ Public Class MainForm
             Next
         Next
     End Sub
+#End Region
 
+#Region "Load in data from csv to given arrays"
     Sub loadCureData()
         Call getTime()
 
@@ -657,6 +713,7 @@ Public Class MainForm
         If stepVal = 1 Then stepVal = 2
 
         If curePro.checkTemp = True Then
+            partTC_Arr.clearArr()
             Dim searchVal As String = ""
             If machType = "Omega" Then
                 searchVal = "Channel "
@@ -667,19 +724,38 @@ Public Class MainForm
             End If
 
             Call getDataMulti(searchVal, partTC_Arr, "TC")
+            Call addToList(partTC_Arr, Data_TC, Box_TC)
         End If
 
         If curePro.checkPressure Then
+            vesselPress.values.clearArr()
             Call getDataSearch("{Vessel_Pressure}", vesselPress)
         End If
 
         If curePro.checkVac Then
+            vac_Arr.clearArr()
             Call getDataMulti("{VacGroup_", vac_Arr, "VAC")
+            Call addToList(vac_Arr, Data_Vac, Box_Vac)
         End If
 
         If machType = "Autoclave" Then
+            vessel_TC.values.clearArr()
             Call getDataSearch("{Air_TC}", vessel_TC)
         End If
+    End Sub
+
+    Sub addToList(inArr() As DataSet, inGrid As DataGridView, inContainer As GroupBox)
+        inContainer.Visible = True
+        inGrid.Rows.Clear()
+
+        For i = 0 To UBound(inArr)
+            inGrid.Rows.Add()
+            inGrid.Item(1, i).Value = inArr(i).Number
+            'inGrid.Item(0, i).Value = True
+        Next
+
+        inGrid.Sort(inGrid.Columns(1), System.ComponentModel.ListSortDirection.Ascending)
+
     End Sub
 
     Sub getDataSearch(searchVal As String, ByRef loadTo As DataSet)
@@ -776,6 +852,7 @@ Public Class MainForm
             End If
         End If
     End Sub
+#End Region
 
     Sub errorReset()
 
@@ -835,6 +912,7 @@ Public Class MainForm
                                 Throw New Exception("Omega TC reader data cannot be used to check this cure profile as is contains either pressure or vacuum requirements.")
                             End If
 
+                            Box_DataRecorder.Visible = True
 
                         ElseIf currentRow(0) = "No." AndAlso InStr(currentRow(1), "Date", 0) <> 0 AndAlso InStr(currentRow(2), "Time", 0) <> 0 AndAlso InStr(currentRow(3), "Millitm", 0) <> 0 AndAlso InStr(currentRow(4), "{Air_TC}", 0) <> 0 Then
                             machType = "Autoclave"
@@ -851,6 +929,7 @@ Public Class MainForm
 
     End Sub
 
+#Region "Cure profile inport/export"
     Sub outputCureProfiles(inPath As String)
         Dim outputWriter As IO.StreamWriter = New System.IO.StreamWriter(inPath)
 
@@ -867,12 +946,19 @@ Public Class MainForm
 
     Sub loadCureProfiles(inPath As String)
 
+        Combo_CureProfile.Items.Clear()
+        cureProfiles.clearArr()
+
         If IO.File.Exists(inPath) Then
             loadCureFile(inPath)
         ElseIf IO.Directory.Exists(inPath) Then
             For Each file In IO.Directory.GetFiles(inPath)
                 loadCureFile(file)
             Next
+        End If
+
+        If cureProfiles Is Nothing Then
+            Throw New Exception("No cure profiles were found at your specified path.")
         End If
 
 
@@ -887,18 +973,72 @@ Public Class MainForm
             For i = 0 To UBound(cureDef)
                 If cureProfiles Is Nothing Then
                     ReDim cureProfiles(0)
-                    cureProfiles(i) = New CureProfile()
+                    cureProfiles(0) = New CureProfile()
                 Else
                     ReDim Preserve cureProfiles(UBound(cureProfiles) + 1)
-                    cureProfiles(i) = New CureProfile()
+                    cureProfiles(UBound(cureProfiles)) = New CureProfile()
                 End If
 
-                cureProfiles(i).deserializeCure(cureDef(i))
+                cureProfiles(UBound(cureProfiles)).deserializeCure(cureDef(i))
+                Combo_CureProfile.Items.Add(cureProfiles(UBound(cureProfiles)).Name)
             Next
         End If
     End Sub
+#End Region
 
+    Private Sub Btn_OpenFile_Click(sender As Object, e As EventArgs) Handles Btn_OpenFile.Click
+        If IO.File.Exists(Txt_FilePath.Text) Then
+            Call loadCSVin(Txt_FilePath.Text)
+            Call loadCureData()
+        ElseIf OpenCSVFileDialog.ShowDialog <> Windows.Forms.DialogResult.Cancel Then
+            Txt_FilePath.Text = OpenCSVFileDialog.FileName
+            Call loadCSVin(Txt_FilePath.Text)
+            Call loadCureData()
+        End If
+    End Sub
+
+    Private Sub Txt_FilePath_TextChanged(sender As Object, e As EventArgs) Handles Txt_FilePath.TextChanged
+        If IO.File.Exists(Txt_FilePath.Text) Then
+            Txt_FilePath.BackColor = SystemColors.Window
+        Else
+            Txt_FilePath.BackColor = Color.PeachPuff
+        End If
+    End Sub
+
+    Private Sub Btn_LoadProfileFiles_Click(sender As Object, e As EventArgs) Handles Btn_LoadProfileFiles.Click
+        If IO.File.Exists(Txt_CureProfilesPath.Text) Then
+            Call loadCureProfiles(Txt_CureProfilesPath.Text)
+        ElseIf IO.Directory.Exists(Txt_CureProfilesPath.Text) Then
+            Call loadCureProfiles(Txt_CureProfilesPath.Text)
+        ElseIf OpenCureProfileFileDialog.ShowDialog <> Windows.Forms.DialogResult.Cancel Then
+            Txt_CureProfilesPath.Text = OpenCureProfileFileDialog.FileName
+            Call loadCureProfiles(Txt_CureProfilesPath.Text)
+        End If
+    End Sub
+
+    Private Sub Txt_CureProfiles_TextChanged(sender As Object, e As EventArgs) Handles Txt_CureProfilesPath.TextChanged
+        If IO.File.Exists(Txt_CureProfilesPath.Text) Then
+            Txt_CureProfilesPath.BackColor = SystemColors.Window
+        ElseIf IO.Directory.Exists(Txt_CureProfilesPath.Text) Then
+            Txt_CureProfilesPath.BackColor = SystemColors.Window
+        Else
+            Txt_CureProfilesPath.BackColor = Color.PeachPuff
+        End If
+    End Sub
+
+    Private Sub Combo_CureProfile_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Combo_CureProfile.SelectedIndexChanged
+
+        If cureProfiles(Combo_CureProfile.SelectedIndex).Name <> Combo_CureProfile.Text Then
+            Throw New Exception("Cure profile does not line up with loaded array.")
+        End If
+
+        curePro = cureProfiles(Combo_CureProfile.SelectedIndex)
+
+        Txt_CureDoc.Text = curePro.cureDoc
+        Txt_DocRev.Text = curePro.cureDocRev
+    End Sub
 End Class
+
 
 Module ArrayExtensions
 
