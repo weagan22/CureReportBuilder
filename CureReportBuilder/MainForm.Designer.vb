@@ -32,6 +32,15 @@ Partial Class MainForm
         Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Box_CureProfile = New System.Windows.Forms.GroupBox()
+        Me.Combo_CureProfile = New System.Windows.Forms.ComboBox()
+        Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Box_DocRev = New System.Windows.Forms.GroupBox()
+        Me.Txt_DocRev = New System.Windows.Forms.TextBox()
+        Me.Box_CureDoc = New System.Windows.Forms.GroupBox()
+        Me.Txt_CureDoc = New System.Windows.Forms.TextBox()
         Me.Box_Technician = New System.Windows.Forms.GroupBox()
         Me.Txt_Technician = New System.Windows.Forms.TextBox()
         Me.Box_Vac = New System.Windows.Forms.GroupBox()
@@ -42,14 +51,8 @@ Partial Class MainForm
         Me.Data_TC = New System.Windows.Forms.DataGridView()
         Me.Used = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.TCNum = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Box_CureProfile = New System.Windows.Forms.GroupBox()
-        Me.Combo_CureProfile = New System.Windows.Forms.ComboBox()
         Me.Box_DataRecorder = New System.Windows.Forms.GroupBox()
         Me.Txt_DataRecorder = New System.Windows.Forms.TextBox()
-        Me.Box_DocRev = New System.Windows.Forms.GroupBox()
-        Me.Txt_DocRev = New System.Windows.Forms.TextBox()
-        Me.Box_CureDoc = New System.Windows.Forms.GroupBox()
-        Me.Txt_CureDoc = New System.Windows.Forms.TextBox()
         Me.Box_Qty = New System.Windows.Forms.GroupBox()
         Me.Txt_Qty = New System.Windows.Forms.TextBox()
         Me.Box_JobNumber = New System.Windows.Forms.GroupBox()
@@ -73,22 +76,25 @@ Partial Class MainForm
         Me.Btn_LoadProfileFiles = New System.Windows.Forms.Button()
         Me.OpenCSVFileDialog = New System.Windows.Forms.OpenFileDialog()
         Me.OpenCureProfileFileDialog = New System.Windows.Forms.OpenFileDialog()
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
-        Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Box_TemplatePath = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Txt_TemplatePath = New System.Windows.Forms.TextBox()
         Me.MenuStrip1.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
+        Me.GroupBox1.SuspendLayout()
+        Me.TableLayoutPanel3.SuspendLayout()
+        Me.Box_CureProfile.SuspendLayout()
+        Me.TableLayoutPanel4.SuspendLayout()
+        Me.Box_DocRev.SuspendLayout()
+        Me.Box_CureDoc.SuspendLayout()
         Me.Box_Technician.SuspendLayout()
         Me.Box_Vac.SuspendLayout()
         CType(Me.Data_Vac, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Box_TC.SuspendLayout()
         CType(Me.Data_TC, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.Box_CureProfile.SuspendLayout()
         Me.Box_DataRecorder.SuspendLayout()
-        Me.Box_DocRev.SuspendLayout()
-        Me.Box_CureDoc.SuspendLayout()
         Me.Box_Qty.SuspendLayout()
         Me.Box_JobNumber.SuspendLayout()
         Me.Box_PartDesc.SuspendLayout()
@@ -100,9 +106,8 @@ Partial Class MainForm
         Me.TabPage2.SuspendLayout()
         Me.Box_CureProfiles.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
-        Me.GroupBox1.SuspendLayout()
-        Me.TableLayoutPanel3.SuspendLayout()
-        Me.TableLayoutPanel4.SuspendLayout()
+        Me.Box_TemplatePath.SuspendLayout()
+        Me.TableLayoutPanel5.SuspendLayout()
         Me.SuspendLayout()
         '
         'MenuStrip1
@@ -172,6 +177,107 @@ Partial Class MainForm
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "TabPage1"
         Me.TabPage1.UseVisualStyleBackColor = True
+        '
+        'GroupBox1
+        '
+        Me.GroupBox1.Controls.Add(Me.TableLayoutPanel3)
+        Me.GroupBox1.Location = New System.Drawing.Point(27, 224)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(264, 136)
+        Me.GroupBox1.TabIndex = 11
+        Me.GroupBox1.TabStop = False
+        '
+        'TableLayoutPanel3
+        '
+        Me.TableLayoutPanel3.ColumnCount = 1
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel3.Controls.Add(Me.Box_CureProfile, 0, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.TableLayoutPanel4, 0, 1)
+        Me.TableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel3.Location = New System.Drawing.Point(3, 16)
+        Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
+        Me.TableLayoutPanel3.RowCount = 2
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(258, 117)
+        Me.TableLayoutPanel3.TabIndex = 12
+        '
+        'Box_CureProfile
+        '
+        Me.Box_CureProfile.Controls.Add(Me.Combo_CureProfile)
+        Me.Box_CureProfile.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Box_CureProfile.Location = New System.Drawing.Point(3, 3)
+        Me.Box_CureProfile.Name = "Box_CureProfile"
+        Me.Box_CureProfile.Size = New System.Drawing.Size(252, 52)
+        Me.Box_CureProfile.TabIndex = 7
+        Me.Box_CureProfile.TabStop = False
+        Me.Box_CureProfile.Text = "Cure Profile"
+        '
+        'Combo_CureProfile
+        '
+        Me.Combo_CureProfile.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Combo_CureProfile.FormattingEnabled = True
+        Me.Combo_CureProfile.Location = New System.Drawing.Point(6, 15)
+        Me.Combo_CureProfile.Name = "Combo_CureProfile"
+        Me.Combo_CureProfile.Size = New System.Drawing.Size(240, 21)
+        Me.Combo_CureProfile.TabIndex = 6
+        '
+        'TableLayoutPanel4
+        '
+        Me.TableLayoutPanel4.ColumnCount = 2
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60.0!))
+        Me.TableLayoutPanel4.Controls.Add(Me.Box_DocRev, 1, 0)
+        Me.TableLayoutPanel4.Controls.Add(Me.Box_CureDoc, 0, 0)
+        Me.TableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel4.Location = New System.Drawing.Point(3, 61)
+        Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
+        Me.TableLayoutPanel4.RowCount = 1
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel4.Size = New System.Drawing.Size(252, 53)
+        Me.TableLayoutPanel4.TabIndex = 8
+        '
+        'Box_DocRev
+        '
+        Me.Box_DocRev.Controls.Add(Me.Txt_DocRev)
+        Me.Box_DocRev.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Box_DocRev.Location = New System.Drawing.Point(195, 3)
+        Me.Box_DocRev.Name = "Box_DocRev"
+        Me.Box_DocRev.Size = New System.Drawing.Size(54, 47)
+        Me.Box_DocRev.TabIndex = 3
+        Me.Box_DocRev.TabStop = False
+        Me.Box_DocRev.Text = "Rev"
+        '
+        'Txt_DocRev
+        '
+        Me.Txt_DocRev.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Txt_DocRev.Enabled = False
+        Me.Txt_DocRev.Location = New System.Drawing.Point(3, 16)
+        Me.Txt_DocRev.Name = "Txt_DocRev"
+        Me.Txt_DocRev.Size = New System.Drawing.Size(48, 20)
+        Me.Txt_DocRev.TabIndex = 1
+        Me.Txt_DocRev.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Box_CureDoc
+        '
+        Me.Box_CureDoc.Controls.Add(Me.Txt_CureDoc)
+        Me.Box_CureDoc.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Box_CureDoc.Location = New System.Drawing.Point(3, 3)
+        Me.Box_CureDoc.Name = "Box_CureDoc"
+        Me.Box_CureDoc.Size = New System.Drawing.Size(186, 47)
+        Me.Box_CureDoc.TabIndex = 3
+        Me.Box_CureDoc.TabStop = False
+        Me.Box_CureDoc.Text = "Document"
+        '
+        'Txt_CureDoc
+        '
+        Me.Txt_CureDoc.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Txt_CureDoc.Enabled = False
+        Me.Txt_CureDoc.Location = New System.Drawing.Point(3, 16)
+        Me.Txt_CureDoc.Name = "Txt_CureDoc"
+        Me.Txt_CureDoc.Size = New System.Drawing.Size(180, 20)
+        Me.Txt_CureDoc.TabIndex = 1
+        Me.Txt_CureDoc.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Box_Technician
         '
@@ -295,26 +401,6 @@ Partial Class MainForm
         Me.TCNum.ReadOnly = True
         Me.TCNum.Width = 86
         '
-        'Box_CureProfile
-        '
-        Me.Box_CureProfile.Controls.Add(Me.Combo_CureProfile)
-        Me.Box_CureProfile.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Box_CureProfile.Location = New System.Drawing.Point(3, 3)
-        Me.Box_CureProfile.Name = "Box_CureProfile"
-        Me.Box_CureProfile.Size = New System.Drawing.Size(252, 52)
-        Me.Box_CureProfile.TabIndex = 7
-        Me.Box_CureProfile.TabStop = False
-        Me.Box_CureProfile.Text = "Cure Profile"
-        '
-        'Combo_CureProfile
-        '
-        Me.Combo_CureProfile.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Combo_CureProfile.FormattingEnabled = True
-        Me.Combo_CureProfile.Location = New System.Drawing.Point(6, 15)
-        Me.Combo_CureProfile.Name = "Combo_CureProfile"
-        Me.Combo_CureProfile.Size = New System.Drawing.Size(240, 21)
-        Me.Combo_CureProfile.TabIndex = 6
-        '
         'Box_DataRecorder
         '
         Me.Box_DataRecorder.Controls.Add(Me.Txt_DataRecorder)
@@ -333,48 +419,6 @@ Partial Class MainForm
         Me.Txt_DataRecorder.Name = "Txt_DataRecorder"
         Me.Txt_DataRecorder.Size = New System.Drawing.Size(143, 20)
         Me.Txt_DataRecorder.TabIndex = 1
-        '
-        'Box_DocRev
-        '
-        Me.Box_DocRev.Controls.Add(Me.Txt_DocRev)
-        Me.Box_DocRev.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Box_DocRev.Location = New System.Drawing.Point(195, 3)
-        Me.Box_DocRev.Name = "Box_DocRev"
-        Me.Box_DocRev.Size = New System.Drawing.Size(54, 47)
-        Me.Box_DocRev.TabIndex = 3
-        Me.Box_DocRev.TabStop = False
-        Me.Box_DocRev.Text = "Rev"
-        '
-        'Txt_DocRev
-        '
-        Me.Txt_DocRev.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Txt_DocRev.Enabled = False
-        Me.Txt_DocRev.Location = New System.Drawing.Point(3, 16)
-        Me.Txt_DocRev.Name = "Txt_DocRev"
-        Me.Txt_DocRev.Size = New System.Drawing.Size(48, 20)
-        Me.Txt_DocRev.TabIndex = 1
-        Me.Txt_DocRev.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'Box_CureDoc
-        '
-        Me.Box_CureDoc.Controls.Add(Me.Txt_CureDoc)
-        Me.Box_CureDoc.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Box_CureDoc.Location = New System.Drawing.Point(3, 3)
-        Me.Box_CureDoc.Name = "Box_CureDoc"
-        Me.Box_CureDoc.Size = New System.Drawing.Size(186, 47)
-        Me.Box_CureDoc.TabIndex = 3
-        Me.Box_CureDoc.TabStop = False
-        Me.Box_CureDoc.Text = "Document"
-        '
-        'Txt_CureDoc
-        '
-        Me.Txt_CureDoc.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Txt_CureDoc.Enabled = False
-        Me.Txt_CureDoc.Location = New System.Drawing.Point(3, 16)
-        Me.Txt_CureDoc.Name = "Txt_CureDoc"
-        Me.Txt_CureDoc.Size = New System.Drawing.Size(180, 20)
-        Me.Txt_CureDoc.TabIndex = 1
-        Me.Txt_CureDoc.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Box_Qty
         '
@@ -532,6 +576,7 @@ Partial Class MainForm
         '
         'TabPage2
         '
+        Me.TabPage2.Controls.Add(Me.Box_TemplatePath)
         Me.TabPage2.Controls.Add(Me.Box_CureProfiles)
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
@@ -598,44 +643,40 @@ Partial Class MainForm
         Me.OpenCureProfileFileDialog.Filter = "Cure Profile Files (*.cprof)|*.cprof|All Files (*.*)|*.*"
         Me.OpenCureProfileFileDialog.ValidateNames = False
         '
-        'GroupBox1
+        'Box_TemplatePath
         '
-        Me.GroupBox1.Controls.Add(Me.TableLayoutPanel3)
-        Me.GroupBox1.Location = New System.Drawing.Point(27, 224)
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(264, 136)
-        Me.GroupBox1.TabIndex = 11
-        Me.GroupBox1.TabStop = False
+        Me.Box_TemplatePath.AutoSize = True
+        Me.Box_TemplatePath.Controls.Add(Me.TableLayoutPanel5)
+        Me.Box_TemplatePath.Location = New System.Drawing.Point(3, 116)
+        Me.Box_TemplatePath.Name = "Box_TemplatePath"
+        Me.Box_TemplatePath.Size = New System.Drawing.Size(646, 57)
+        Me.Box_TemplatePath.TabIndex = 2
+        Me.Box_TemplatePath.TabStop = False
+        Me.Box_TemplatePath.Text = "Cure Report Template"
         '
-        'TableLayoutPanel3
+        'TableLayoutPanel5
         '
-        Me.TableLayoutPanel3.ColumnCount = 1
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel3.Controls.Add(Me.Box_CureProfile, 0, 0)
-        Me.TableLayoutPanel3.Controls.Add(Me.TableLayoutPanel4, 0, 1)
-        Me.TableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel3.Location = New System.Drawing.Point(3, 16)
-        Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
-        Me.TableLayoutPanel3.RowCount = 2
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel3.Size = New System.Drawing.Size(258, 117)
-        Me.TableLayoutPanel3.TabIndex = 12
+        Me.TableLayoutPanel5.ColumnCount = 2
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 102.0!))
+        Me.TableLayoutPanel5.Controls.Add(Me.Txt_TemplatePath, 0, 0)
+        Me.TableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel5.Location = New System.Drawing.Point(3, 16)
+        Me.TableLayoutPanel5.Name = "TableLayoutPanel5"
+        Me.TableLayoutPanel5.RowCount = 1
+        Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel5.Size = New System.Drawing.Size(640, 38)
+        Me.TableLayoutPanel5.TabIndex = 2
         '
-        'TableLayoutPanel4
+        'Txt_TemplatePath
         '
-        Me.TableLayoutPanel4.ColumnCount = 2
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60.0!))
-        Me.TableLayoutPanel4.Controls.Add(Me.Box_DocRev, 1, 0)
-        Me.TableLayoutPanel4.Controls.Add(Me.Box_CureDoc, 0, 0)
-        Me.TableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel4.Location = New System.Drawing.Point(3, 61)
-        Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
-        Me.TableLayoutPanel4.RowCount = 1
-        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel4.Size = New System.Drawing.Size(252, 53)
-        Me.TableLayoutPanel4.TabIndex = 8
+        Me.Txt_TemplatePath.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Txt_TemplatePath.Location = New System.Drawing.Point(3, 9)
+        Me.Txt_TemplatePath.Name = "Txt_TemplatePath"
+        Me.Txt_TemplatePath.Size = New System.Drawing.Size(532, 20)
+        Me.Txt_TemplatePath.TabIndex = 0
+        Me.Txt_TemplatePath.Text = "C:\Users\Will Eagan\Source\repos\CureReportBuilder\CureReportBuilder\Sample Files" &
+    "\Cure Report_Template.xlsx"
         '
         'MainForm
         '
@@ -656,19 +697,22 @@ Partial Class MainForm
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage1.PerformLayout()
+        Me.GroupBox1.ResumeLayout(False)
+        Me.TableLayoutPanel3.ResumeLayout(False)
+        Me.Box_CureProfile.ResumeLayout(False)
+        Me.TableLayoutPanel4.ResumeLayout(False)
+        Me.Box_DocRev.ResumeLayout(False)
+        Me.Box_DocRev.PerformLayout()
+        Me.Box_CureDoc.ResumeLayout(False)
+        Me.Box_CureDoc.PerformLayout()
         Me.Box_Technician.ResumeLayout(False)
         Me.Box_Technician.PerformLayout()
         Me.Box_Vac.ResumeLayout(False)
         CType(Me.Data_Vac, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Box_TC.ResumeLayout(False)
         CType(Me.Data_TC, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.Box_CureProfile.ResumeLayout(False)
         Me.Box_DataRecorder.ResumeLayout(False)
         Me.Box_DataRecorder.PerformLayout()
-        Me.Box_DocRev.ResumeLayout(False)
-        Me.Box_DocRev.PerformLayout()
-        Me.Box_CureDoc.ResumeLayout(False)
-        Me.Box_CureDoc.PerformLayout()
         Me.Box_Qty.ResumeLayout(False)
         Me.Box_Qty.PerformLayout()
         Me.Box_JobNumber.ResumeLayout(False)
@@ -689,9 +733,9 @@ Partial Class MainForm
         Me.Box_CureProfiles.ResumeLayout(False)
         Me.TableLayoutPanel2.ResumeLayout(False)
         Me.TableLayoutPanel2.PerformLayout()
-        Me.GroupBox1.ResumeLayout(False)
-        Me.TableLayoutPanel3.ResumeLayout(False)
-        Me.TableLayoutPanel4.ResumeLayout(False)
+        Me.Box_TemplatePath.ResumeLayout(False)
+        Me.TableLayoutPanel5.ResumeLayout(False)
+        Me.TableLayoutPanel5.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -748,4 +792,7 @@ Partial Class MainForm
     Friend WithEvents GroupBox1 As GroupBox
     Friend WithEvents TableLayoutPanel3 As TableLayoutPanel
     Friend WithEvents TableLayoutPanel4 As TableLayoutPanel
+    Friend WithEvents Box_TemplatePath As GroupBox
+    Friend WithEvents TableLayoutPanel5 As TableLayoutPanel
+    Friend WithEvents Txt_TemplatePath As TextBox
 End Class

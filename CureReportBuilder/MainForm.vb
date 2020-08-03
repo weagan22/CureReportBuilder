@@ -45,8 +45,8 @@ Public Class MainForm
 
         Call loadCureProfiles(Txt_CureProfilesPath.Text) '\test.cprof")
 
-        loadCSVin("C:\Users\Will Eagan\Source\Repos\CureReportBuilder\CureReportBuilder\Sample Files\DA-18-20 - Copy.csv")
-        ''loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\DA-18-20.csv")
+        'loadCSVin("C:\Users\Will Eagan\Source\Repos\CureReportBuilder\CureReportBuilder\Sample Files\DA-18-20 - Copy.csv")
+        loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\DA-18-20.csv")
         'loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\BATCH 38 JOB 101573, 101574 1-23-20 - Copy.CSV")
         ''loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\Autoclave Simple.CSV")
 
@@ -56,9 +56,9 @@ Public Class MainForm
 
         Call loadCureData()
 
-        'Call runCalc()
+        Call runCalc()
 
-        ' Call outputResultsNew()
+        Call outputResultsNew()
 
     End Sub
 #Region "Output"
@@ -86,7 +86,7 @@ Public Class MainForm
         Dim Excel As Object
         Excel = CreateObject("Excel.Application")
         Excel.Visible = True
-        Excel.workbooks.open("C:\Users\Will Eagan\Source\repos\CureReportBuilder\CureReportBuilder\Sample Files\Cure Report_Template.xlsx")
+        Excel.Workbooks.Open("C:\Users\Will Eagan\Source\repos\CureReportBuilder\CureReportBuilder\Sample Files\Cure Report_Template.xlsx")
 
 
         Excel.cells(2, 1) = "Job" & vbNewLine & partValues("JobNum") & vbNewLine & "Program" & vbNewLine & partValues("PONum")
@@ -104,14 +104,64 @@ Public Class MainForm
 
         If curePro.curePass Then
             Excel.cells(6, 4) = "PASS"
-            formatFont(Excel.cells(6, 4), "PASS", 24, True, False, True, Color.Green)
+            formatFont(Excel.cells(6, 4), "PASS", 30, True, False, True, Color.Green)
         Else
             Excel.cells(6, 4) = "FAIL"
-            formatFont(Excel.cells(6, 4), "FAIL", 24, True, False, True, Color.Red)
+            formatFont(Excel.cells(6, 4), "FAIL", 30, True, False, True, Color.Red)
         End If
 
         Excel.cells(5, 8) = "Cure Document" & vbNewLine & curePro.cureDoc & vbNewLine & "Rev. " & curePro.cureDocRev & vbNewLine & "Profile: " & curePro.Name
         formatFont(Excel.cells(5, 8), "Cure Document", 14, True, False, True)
+
+
+
+
+        Dim curRow As Integer = 40
+        For i = 0 To UBound(curePro.CureSteps)
+
+            Dim currentStep As CureStep = curePro.CureSteps(i)
+
+            Excel.activesheet.range(Excel.Cells(curRow, 1), Excel.Cells(curRow, 2)).Merge
+            Excel.activesheet.range(Excel.Cells(curRow, 3), Excel.Cells(curRow, 6)).Merge
+            Excel.activesheet.range(Excel.Cells(curRow, 7), Excel.Cells(curRow, 9)).Merge
+
+            Excel.activesheet.range(Excel.Cells(curRow, 1), Excel.Cells(curRow, 2)).HorizontalAlignment = 3
+            Excel.activesheet.range(Excel.Cells(curRow, 3), Excel.Cells(curRow, 6)).HorizontalAlignment = 3
+            Excel.activesheet.range(Excel.Cells(curRow, 7), Excel.Cells(curRow, 9)).HorizontalAlignment = 3
+
+            Dim stepPass As String = "FAIL"
+            If currentStep.stepPass Then stepPass = "PASS"
+
+            Dim startTime As Integer = (dateArr(currentStep.stepStart) - dateArr(cureStart)).TotalMinutes
+            Dim endTime As Integer = (dateArr(currentStep.stepEnd) - dateArr(cureStart)).TotalMinutes
+
+            Dim endStr As String = ""
+            If currentStep.stepEnd = 0 Then
+                endStr = "Failed to terminate"
+            Else
+                endStr = endTime
+            End If
+
+
+            Excel.Cells(curRow, 1) = currentStep.stepName & vbNewLine & "(" & stepPass & ")" & vbNewLine & "Start Time: " & startTime & " min" & vbNewLine & "End Time: " & endStr & " min"
+
+            formatFont(Excel.cells(curRow, 1), currentStep.stepName, 11, True, False, False)
+
+            If currentStep.stepPass = True Then
+                formatFont(Excel.cells(curRow, 1), "(" & stepPass & ")", 11, False, False, False)
+            Else
+                formatFont(Excel.cells(curRow, 1), "(" & stepPass & ")", 11, False, False, False, Color.Red)
+            End If
+
+            formatFont(Excel.cells(curRow, 1), "Start Time: " & startTime & " min", 9, False, False, False)
+            formatFont(Excel.cells(curRow, 1), "End Time: " & endStr & " min", 9, False, False, False)
+
+            If currentStep.stepEnd = 0 Then
+                formatFont(Excel.cells(curRow, 1), "End Time: " & endStr & " min", 9, False, False, False, Color.Red)
+            End If
+
+            curRow = curRow + 1
+        Next
 
     End Sub
 
