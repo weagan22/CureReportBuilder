@@ -3,8 +3,8 @@
 	cureDoc, doc11232
 	cureDocRev,-
 	checkTemp,True
-	checkPressure,False
-	checkVac,False
+	checkPressure,True
+	checkVac,True
 	<Steps>
 		stepCount,2
 		<Step0>

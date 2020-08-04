@@ -46,13 +46,13 @@ Public Class MainForm
         Call loadCureProfiles(Txt_CureProfilesPath.Text) '\test.cprof")
 
         'loadCSVin("C:\Users\Will Eagan\Source\Repos\CureReportBuilder\CureReportBuilder\Sample Files\DA-18-20 - Copy.csv")
-        loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\DA-18-20.csv")
-        'loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\BATCH 38 JOB 101573, 101574 1-23-20 - Copy.CSV")
+        'loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\DA-18-20.csv")
+        loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\BATCH 38 JOB 101573, 101574 1-23-20 - Copy.CSV")
         ''loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\Autoclave Simple.CSV")
 
         Call loadCureData()
 
-        curePro = cureProfiles(0)
+        curePro = cureProfiles(2)
 
         Call loadCureData()
 
@@ -63,6 +63,8 @@ Public Class MainForm
     End Sub
 #Region "Output"
     Sub formatFont(inCell As Object, checkStr As String, Optional fontSize As Double = 11, Optional bold As Boolean = False, Optional italic As Boolean = False, Optional underline As Boolean = False, Optional color As Color = Nothing)
+
+        If checkStr = "" Then Exit Sub
 
         Dim startPos As Integer = InStr(inCell.value, checkStr)
 
@@ -85,33 +87,33 @@ Public Class MainForm
     Sub outputResultsNew()
         Dim Excel As Object
         Excel = CreateObject("Excel.Application")
-        Excel.Visible = True
+        'Excel.Visible = True
         Excel.Workbooks.Open("C:\Users\Will Eagan\Source\repos\CureReportBuilder\CureReportBuilder\Sample Files\Cure Report_Template.xlsx")
 
 
-        Excel.cells(2, 1) = "Job" & vbNewLine & partValues("JobNum") & vbNewLine & "Program" & vbNewLine & partValues("PONum")
-        formatFont(Excel.cells(2, 1), "Job", 14, True, False, True)
-        formatFont(Excel.cells(2, 1), "Program", 14, True, False, True)
+        'Excel.cells(2, 1) = "Job" & vbNewLine & partValues("JobNum") & vbNewLine & "Program" & vbNewLine & partValues("PONum")
+        'formatFont(Excel.cells(2, 1), "Job", 14, True, False, True)
+        'formatFont(Excel.cells(2, 1), "Program", 14, True, False, True)
 
-        Excel.cells(2, 4) = "Part" & vbNewLine & partValues("PartNum") & vbNewLine & "Rev. " & partValues("PartRev") & vbNewLine & partValues("PartNom") & vbNewLine & "Qty: " & partValues("PartQty")
-        formatFont(Excel.cells(2, 4), "Part", 14, True, False, True)
+        'Excel.cells(2, 4) = "Part" & vbNewLine & partValues("PartNum") & vbNewLine & "Rev. " & partValues("PartRev") & vbNewLine & partValues("PartNom") & vbNewLine & "Qty: " & partValues("PartQty")
+        'formatFont(Excel.cells(2, 4), "Part", 14, True, False, True)
 
-        Excel.cells(2, 8) = "Cure" & vbNewLine & "Start: " & dateArr(cureStart).ToString("dd-MMM-yyyy h:mm tt") & vbNewLine & "End: " & dateArr(cureEnd).ToString("dd-MMM-yyyy h:mm tt") & vbNewLine & "Duration: " & (dateArr(cureEnd) - dateArr(cureStart)).TotalMinutes & " min"
-        formatFont(Excel.cells(2, 8), "Cure", 14, True, False, True)
+        'Excel.cells(2, 8) = "Cure" & vbNewLine & "Start: " & dateArr(cureStart).ToString("dd-MMM-yyyy h:mm tt") & vbNewLine & "End: " & dateArr(cureEnd).ToString("dd-MMM-yyyy h:mm tt") & vbNewLine & "Duration: " & (dateArr(cureEnd) - dateArr(cureStart)).TotalMinutes & " min"
+        'formatFont(Excel.cells(2, 8), "Cure", 14, True, False, True)
 
-        Excel.cells(5, 1) = "Equipment" & vbNewLine & machType & " | " & Me.Txt_DataRecorder.Text
-        formatFont(Excel.cells(5, 1), "Equipment", 14, True, False, True)
+        'Excel.cells(5, 1) = "Equipment" & vbNewLine & machType & " | " & Me.Txt_DataRecorder.Text
+        'formatFont(Excel.cells(5, 1), "Equipment", 14, True, False, True)
 
-        If curePro.curePass Then
-            Excel.cells(6, 4) = "PASS"
-            formatFont(Excel.cells(6, 4), "PASS", 30, True, False, True, Color.Green)
-        Else
-            Excel.cells(6, 4) = "FAIL"
-            formatFont(Excel.cells(6, 4), "FAIL", 30, True, False, True, Color.Red)
-        End If
+        'If curePro.curePass Then
+        '    Excel.cells(6, 4) = "PASS"
+        '    formatFont(Excel.cells(6, 4), "PASS", 30, True, False, True, Color.Green)
+        'Else
+        '    Excel.cells(6, 4) = "FAIL"
+        '    formatFont(Excel.cells(6, 4), "FAIL", 30, True, False, True, Color.Red)
+        'End If
 
-        Excel.cells(5, 8) = "Cure Document" & vbNewLine & curePro.cureDoc & vbNewLine & "Rev. " & curePro.cureDocRev & vbNewLine & "Profile: " & curePro.Name
-        formatFont(Excel.cells(5, 8), "Cure Document", 14, True, False, True)
+        'Excel.cells(5, 8) = "Cure Document" & vbNewLine & curePro.cureDoc & vbNewLine & "Rev. " & curePro.cureDocRev & vbNewLine & "Profile: " & curePro.Name
+        'formatFont(Excel.cells(5, 8), "Cure Document", 14, True, False, True)
 
 
 
@@ -121,14 +123,20 @@ Public Class MainForm
 
             Dim currentStep As CureStep = curePro.CureSteps(i)
 
-            Excel.activesheet.range(Excel.Cells(curRow, 1), Excel.Cells(curRow, 2)).Merge
-            Excel.activesheet.range(Excel.Cells(curRow, 3), Excel.Cells(curRow, 6)).Merge
-            Excel.activesheet.range(Excel.Cells(curRow, 7), Excel.Cells(curRow, 9)).Merge
+            'Merge cells and center text
+            Excel.ActiveSheet.Range(Excel.Cells(curRow, 1), Excel.Cells(curRow, 2)).Merge
+            Excel.ActiveSheet.Range(Excel.Cells(curRow, 3), Excel.Cells(curRow, 6)).Merge
+            Excel.ActiveSheet.Range(Excel.Cells(curRow, 7), Excel.Cells(curRow, 9)).Merge
 
-            Excel.activesheet.range(Excel.Cells(curRow, 1), Excel.Cells(curRow, 2)).HorizontalAlignment = 3
-            Excel.activesheet.range(Excel.Cells(curRow, 3), Excel.Cells(curRow, 6)).HorizontalAlignment = 3
-            Excel.activesheet.range(Excel.Cells(curRow, 7), Excel.Cells(curRow, 9)).HorizontalAlignment = 3
+            Excel.ActiveSheet.Range(Excel.Cells(curRow, 1), Excel.Cells(curRow, 2)).HorizontalAlignment = 3
+            Excel.ActiveSheet.Range(Excel.Cells(curRow, 3), Excel.Cells(curRow, 6)).HorizontalAlignment = 3
+            Excel.ActiveSheet.Range(Excel.Cells(curRow, 7), Excel.Cells(curRow, 9)).HorizontalAlignment = 3
 
+            Excel.ActiveSheet.Range(Excel.Cells(curRow, 1), Excel.Cells(curRow, 9)).VerticalAlignment = -4108
+
+            Excel.ActiveSheet.Range(Excel.Cells(curRow, 1), Excel.Cells(curRow, 10)).Borders(9).LineStyle = 1
+
+            'Fill out data in cell 1
             Dim stepPass As String = "FAIL"
             If currentStep.stepPass Then stepPass = "PASS"
 
@@ -160,10 +168,168 @@ Public Class MainForm
                 formatFont(Excel.cells(curRow, 1), "End Time: " & endStr & " min", 9, False, False, False, Color.Red)
             End If
 
+
+            'Fill out cell 2
+            Dim cell2 As String = ""
+
+            Dim tempStr As String = ""
+            Dim tempRmpStr As String = ""
+            Dim pressStr As String = ""
+            Dim pressRmpStr As String = ""
+            Dim vacStr As String = ""
+
+            Dim optionNeg As String = ""
+
+            If curePro.checkTemp Then
+                optionNegTest(currentStep.tempSet("NegTol"), optionNeg)
+                tempStr = "Temperature: " & currentStep.tempSet("SetPoint") & "°F +" & currentStep.tempSet("PosTol") & "/" & optionNeg & currentStep.tempSet("NegTol") & "°F"
+                tempStr = tempStr & vbNewLine
+
+                If currentStep.tempSet("RampRate") <> 0 Then
+                    optionNegTest(currentStep.tempSet("RampNegTol"), optionNeg)
+                    tempRmpStr = "Temp. Ramp: " & currentStep.tempSet("RampRate") & "°F/min +" & currentStep.tempSet("RampPosTol") & "/" & optionNeg & currentStep.tempSet("RampNegTol") & "°F/min"
+                    tempRmpStr = tempRmpStr & vbNewLine
+                End If
+            End If
+
+            If curePro.checkPressure Then
+                optionNegTest(currentStep.pressureSet("NegTol"), optionNeg)
+                pressStr = pressStr & "Pressure: " & currentStep.pressureSet("SetPoint") & " psi +" & currentStep.pressureSet("PosTol") & "/" & optionNeg & currentStep.pressureSet("NegTol") & " psi"
+                pressStr = pressStr & vbNewLine
+
+                If currentStep.pressureSet("RampRate") <> 0 Then
+                    optionNegTest(currentStep.pressureSet("RampNegTol"), optionNeg)
+                    pressRmpStr = pressRmpStr & "Pressure Ramp: " & currentStep.pressureSet("RampRate") & " psi/min +" & currentStep.pressureSet("RampPosTol") & "/" & optionNeg & currentStep.pressureSet("RampNegTol") & " psi/min"
+                    pressRmpStr = pressRmpStr & vbNewLine
+                End If
+            End If
+
+            If curePro.checkVac Then
+                optionNegTest(currentStep.vacSet("NegTol"), optionNeg)
+                vacStr = vacStr & "Vacuum: " & currentStep.vacSet("SetPoint") & " inHg +" & currentStep.vacSet("PosTol") & "/" & optionNeg & currentStep.vacSet("NegTol") & " inHg"
+                vacStr = vacStr & vbNewLine
+            End If
+
+            cell2 = cell2 & tempStr & tempRmpStr & pressStr & pressRmpStr & vacStr
+
+            cell2 = cell2 & "Terminate"
+            cell2 = cell2 & vbNewLine
+
+
+
+            Dim term1Str As String = termToStr(currentStep.termCond1, currentStep)
+            Dim term2Str As String = ""
+
+            If currentStep.termCond2("Type") <> "None" Then
+                term2Str = term2Str & currentStep.termCondOper
+                term2Str = term2Str & vbNewLine
+                term2Str = term2Str & termToStr(currentStep.termCond2, currentStep)
+            End If
+
+            cell2 = cell2 & term1Str
+            cell2 = cell2 & term2Str
+
+            If Strings.Right(cell2, 1) = vbLf Then
+                cell2 = Strings.Left(cell2, Len(cell2) - 1)
+            End If
+
+            Excel.Cells(curRow, 3) = cell2
+
+            'Format cell 2
+
+            formatFont(Excel.Cells(curRow, 3), tempStr, 9)
+            formatFont(Excel.Cells(curRow, 3), tempRmpStr, 9)
+            formatFont(Excel.Cells(curRow, 3), pressStr, 9)
+            formatFont(Excel.Cells(curRow, 3), pressRmpStr, 9)
+            formatFont(Excel.Cells(curRow, 3), vacStr, 9)
+
+            If Strings.Right(term1Str, 1) = vbLf Then
+                term1Str = Strings.Left(term1Str, Len(term1Str) - 1)
+            End If
+            If Strings.Right(term2Str, 1) = vbLf Then
+                term2Str = Strings.Left(term2Str, Len(term2Str) - 1)
+            End If
+
+            formatFont(Excel.Cells(curRow, 3), "Terminate", 11, True, False, True)
+            formatFont(Excel.Cells(curRow, 3), term1Str, 9)
+            formatFont(Excel.Cells(curRow, 3), term2Str, 9)
+
+
+
+            'Fill out cell 3
+
+
+
+
+
+            'Set row height
+            Dim rowCount As Integer = 0
+
+            If Excel.cells(curRow, 1).Value.Split(vbNewLine).Length > rowCount Then rowCount = Excel.cells(curRow, 1).Value.Split(vbNewLine).Length
+            If Excel.cells(curRow, 3).Value.Split(vbNewLine).Length > rowCount Then rowCount = Excel.cells(curRow, 3).Value.Split(vbNewLine).Length
+
+            Excel.cells(curRow, 7).Value = "test" 'Remove ones cell3 filled out
+            If Excel.cells(curRow, 7).Value.Split(vbNewLine).Length > rowCount Then rowCount = Excel.cells(curRow, 7).Value.Split(vbNewLine).Length
+
+            Excel.ActiveSheet.Range(Excel.Cells(curRow, 1), Excel.Cells(curRow, 9)).RowHeight = rowCount * 15.75
+
             curRow = curRow + 1
         Next
 
+        Excel.Visible = True
     End Sub
+
+    Sub optionNegTest(negTolValue As Integer, ByRef optionNeg As String)
+        If negTolValue = 0 Then
+            optionNeg = "-"
+        Else
+            optionNeg = ""
+        End If
+    End Sub
+
+    Function termToStr(termCond As Dictionary(Of String, Object), currentStep As CureStep) As String
+
+        Dim currentStr As String = ""
+
+        If termCond("Type") = "None" Then
+            Return ""
+
+
+        ElseIf termCond("Type") = "Time" Then
+            currentStr = currentStr & "After " & termCond("Goal") & " min"
+            currentStr = currentStr & vbNewLine
+
+
+        ElseIf termCond("Type") = "Temp" Then
+            currentStr = currentStr & termCond("TCNum")
+
+            If termCond("Condition") = "GREATER" Then
+                currentStr = currentStr & ">"
+            ElseIf termCond("Condition") = "LESS" Then
+                currentStr = currentStr & "<"
+            Else
+                Throw New Exception("Unknown termination condition for temp on " & currentStep.stepName)
+            End If
+
+            currentStr = currentStr & termCond("Goal") & "°F"
+            currentStr = currentStr & vbNewLine
+
+
+        ElseIf termCond("Type") = "Press" Then
+            If termCond("Condition") = "GREATER" Then
+                currentStr = currentStr & ">"
+            ElseIf termCond("Condition") = "LESS" Then
+                currentStr = currentStr & "<"
+            Else
+                Throw New Exception("Unknown termination condition for temp on " & currentStep.stepName)
+            End If
+
+            currentStr = currentStr & termCond("Goal") & " psi"
+            currentStr = currentStr & vbNewLine
+        End If
+
+        Return currentStr
+    End Function
 
 
     Sub outputResults()
