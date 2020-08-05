@@ -271,9 +271,12 @@ Public Class CureStep
     Public pressurePass As Boolean = True
     Public tempPass As Boolean = True
     Public vacPass As Boolean = True
+    Public pressureRampPass As Boolean = True
+    Public tempRampPass As Boolean = True
 
     Public stepPass As Boolean = False
     Public hardFail As Boolean = False
+    Public stepTerminate As Boolean = True
 
     Public stepStart As Integer = 0
     Public stepEnd As Integer = 0

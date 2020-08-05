@@ -2,6 +2,9 @@
 	Name,ARRWPostCure
 	cureDoc,
 	cureDocRev,-
+	checkTemp,True
+	checkPressure,False
+	checkVac,False
 	<Steps>
 		stepCount,2
 		<Step0>

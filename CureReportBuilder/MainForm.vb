@@ -33,7 +33,7 @@ Public Class MainForm
     Dim minVac As DataSet = New DataSet(0, "minVac")
     Dim maxVac As DataSet = New DataSet(0, "maxVac")
 
-    Dim usrRunTC() As Integer = {1} ', 2}
+    Dim usrRunTC() As Integer = {1, 2, 3, 4} ', 2}
     Dim usrRunVac() As Integer = {2, 3, 5}
 
 
@@ -46,30 +46,38 @@ Public Class MainForm
         Call loadCureProfiles(Txt_CureProfilesPath.Text) '\test.cprof")
 
         'loadCSVin("C:\Users\Will Eagan\Source\Repos\CureReportBuilder\CureReportBuilder\Sample Files\DA-18-20 - Copy.csv")
-        'loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\DA-18-20.csv")
-        loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\BATCH 38 JOB 101573, 101574 1-23-20 - Copy.CSV")
+        loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\DA-18-20.csv")
+        'loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\BATCH 38 JOB 101573, 101574 1-23-20 - Copy.CSV")
         ''loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\Autoclave Simple.CSV")
 
         Call loadCureData()
 
-        curePro = cureProfiles(2)
+        curePro = cureProfiles(3)
 
         Call loadCureData()
 
         Call runCalc()
 
-        Call outputResultsNew()
+        Call outputResults()
 
     End Sub
 #Region "Output"
-    Sub formatFont(inCell As Object, checkStr As String, Optional fontSize As Double = 11, Optional bold As Boolean = False, Optional italic As Boolean = False, Optional underline As Boolean = False, Optional color As Color = Nothing)
+    Sub formatFont(inCell As Object, checkStr As String, Optional fontSize As Double = 11, Optional bold As Boolean = False, Optional italic As Boolean = False, Optional underline As Boolean = False, Optional color As Color = Nothing, Optional checkExists As Boolean = True)
 
         If checkStr = "" Then Exit Sub
 
+        If Strings.Right(checkStr, 1) = vbLf Then
+            checkStr = Strings.Left(checkStr, Len(checkStr) - 1)
+        End If
+
         Dim startPos As Integer = InStr(inCell.value, checkStr)
 
-        If startPos = 0 Then
-            Throw New Exception("Format font failed to locate the desired string within the specified cell.")
+        If checkExists Then
+            If startPos = 0 Then
+                Throw New Exception("Format font failed to locate the desired string within the specified cell.")
+            End If
+        ElseIf startPos = 0 Then
+            Exit Sub
         End If
 
         inCell.Characters(Start:=startPos, Length:=Len(checkStr)).Font.Size = fontSize
@@ -84,36 +92,36 @@ Public Class MainForm
 
     End Sub
 
-    Sub outputResultsNew()
+    Sub outputResults()
         Dim Excel As Object
         Excel = CreateObject("Excel.Application")
-        'Excel.Visible = True
+        Excel.Visible = True
         Excel.Workbooks.Open("C:\Users\Will Eagan\Source\repos\CureReportBuilder\CureReportBuilder\Sample Files\Cure Report_Template.xlsx")
 
 
-        'Excel.cells(2, 1) = "Job" & vbNewLine & partValues("JobNum") & vbNewLine & "Program" & vbNewLine & partValues("PONum")
-        'formatFont(Excel.cells(2, 1), "Job", 14, True, False, True)
-        'formatFont(Excel.cells(2, 1), "Program", 14, True, False, True)
+        Excel.cells(2, 1) = "Job" & vbNewLine & partValues("JobNum") & vbNewLine & "Program" & vbNewLine & partValues("PONum")
+        formatFont(Excel.cells(2, 1), "Job", 14, True, False, True)
+        formatFont(Excel.cells(2, 1), "Program", 14, True, False, True)
 
-        'Excel.cells(2, 4) = "Part" & vbNewLine & partValues("PartNum") & vbNewLine & "Rev. " & partValues("PartRev") & vbNewLine & partValues("PartNom") & vbNewLine & "Qty: " & partValues("PartQty")
-        'formatFont(Excel.cells(2, 4), "Part", 14, True, False, True)
+        Excel.cells(2, 4) = "Part" & vbNewLine & partValues("PartNum") & vbNewLine & "Rev. " & partValues("PartRev") & vbNewLine & partValues("PartNom") & vbNewLine & "Qty: " & partValues("PartQty")
+        formatFont(Excel.cells(2, 4), "Part", 14, True, False, True)
 
-        'Excel.cells(2, 8) = "Cure" & vbNewLine & "Start: " & dateArr(cureStart).ToString("dd-MMM-yyyy h:mm tt") & vbNewLine & "End: " & dateArr(cureEnd).ToString("dd-MMM-yyyy h:mm tt") & vbNewLine & "Duration: " & (dateArr(cureEnd) - dateArr(cureStart)).TotalMinutes & " min"
-        'formatFont(Excel.cells(2, 8), "Cure", 14, True, False, True)
+        Excel.cells(2, 8) = "Cure" & vbNewLine & "Start: " & dateArr(cureStart).ToString("dd-MMM-yyyy h:mm tt") & vbNewLine & "End: " & dateArr(cureEnd).ToString("dd-MMM-yyyy h:mm tt") & vbNewLine & "Duration: " & (dateArr(cureEnd) - dateArr(cureStart)).TotalMinutes & " min"
+        formatFont(Excel.cells(2, 8), "Cure", 14, True, False, True)
 
-        'Excel.cells(5, 1) = "Equipment" & vbNewLine & machType & " | " & Me.Txt_DataRecorder.Text
-        'formatFont(Excel.cells(5, 1), "Equipment", 14, True, False, True)
+        Excel.cells(5, 1) = "Equipment" & vbNewLine & machType & " | " & Me.Txt_DataRecorder.Text
+        formatFont(Excel.cells(5, 1), "Equipment", 14, True, False, True)
 
-        'If curePro.curePass Then
-        '    Excel.cells(6, 4) = "PASS"
-        '    formatFont(Excel.cells(6, 4), "PASS", 30, True, False, True, Color.Green)
-        'Else
-        '    Excel.cells(6, 4) = "FAIL"
-        '    formatFont(Excel.cells(6, 4), "FAIL", 30, True, False, True, Color.Red)
-        'End If
+        If curePro.curePass Then
+            Excel.cells(6, 4) = "PASS"
+            formatFont(Excel.cells(6, 4), "PASS", 30, True, False, True, Color.Green)
+        Else
+            Excel.cells(6, 4) = "FAIL"
+            formatFont(Excel.cells(6, 4), "FAIL", 30, True, False, True, Color.Red)
+        End If
 
-        'Excel.cells(5, 8) = "Cure Document" & vbNewLine & curePro.cureDoc & vbNewLine & "Rev. " & curePro.cureDocRev & vbNewLine & "Profile: " & curePro.Name
-        'formatFont(Excel.cells(5, 8), "Cure Document", 14, True, False, True)
+        Excel.cells(5, 8) = "Cure Document" & vbNewLine & curePro.cureDoc & vbNewLine & "Rev. " & curePro.cureDocRev & vbNewLine & "Profile: " & curePro.Name
+        formatFont(Excel.cells(5, 8), "Cure Document", 14, True, False, True)
 
 
 
@@ -137,37 +145,41 @@ Public Class MainForm
             Excel.ActiveSheet.Range(Excel.Cells(curRow, 1), Excel.Cells(curRow, 10)).Borders(9).LineStyle = 1
 
             'Fill out data in cell 1
-            Dim stepPass As String = "FAIL"
-            If currentStep.stepPass Then stepPass = "PASS"
-
-            Dim startTime As Integer = (dateArr(currentStep.stepStart) - dateArr(cureStart)).TotalMinutes
-            Dim endTime As Integer = (dateArr(currentStep.stepEnd) - dateArr(cureStart)).TotalMinutes
-
-            Dim endStr As String = ""
-            If currentStep.stepEnd = 0 Then
-                endStr = "Failed to terminate"
+            If currentStep.hardFail Then
+                Excel.Cells(curRow, 1) = currentStep.stepName
+                formatFont(Excel.cells(curRow, 1), currentStep.stepName, 11, True, False, False)
             Else
-                endStr = endTime
+                Dim stepPass As String = "FAIL"
+                If currentStep.stepPass Then stepPass = "PASS"
+
+                Dim startTime As Integer = (dateArr(currentStep.stepStart) - dateArr(cureStart)).TotalMinutes
+                Dim endTime As Integer = (dateArr(currentStep.stepEnd) - dateArr(cureStart)).TotalMinutes
+
+                Dim endStr As String = ""
+                If currentStep.stepTerminate = False Then
+                    endStr = "Failed to Terminate"
+                Else
+                    endStr = "End Time: " & endTime & " min"
+                End If
+
+
+                Excel.Cells(curRow, 1) = currentStep.stepName & vbNewLine & "(" & stepPass & ")" & vbNewLine & "Start Time: " & startTime & " min" & vbNewLine & endStr
+
+                formatFont(Excel.cells(curRow, 1), currentStep.stepName, 11, True, False, False)
+
+                If currentStep.stepPass = True Then
+                    formatFont(Excel.cells(curRow, 1), "(" & stepPass & ")", 11, False, False, False)
+                Else
+                    formatFont(Excel.cells(curRow, 1), "(" & stepPass & ")", 11, False, False, False, Color.Red)
+                End If
+
+                formatFont(Excel.cells(curRow, 1), "Start Time: " & startTime & " min", 9, False, False, False)
+                formatFont(Excel.cells(curRow, 1), endStr, 9, False, False, False)
+
+                If currentStep.stepTerminate = False Then
+                    formatFont(Excel.cells(curRow, 1), endStr, 9, False, False, False, Color.Red)
+                End If
             End If
-
-
-            Excel.Cells(curRow, 1) = currentStep.stepName & vbNewLine & "(" & stepPass & ")" & vbNewLine & "Start Time: " & startTime & " min" & vbNewLine & "End Time: " & endStr & " min"
-
-            formatFont(Excel.cells(curRow, 1), currentStep.stepName, 11, True, False, False)
-
-            If currentStep.stepPass = True Then
-                formatFont(Excel.cells(curRow, 1), "(" & stepPass & ")", 11, False, False, False)
-            Else
-                formatFont(Excel.cells(curRow, 1), "(" & stepPass & ")", 11, False, False, False, Color.Red)
-            End If
-
-            formatFont(Excel.cells(curRow, 1), "Start Time: " & startTime & " min", 9, False, False, False)
-            formatFont(Excel.cells(curRow, 1), "End Time: " & endStr & " min", 9, False, False, False)
-
-            If currentStep.stepEnd = 0 Then
-                formatFont(Excel.cells(curRow, 1), "End Time: " & endStr & " min", 9, False, False, False, Color.Red)
-            End If
-
 
             'Fill out cell 2
             Dim cell2 As String = ""
@@ -181,8 +193,14 @@ Public Class MainForm
             Dim optionNeg As String = ""
 
             If curePro.checkTemp Then
-                optionNegTest(currentStep.tempSet("NegTol"), optionNeg)
-                tempStr = "Temperature: " & currentStep.tempSet("SetPoint") & "°F +" & currentStep.tempSet("PosTol") & "/" & optionNeg & currentStep.tempSet("NegTol") & "°F"
+                If Math.Abs(currentStep.tempSet("SetPoint")) = Math.Abs(currentStep.tempSet("NegTol")) Then
+                    tempStr = "Temperature: Max " & currentStep.tempSet("SetPoint") + currentStep.tempSet("PosTol") & "°F"
+                ElseIf Math.Abs(currentStep.tempSet("SetPoint")) = Math.Abs(currentStep.tempSet("PosTol")) Then
+                    tempStr = "Temperature: Min " & currentStep.tempSet("SetPoint") + currentStep.tempSet("NegTol") & "°F"
+                Else
+                    optionNegTest(currentStep.tempSet("NegTol"), optionNeg)
+                    tempStr = "Temperature: " & currentStep.tempSet("SetPoint") & "°F +" & currentStep.tempSet("PosTol") & "/" & optionNeg & currentStep.tempSet("NegTol") & "°F"
+                End If
                 tempStr = tempStr & vbNewLine
 
                 If currentStep.tempSet("RampRate") <> 0 Then
@@ -193,8 +211,14 @@ Public Class MainForm
             End If
 
             If curePro.checkPressure Then
-                optionNegTest(currentStep.pressureSet("NegTol"), optionNeg)
-                pressStr = pressStr & "Pressure: " & currentStep.pressureSet("SetPoint") & " psi +" & currentStep.pressureSet("PosTol") & "/" & optionNeg & currentStep.pressureSet("NegTol") & " psi"
+                If Math.Abs(currentStep.pressureSet("SetPoint")) = Math.Abs(currentStep.pressureSet("NegTol")) Then
+                    pressStr = "Pressure: Max " & currentStep.pressureSet("SetPoint") + currentStep.pressureSet("PosTol") & " psi"
+                ElseIf Math.Abs(currentStep.pressureSet("SetPoint")) = Math.Abs(currentStep.pressureSet("PosTol")) Then
+                    pressStr = "Pressure Min " & currentStep.pressureSet("SetPoint") + currentStep.pressureSet("NegTol") & " psi"
+                Else
+                    optionNegTest(currentStep.pressureSet("NegTol"), optionNeg)
+                    pressStr = pressStr & "Pressure: " & currentStep.pressureSet("SetPoint") & " psi +" & currentStep.pressureSet("PosTol") & "/" & optionNeg & currentStep.pressureSet("NegTol") & " psi"
+                End If
                 pressStr = pressStr & vbNewLine
 
                 If currentStep.pressureSet("RampRate") <> 0 Then
@@ -205,8 +229,14 @@ Public Class MainForm
             End If
 
             If curePro.checkVac Then
-                optionNegTest(currentStep.vacSet("NegTol"), optionNeg)
-                vacStr = vacStr & "Vacuum: " & currentStep.vacSet("SetPoint") & " inHg +" & currentStep.vacSet("PosTol") & "/" & optionNeg & currentStep.vacSet("NegTol") & " inHg"
+                If Math.Abs(currentStep.vacSet("SetPoint")) = Math.Abs(currentStep.vacSet("NegTol")) Then
+                    vacStr = "Pressure: Max " & currentStep.vacSet("SetPoint") + currentStep.vacSet("PosTol") & " inHg"
+                ElseIf Math.Abs(currentStep.vacSet("SetPoint")) = Math.Abs(currentStep.vacSet("PosTol")) Then
+                    vacStr = "Pressure: Min " & currentStep.vacSet("SetPoint") + currentStep.vacSet("NegTol") & " inHg"
+                Else
+                    optionNegTest(currentStep.vacSet("NegTol"), optionNeg)
+                    vacStr = vacStr & "Vacuum: " & currentStep.vacSet("SetPoint") & " inHg +" & currentStep.vacSet("PosTol") & "/" & optionNeg & currentStep.vacSet("NegTol") & " inHg"
+                End If
                 vacStr = vacStr & vbNewLine
             End If
 
@@ -256,20 +286,131 @@ Public Class MainForm
 
 
 
-            'Fill out cell 3
+#Region "Fill out cell 3"
+            If currentStep.hardFail Then
+                Excel.Cells(curRow, 7) = "Failed to Reach Step"
+                formatFont(Excel.Cells(curRow, 7), "Failed to Reach Step", 11, True)
+            Else
+                Dim cell3 As String = ""
+
+                tempStr = ""
+                tempRmpStr = ""
+                pressStr = ""
+                pressRmpStr = ""
+                vacStr = ""
+
+                If curePro.checkTemp Then
+                    tempStr = "Temperature (°F)" & vbNewLine
+
+                    If Math.Abs(currentStep.tempSet("SetPoint")) = Math.Abs(currentStep.tempSet("NegTol")) Then
+                        tempStr = tempStr & "Max: " & currentStep.tempResult("Max") & vbNewLine
+                    ElseIf Math.Abs(currentStep.tempSet("SetPoint")) = Math.Abs(currentStep.tempSet("PosTol")) Then
+                        tempStr = tempStr & "Min: " & currentStep.tempResult("Min") & vbNewLine
+                    Else
+                        tempStr = tempStr & "Max: " & currentStep.tempResult("Max") & " | Min: " & currentStep.tempResult("Min") & "  | Avg.: " & currentStep.tempResult("Avg") & vbNewLine
+                    End If
+
+                    If currentStep.tempSet("RampRate") <> 0 Then
+                        tempRmpStr = "Temp. Ramp (°F/min )" & vbNewLine
+                        tempRmpStr = tempRmpStr & "Max: " & currentStep.tempResult("MaxRamp") & " | Min: " & currentStep.tempResult("MinRamp") & "  | Avg.: " & currentStep.tempResult("AvgRamp") & vbNewLine
+                    End If
+                End If
+
+                If curePro.checkPressure Then
+                    pressStr = "Pressure (psi)" & vbNewLine
+
+                    If Math.Abs(currentStep.pressureSet("SetPoint")) = Math.Abs(currentStep.pressureSet("NegTol")) Then
+                        pressStr = pressStr & "Max: " & currentStep.pressureResult("Max") & vbNewLine
+                    ElseIf Math.Abs(currentStep.pressureSet("SetPoint")) = Math.Abs(currentStep.pressureSet("PosTol")) Then
+                        pressStr = "Min: " & currentStep.pressureResult("Min") & vbNewLine
+                    Else
+                        pressStr = pressStr & "Max: " & currentStep.pressureResult("Max") & " | Min: " & currentStep.pressureResult("Min") & " | Avg.: " & currentStep.pressureResult("Avg") & vbNewLine
+                    End If
+
+                    If currentStep.pressureSet("RampRate") <> 0 Then
+                        pressRmpStr = "Pressure Ramp (psi/min)" & vbNewLine
+                        pressRmpStr = pressRmpStr & "Max: " & currentStep.pressureResult("MaxRamp") & " | Min: " & currentStep.pressureResult("MinRamp") & "  | Avg.: " & currentStep.pressureResult("AvgRamp") & vbNewLine
+                    End If
+                End If
+
+                If curePro.checkVac Then
+                    vacStr = "Vacuum (inHg)" & vbNewLine
+
+                    If Math.Abs(currentStep.vacSet("SetPoint")) = Math.Abs(currentStep.vacSet("NegTol")) Then
+                        vacStr = vacStr & "Max: " & currentStep.vacResult("Max") & vbNewLine
+                    ElseIf Math.Abs(currentStep.vacSet("SetPoint")) = Math.Abs(currentStep.vacSet("PosTol")) Then
+                        vacStr = vacStr & "Min: " & currentStep.vacResult("Min") & vbNewLine
+                    Else
+                        vacStr = vacStr & "Max: " & currentStep.vacResult("Max") & " | Min: " & currentStep.vacResult("Min") & " | Avg.: " & currentStep.vacResult("Avg") & vbNewLine
+                    End If
+
+                End If
+
+                cell3 = cell3 & tempStr & tempRmpStr & pressStr & pressRmpStr & vacStr
 
 
+                If Strings.Right(cell3, 1) = vbLf Then
+                    cell3 = Strings.Left(cell3, Len(cell3) - 1)
+                End If
+
+                Excel.Cells(curRow, 7) = cell3
+
+                'Format cell 3
+
+                If currentStep.tempPass Then
+                    formatFont(Excel.Cells(curRow, 7), tempStr, 9,, True)
+                    formatFont(Excel.Cells(curRow, 7), "Temperature (°F)", 11, True,,,, False)
+                Else
+                    formatFont(Excel.Cells(curRow, 7), tempStr, 9,, True, True, Color.Red)
+                    formatFont(Excel.Cells(curRow, 7), "Temperature (°F)", 11, True,, True, Color.Red, False)
+                End If
+
+                If currentStep.tempSet("RampRate") <> 0 Then
+                    If currentStep.tempRampPass Then
+                        formatFont(Excel.Cells(curRow, 7), tempRmpStr, 9,, True)
+                        formatFont(Excel.Cells(curRow, 7), "Temp. Ramp (°F/min )", 11, True,,,, False)
+                    Else
+                        formatFont(Excel.Cells(curRow, 7), tempRmpStr, 9,, True, True, Color.Red)
+                        formatFont(Excel.Cells(curRow, 7), "Temp. Ramp (°F/min )", 11, True,, True, Color.Red, False)
+                    End If
+                End If
+
+                If currentStep.pressurePass Then
+                    formatFont(Excel.Cells(curRow, 7), pressStr, 9,, True)
+                    formatFont(Excel.Cells(curRow, 7), "Pressure (psi)", 11, True,,,, False)
+                Else
+                    formatFont(Excel.Cells(curRow, 7), pressStr, 9,, True, True, Color.Red)
+                    formatFont(Excel.Cells(curRow, 7), "Pressure (psi)", 11, True,, True, Color.Red, False)
+                End If
+
+                If currentStep.pressureSet("RampRate") <> 0 Then
+                    If currentStep.pressureRampPass Then
+                        formatFont(Excel.Cells(curRow, 7), pressRmpStr, 9,, True)
+                        formatFont(Excel.Cells(curRow, 7), "Pressure Ramp (psi/min)", 11, True,,,, False)
+                    Else
+                        formatFont(Excel.Cells(curRow, 7), pressRmpStr, 9,, True, True, Color.Red)
+                        formatFont(Excel.Cells(curRow, 7), "Pressure Ramp (psi/min)", 11, True,, True, Color.Red, False)
+                    End If
+                End If
+
+                If currentStep.vacPass Then
+                    formatFont(Excel.Cells(curRow, 7), vacStr, 9,, True)
+                    formatFont(Excel.Cells(curRow, 7), "Vacuum (inHg)", 11, True,,,, False)
+                Else
+                    formatFont(Excel.Cells(curRow, 7), vacStr, 9,, True, True, Color.Red)
+                    formatFont(Excel.Cells(curRow, 7), "Vacuum (inHg)", 11, True,, True, Color.Red, False)
+                End If
+            End If
 
 
+#End Region
 
             'Set row height
             Dim rowCount As Integer = 0
 
-            If Excel.cells(curRow, 1).Value.Split(vbNewLine).Length > rowCount Then rowCount = Excel.cells(curRow, 1).Value.Split(vbNewLine).Length
-            If Excel.cells(curRow, 3).Value.Split(vbNewLine).Length > rowCount Then rowCount = Excel.cells(curRow, 3).Value.Split(vbNewLine).Length
-
-            Excel.cells(curRow, 7).Value = "test" 'Remove ones cell3 filled out
-            If Excel.cells(curRow, 7).Value.Split(vbNewLine).Length > rowCount Then rowCount = Excel.cells(curRow, 7).Value.Split(vbNewLine).Length
+            If Excel.cells(curRow, 1).Value.ToString.Split(vbNewLine).Length > rowCount Then rowCount = Excel.cells(curRow, 1).Value.ToString.Split(vbNewLine).Length
+            If Excel.cells(curRow, 3).Value.ToString.Split(vbNewLine).Length > rowCount Then rowCount = Excel.cells(curRow, 3).Value.ToString.Split(vbNewLine).Length
+            If Excel.cells(curRow, 7).Value.ToString.Split(vbNewLine).Length > rowCount Then rowCount = Excel.cells(curRow, 7).Value.ToString.Split(vbNewLine).Length
 
             Excel.ActiveSheet.Range(Excel.Cells(curRow, 1), Excel.Cells(curRow, 9)).RowHeight = rowCount * 15.75
 
@@ -304,9 +445,9 @@ Public Class MainForm
             currentStr = currentStr & termCond("TCNum")
 
             If termCond("Condition") = "GREATER" Then
-                currentStr = currentStr & ">"
+                currentStr = currentStr & " > "
             ElseIf termCond("Condition") = "LESS" Then
-                currentStr = currentStr & "<"
+                currentStr = currentStr & " < "
             Else
                 Throw New Exception("Unknown termination condition for temp on " & currentStep.stepName)
             End If
@@ -317,9 +458,9 @@ Public Class MainForm
 
         ElseIf termCond("Type") = "Press" Then
             If termCond("Condition") = "GREATER" Then
-                currentStr = currentStr & ">"
+                currentStr = currentStr & " > "
             ElseIf termCond("Condition") = "LESS" Then
-                currentStr = currentStr & "<"
+                currentStr = currentStr & " < "
             Else
                 Throw New Exception("Unknown termination condition for temp on " & currentStep.stepName)
             End If
@@ -332,118 +473,7 @@ Public Class MainForm
     End Function
 
 
-    Sub outputResults()
-        Dim Excel As Object
-        Excel = CreateObject("Excel.Application")
-        Excel.Visible = True
-        Excel.workbooks.Add
 
-        Dim currentRow As Integer = 1
-
-        Call outputExcel(Excel, "Cure Name:", "'" & curePro.Name, currentRow, 1)
-        Call outputExcel(Excel, "Cure Doc:", curePro.cureDoc, currentRow, 1)
-        Call outputExcel(Excel, "Cure Rev", curePro.cureDocRev, currentRow, 1)
-        Call outputExcel(Excel, "", "", currentRow, 1)
-        Call outputExcel(Excel, "", "", currentRow, 1)
-
-        Dim i As Integer = 0
-        For i = 0 To UBound(curePro.CureSteps)
-            Dim currentStep As CureStep = curePro.CureSteps(i)
-
-            Call outputExcel(Excel, "Cure Step: ", currentStep.stepName, currentRow, 1)
-            Call outputExcel(Excel, "Step Pass: ", currentStep.stepPass, currentRow, 1)
-            Call outputExcel(Excel, "", "", currentRow, 1)
-
-            If curePro.checkTemp Then
-                Call outputExcel(Excel, "Temp", "", currentRow, 1)
-                Call outputExcel(Excel, "Temp Pass", currentStep.tempPass, currentRow, 1)
-                Call outputExcel(Excel, "Temp Max", currentStep.tempResult("Max"), currentRow, 1)
-                Call outputExcel(Excel, "Temp Min", currentStep.tempResult("Min"), currentRow, 1)
-                Call outputExcel(Excel, "Temp Avg", currentStep.tempResult("Avg"), currentRow, 1)
-                Call outputExcel(Excel, "Temp Ramp Max", currentStep.tempResult("MaxRamp"), currentRow, 1)
-                Call outputExcel(Excel, "Temp Ramp Min", currentStep.tempResult("MinRamp"), currentRow, 1)
-                Call outputExcel(Excel, "Temp Ramp Avg", currentStep.tempResult("AvgRamp"), currentRow, 1)
-                Call outputExcel(Excel, "", "", currentRow, 1)
-            End If
-
-            If curePro.checkPressure Then
-                Call outputExcel(Excel, "Pressure", "", currentRow, 1)
-                Call outputExcel(Excel, "Pressure Pass", currentStep.pressurePass, currentRow, 1)
-                Call outputExcel(Excel, "Pressure Max", currentStep.pressureResult("Max"), currentRow, 1)
-                Call outputExcel(Excel, "Pressure Min", currentStep.pressureResult("Min"), currentRow, 1)
-                Call outputExcel(Excel, "Pressure Avg", currentStep.pressureResult("Avg"), currentRow, 1)
-                Call outputExcel(Excel, "Pressure Ramp Max", currentStep.pressureResult("MaxRamp"), currentRow, 1)
-                Call outputExcel(Excel, "Pressure Ramp Min", currentStep.pressureResult("MinRamp"), currentRow, 1)
-                Call outputExcel(Excel, "Pressure Ramp Avg", currentStep.pressureResult("AvgRamp"), currentRow, 1)
-                Call outputExcel(Excel, "", "", currentRow, 1)
-            End If
-
-            If curePro.checkVac Then
-                Call outputExcel(Excel, "vac", "", currentRow, 1)
-                Call outputExcel(Excel, "vac Pass", currentStep.vacPass, currentRow, 1)
-                Call outputExcel(Excel, "vac Max", currentStep.vacResult("Max"), currentRow, 1)
-                Call outputExcel(Excel, "vac Min", currentStep.vacResult("Min"), currentRow, 1)
-                Call outputExcel(Excel, "vac Avg", currentStep.vacResult("Avg"), currentRow, 1)
-                Call outputExcel(Excel, "", "", currentRow, 1)
-            End If
-
-
-            Call outputExcel(Excel, "", "", currentRow, 1)
-        Next
-
-        currentRow = 6
-        For i = 0 To UBound(curePro.CureSteps)
-            Dim currentStep As CureStep = curePro.CureSteps(i)
-
-            Call outputExcel(Excel, "", "", currentRow, 4)
-            Call outputExcel(Excel, "", "", currentRow, 4)
-            Call outputExcel(Excel, "", "", currentRow, 4)
-
-            If curePro.checkTemp Then
-                Call outputExcel(Excel, "", "", currentRow, 4)
-                Call outputExcel(Excel, "", "", currentRow, 4)
-                Call outputExcel(Excel, "Setpoint", currentStep.tempSet("SetPoint"), currentRow, 4)
-                Call outputExcel(Excel, "PosTol", currentStep.tempSet("PosTol"), currentRow, 4)
-                Call outputExcel(Excel, "NegTol", currentStep.tempSet("NegTol"), currentRow, 4)
-                Call outputExcel(Excel, "RampSet", currentStep.tempSet("RampRate"), currentRow, 4)
-                Call outputExcel(Excel, "RampPosTol", currentStep.tempSet("RampPosTol"), currentRow, 4)
-                Call outputExcel(Excel, "RampNegTol", currentStep.tempSet("RampNegTol"), currentRow, 4)
-                Call outputExcel(Excel, "", "", currentRow, 4)
-            End If
-
-
-
-            If curePro.checkPressure Then
-                Call outputExcel(Excel, "", "", currentRow, 4)
-                Call outputExcel(Excel, "Setpoint", currentStep.pressureSet("SetPoint"), currentRow, 4)
-                Call outputExcel(Excel, "PosTol", currentStep.pressureSet("PosTol"), currentRow, 4)
-                Call outputExcel(Excel, "NegTol", currentStep.pressureSet("NegTol"), currentRow, 4)
-                Call outputExcel(Excel, "RampSet", currentStep.pressureSet("RampRate"), currentRow, 4)
-                Call outputExcel(Excel, "RampPosTol", currentStep.pressureSet("RampPosTol"), currentRow, 4)
-                Call outputExcel(Excel, "RampNegTol", currentStep.pressureSet("RampNegTol"), currentRow, 4)
-                Call outputExcel(Excel, "", "", currentRow, 4)
-                Call outputExcel(Excel, "", "", currentRow, 4)
-            End If
-
-            If curePro.checkVac Then
-
-                Call outputExcel(Excel, "", "", currentRow, 4)
-                Call outputExcel(Excel, "Setpoint", currentStep.vacSet("SetPoint"), currentRow, 4)
-                Call outputExcel(Excel, "PosTol", currentStep.vacSet("PosTol"), currentRow, 4)
-                Call outputExcel(Excel, "NegTol", currentStep.vacSet("NegTol"), currentRow, 4)
-                Call outputExcel(Excel, "RampSet", currentStep.vacSet("RampRate"), currentRow, 4)
-                Call outputExcel(Excel, "", "", currentRow, 4)
-            End If
-
-            Call outputExcel(Excel, "", "", currentRow, 4)
-        Next
-    End Sub
-
-    Sub outputExcel(Excel As Object, desc As String, uVal As String, ByRef currentRow As Integer, inCol As Integer)
-        Excel.cells(currentRow, inCol) = desc
-        Excel.cells(currentRow, inCol + 1) = uVal
-        currentRow = currentRow + 1
-    End Sub
 #End Region
 
 #Region "Data test against cure definition"
@@ -495,7 +525,7 @@ Public Class MainForm
                     End If
                 End If
 
-                curePro.CureSteps(i).tempResult("Max") = leadTC.Max(indexStart, indexEnd)
+                curePro.CureSteps(i).tempResult("Max") = Math.Round(leadTC.Max(indexStart, indexEnd), 0)
 
 
                 ''Min temp
@@ -511,7 +541,7 @@ Public Class MainForm
                     End If
                 End If
 
-                curePro.CureSteps(i).tempResult("Min") = lagTC.Min(indexStart, indexEnd)
+                curePro.CureSteps(i).tempResult("Min") = Math.Round(lagTC.Min(indexStart, indexEnd), 0)
 
 
                 ''Average temp
@@ -529,7 +559,7 @@ Public Class MainForm
                     Next
                 Next
 
-                curePro.CureSteps(i).tempResult("Avg") = total / addCnt
+                curePro.CureSteps(i).tempResult("Avg") = Math.Round(total / addCnt, 0)
 
                 ''Max temp ramp
                 Dim holder As Double = 0
@@ -546,7 +576,7 @@ Public Class MainForm
                     Next
                 Next
 
-                curePro.CureSteps(i).tempResult("MaxRamp") = holder
+                curePro.CureSteps(i).tempResult("MaxRamp") = Math.Round(holder, 1)
 
                 ''Min temp ramp
                 holder = 0
@@ -562,7 +592,7 @@ Public Class MainForm
                         End If
                     Next
                 Next
-                curePro.CureSteps(i).tempResult("MinRamp") = holder
+                curePro.CureSteps(i).tempResult("MinRamp") = Math.Round(holder, 1)
 
 
                 ''Average temp ramp
@@ -580,13 +610,13 @@ Public Class MainForm
                     Next
                 Next
 
-                curePro.CureSteps(i).tempResult("AvgRamp") = total / addCnt
+                curePro.CureSteps(i).tempResult("AvgRamp") = Math.Round(total / addCnt, 1)
 
                 'Check temp for passing
                 If curePro.CureSteps(i).tempResult("Min") < curePro.CureSteps(i).tempSet("SetPoint") + curePro.CureSteps(i).tempSet("NegTol") Then curePro.CureSteps(i).tempPass = False
                 If curePro.CureSteps(i).tempResult("Max") > curePro.CureSteps(i).tempSet("SetPoint") + curePro.CureSteps(i).tempSet("PosTol") Then curePro.CureSteps(i).tempPass = False
-                If curePro.CureSteps(i).tempResult("MinRamp") < curePro.CureSteps(i).tempSet("RampRate") + curePro.CureSteps(i).tempSet("RampNegTol") Then curePro.CureSteps(i).tempPass = False
-                If curePro.CureSteps(i).tempResult("MaxRamp") > curePro.CureSteps(i).tempSet("RampRate") + curePro.CureSteps(i).tempSet("RampPosTol") Then curePro.CureSteps(i).tempPass = False
+                If curePro.CureSteps(i).tempResult("MinRamp") < curePro.CureSteps(i).tempSet("RampRate") + curePro.CureSteps(i).tempSet("RampNegTol") Then curePro.CureSteps(i).tempRampPass = False
+                If curePro.CureSteps(i).tempResult("MaxRamp") > curePro.CureSteps(i).tempSet("RampRate") + curePro.CureSteps(i).tempSet("RampPosTol") Then curePro.CureSteps(i).tempRampPass = False
             Else
                 curePro.CureSteps(i).tempPass = True
             End If
@@ -607,7 +637,7 @@ Public Class MainForm
                         indexEnd = indexEnd - curePro.CureSteps(i - 1).pressureSet("RampRate") \ (dateArr(1) - dateArr(0)).TotalMinutes
                     End If
                 End If
-                curePro.CureSteps(i).pressureResult("Max") = vesselPress.Max(indexStart, indexEnd)
+                curePro.CureSteps(i).pressureResult("Max") = Math.Round(vesselPress.Max(indexStart, indexEnd), 1)
 
                 ''Min pressure
                 If Not firstStep Then
@@ -622,32 +652,32 @@ Public Class MainForm
                     End If
 
                 End If
-                curePro.CureSteps(i).pressureResult("Min") = vesselPress.Min(indexStart, indexEnd)
+                curePro.CureSteps(i).pressureResult("Min") = Math.Round(vesselPress.Min(indexStart, indexEnd), 1)
 
                 ''Average pressure
                 indexStart = curePro.CureSteps(i).stepStart
                 indexEnd = curePro.CureSteps(i).stepEnd
-                curePro.CureSteps(i).pressureResult("Avg") = vesselPress.Average(indexStart, indexEnd)
+                curePro.CureSteps(i).pressureResult("Avg") = Math.Round(vesselPress.Average(indexStart, indexEnd), 1)
 
-                curePro.CureSteps(i).pressureResult("MaxRamp") = vesselPress.MaxRamp(indexStart, indexEnd)
-                curePro.CureSteps(i).pressureResult("MinRamp") = vesselPress.MinRamp(indexStart, indexEnd)
-                curePro.CureSteps(i).pressureResult("AvgRamp") = vesselPress.AverageRamp(indexStart, indexEnd)
+                curePro.CureSteps(i).pressureResult("MaxRamp") = Math.Round(vesselPress.MaxRamp(indexStart, indexEnd), 1)
+                curePro.CureSteps(i).pressureResult("MinRamp") = Math.Round(vesselPress.MinRamp(indexStart, indexEnd), 1)
+                curePro.CureSteps(i).pressureResult("AvgRamp") = Math.Round(vesselPress.AverageRamp(indexStart, indexEnd), 1)
 
 
 
                 'Check pressure for passing
                 If curePro.CureSteps(i).pressureResult("Min") < curePro.CureSteps(i).pressureSet("SetPoint") + curePro.CureSteps(i).pressureSet("NegTol") Then curePro.CureSteps(i).pressurePass = False
                 If curePro.CureSteps(i).pressureResult("Max") > curePro.CureSteps(i).pressureSet("SetPoint") + curePro.CureSteps(i).pressureSet("PosTol") Then curePro.CureSteps(i).pressurePass = False
-                If curePro.CureSteps(i).pressureResult("MinRamp") < curePro.CureSteps(i).pressureSet("RampRate") + curePro.CureSteps(i).pressureSet("RampNegTol") Then curePro.CureSteps(i).pressurePass = False
-                If curePro.CureSteps(i).pressureResult("MaxRamp") > curePro.CureSteps(i).pressureSet("RampRate") + curePro.CureSteps(i).pressureSet("RampPosTol") Then curePro.CureSteps(i).pressurePass = False
+                If curePro.CureSteps(i).pressureResult("MinRamp") < curePro.CureSteps(i).pressureSet("RampRate") + curePro.CureSteps(i).pressureSet("RampNegTol") Then curePro.CureSteps(i).pressureRampPass = False
+                If curePro.CureSteps(i).pressureResult("MaxRamp") > curePro.CureSteps(i).pressureSet("RampRate") + curePro.CureSteps(i).pressureSet("RampPosTol") Then curePro.CureSteps(i).pressureRampPass = False
             Else
                 curePro.CureSteps(i).pressurePass = True
             End If
 
             'Calculate vac results for a given step
             If curePro.checkVac Then
-                curePro.CureSteps(i).vacResult("Max") = maxVac.Max(indexStart, indexEnd)
-                curePro.CureSteps(i).vacResult("Min") = minVac.Min(indexStart, indexEnd)
+                curePro.CureSteps(i).vacResult("Max") = Math.Round(maxVac.Max(indexStart, indexEnd), 1)
+                curePro.CureSteps(i).vacResult("Min") = Math.Round(minVac.Min(indexStart, indexEnd), 1)
 
                 ''Average vac
                 total = 0
@@ -664,7 +694,7 @@ Public Class MainForm
                     Next
                 Next
 
-                curePro.CureSteps(i).vacResult("Avg") = total / addCnt
+                curePro.CureSteps(i).vacResult("Avg") = Math.Round(total / addCnt, 1)
 
                 'Check vacuum for passing
                 If curePro.CureSteps(i).vacResult("Min") < curePro.CureSteps(i).vacSet("SetPoint") + curePro.CureSteps(i).vacSet("NegTol") Then curePro.CureSteps(i).vacPass = False
@@ -676,7 +706,7 @@ Public Class MainForm
 
 
             'Check for all passing
-            If curePro.CureSteps(i).vacPass And curePro.CureSteps(i).tempPass And curePro.CureSteps(i).pressurePass Then
+            If curePro.CureSteps(i).vacPass And curePro.CureSteps(i).tempPass And curePro.CureSteps(i).tempRampPass And curePro.CureSteps(i).pressurePass And curePro.CureSteps(i).pressureRampPass And curePro.CureSteps(i).stepTerminate Then
                 curePro.CureSteps(i).stepPass = True
             Else
                 curePro.CureSteps(i).stepPass = False
@@ -715,6 +745,7 @@ Public Class MainForm
                 curePro.curePass = False
             Next
         ElseIf UBound(curePro.CureSteps) = currentStep Then
+            curePro.CureSteps(currentStep).stepTerminate = False
             curePro.CureSteps(currentStep).stepPass = False
             curePro.curePass = False
             MsgBox("Failed to reach terminating conditions.")

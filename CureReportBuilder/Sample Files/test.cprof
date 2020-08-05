@@ -3,8 +3,8 @@
 	cureDoc, doc11232
 	cureDocRev,-
 	checkTemp,True
-	checkPressure,True
-	checkVac,True
+	checkPressure,False
+	checkVac,False
 	<Steps>
 		stepCount,2
 		<Step0>
@@ -18,9 +18,9 @@
 				RampNegTol,0
 			</pressureSet>
 			<tempSet>
-				setPoint,425
+				setPoint,350
 				PosTol,25
-				NegTol,-425
+				NegTol,-350
 				RampRate,5
 				RampPosTol,0
 				RampNegTol,-5
@@ -36,7 +36,7 @@
 			<termCond1>
 				Type,Temp
 				Condition,GREATER
-				Goal,400
+				Goal,350
 				TCNum,Lag
 			</termCond1>
 			<termCond2>
@@ -60,7 +60,7 @@
 				RampNegTol,0
 			</pressureSet>
 			<tempSet>
-				setPoint,425
+				setPoint,350
 				PosTol,25
 				NegTol,-25
 				RampRate,0
@@ -84,7 +84,7 @@
 			<termCond2>
 				Type,Temp
 				Condition,LESS
-				Goal,400
+				Goal,350
 				TCNum,Lag
 			</termCond2>
 			<termCondOper>
@@ -102,9 +102,9 @@
 				RampNegTol,0
 			</pressureSet>
 			<tempSet>
-				setPoint,425
+				setPoint,350
 				PosTol,25
-				NegTol,-425
+				NegTol,-350
 				RampRate,-5
 				RampPosTol,5
 				RampNegTol,0
