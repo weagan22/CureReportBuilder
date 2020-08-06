@@ -70,15 +70,16 @@ Partial Class MainForm
         Me.Txt_FilePath = New System.Windows.Forms.TextBox()
         Me.Btn_OpenFile = New System.Windows.Forms.Button()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.Box_TemplatePath = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Txt_TemplatePath = New System.Windows.Forms.TextBox()
         Me.Box_CureProfiles = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.Txt_CureProfilesPath = New System.Windows.Forms.TextBox()
         Me.Btn_LoadProfileFiles = New System.Windows.Forms.Button()
         Me.OpenCSVFileDialog = New System.Windows.Forms.OpenFileDialog()
         Me.OpenCureProfileFileDialog = New System.Windows.Forms.OpenFileDialog()
-        Me.Box_TemplatePath = New System.Windows.Forms.GroupBox()
-        Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Txt_TemplatePath = New System.Windows.Forms.TextBox()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.MenuStrip1.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
         Me.TabControl1.SuspendLayout()
@@ -104,10 +105,10 @@ Partial Class MainForm
         Me.Box_CureDataLocation.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
-        Me.Box_CureProfiles.SuspendLayout()
-        Me.TableLayoutPanel2.SuspendLayout()
         Me.Box_TemplatePath.SuspendLayout()
         Me.TableLayoutPanel5.SuspendLayout()
+        Me.Box_CureProfiles.SuspendLayout()
+        Me.TableLayoutPanel2.SuspendLayout()
         Me.SuspendLayout()
         '
         'MenuStrip1
@@ -158,6 +159,7 @@ Partial Class MainForm
         '
         'TabPage1
         '
+        Me.TabPage1.Controls.Add(Me.Button1)
         Me.TabPage1.Controls.Add(Me.GroupBox1)
         Me.TabPage1.Controls.Add(Me.Box_Technician)
         Me.TabPage1.Controls.Add(Me.Box_Vac)
@@ -181,7 +183,7 @@ Partial Class MainForm
         'GroupBox1
         '
         Me.GroupBox1.Controls.Add(Me.TableLayoutPanel3)
-        Me.GroupBox1.Location = New System.Drawing.Point(27, 224)
+        Me.GroupBox1.Location = New System.Drawing.Point(28, 223)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(264, 136)
         Me.GroupBox1.TabIndex = 11
@@ -586,6 +588,41 @@ Partial Class MainForm
         Me.TabPage2.Text = "TabPage2"
         Me.TabPage2.UseVisualStyleBackColor = True
         '
+        'Box_TemplatePath
+        '
+        Me.Box_TemplatePath.AutoSize = True
+        Me.Box_TemplatePath.Controls.Add(Me.TableLayoutPanel5)
+        Me.Box_TemplatePath.Location = New System.Drawing.Point(3, 116)
+        Me.Box_TemplatePath.Name = "Box_TemplatePath"
+        Me.Box_TemplatePath.Size = New System.Drawing.Size(646, 57)
+        Me.Box_TemplatePath.TabIndex = 2
+        Me.Box_TemplatePath.TabStop = False
+        Me.Box_TemplatePath.Text = "Cure Report Template"
+        '
+        'TableLayoutPanel5
+        '
+        Me.TableLayoutPanel5.ColumnCount = 2
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 102.0!))
+        Me.TableLayoutPanel5.Controls.Add(Me.Txt_TemplatePath, 0, 0)
+        Me.TableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel5.Location = New System.Drawing.Point(3, 16)
+        Me.TableLayoutPanel5.Name = "TableLayoutPanel5"
+        Me.TableLayoutPanel5.RowCount = 1
+        Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel5.Size = New System.Drawing.Size(640, 38)
+        Me.TableLayoutPanel5.TabIndex = 2
+        '
+        'Txt_TemplatePath
+        '
+        Me.Txt_TemplatePath.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Txt_TemplatePath.Location = New System.Drawing.Point(3, 9)
+        Me.Txt_TemplatePath.Name = "Txt_TemplatePath"
+        Me.Txt_TemplatePath.Size = New System.Drawing.Size(532, 20)
+        Me.Txt_TemplatePath.TabIndex = 0
+        Me.Txt_TemplatePath.Text = "C:\Users\Will Eagan\Source\repos\CureReportBuilder\CureReportBuilder\Sample Files" &
+    "\Cure Report_Template.xlsx"
+        '
         'Box_CureProfiles
         '
         Me.Box_CureProfiles.AutoSize = True
@@ -643,40 +680,14 @@ Partial Class MainForm
         Me.OpenCureProfileFileDialog.Filter = "Cure Profile Files (*.cprof)|*.cprof|All Files (*.*)|*.*"
         Me.OpenCureProfileFileDialog.ValidateNames = False
         '
-        'Box_TemplatePath
+        'Button1
         '
-        Me.Box_TemplatePath.AutoSize = True
-        Me.Box_TemplatePath.Controls.Add(Me.TableLayoutPanel5)
-        Me.Box_TemplatePath.Location = New System.Drawing.Point(3, 116)
-        Me.Box_TemplatePath.Name = "Box_TemplatePath"
-        Me.Box_TemplatePath.Size = New System.Drawing.Size(646, 57)
-        Me.Box_TemplatePath.TabIndex = 2
-        Me.Box_TemplatePath.TabStop = False
-        Me.Box_TemplatePath.Text = "Cure Report Template"
-        '
-        'TableLayoutPanel5
-        '
-        Me.TableLayoutPanel5.ColumnCount = 2
-        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 102.0!))
-        Me.TableLayoutPanel5.Controls.Add(Me.Txt_TemplatePath, 0, 0)
-        Me.TableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel5.Location = New System.Drawing.Point(3, 16)
-        Me.TableLayoutPanel5.Name = "TableLayoutPanel5"
-        Me.TableLayoutPanel5.RowCount = 1
-        Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel5.Size = New System.Drawing.Size(640, 38)
-        Me.TableLayoutPanel5.TabIndex = 2
-        '
-        'Txt_TemplatePath
-        '
-        Me.Txt_TemplatePath.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Txt_TemplatePath.Location = New System.Drawing.Point(3, 9)
-        Me.Txt_TemplatePath.Name = "Txt_TemplatePath"
-        Me.Txt_TemplatePath.Size = New System.Drawing.Size(532, 20)
-        Me.Txt_TemplatePath.TabIndex = 0
-        Me.Txt_TemplatePath.Text = "C:\Users\Will Eagan\Source\repos\CureReportBuilder\CureReportBuilder\Sample Files" &
-    "\Cure Report_Template.xlsx"
+        Me.Button1.Location = New System.Drawing.Point(532, 353)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(75, 23)
+        Me.Button1.TabIndex = 12
+        Me.Button1.Text = "Button1"
+        Me.Button1.UseVisualStyleBackColor = True
         '
         'MainForm
         '
@@ -730,12 +741,12 @@ Partial Class MainForm
         Me.TableLayoutPanel1.PerformLayout()
         Me.TabPage2.ResumeLayout(False)
         Me.TabPage2.PerformLayout()
-        Me.Box_CureProfiles.ResumeLayout(False)
-        Me.TableLayoutPanel2.ResumeLayout(False)
-        Me.TableLayoutPanel2.PerformLayout()
         Me.Box_TemplatePath.ResumeLayout(False)
         Me.TableLayoutPanel5.ResumeLayout(False)
         Me.TableLayoutPanel5.PerformLayout()
+        Me.Box_CureProfiles.ResumeLayout(False)
+        Me.TableLayoutPanel2.ResumeLayout(False)
+        Me.TableLayoutPanel2.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -795,4 +806,5 @@ Partial Class MainForm
     Friend WithEvents Box_TemplatePath As GroupBox
     Friend WithEvents TableLayoutPanel5 As TableLayoutPanel
     Friend WithEvents Txt_TemplatePath As TextBox
+    Friend WithEvents Button1 As Button
 End Class

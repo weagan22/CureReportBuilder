@@ -3,12 +3,12 @@
 	cureDoc, doc11232
 	cureDocRev,-
 	checkTemp,True
-	checkPressure,False
-	checkVac,False
+	checkPressure,True
+	checkVac,True
 	<Steps>
 		stepCount,2
 		<Step0>
-			stepName,0
+			stepName,Ramp Up
 			<pressureSet>
 				setPoint,0
 				PosTol,0
@@ -50,7 +50,7 @@
 			</termCondOper>
 		</Step0>
 		<Step1>
-			stepName,1
+			stepName,Dwell
 			<pressureSet>
 				setPoint,0
 				PosTol,0
@@ -92,7 +92,7 @@
 			</termCondOper>
 		</Step1>
 		<Step2>
-			stepName,2
+			stepName,Ramp Down
 			<pressureSet>
 				setPoint,0
 				PosTol,0
