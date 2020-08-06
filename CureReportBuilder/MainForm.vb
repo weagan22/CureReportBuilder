@@ -39,7 +39,7 @@ Public Class MainForm
     Dim minVac As DataSet = New DataSet(0, "minVac")
     Dim maxVac As DataSet = New DataSet(0, "maxVac")
 
-    Dim usrRunTC() As Integer = {1, 2}
+    Dim usrRunTC() As Integer = {1, 2, 4, 4}
     Dim usrRunVac() As Integer = {2, 3} ', 5}
 
 
@@ -63,10 +63,21 @@ Public Class MainForm
     Sub testRun()
         'loadCSVin("C:\Users\Will Eagan\Source\repos\CureReportBuilder\CureReportBuilder\Sample Files\DA-18-20 - Copy (2).csv")
         'loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\DA-18-20.csv")
-        loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\BATCH 38 JOB 101573, 101574 1-23-20 - Copy.CSV")
+        'loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\BATCH 38 JOB 101573, 101574 1-23-20 - Copy.CSV")
         ''loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\Autoclave Simple.CSV")
 
-        curePro = cureProfiles(3)
+        loadCSVin("S:\Manufacturing\Post Cure Reports\Programs\D11675 - ARRW SHROUD\RAW DATA\102673\102673 S2537.csv")
+
+        partValues("JobNum") = "102673"
+        partValues("PONum") =
+        partValues("PartNum") = "48777-100"
+        partValues("PartRev") = "E"
+        partValues("PartNom") = "ARRW COMPOSITE  SHROUD"
+        partValues("ProgramNum") = "D11675"
+        partValues("PartQty") = 1
+        Me.Txt_DataRecorder.Text = "S2537"
+
+        curePro = cureProfiles(0)
 
 
         Call loadCureData()
@@ -136,7 +147,7 @@ Public Class MainForm
         Dim Excel As Object
         Excel = CreateObject("Excel.Application")
         Excel.Visible = False
-        Excel.Workbooks.Open("C:\Users\Will Eagan\Source\repos\CureReportBuilder\CureReportBuilder\Sample Files\Cure Report_Template.xlsx")
+        Excel.Workbooks.Open("C:\Users\Will.Eagan\Source\repos\CureReportBuilder\CureReportBuilder\Sample Files\Cure Report_Template.xlsx")
 
         SwitchOff(Excel, True)
 
@@ -146,7 +157,7 @@ Public Class MainForm
         Dim mainSheet As Excel.Worksheet = Excel.Sheets.Item(1)
         Dim dataSheet As Excel.Worksheet = Excel.Sheets.Item(3)
 
-        mainSheet.Cells(2, 1) = "Job" & vbNewLine & partValues("JobNum") & vbNewLine & "Program" & vbNewLine & partValues("PONum")
+        mainSheet.Cells(2, 1) = "Job" & vbNewLine & partValues("JobNum") & vbNewLine & "Program" & vbNewLine & partValues("ProgramNum")
         formatFont(mainSheet.Cells(2, 1), "Job", 14, True, False, True)
         formatFont(mainSheet.Cells(2, 1), "Program", 14, True, False, True)
 
@@ -955,10 +966,11 @@ Public Class MainForm
                 curePro.CureSteps(currentStep).stepEnd = i
                 If UBound(curePro.CureSteps) = currentStep Then
                     curePro.CureSteps(currentStep).stepEnd = cureEnd
+                    currentStep += 1
                     Exit For
                 End If
 
-                currentStep = currentStep + 1
+                currentStep += 1
             End If
         Next
 
@@ -1355,14 +1367,14 @@ Public Class MainForm
         machType = "Unknown"
 
         'Reset partValues to nothing
-        partValues("JobNum") = String.Empty
-        partValues("PONum") = String.Empty
-        partValues("PartNum") = String.Empty
-        partValues("PartRev") = String.Empty
-        partValues("PartNom") = String.Empty
-        partValues("ProgramNum") = String.Empty
-        partValues("PartQty") = String.Empty
-        partValues("DataPath") = String.Empty
+        'partValues("JobNum") = String.Empty
+        'partValues("PONum") = String.Empty
+        'partValues("PartNum") = String.Empty
+        'partValues("PartRev") = String.Empty
+        'partValues("PartNom") = String.Empty
+        'partValues("ProgramNum") = String.Empty
+        'partValues("PartQty") = String.Empty
+        'partValues("DataPath") = String.Empty
 
         'Reset dateValues to null values
         dateValues("startTime") = Nothing
@@ -1383,12 +1395,20 @@ Public Class MainForm
                 While Not MyReader.EndOfData
                     Try
                         currentRow = MyReader.ReadFields()
-                        loadedDataSet.AddArr(currentRow)
+
+                        If UBound(currentRow) > 3 Then
+                            If currentRow(3) = "ooOoo" Then Exit Sub
+                            loadedDataSet.AddArr(currentRow)
+                        End If
+
+
+
+
 
                         'Finds file type
                         If InStr(currentRow(0), "Omega", 0) <> 0 Then
                             machType = "Omega"
-                            headerRow = 2
+                            headerRow = 0
                             headerCount = 2
                             If curePro.Name = "null" Then
                                 curePro.checkPressure = False

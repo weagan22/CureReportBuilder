@@ -1,7 +1,7 @@
 <Cure>
-	Name,ARRWPostCure
-	cureDoc,
-	cureDocRev,-
+	Name,POST CURE PROFILE 1
+	cureDoc,SPS-201
+	cureDocRev,B
 	checkTemp,True
 	checkPressure,False
 	checkVac,False
@@ -120,7 +120,7 @@
 			<termCond1>
 				Type,Temp
 				Condition,LESS
-				Goal,140
+				Goal,150
 				TCNum,Lag
 			</termCond1>
 			<termCond2>
