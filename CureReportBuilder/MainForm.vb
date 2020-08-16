@@ -66,7 +66,7 @@ Public Class MainForm
         loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\BATCH 38 JOB 101573, 101574 1-23-20 - Copy.CSV")
         ''loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\Autoclave Simple.CSV")
 
-        curePro = cureProfiles(3)
+        curePro = cureProfiles(Combo_CureProfile.SelectedIndex)
 
 
         Call loadCureData()

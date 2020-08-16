@@ -32,6 +32,7 @@ Partial Class MainForm
         Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
         Me.Box_CureProfile = New System.Windows.Forms.GroupBox()
@@ -79,7 +80,6 @@ Partial Class MainForm
         Me.Btn_LoadProfileFiles = New System.Windows.Forms.Button()
         Me.OpenCSVFileDialog = New System.Windows.Forms.OpenFileDialog()
         Me.OpenCureProfileFileDialog = New System.Windows.Forms.OpenFileDialog()
-        Me.Button1 = New System.Windows.Forms.Button()
         Me.MenuStrip1.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
         Me.TabControl1.SuspendLayout()
@@ -179,6 +179,15 @@ Partial Class MainForm
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "TabPage1"
         Me.TabPage1.UseVisualStyleBackColor = True
+        '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(532, 353)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(75, 23)
+        Me.Button1.TabIndex = 12
+        Me.Button1.Text = "Button1"
+        Me.Button1.UseVisualStyleBackColor = True
         '
         'GroupBox1
         '
@@ -656,8 +665,8 @@ Partial Class MainForm
         Me.Txt_CureProfilesPath.Name = "Txt_CureProfilesPath"
         Me.Txt_CureProfilesPath.Size = New System.Drawing.Size(532, 20)
         Me.Txt_CureProfilesPath.TabIndex = 0
-        Me.Txt_CureProfilesPath.Text = "C:\Users\Will Eagan\Source\Repos\CureReportBuilder\CureReportBuilder\Sample Files" &
-    ""
+        Me.Txt_CureProfilesPath.Text = "C:\Users\Will Eagan\Source\repos\CureReportBuilder\CureReportBuilder\Sample Files" &
+    "\Cure Profiles"
         '
         'Btn_LoadProfileFiles
         '
@@ -679,15 +688,6 @@ Partial Class MainForm
         Me.OpenCureProfileFileDialog.CheckFileExists = False
         Me.OpenCureProfileFileDialog.Filter = "Cure Profile Files (*.cprof)|*.cprof|All Files (*.*)|*.*"
         Me.OpenCureProfileFileDialog.ValidateNames = False
-        '
-        'Button1
-        '
-        Me.Button1.Location = New System.Drawing.Point(532, 353)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
-        Me.Button1.TabIndex = 12
-        Me.Button1.Text = "Button1"
-        Me.Button1.UseVisualStyleBackColor = True
         '
         'MainForm
         '
