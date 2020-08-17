@@ -37,7 +37,7 @@ Partial Class MainForm
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.Txt_FilePath = New System.Windows.Forms.TextBox()
         Me.Btn_OpenFile = New System.Windows.Forms.Button()
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Box_CureProfChoice = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
         Me.Box_CureProfile = New System.Windows.Forms.GroupBox()
         Me.Combo_CureProfile = New System.Windows.Forms.ComboBox()
@@ -84,6 +84,8 @@ Partial Class MainForm
         Me.Btn_LoadProfileFiles = New System.Windows.Forms.Button()
         Me.OpenCSVFileDialog = New System.Windows.Forms.OpenFileDialog()
         Me.OpenCureProfileFileDialog = New System.Windows.Forms.OpenFileDialog()
+        Me.TableLayoutPanel6 = New System.Windows.Forms.TableLayoutPanel()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.MenuStrip1.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
         Me.TabControl1.SuspendLayout()
@@ -91,7 +93,7 @@ Partial Class MainForm
         Me.TableLayoutPanel7.SuspendLayout()
         Me.Box_CureDataLocation.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
-        Me.GroupBox1.SuspendLayout()
+        Me.Box_CureProfChoice.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
         Me.Box_CureProfile.SuspendLayout()
         Me.TableLayoutPanel4.SuspendLayout()
@@ -117,6 +119,8 @@ Partial Class MainForm
         Me.TableLayoutPanel5.SuspendLayout()
         Me.Box_CureProfiles.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
+        Me.TableLayoutPanel6.SuspendLayout()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'MenuStrip1
@@ -124,7 +128,7 @@ Partial Class MainForm
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(759, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(761, 24)
         Me.MenuStrip1.TabIndex = 0
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -144,9 +148,9 @@ Partial Class MainForm
         'StatusStrip1
         '
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 525)
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 526)
         Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Size = New System.Drawing.Size(759, 22)
+        Me.StatusStrip1.Size = New System.Drawing.Size(761, 22)
         Me.StatusStrip1.TabIndex = 1
         '
         'ToolStripStatusLabel1
@@ -163,7 +167,7 @@ Partial Class MainForm
         Me.TabControl1.Location = New System.Drawing.Point(0, 24)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(759, 501)
+        Me.TabControl1.Size = New System.Drawing.Size(761, 502)
         Me.TabControl1.TabIndex = 2
         '
         'TabPage1
@@ -172,7 +176,7 @@ Partial Class MainForm
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(751, 475)
+        Me.TabPage1.Size = New System.Drawing.Size(753, 476)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Run Cure"
         Me.TabPage1.UseVisualStyleBackColor = True
@@ -183,9 +187,9 @@ Partial Class MainForm
         Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel7.Controls.Add(Me.Box_CureDataLocation, 1, 1)
-        Me.TableLayoutPanel7.Controls.Add(Me.GroupBox1, 1, 0)
         Me.TableLayoutPanel7.Controls.Add(Me.Box_RunParams, 1, 2)
         Me.TableLayoutPanel7.Controls.Add(Me.Box_RunLine, 1, 3)
+        Me.TableLayoutPanel7.Controls.Add(Me.TableLayoutPanel6, 1, 0)
         Me.TableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel7.Location = New System.Drawing.Point(3, 3)
         Me.TableLayoutPanel7.Name = "TableLayoutPanel7"
@@ -194,18 +198,18 @@ Partial Class MainForm
         Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60.0!))
         Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60.0!))
-        Me.TableLayoutPanel7.Size = New System.Drawing.Size(745, 469)
+        Me.TableLayoutPanel7.Size = New System.Drawing.Size(747, 470)
         Me.TableLayoutPanel7.TabIndex = 13
         '
         'Box_CureDataLocation
         '
-        Me.Box_CureDataLocation.AutoSize = True
         Me.Box_CureDataLocation.Controls.Add(Me.TableLayoutPanel1)
         Me.Box_CureDataLocation.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Box_CureDataLocation.Enabled = False
+        Me.Box_CureDataLocation.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Box_CureDataLocation.Location = New System.Drawing.Point(23, 153)
         Me.Box_CureDataLocation.Name = "Box_CureDataLocation"
-        Me.Box_CureDataLocation.Size = New System.Drawing.Size(719, 54)
+        Me.Box_CureDataLocation.Size = New System.Drawing.Size(721, 54)
         Me.Box_CureDataLocation.TabIndex = 0
         Me.Box_CureDataLocation.TabStop = False
         Me.Box_CureDataLocation.Text = "Cure Data Location"
@@ -222,37 +226,39 @@ Partial Class MainForm
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(713, 35)
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(715, 35)
         Me.TableLayoutPanel1.TabIndex = 2
         '
         'Txt_FilePath
         '
         Me.Txt_FilePath.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Txt_FilePath.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Txt_FilePath.Location = New System.Drawing.Point(3, 7)
         Me.Txt_FilePath.Name = "Txt_FilePath"
-        Me.Txt_FilePath.Size = New System.Drawing.Size(632, 20)
+        Me.Txt_FilePath.Size = New System.Drawing.Size(634, 20)
         Me.Txt_FilePath.TabIndex = 0
         Me.Txt_FilePath.Text = "File path..."
         '
         'Btn_OpenFile
         '
         Me.Btn_OpenFile.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Btn_OpenFile.Location = New System.Drawing.Point(641, 3)
+        Me.Btn_OpenFile.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Btn_OpenFile.Location = New System.Drawing.Point(643, 3)
         Me.Btn_OpenFile.Name = "Btn_OpenFile"
         Me.Btn_OpenFile.Size = New System.Drawing.Size(69, 29)
         Me.Btn_OpenFile.TabIndex = 1
         Me.Btn_OpenFile.Text = "Open File"
         Me.Btn_OpenFile.UseVisualStyleBackColor = True
         '
-        'GroupBox1
+        'Box_CureProfChoice
         '
-        Me.GroupBox1.Anchor = System.Windows.Forms.AnchorStyles.Top
-        Me.GroupBox1.Controls.Add(Me.TableLayoutPanel3)
-        Me.GroupBox1.Location = New System.Drawing.Point(250, 3)
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(264, 136)
-        Me.GroupBox1.TabIndex = 11
-        Me.GroupBox1.TabStop = False
+        Me.Box_CureProfChoice.Controls.Add(Me.TableLayoutPanel3)
+        Me.Box_CureProfChoice.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Box_CureProfChoice.Location = New System.Drawing.Point(3, 3)
+        Me.Box_CureProfChoice.Name = "Box_CureProfChoice"
+        Me.Box_CureProfChoice.Size = New System.Drawing.Size(375, 138)
+        Me.Box_CureProfChoice.TabIndex = 11
+        Me.Box_CureProfChoice.TabStop = False
         '
         'TableLayoutPanel3
         '
@@ -266,16 +272,17 @@ Partial Class MainForm
         Me.TableLayoutPanel3.RowCount = 2
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel3.Size = New System.Drawing.Size(258, 117)
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(369, 119)
         Me.TableLayoutPanel3.TabIndex = 12
         '
         'Box_CureProfile
         '
         Me.Box_CureProfile.Controls.Add(Me.Combo_CureProfile)
         Me.Box_CureProfile.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Box_CureProfile.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.5!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Underline), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Box_CureProfile.Location = New System.Drawing.Point(3, 3)
         Me.Box_CureProfile.Name = "Box_CureProfile"
-        Me.Box_CureProfile.Size = New System.Drawing.Size(252, 52)
+        Me.Box_CureProfile.Size = New System.Drawing.Size(363, 53)
         Me.Box_CureProfile.TabIndex = 7
         Me.Box_CureProfile.TabStop = False
         Me.Box_CureProfile.Text = "Cure Profile"
@@ -284,10 +291,11 @@ Partial Class MainForm
         '
         Me.Combo_CureProfile.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Combo_CureProfile.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.Combo_CureProfile.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Combo_CureProfile.FormattingEnabled = True
-        Me.Combo_CureProfile.Location = New System.Drawing.Point(6, 15)
+        Me.Combo_CureProfile.Location = New System.Drawing.Point(6, 16)
         Me.Combo_CureProfile.Name = "Combo_CureProfile"
-        Me.Combo_CureProfile.Size = New System.Drawing.Size(240, 21)
+        Me.Combo_CureProfile.Size = New System.Drawing.Size(351, 21)
         Me.Combo_CureProfile.TabIndex = 6
         '
         'TableLayoutPanel4
@@ -298,20 +306,20 @@ Partial Class MainForm
         Me.TableLayoutPanel4.Controls.Add(Me.Box_DocRev, 1, 0)
         Me.TableLayoutPanel4.Controls.Add(Me.Box_CureDoc, 0, 0)
         Me.TableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel4.Location = New System.Drawing.Point(3, 61)
+        Me.TableLayoutPanel4.Location = New System.Drawing.Point(3, 62)
         Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
         Me.TableLayoutPanel4.RowCount = 1
         Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel4.Size = New System.Drawing.Size(252, 53)
+        Me.TableLayoutPanel4.Size = New System.Drawing.Size(363, 54)
         Me.TableLayoutPanel4.TabIndex = 8
         '
         'Box_DocRev
         '
         Me.Box_DocRev.Controls.Add(Me.Txt_DocRev)
         Me.Box_DocRev.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Box_DocRev.Location = New System.Drawing.Point(195, 3)
+        Me.Box_DocRev.Location = New System.Drawing.Point(306, 3)
         Me.Box_DocRev.Name = "Box_DocRev"
-        Me.Box_DocRev.Size = New System.Drawing.Size(54, 47)
+        Me.Box_DocRev.Size = New System.Drawing.Size(54, 48)
         Me.Box_DocRev.TabIndex = 3
         Me.Box_DocRev.TabStop = False
         Me.Box_DocRev.Text = "Rev"
@@ -332,7 +340,7 @@ Partial Class MainForm
         Me.Box_CureDoc.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Box_CureDoc.Location = New System.Drawing.Point(3, 3)
         Me.Box_CureDoc.Name = "Box_CureDoc"
-        Me.Box_CureDoc.Size = New System.Drawing.Size(186, 47)
+        Me.Box_CureDoc.Size = New System.Drawing.Size(297, 48)
         Me.Box_CureDoc.TabIndex = 3
         Me.Box_CureDoc.TabStop = False
         Me.Box_CureDoc.Text = "Document"
@@ -343,7 +351,7 @@ Partial Class MainForm
         Me.Txt_CureDoc.Enabled = False
         Me.Txt_CureDoc.Location = New System.Drawing.Point(3, 16)
         Me.Txt_CureDoc.Name = "Txt_CureDoc"
-        Me.Txt_CureDoc.Size = New System.Drawing.Size(180, 20)
+        Me.Txt_CureDoc.Size = New System.Drawing.Size(291, 20)
         Me.Txt_CureDoc.TabIndex = 1
         Me.Txt_CureDoc.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -359,7 +367,7 @@ Partial Class MainForm
         Me.Box_RunParams.Enabled = False
         Me.Box_RunParams.Location = New System.Drawing.Point(23, 213)
         Me.Box_RunParams.Name = "Box_RunParams"
-        Me.Box_RunParams.Size = New System.Drawing.Size(719, 193)
+        Me.Box_RunParams.Size = New System.Drawing.Size(721, 194)
         Me.Box_RunParams.TabIndex = 13
         Me.Box_RunParams.TabStop = False
         '
@@ -624,11 +632,11 @@ Partial Class MainForm
         Me.Box_RunLine.Controls.Add(Me.Box_Technician, 0, 0)
         Me.Box_RunLine.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Box_RunLine.Enabled = False
-        Me.Box_RunLine.Location = New System.Drawing.Point(23, 412)
+        Me.Box_RunLine.Location = New System.Drawing.Point(23, 413)
         Me.Box_RunLine.Name = "Box_RunLine"
         Me.Box_RunLine.RowCount = 1
         Me.Box_RunLine.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.Box_RunLine.Size = New System.Drawing.Size(719, 54)
+        Me.Box_RunLine.Size = New System.Drawing.Size(721, 54)
         Me.Box_RunLine.TabIndex = 14
         '
         'Btn_Run
@@ -636,7 +644,7 @@ Partial Class MainForm
         Me.Btn_Run.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Btn_Run.FlatAppearance.BorderSize = 2
         Me.Btn_Run.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.Btn_Run.Location = New System.Drawing.Point(556, 3)
+        Me.Btn_Run.Location = New System.Drawing.Point(558, 3)
         Me.Btn_Run.Name = "Btn_Run"
         Me.Btn_Run.Size = New System.Drawing.Size(160, 48)
         Me.Btn_Run.TabIndex = 12
@@ -647,7 +655,7 @@ Partial Class MainForm
         '
         Me.Box_Technician.Anchor = System.Windows.Forms.AnchorStyles.Right
         Me.Box_Technician.Controls.Add(Me.Txt_Technician)
-        Me.Box_Technician.Location = New System.Drawing.Point(389, 5)
+        Me.Box_Technician.Location = New System.Drawing.Point(391, 5)
         Me.Box_Technician.Name = "Box_Technician"
         Me.Box_Technician.Size = New System.Drawing.Size(161, 44)
         Me.Box_Technician.TabIndex = 10
@@ -670,7 +678,7 @@ Partial Class MainForm
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(751, 475)
+        Me.TabPage2.Size = New System.Drawing.Size(767, 545)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Settings"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -764,14 +772,42 @@ Partial Class MainForm
         'OpenCureProfileFileDialog
         '
         Me.OpenCureProfileFileDialog.CheckFileExists = False
+        Me.OpenCureProfileFileDialog.CheckPathExists = False
         Me.OpenCureProfileFileDialog.Filter = "Cure Profile Files (*.cprof)|*.cprof|All Files (*.*)|*.*"
         Me.OpenCureProfileFileDialog.ValidateNames = False
+        '
+        'TableLayoutPanel6
+        '
+        Me.TableLayoutPanel6.ColumnCount = 4
+        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300.0!))
+        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel6.Controls.Add(Me.Box_CureProfChoice, 0, 0)
+        Me.TableLayoutPanel6.Controls.Add(Me.PictureBox1, 2, 0)
+        Me.TableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel6.Location = New System.Drawing.Point(23, 3)
+        Me.TableLayoutPanel6.Name = "TableLayoutPanel6"
+        Me.TableLayoutPanel6.RowCount = 1
+        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel6.Size = New System.Drawing.Size(721, 144)
+        Me.TableLayoutPanel6.TabIndex = 15
+        '
+        'PictureBox1
+        '
+        Me.PictureBox1.Image = Global.CureReportBuilder.My.Resources.Resources.Systima_Composites_2018
+        Me.PictureBox1.Location = New System.Drawing.Point(404, 3)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(294, 138)
+        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.PictureBox1.TabIndex = 12
+        Me.PictureBox1.TabStop = False
         '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(759, 547)
+        Me.ClientSize = New System.Drawing.Size(761, 548)
         Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.MenuStrip1)
@@ -786,11 +822,10 @@ Partial Class MainForm
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.TableLayoutPanel7.ResumeLayout(False)
-        Me.TableLayoutPanel7.PerformLayout()
         Me.Box_CureDataLocation.ResumeLayout(False)
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.TableLayoutPanel1.PerformLayout()
-        Me.GroupBox1.ResumeLayout(False)
+        Me.Box_CureProfChoice.ResumeLayout(False)
         Me.TableLayoutPanel3.ResumeLayout(False)
         Me.Box_CureProfile.ResumeLayout(False)
         Me.TableLayoutPanel4.ResumeLayout(False)
@@ -830,6 +865,8 @@ Partial Class MainForm
         Me.Box_CureProfiles.ResumeLayout(False)
         Me.TableLayoutPanel2.ResumeLayout(False)
         Me.TableLayoutPanel2.PerformLayout()
+        Me.TableLayoutPanel6.ResumeLayout(False)
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -883,7 +920,7 @@ Partial Class MainForm
     Friend WithEvents Txt_CureProfilesPath As TextBox
     Friend WithEvents Btn_LoadProfileFiles As Button
     Friend WithEvents OpenCureProfileFileDialog As OpenFileDialog
-    Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents Box_CureProfChoice As GroupBox
     Friend WithEvents TableLayoutPanel3 As TableLayoutPanel
     Friend WithEvents TableLayoutPanel4 As TableLayoutPanel
     Friend WithEvents Box_TemplatePath As GroupBox
@@ -894,4 +931,6 @@ Partial Class MainForm
     Friend WithEvents TableLayoutPanel7 As TableLayoutPanel
     Friend WithEvents Box_RunParams As GroupBox
     Friend WithEvents Box_RunLine As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel6 As TableLayoutPanel
+    Friend WithEvents PictureBox1 As PictureBox
 End Class

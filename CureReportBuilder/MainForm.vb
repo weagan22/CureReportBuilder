@@ -39,15 +39,22 @@ Public Class MainForm
 
     Dim usrRunTC() As Integer
     Dim usrRunVac() As Integer
-
-
+    Public Property settings As Object
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Call errorReset()
 
-        Txt_Technician.Text = Replace(Environment.UserName, ".", " ")
 
-        Call loadCureProfiles(Txt_CureProfilesPath.Text)
+
+        Txt_Technician.Text = Replace(Environment.UserName, ".", " ")
+        Txt_CureProfilesPath.Text = My.Settings.CureProfilePath
+        Txt_TemplatePath.Text = My.Settings.ReportTemplatePath
+
+        Try
+            Call loadCureProfiles(Txt_CureProfilesPath.Text)
+        Catch ex As Exception
+            If MsgBox(ex.Message, vbOKCancel, "Cure Profiles: Path Error") = vbCancel Then Me.Close()
+        End Try
 
         Me.Show()
 
@@ -185,7 +192,13 @@ Public Class MainForm
         Dim Excel As Object
         Excel = CreateObject("Excel.Application")
         Excel.Visible = False
-        Excel.Workbooks.Open(Txt_TemplatePath.Text)
+
+        Try
+            Excel.Workbooks.Open(Txt_TemplatePath.Text)
+        Catch ex As Exception
+            MsgBox("Failed to open Excel Report Template.")
+            Exit Sub
+        End Try
 
         SwitchOff(Excel, True)
 
@@ -1453,14 +1466,14 @@ Public Class MainForm
         machType = "Unknown"
 
         'Reset partValues to nothing
-        'partValues("JobNum") = String.Empty
-        'partValues("PONum") = String.Empty
-        'partValues("PartNum") = String.Empty
-        'partValues("PartRev") = String.Empty
-        'partValues("PartNom") = String.Empty
-        'partValues("ProgramNum") = String.Empty
-        'partValues("PartQty") = String.Empty
-        'partValues("DataPath") = String.Empty
+        partValues("JobNum") = String.Empty
+        partValues("PONum") = String.Empty
+        partValues("PartNum") = String.Empty
+        partValues("PartRev") = String.Empty
+        partValues("PartNom") = String.Empty
+        partValues("ProgramNum") = String.Empty
+        partValues("PartQty") = String.Empty
+        partValues("DataPath") = String.Empty
 
         'Reset dateValues to null values
         dateValues("startTime") = Nothing
@@ -1474,84 +1487,96 @@ Public Class MainForm
 
         If IO.File.Exists(inFile) AndAlso IO.Path.GetExtension(inFile).ToLower = ".csv" Then
 
-            Txt_JobNumber.Text = System.Text.RegularExpressions.Regex.Match(inFile, "\d{6}").Value
-            Txt_DataRecorder.Text = System.Text.RegularExpressions.Regex.Match(inFile, "S(\d{4})").Value
+            If System.Text.RegularExpressions.Regex.Match(inFile, "\d{6}").Value <> "" Then
+                Txt_JobNumber.Text = System.Text.RegularExpressions.Regex.Match(inFile, "\d{6}").Value
+            End If
+
+            If System.Text.RegularExpressions.Regex.Match(inFile, "S(\d{4})").Value <> "" Then
+                Txt_DataRecorder.Text = System.Text.RegularExpressions.Regex.Match(inFile, "S(\d{4})").Value
+            End If
+
+            If System.Text.RegularExpressions.Regex.Match(inFile, "D(\d{5})").Value <> "" Then
+                Txt_ProgramNumber.Text = System.Text.RegularExpressions.Regex.Match(inFile, "D(\d{5})").Value
+            End If
+
+
+
 
             Using MyReader As New Microsoft.VisualBasic.FileIO.TextFieldParser(inFile)
-                MyReader.TextFieldType = FileIO.FieldType.Delimited
-                MyReader.SetDelimiters({",", vbTab})
-                Dim currentRow As String()
-                Dim headerSet As Boolean = False
+                    MyReader.TextFieldType = FileIO.FieldType.Delimited
+                    MyReader.SetDelimiters({",", vbTab})
+                    Dim currentRow As String()
+                    Dim headerSet As Boolean = False
 
-                While Not MyReader.EndOfData
-                    Try
-                        currentRow = MyReader.ReadFields()
+                    While Not MyReader.EndOfData
+                        Try
+                            currentRow = MyReader.ReadFields()
 
-                        'Only check rows with greater than 4 columns
-                        If UBound(currentRow) > 3 Then
+                            'Only check rows with greater than 4 columns
+                            If UBound(currentRow) > 3 Then
 
-                            'Stop input for stop line symbol in Omega files
-                            If currentRow(3) = "ooOoo" Then
-                                Call setHeaderRow()
-                                Exit Sub
-                            End If
-
-                            'Stop input if first or second item isn't a date/time after 6 lines
-                            If Not loadedDataSet Is Nothing AndAlso headerSet = True Then
-                                If Not IsDate(currentRow(0)) And Not IsDate(currentRow(1)) Then
+                                'Stop input for stop line symbol in Omega files
+                                If currentRow(3) = "ooOoo" Then
                                     Call setHeaderRow()
                                     Exit Sub
                                 End If
-                            End If
 
-                            loadedDataSet.AddArr(currentRow)
-
-
-                            If headerSet = False Then
-                                If IsDate(currentRow(0)) Then
-                                    headerRow = UBound(loadedDataSet, 2)
-                                    headerSet = True
-                                ElseIf currentRow(0) <> "Date:" Then
-                                    If IsDate(currentRow(1)) Then
-                                        headerRow = UBound(loadedDataSet, 2)
-                                        headerSet = True
+                                'Stop input if first or second item isn't a date/time after 6 lines
+                                If Not loadedDataSet Is Nothing AndAlso headerSet = True Then
+                                    If Not IsDate(currentRow(0)) And Not IsDate(currentRow(1)) Then
+                                        Call setHeaderRow()
+                                        Exit Sub
                                     End If
                                 End If
+
+                                loadedDataSet.AddArr(currentRow)
+
+
+                                If headerSet = False Then
+                                    If IsDate(currentRow(0)) Then
+                                        headerRow = UBound(loadedDataSet, 2)
+                                        headerSet = True
+                                    ElseIf currentRow(0) <> "Date:" Then
+                                        If IsDate(currentRow(1)) Then
+                                            headerRow = UBound(loadedDataSet, 2)
+                                            headerSet = True
+                                        End If
+                                    End If
+                                End If
+
                             End If
 
-                        End If
 
 
 
 
+                            'Finds file type
+                            If InStr(currentRow(0), "Omega", 0) <> 0 Then
+                                machType = "Omega"
+                                headerCount = 2
+                                If curePro.Name = "null" Then
+                                    curePro.checkPressure = False
+                                    curePro.checkVac = False
+                                ElseIf curePro.checkPressure <> False And curePro.checkVac <> False Then
+                                    Throw New Exception("Omega TC reader data cannot be used to check this cure profile as is contains either pressure or vacuum requirements.")
+                                End If
 
-                        'Finds file type
-                        If InStr(currentRow(0), "Omega", 0) <> 0 Then
-                            machType = "Omega"
-                            headerCount = 2
-                            If curePro.Name = "null" Then
-                                curePro.checkPressure = False
-                                curePro.checkVac = False
-                            ElseIf curePro.checkPressure <> False And curePro.checkVac <> False Then
-                                Throw New Exception("Omega TC reader data cannot be used to check this cure profile as is contains either pressure or vacuum requirements.")
+                                Box_DataRecorder.Visible = True
+
+                            ElseIf currentRow(0) = "No." AndAlso InStr(currentRow(1), "Date", 0) <> 0 AndAlso InStr(currentRow(2), "Time", 0) <> 0 AndAlso InStr(currentRow(3), "Millitm", 0) <> 0 AndAlso InStr(currentRow(4), "{Air_TC}", 0) <> 0 Then
+                                machType = "Autoclave"
+                                headerCount = 2
                             End If
 
-                            Box_DataRecorder.Visible = True
+                        Catch ex As Microsoft.VisualBasic.FileIO.MalformedLineException
+                            MsgBox("Line " & ex.Message & "is not valid and will be skipped.")
+                        End Try
+                    End While
+                End Using
 
-                        ElseIf currentRow(0) = "No." AndAlso InStr(currentRow(1), "Date", 0) <> 0 AndAlso InStr(currentRow(2), "Time", 0) <> 0 AndAlso InStr(currentRow(3), "Millitm", 0) <> 0 AndAlso InStr(currentRow(4), "{Air_TC}", 0) <> 0 Then
-                            machType = "Autoclave"
-                            headerCount = 2
-                        End If
-
-                    Catch ex As Microsoft.VisualBasic.FileIO.MalformedLineException
-                        MsgBox("Line " & ex.Message & "is not valid and will be skipped.")
-                    End Try
-                End While
-            End Using
-
-            Call setHeaderRow()
-        Else
-            Throw New Exception("Input file is not a .csv, please load a new file.")
+                Call setHeaderRow()
+            Else
+                Throw New Exception("Input file is not a .csv, please load a new file.")
         End If
 
     End Sub
@@ -1559,7 +1584,7 @@ Public Class MainForm
     Sub setHeaderRow()
         headerRow = headerRow - headerCount
 
-        If headerRow < 0 Then
+        If headerRow <0 Then
             Throw New Exception("Header row cannot be less than 0. Please check to make sure your file has the correct amount of header lines for it's type.")
         End If
     End Sub
@@ -1625,17 +1650,27 @@ Public Class MainForm
 
     Private Sub Btn_OpenFile_Click(sender As Object, e As EventArgs) Handles Btn_OpenFile.Click
         If IO.File.Exists(Txt_FilePath.Text) Then
-            Call loadCSVin(Txt_FilePath.Text)
-            Call loadCureData()
-            Box_RunParams.Enabled = True
-            Box_RunLine.Enabled = True
+            Call openCureFile()
         ElseIf OpenCSVFileDialog.ShowDialog <> Windows.Forms.DialogResult.Cancel Then
             Txt_FilePath.Text = OpenCSVFileDialog.FileName
+            Call openCureFile()
+        End If
+    End Sub
+
+    Sub openCureFile()
+        Box_DataRecorder.Visible = False
+        Box_TC.Visible = False
+        Box_Vac.Visible = False
+        Try
             Call loadCSVin(Txt_FilePath.Text)
             Call loadCureData()
             Box_RunParams.Enabled = True
             Box_RunLine.Enabled = True
-        End If
+        Catch ex As Exception
+            If MsgBox(ex.Message, vbOKCancel, "Error") = vbCancel Then Me.Close()
+            Box_RunLine.Enabled = False
+        End Try
+
     End Sub
 
     Private Sub Txt_FilePath_TextChanged(sender As Object, e As EventArgs) Handles Txt_FilePath.TextChanged
@@ -1643,10 +1678,13 @@ Public Class MainForm
             Txt_FilePath.BackColor = SystemColors.Window
         Else
             Txt_FilePath.BackColor = Color.PeachPuff
+            Box_RunLine.Enabled = False
         End If
     End Sub
 
     Private Sub Btn_LoadProfileFiles_Click(sender As Object, e As EventArgs) Handles Btn_LoadProfileFiles.Click
+
+
         If IO.File.Exists(Txt_CureProfilesPath.Text) Then
             Call loadCureProfiles(Txt_CureProfilesPath.Text)
         ElseIf IO.Directory.Exists(Txt_CureProfilesPath.Text) Then
@@ -1655,6 +1693,8 @@ Public Class MainForm
             Txt_CureProfilesPath.Text = OpenCureProfileFileDialog.FileName
             Call loadCureProfiles(Txt_CureProfilesPath.Text)
         End If
+
+        My.Settings.CureProfilePath = Txt_CureProfilesPath.Text
     End Sub
 
     Private Sub Txt_CureProfiles_TextChanged(sender As Object, e As EventArgs) Handles Txt_CureProfilesPath.TextChanged
@@ -1678,9 +1718,19 @@ Public Class MainForm
         Txt_CureDoc.Text = curePro.cureDoc
         Txt_DocRev.Text = curePro.cureDocRev
 
+        Txt_FilePath.Text = "File path..."
         Box_CureDataLocation.Enabled = True
     End Sub
 
+    Private Sub Txt_TemplatePath_TextChanged(sender As Object, e As EventArgs) Handles Txt_TemplatePath.TextChanged
+        If IO.File.Exists(Txt_TemplatePath.Text) Then
+            My.Settings.ReportTemplatePath = Txt_TemplatePath.Text
+            Txt_TemplatePath.BackColor = SystemColors.Window
+        Else
+            Txt_TemplatePath.BackColor = Color.PeachPuff
+        End If
+
+    End Sub
 
 End Class
 
@@ -1747,4 +1797,6 @@ Module ArrayExtensions
     End Sub
 
 End Module
+
+
 

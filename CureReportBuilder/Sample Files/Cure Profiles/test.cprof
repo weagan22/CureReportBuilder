@@ -18,9 +18,9 @@
 				RampNegTol,0
 			</pressureSet>
 			<tempSet>
-				setPoint,350
+				setPoint,180
 				PosTol,25
-				NegTol,-350
+				NegTol,-180
 				RampRate,5
 				RampPosTol,0
 				RampNegTol,-5
@@ -36,7 +36,7 @@
 			<termCond1>
 				Type,Temp
 				Condition,GREATER
-				Goal,350
+				Goal,180
 				TCNum,Lag
 			</termCond1>
 			<termCond2>
@@ -60,8 +60,8 @@
 				RampNegTol,0
 			</pressureSet>
 			<tempSet>
-				setPoint,350
-				PosTol,25
+				setPoint,180
+				PosTol,100
 				NegTol,-25
 				RampRate,0
 				RampPosTol,10
@@ -84,7 +84,7 @@
 			<termCond2>
 				Type,Temp
 				Condition,LESS
-				Goal,350
+				Goal,165
 				TCNum,Lag
 			</termCond2>
 			<termCondOper>
@@ -102,9 +102,9 @@
 				RampNegTol,0
 			</pressureSet>
 			<tempSet>
-				setPoint,350
-				PosTol,25
-				NegTol,-350
+				setPoint,180
+				PosTol,0
+				NegTol,-180
 				RampRate,-5
 				RampPosTol,5
 				RampNegTol,0

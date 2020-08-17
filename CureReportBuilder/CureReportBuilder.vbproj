@@ -73,9 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataSet.vb" />
-    <Compile Include="DictionaryProxy.vb" />
     <Compile Include="CureProfile.vb" />
-    <Compile Include="Extensions.vb" />
     <Compile Include="MainForm.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -159,6 +157,12 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SysCompLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Systima Composites 2018.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
