@@ -1649,9 +1649,7 @@ Public Class MainForm
 #End Region
 
     Private Sub Btn_OpenFile_Click(sender As Object, e As EventArgs) Handles Btn_OpenFile.Click
-        If IO.File.Exists(Txt_FilePath.Text) Then
-            Call openCureFile()
-        ElseIf OpenCSVFileDialog.ShowDialog <> Windows.Forms.DialogResult.Cancel Then
+        If OpenCSVFileDialog.ShowDialog <> Windows.Forms.DialogResult.Cancel Then
             Txt_FilePath.Text = OpenCSVFileDialog.FileName
             Call openCureFile()
         End If
@@ -1676,6 +1674,7 @@ Public Class MainForm
     Private Sub Txt_FilePath_TextChanged(sender As Object, e As EventArgs) Handles Txt_FilePath.TextChanged
         If IO.File.Exists(Txt_FilePath.Text) Then
             Txt_FilePath.BackColor = SystemColors.Window
+            Call openCureFile()
         Else
             Txt_FilePath.BackColor = Color.PeachPuff
             Box_RunLine.Enabled = False
@@ -1732,6 +1731,21 @@ Public Class MainForm
 
     End Sub
 
+    Private Sub Btn_ClearCells_Click(sender As Object, e As EventArgs) Handles Btn_ClearCells.Click
+        Txt_JobNumber.Text = ""
+        Txt_ProgramNumber.Text = ""
+        Txt_DataRecorder.Text = "S"
+        Txt_PartNumber.Text = ""
+        Txt_Revision.Text = ""
+        Txt_Qty.Text = ""
+        Txt_PartDesc.Text = ""
+
+        Box_RunLine.Enabled = False
+    End Sub
+
+    Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
+        Me.Close()
+    End Sub
 End Class
 
 

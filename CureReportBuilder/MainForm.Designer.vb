@@ -86,6 +86,7 @@ Partial Class MainForm
         Me.OpenCureProfileFileDialog = New System.Windows.Forms.OpenFileDialog()
         Me.TableLayoutPanel6 = New System.Windows.Forms.TableLayoutPanel()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.Btn_ClearCells = New System.Windows.Forms.Button()
         Me.MenuStrip1.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
         Me.TabControl1.SuspendLayout()
@@ -142,7 +143,7 @@ Partial Class MainForm
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(93, 22)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ExitToolStripMenuItem.Text = "Exit"
         '
         'StatusStrip1
@@ -364,7 +365,6 @@ Partial Class MainForm
         Me.Box_RunParams.Controls.Add(Me.Box_ProgramNumber)
         Me.Box_RunParams.Controls.Add(Me.Box_DataRecorder)
         Me.Box_RunParams.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Box_RunParams.Enabled = False
         Me.Box_RunParams.Location = New System.Drawing.Point(23, 213)
         Me.Box_RunParams.Name = "Box_RunParams"
         Me.Box_RunParams.Size = New System.Drawing.Size(721, 194)
@@ -373,6 +373,7 @@ Partial Class MainForm
         '
         'Box_PartInfo
         '
+        Me.Box_PartInfo.Controls.Add(Me.Btn_ClearCells)
         Me.Box_PartInfo.Controls.Add(Me.Box_PartNumber)
         Me.Box_PartInfo.Controls.Add(Me.Box_Revision)
         Me.Box_PartInfo.Controls.Add(Me.Box_PartDesc)
@@ -446,7 +447,7 @@ Partial Class MainForm
         Me.Box_Qty.Controls.Add(Me.Txt_Qty)
         Me.Box_Qty.Location = New System.Drawing.Point(198, 20)
         Me.Box_Qty.Name = "Box_Qty"
-        Me.Box_Qty.Size = New System.Drawing.Size(114, 44)
+        Me.Box_Qty.Size = New System.Drawing.Size(51, 44)
         Me.Box_Qty.TabIndex = 3
         Me.Box_Qty.TabStop = False
         Me.Box_Qty.Text = "Qty"
@@ -456,7 +457,7 @@ Partial Class MainForm
         Me.Txt_Qty.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Txt_Qty.Location = New System.Drawing.Point(3, 16)
         Me.Txt_Qty.Name = "Txt_Qty"
-        Me.Txt_Qty.Size = New System.Drawing.Size(108, 20)
+        Me.Txt_Qty.Size = New System.Drawing.Size(45, 20)
         Me.Txt_Qty.TabIndex = 1
         Me.Txt_Qty.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -678,7 +679,7 @@ Partial Class MainForm
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(767, 545)
+        Me.TabPage2.Size = New System.Drawing.Size(753, 476)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Settings"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -802,6 +803,15 @@ Partial Class MainForm
         Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.PictureBox1.TabIndex = 12
         Me.PictureBox1.TabStop = False
+        '
+        'Btn_ClearCells
+        '
+        Me.Btn_ClearCells.Location = New System.Drawing.Point(264, 24)
+        Me.Btn_ClearCells.Name = "Btn_ClearCells"
+        Me.Btn_ClearCells.Size = New System.Drawing.Size(104, 38)
+        Me.Btn_ClearCells.TabIndex = 4
+        Me.Btn_ClearCells.Text = "Clear Cells"
+        Me.Btn_ClearCells.UseVisualStyleBackColor = True
         '
         'MainForm
         '
@@ -933,4 +943,5 @@ Partial Class MainForm
     Friend WithEvents Box_RunLine As TableLayoutPanel
     Friend WithEvents TableLayoutPanel6 As TableLayoutPanel
     Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents Btn_ClearCells As Button
 End Class
