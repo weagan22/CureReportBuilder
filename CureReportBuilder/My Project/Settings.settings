@@ -3,10 +3,10 @@
   <Profiles />
   <Settings>
     <Setting Name="CureProfilePath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Users\Will Eagan\Source\repos\CureReportBuilder\CureReportBuilder\Sample Files\Cure Profiles</Value>
+      <Value Profile="(Default)">S:\Engineering\Functional Groups\Composites\Macros\CureReportFiles\Cure Profiles</Value>
     </Setting>
     <Setting Name="ReportTemplatePath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Users\Will Eagan\Source\repos\CureReportBuilder\CureReportBuilder\Sample Files\Cure Report_Template.xlsx</Value>
+      <Value Profile="(Default)">S:\Engineering\Functional Groups\Composites\Macros\CureReportFiles\Cure Report_Template.xlsx</Value>
     </Setting>
   </Settings>
 </SettingsFile>

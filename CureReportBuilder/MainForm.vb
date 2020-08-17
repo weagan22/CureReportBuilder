@@ -39,7 +39,7 @@ Public Class MainForm
 
     Dim usrRunTC() As Integer
     Dim usrRunVac() As Integer
-    Public Property settings As Object
+
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Call errorReset()
@@ -63,6 +63,7 @@ Public Class MainForm
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Btn_Run.Click
         testRun()
+        Box_RunLine.Enabled = False
     End Sub
 
     Sub testRun()
@@ -1461,9 +1462,28 @@ Public Class MainForm
         vessel_TC = New DataSet(0, "vessel_TC")
         vesselPress = New DataSet(0, "vessel_Press")
 
+        leadTC = New DataSet(0, "leadTC")
+        lagTC = New DataSet(0, "lagTC")
+
+        minVac = New DataSet(0, "minVac")
+        maxVac = New DataSet(0, "maxVac")
+
+        usrRunTC.clearArr()
+        usrRunVac.clearArr()
 
         'Reset machType to null
         machType = "Unknown"
+
+        equipSerialNum = ""
+
+        dataCnt = 0
+        headerRow = 0
+        headerCount = 2
+
+        cureStart = 0
+        cureEnd = 0
+
+        stepVal = 2
 
         'Reset partValues to nothing
         partValues("JobNum") = String.Empty

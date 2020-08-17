@@ -752,8 +752,8 @@ Partial Class MainForm
         Me.Txt_TemplatePath.Name = "Txt_TemplatePath"
         Me.Txt_TemplatePath.Size = New System.Drawing.Size(532, 20)
         Me.Txt_TemplatePath.TabIndex = 0
-        Me.Txt_TemplatePath.Text = "C:\Users\Will Eagan\Source\repos\CureReportBuilder\CureReportBuilder\Sample Files" &
-    "\Cure Report_Template.xlsx"
+        Me.Txt_TemplatePath.Text = "S:\Engineering\Functional Groups\Composites\Macros\CureReportFiles\Cure Profiles\" &
+    "Cure Report_Template.xlsx"
         '
         'Box_CureProfiles
         '
@@ -788,8 +788,7 @@ Partial Class MainForm
         Me.Txt_CureProfilesPath.Name = "Txt_CureProfilesPath"
         Me.Txt_CureProfilesPath.Size = New System.Drawing.Size(532, 20)
         Me.Txt_CureProfilesPath.TabIndex = 0
-        Me.Txt_CureProfilesPath.Text = "C:\Users\Will Eagan\Source\repos\CureReportBuilder\CureReportBuilder\Sample Files" &
-    "\Cure Profiles"
+        Me.Txt_CureProfilesPath.Text = "S:\Engineering\Functional Groups\Composites\Macros\CureReportFiles\Cure Profiles"
         '
         'Btn_LoadProfileFiles
         '
@@ -824,7 +823,7 @@ Partial Class MainForm
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "MainForm"
-        Me.Text = "Cure Report Builder 0.0.0"
+        Me.Text = "Cure Report Builder 0.0.1"
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
         Me.StatusStrip1.ResumeLayout(False)
