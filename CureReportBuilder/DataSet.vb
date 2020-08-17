@@ -14,7 +14,7 @@
         ReDim ramp(UBound(values))
 
         Dim startVal As Integer = stepRate \ 2
-        If startVal = 1 Then startVal = 2
+        'If startVal = 0 Then startVal = 2
 
         Dim i As Integer
         For i = startVal To UBound(values) - (stepRate \ 2)

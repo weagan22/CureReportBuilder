@@ -32,7 +32,11 @@ Partial Class MainForm
         Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.TableLayoutPanel7 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Box_CureDataLocation = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Txt_FilePath = New System.Windows.Forms.TextBox()
+        Me.Btn_OpenFile = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
         Me.Box_CureProfile = New System.Windows.Forms.GroupBox()
@@ -42,8 +46,16 @@ Partial Class MainForm
         Me.Txt_DocRev = New System.Windows.Forms.TextBox()
         Me.Box_CureDoc = New System.Windows.Forms.GroupBox()
         Me.Txt_CureDoc = New System.Windows.Forms.TextBox()
-        Me.Box_Technician = New System.Windows.Forms.GroupBox()
-        Me.Txt_Technician = New System.Windows.Forms.TextBox()
+        Me.Box_RunParams = New System.Windows.Forms.GroupBox()
+        Me.Box_PartInfo = New System.Windows.Forms.GroupBox()
+        Me.Box_PartNumber = New System.Windows.Forms.GroupBox()
+        Me.Txt_PartNumber = New System.Windows.Forms.TextBox()
+        Me.Box_Revision = New System.Windows.Forms.GroupBox()
+        Me.Txt_Revision = New System.Windows.Forms.TextBox()
+        Me.Box_PartDesc = New System.Windows.Forms.GroupBox()
+        Me.Txt_PartDesc = New System.Windows.Forms.TextBox()
+        Me.Box_Qty = New System.Windows.Forms.GroupBox()
+        Me.Txt_Qty = New System.Windows.Forms.TextBox()
         Me.Box_Vac = New System.Windows.Forms.GroupBox()
         Me.Data_Vac = New System.Windows.Forms.DataGridView()
         Me.DataGridViewCheckBoxColumn1 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
@@ -52,24 +64,16 @@ Partial Class MainForm
         Me.Data_TC = New System.Windows.Forms.DataGridView()
         Me.Used = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.TCNum = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Box_DataRecorder = New System.Windows.Forms.GroupBox()
-        Me.Txt_DataRecorder = New System.Windows.Forms.TextBox()
-        Me.Box_Qty = New System.Windows.Forms.GroupBox()
-        Me.Txt_Qty = New System.Windows.Forms.TextBox()
         Me.Box_JobNumber = New System.Windows.Forms.GroupBox()
         Me.Txt_JobNumber = New System.Windows.Forms.TextBox()
-        Me.Box_PartDesc = New System.Windows.Forms.GroupBox()
-        Me.Txt_PartDesc = New System.Windows.Forms.TextBox()
         Me.Box_ProgramNumber = New System.Windows.Forms.GroupBox()
         Me.Txt_ProgramNumber = New System.Windows.Forms.TextBox()
-        Me.Box_Revision = New System.Windows.Forms.GroupBox()
-        Me.Txt_Revision = New System.Windows.Forms.TextBox()
-        Me.Box_PartNumber = New System.Windows.Forms.GroupBox()
-        Me.TxtPartNumber = New System.Windows.Forms.TextBox()
-        Me.Box_CureDataLocation = New System.Windows.Forms.GroupBox()
-        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Txt_FilePath = New System.Windows.Forms.TextBox()
-        Me.Btn_OpenFile = New System.Windows.Forms.Button()
+        Me.Box_DataRecorder = New System.Windows.Forms.GroupBox()
+        Me.Txt_DataRecorder = New System.Windows.Forms.TextBox()
+        Me.Box_RunLine = New System.Windows.Forms.TableLayoutPanel()
+        Me.Btn_Run = New System.Windows.Forms.Button()
+        Me.Box_Technician = New System.Windows.Forms.GroupBox()
+        Me.Txt_Technician = New System.Windows.Forms.TextBox()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.Box_TemplatePath = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
@@ -84,26 +88,30 @@ Partial Class MainForm
         Me.StatusStrip1.SuspendLayout()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
+        Me.TableLayoutPanel7.SuspendLayout()
+        Me.Box_CureDataLocation.SuspendLayout()
+        Me.TableLayoutPanel1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
         Me.Box_CureProfile.SuspendLayout()
         Me.TableLayoutPanel4.SuspendLayout()
         Me.Box_DocRev.SuspendLayout()
         Me.Box_CureDoc.SuspendLayout()
-        Me.Box_Technician.SuspendLayout()
+        Me.Box_RunParams.SuspendLayout()
+        Me.Box_PartInfo.SuspendLayout()
+        Me.Box_PartNumber.SuspendLayout()
+        Me.Box_Revision.SuspendLayout()
+        Me.Box_PartDesc.SuspendLayout()
+        Me.Box_Qty.SuspendLayout()
         Me.Box_Vac.SuspendLayout()
         CType(Me.Data_Vac, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Box_TC.SuspendLayout()
         CType(Me.Data_TC, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.Box_DataRecorder.SuspendLayout()
-        Me.Box_Qty.SuspendLayout()
         Me.Box_JobNumber.SuspendLayout()
-        Me.Box_PartDesc.SuspendLayout()
         Me.Box_ProgramNumber.SuspendLayout()
-        Me.Box_Revision.SuspendLayout()
-        Me.Box_PartNumber.SuspendLayout()
-        Me.Box_CureDataLocation.SuspendLayout()
-        Me.TableLayoutPanel1.SuspendLayout()
+        Me.Box_DataRecorder.SuspendLayout()
+        Me.Box_RunLine.SuspendLayout()
+        Me.Box_Technician.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         Me.Box_TemplatePath.SuspendLayout()
         Me.TableLayoutPanel5.SuspendLayout()
@@ -116,7 +124,7 @@ Partial Class MainForm
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(668, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(1188, 24)
         Me.MenuStrip1.TabIndex = 0
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -136,9 +144,9 @@ Partial Class MainForm
         'StatusStrip1
         '
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 463)
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 686)
         Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Size = New System.Drawing.Size(668, 22)
+        Me.StatusStrip1.Size = New System.Drawing.Size(1188, 22)
         Me.StatusStrip1.TabIndex = 1
         '
         'ToolStripStatusLabel1
@@ -154,45 +162,92 @@ Partial Class MainForm
         Me.TabControl1.Location = New System.Drawing.Point(0, 27)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(668, 433)
+        Me.TabControl1.Size = New System.Drawing.Size(760, 507)
         Me.TabControl1.TabIndex = 2
         '
         'TabPage1
         '
-        Me.TabPage1.Controls.Add(Me.Button1)
-        Me.TabPage1.Controls.Add(Me.GroupBox1)
-        Me.TabPage1.Controls.Add(Me.Box_Technician)
-        Me.TabPage1.Controls.Add(Me.Box_Vac)
-        Me.TabPage1.Controls.Add(Me.Box_TC)
-        Me.TabPage1.Controls.Add(Me.Box_DataRecorder)
-        Me.TabPage1.Controls.Add(Me.Box_Qty)
-        Me.TabPage1.Controls.Add(Me.Box_JobNumber)
-        Me.TabPage1.Controls.Add(Me.Box_PartDesc)
-        Me.TabPage1.Controls.Add(Me.Box_ProgramNumber)
-        Me.TabPage1.Controls.Add(Me.Box_Revision)
-        Me.TabPage1.Controls.Add(Me.Box_PartNumber)
-        Me.TabPage1.Controls.Add(Me.Box_CureDataLocation)
+        Me.TabPage1.Controls.Add(Me.TableLayoutPanel7)
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(660, 407)
+        Me.TabPage1.Size = New System.Drawing.Size(752, 481)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "TabPage1"
         Me.TabPage1.UseVisualStyleBackColor = True
         '
-        'Button1
+        'TableLayoutPanel7
         '
-        Me.Button1.Location = New System.Drawing.Point(532, 353)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
-        Me.Button1.TabIndex = 12
-        Me.Button1.Text = "Button1"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.TableLayoutPanel7.ColumnCount = 2
+        Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel7.Controls.Add(Me.Box_CureDataLocation, 1, 1)
+        Me.TableLayoutPanel7.Controls.Add(Me.GroupBox1, 1, 0)
+        Me.TableLayoutPanel7.Controls.Add(Me.Box_RunParams, 1, 2)
+        Me.TableLayoutPanel7.Controls.Add(Me.Box_RunLine, 1, 3)
+        Me.TableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel7.Location = New System.Drawing.Point(3, 3)
+        Me.TableLayoutPanel7.Name = "TableLayoutPanel7"
+        Me.TableLayoutPanel7.RowCount = 4
+        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 150.0!))
+        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60.0!))
+        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60.0!))
+        Me.TableLayoutPanel7.Size = New System.Drawing.Size(746, 475)
+        Me.TableLayoutPanel7.TabIndex = 13
+        '
+        'Box_CureDataLocation
+        '
+        Me.Box_CureDataLocation.AutoSize = True
+        Me.Box_CureDataLocation.Controls.Add(Me.TableLayoutPanel1)
+        Me.Box_CureDataLocation.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Box_CureDataLocation.Enabled = False
+        Me.Box_CureDataLocation.Location = New System.Drawing.Point(23, 153)
+        Me.Box_CureDataLocation.Name = "Box_CureDataLocation"
+        Me.Box_CureDataLocation.Size = New System.Drawing.Size(720, 54)
+        Me.Box_CureDataLocation.TabIndex = 0
+        Me.Box_CureDataLocation.TabStop = False
+        Me.Box_CureDataLocation.Text = "Cure Data Location"
+        '
+        'TableLayoutPanel1
+        '
+        Me.TableLayoutPanel1.ColumnCount = 2
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75.0!))
+        Me.TableLayoutPanel1.Controls.Add(Me.Txt_FilePath, 0, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Btn_OpenFile, 1, 0)
+        Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(3, 16)
+        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
+        Me.TableLayoutPanel1.RowCount = 1
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(714, 35)
+        Me.TableLayoutPanel1.TabIndex = 2
+        '
+        'Txt_FilePath
+        '
+        Me.Txt_FilePath.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Txt_FilePath.Location = New System.Drawing.Point(3, 7)
+        Me.Txt_FilePath.Name = "Txt_FilePath"
+        Me.Txt_FilePath.Size = New System.Drawing.Size(633, 20)
+        Me.Txt_FilePath.TabIndex = 0
+        Me.Txt_FilePath.Text = "File path..."
+        '
+        'Btn_OpenFile
+        '
+        Me.Btn_OpenFile.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Btn_OpenFile.Location = New System.Drawing.Point(642, 3)
+        Me.Btn_OpenFile.Name = "Btn_OpenFile"
+        Me.Btn_OpenFile.Size = New System.Drawing.Size(69, 29)
+        Me.Btn_OpenFile.TabIndex = 1
+        Me.Btn_OpenFile.Text = "Open File"
+        Me.Btn_OpenFile.UseVisualStyleBackColor = True
         '
         'GroupBox1
         '
+        Me.GroupBox1.Anchor = System.Windows.Forms.AnchorStyles.Top
         Me.GroupBox1.Controls.Add(Me.TableLayoutPanel3)
-        Me.GroupBox1.Location = New System.Drawing.Point(28, 223)
+        Me.GroupBox1.Location = New System.Drawing.Point(251, 3)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(264, 136)
         Me.GroupBox1.TabIndex = 11
@@ -227,6 +282,7 @@ Partial Class MainForm
         'Combo_CureProfile
         '
         Me.Combo_CureProfile.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Combo_CureProfile.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Combo_CureProfile.FormattingEnabled = True
         Me.Combo_CureProfile.Location = New System.Drawing.Point(6, 15)
         Me.Combo_CureProfile.Name = "Combo_CureProfile"
@@ -290,29 +346,116 @@ Partial Class MainForm
         Me.Txt_CureDoc.TabIndex = 1
         Me.Txt_CureDoc.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
-        'Box_Technician
+        'Box_RunParams
         '
-        Me.Box_Technician.Controls.Add(Me.Txt_Technician)
-        Me.Box_Technician.Location = New System.Drawing.Point(329, 337)
-        Me.Box_Technician.Name = "Box_Technician"
-        Me.Box_Technician.Size = New System.Drawing.Size(161, 44)
-        Me.Box_Technician.TabIndex = 10
-        Me.Box_Technician.TabStop = False
-        Me.Box_Technician.Text = "Completed By:"
+        Me.Box_RunParams.Controls.Add(Me.Box_PartInfo)
+        Me.Box_RunParams.Controls.Add(Me.Box_Vac)
+        Me.Box_RunParams.Controls.Add(Me.Box_TC)
+        Me.Box_RunParams.Controls.Add(Me.Box_JobNumber)
+        Me.Box_RunParams.Controls.Add(Me.Box_ProgramNumber)
+        Me.Box_RunParams.Controls.Add(Me.Box_DataRecorder)
+        Me.Box_RunParams.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Box_RunParams.Enabled = False
+        Me.Box_RunParams.Location = New System.Drawing.Point(23, 213)
+        Me.Box_RunParams.Name = "Box_RunParams"
+        Me.Box_RunParams.Size = New System.Drawing.Size(720, 199)
+        Me.Box_RunParams.TabIndex = 13
+        Me.Box_RunParams.TabStop = False
         '
-        'Txt_Technician
+        'Box_PartInfo
         '
-        Me.Txt_Technician.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Txt_Technician.Location = New System.Drawing.Point(3, 16)
-        Me.Txt_Technician.Name = "Txt_Technician"
-        Me.Txt_Technician.Size = New System.Drawing.Size(155, 20)
-        Me.Txt_Technician.TabIndex = 1
+        Me.Box_PartInfo.Controls.Add(Me.Box_PartNumber)
+        Me.Box_PartInfo.Controls.Add(Me.Box_Revision)
+        Me.Box_PartInfo.Controls.Add(Me.Box_PartDesc)
+        Me.Box_PartInfo.Controls.Add(Me.Box_Qty)
+        Me.Box_PartInfo.Location = New System.Drawing.Point(6, 69)
+        Me.Box_PartInfo.Name = "Box_PartInfo"
+        Me.Box_PartInfo.Size = New System.Drawing.Size(382, 120)
+        Me.Box_PartInfo.TabIndex = 13
+        Me.Box_PartInfo.TabStop = False
+        Me.Box_PartInfo.Text = "Part Info"
+        '
+        'Box_PartNumber
+        '
+        Me.Box_PartNumber.Controls.Add(Me.Txt_PartNumber)
+        Me.Box_PartNumber.Location = New System.Drawing.Point(6, 19)
+        Me.Box_PartNumber.Name = "Box_PartNumber"
+        Me.Box_PartNumber.Size = New System.Drawing.Size(114, 44)
+        Me.Box_PartNumber.TabIndex = 2
+        Me.Box_PartNumber.TabStop = False
+        Me.Box_PartNumber.Text = "Part Number"
+        '
+        'Txt_PartNumber
+        '
+        Me.Txt_PartNumber.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Txt_PartNumber.Location = New System.Drawing.Point(3, 16)
+        Me.Txt_PartNumber.Name = "Txt_PartNumber"
+        Me.Txt_PartNumber.Size = New System.Drawing.Size(108, 20)
+        Me.Txt_PartNumber.TabIndex = 1
+        Me.Txt_PartNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Box_Revision
+        '
+        Me.Box_Revision.Controls.Add(Me.Txt_Revision)
+        Me.Box_Revision.Location = New System.Drawing.Point(129, 19)
+        Me.Box_Revision.Name = "Box_Revision"
+        Me.Box_Revision.Size = New System.Drawing.Size(63, 44)
+        Me.Box_Revision.TabIndex = 3
+        Me.Box_Revision.TabStop = False
+        Me.Box_Revision.Text = "Rev"
+        '
+        'Txt_Revision
+        '
+        Me.Txt_Revision.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Txt_Revision.Location = New System.Drawing.Point(3, 16)
+        Me.Txt_Revision.Name = "Txt_Revision"
+        Me.Txt_Revision.Size = New System.Drawing.Size(57, 20)
+        Me.Txt_Revision.TabIndex = 1
+        Me.Txt_Revision.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Box_PartDesc
+        '
+        Me.Box_PartDesc.Controls.Add(Me.Txt_PartDesc)
+        Me.Box_PartDesc.Location = New System.Drawing.Point(6, 69)
+        Me.Box_PartDesc.Name = "Box_PartDesc"
+        Me.Box_PartDesc.Size = New System.Drawing.Size(351, 44)
+        Me.Box_PartDesc.TabIndex = 3
+        Me.Box_PartDesc.TabStop = False
+        Me.Box_PartDesc.Text = "Part Nomenclature"
+        '
+        'Txt_PartDesc
+        '
+        Me.Txt_PartDesc.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Txt_PartDesc.Location = New System.Drawing.Point(3, 16)
+        Me.Txt_PartDesc.Name = "Txt_PartDesc"
+        Me.Txt_PartDesc.Size = New System.Drawing.Size(345, 20)
+        Me.Txt_PartDesc.TabIndex = 1
+        Me.Txt_PartDesc.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Box_Qty
+        '
+        Me.Box_Qty.Controls.Add(Me.Txt_Qty)
+        Me.Box_Qty.Location = New System.Drawing.Point(198, 20)
+        Me.Box_Qty.Name = "Box_Qty"
+        Me.Box_Qty.Size = New System.Drawing.Size(114, 44)
+        Me.Box_Qty.TabIndex = 3
+        Me.Box_Qty.TabStop = False
+        Me.Box_Qty.Text = "Qty"
+        '
+        'Txt_Qty
+        '
+        Me.Txt_Qty.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Txt_Qty.Location = New System.Drawing.Point(3, 16)
+        Me.Txt_Qty.Name = "Txt_Qty"
+        Me.Txt_Qty.Size = New System.Drawing.Size(108, 20)
+        Me.Txt_Qty.TabIndex = 1
+        Me.Txt_Qty.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Box_Vac
         '
         Me.Box_Vac.AutoSize = True
         Me.Box_Vac.Controls.Add(Me.Data_Vac)
-        Me.Box_Vac.Location = New System.Drawing.Point(496, 162)
+        Me.Box_Vac.Location = New System.Drawing.Point(557, 19)
         Me.Box_Vac.Name = "Box_Vac"
         Me.Box_Vac.Size = New System.Drawing.Size(160, 169)
         Me.Box_Vac.TabIndex = 9
@@ -364,7 +507,7 @@ Partial Class MainForm
         '
         Me.Box_TC.AutoSize = True
         Me.Box_TC.Controls.Add(Me.Data_TC)
-        Me.Box_TC.Location = New System.Drawing.Point(326, 162)
+        Me.Box_TC.Location = New System.Drawing.Point(391, 19)
         Me.Box_TC.Name = "Box_TC"
         Me.Box_TC.Size = New System.Drawing.Size(160, 169)
         Me.Box_TC.TabIndex = 8
@@ -412,47 +555,10 @@ Partial Class MainForm
         Me.TCNum.ReadOnly = True
         Me.TCNum.Width = 86
         '
-        'Box_DataRecorder
-        '
-        Me.Box_DataRecorder.Controls.Add(Me.Txt_DataRecorder)
-        Me.Box_DataRecorder.Location = New System.Drawing.Point(438, 78)
-        Me.Box_DataRecorder.Name = "Box_DataRecorder"
-        Me.Box_DataRecorder.Size = New System.Drawing.Size(149, 44)
-        Me.Box_DataRecorder.TabIndex = 3
-        Me.Box_DataRecorder.TabStop = False
-        Me.Box_DataRecorder.Text = "Data Recorder ID (S#)"
-        Me.Box_DataRecorder.Visible = False
-        '
-        'Txt_DataRecorder
-        '
-        Me.Txt_DataRecorder.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Txt_DataRecorder.Location = New System.Drawing.Point(3, 16)
-        Me.Txt_DataRecorder.Name = "Txt_DataRecorder"
-        Me.Txt_DataRecorder.Size = New System.Drawing.Size(143, 20)
-        Me.Txt_DataRecorder.TabIndex = 1
-        '
-        'Box_Qty
-        '
-        Me.Box_Qty.Controls.Add(Me.Txt_Qty)
-        Me.Box_Qty.Location = New System.Drawing.Point(123, 162)
-        Me.Box_Qty.Name = "Box_Qty"
-        Me.Box_Qty.Size = New System.Drawing.Size(114, 44)
-        Me.Box_Qty.TabIndex = 3
-        Me.Box_Qty.TabStop = False
-        Me.Box_Qty.Text = "Qty"
-        '
-        'Txt_Qty
-        '
-        Me.Txt_Qty.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Txt_Qty.Location = New System.Drawing.Point(3, 16)
-        Me.Txt_Qty.Name = "Txt_Qty"
-        Me.Txt_Qty.Size = New System.Drawing.Size(108, 20)
-        Me.Txt_Qty.TabIndex = 1
-        '
         'Box_JobNumber
         '
         Me.Box_JobNumber.Controls.Add(Me.Txt_JobNumber)
-        Me.Box_JobNumber.Location = New System.Drawing.Point(6, 162)
+        Me.Box_JobNumber.Location = New System.Drawing.Point(6, 19)
         Me.Box_JobNumber.Name = "Box_JobNumber"
         Me.Box_JobNumber.Size = New System.Drawing.Size(114, 44)
         Me.Box_JobNumber.TabIndex = 4
@@ -466,29 +572,12 @@ Partial Class MainForm
         Me.Txt_JobNumber.Name = "Txt_JobNumber"
         Me.Txt_JobNumber.Size = New System.Drawing.Size(108, 20)
         Me.Txt_JobNumber.TabIndex = 1
-        '
-        'Box_PartDesc
-        '
-        Me.Box_PartDesc.Controls.Add(Me.Txt_PartDesc)
-        Me.Box_PartDesc.Location = New System.Drawing.Point(8, 112)
-        Me.Box_PartDesc.Name = "Box_PartDesc"
-        Me.Box_PartDesc.Size = New System.Drawing.Size(351, 44)
-        Me.Box_PartDesc.TabIndex = 3
-        Me.Box_PartDesc.TabStop = False
-        Me.Box_PartDesc.Text = "Part Description"
-        '
-        'Txt_PartDesc
-        '
-        Me.Txt_PartDesc.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Txt_PartDesc.Location = New System.Drawing.Point(3, 16)
-        Me.Txt_PartDesc.Name = "Txt_PartDesc"
-        Me.Txt_PartDesc.Size = New System.Drawing.Size(345, 20)
-        Me.Txt_PartDesc.TabIndex = 1
+        Me.Txt_JobNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Box_ProgramNumber
         '
         Me.Box_ProgramNumber.Controls.Add(Me.Txt_ProgramNumber)
-        Me.Box_ProgramNumber.Location = New System.Drawing.Point(245, 62)
+        Me.Box_ProgramNumber.Location = New System.Drawing.Point(126, 19)
         Me.Box_ProgramNumber.Name = "Box_ProgramNumber"
         Me.Box_ProgramNumber.Size = New System.Drawing.Size(114, 44)
         Me.Box_ProgramNumber.TabIndex = 3
@@ -502,88 +591,76 @@ Partial Class MainForm
         Me.Txt_ProgramNumber.Name = "Txt_ProgramNumber"
         Me.Txt_ProgramNumber.Size = New System.Drawing.Size(108, 20)
         Me.Txt_ProgramNumber.TabIndex = 1
+        Me.Txt_ProgramNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
-        'Box_Revision
+        'Box_DataRecorder
         '
-        Me.Box_Revision.Controls.Add(Me.Txt_Revision)
-        Me.Box_Revision.Location = New System.Drawing.Point(128, 62)
-        Me.Box_Revision.Name = "Box_Revision"
-        Me.Box_Revision.Size = New System.Drawing.Size(114, 44)
-        Me.Box_Revision.TabIndex = 3
-        Me.Box_Revision.TabStop = False
-        Me.Box_Revision.Text = "Revision"
+        Me.Box_DataRecorder.Controls.Add(Me.Txt_DataRecorder)
+        Me.Box_DataRecorder.Location = New System.Drawing.Point(246, 19)
+        Me.Box_DataRecorder.Name = "Box_DataRecorder"
+        Me.Box_DataRecorder.Size = New System.Drawing.Size(142, 44)
+        Me.Box_DataRecorder.TabIndex = 3
+        Me.Box_DataRecorder.TabStop = False
+        Me.Box_DataRecorder.Text = "Data Recorder ID (S#)"
+        Me.Box_DataRecorder.Visible = False
         '
-        'Txt_Revision
+        'Txt_DataRecorder
         '
-        Me.Txt_Revision.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Txt_Revision.Location = New System.Drawing.Point(3, 16)
-        Me.Txt_Revision.Name = "Txt_Revision"
-        Me.Txt_Revision.Size = New System.Drawing.Size(108, 20)
-        Me.Txt_Revision.TabIndex = 1
+        Me.Txt_DataRecorder.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Txt_DataRecorder.Location = New System.Drawing.Point(3, 16)
+        Me.Txt_DataRecorder.Name = "Txt_DataRecorder"
+        Me.Txt_DataRecorder.Size = New System.Drawing.Size(136, 20)
+        Me.Txt_DataRecorder.TabIndex = 1
+        Me.Txt_DataRecorder.Text = "S"
+        Me.Txt_DataRecorder.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
-        'Box_PartNumber
+        'Box_RunLine
         '
-        Me.Box_PartNumber.Controls.Add(Me.TxtPartNumber)
-        Me.Box_PartNumber.Location = New System.Drawing.Point(8, 62)
-        Me.Box_PartNumber.Name = "Box_PartNumber"
-        Me.Box_PartNumber.Size = New System.Drawing.Size(114, 44)
-        Me.Box_PartNumber.TabIndex = 2
-        Me.Box_PartNumber.TabStop = False
-        Me.Box_PartNumber.Text = "Part Number"
+        Me.Box_RunLine.ColumnCount = 2
+        Me.Box_RunLine.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 77.04918!))
+        Me.Box_RunLine.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22.95082!))
+        Me.Box_RunLine.Controls.Add(Me.Btn_Run, 1, 0)
+        Me.Box_RunLine.Controls.Add(Me.Box_Technician, 0, 0)
+        Me.Box_RunLine.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Box_RunLine.Enabled = False
+        Me.Box_RunLine.Location = New System.Drawing.Point(23, 418)
+        Me.Box_RunLine.Name = "Box_RunLine"
+        Me.Box_RunLine.RowCount = 1
+        Me.Box_RunLine.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.Box_RunLine.Size = New System.Drawing.Size(720, 54)
+        Me.Box_RunLine.TabIndex = 14
         '
-        'TxtPartNumber
+        'Btn_Run
         '
-        Me.TxtPartNumber.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TxtPartNumber.Location = New System.Drawing.Point(3, 16)
-        Me.TxtPartNumber.Name = "TxtPartNumber"
-        Me.TxtPartNumber.Size = New System.Drawing.Size(108, 20)
-        Me.TxtPartNumber.TabIndex = 1
+        Me.Btn_Run.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Btn_Run.FlatAppearance.BorderSize = 2
+        Me.Btn_Run.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Btn_Run.Location = New System.Drawing.Point(557, 3)
+        Me.Btn_Run.Name = "Btn_Run"
+        Me.Btn_Run.Size = New System.Drawing.Size(160, 48)
+        Me.Btn_Run.TabIndex = 12
+        Me.Btn_Run.Text = "Run Output"
+        Me.Btn_Run.UseVisualStyleBackColor = True
         '
-        'Box_CureDataLocation
+        'Box_Technician
         '
-        Me.Box_CureDataLocation.AutoSize = True
-        Me.Box_CureDataLocation.Controls.Add(Me.TableLayoutPanel1)
-        Me.Box_CureDataLocation.Location = New System.Drawing.Point(8, 6)
-        Me.Box_CureDataLocation.Name = "Box_CureDataLocation"
-        Me.Box_CureDataLocation.Size = New System.Drawing.Size(636, 50)
-        Me.Box_CureDataLocation.TabIndex = 0
-        Me.Box_CureDataLocation.TabStop = False
-        Me.Box_CureDataLocation.Text = "Cure Data Location"
+        Me.Box_Technician.Anchor = System.Windows.Forms.AnchorStyles.Right
+        Me.Box_Technician.Controls.Add(Me.Txt_Technician)
+        Me.Box_Technician.Location = New System.Drawing.Point(390, 5)
+        Me.Box_Technician.Name = "Box_Technician"
+        Me.Box_Technician.Size = New System.Drawing.Size(161, 44)
+        Me.Box_Technician.TabIndex = 10
+        Me.Box_Technician.TabStop = False
+        Me.Box_Technician.Text = "Completed By:"
         '
-        'TableLayoutPanel1
+        'Txt_Technician
         '
-        Me.TableLayoutPanel1.ColumnCount = 2
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75.0!))
-        Me.TableLayoutPanel1.Controls.Add(Me.Txt_FilePath, 0, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.Btn_OpenFile, 1, 0)
-        Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(3, 16)
-        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
-        Me.TableLayoutPanel1.RowCount = 1
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(630, 31)
-        Me.TableLayoutPanel1.TabIndex = 2
-        '
-        'Txt_FilePath
-        '
-        Me.Txt_FilePath.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Txt_FilePath.Location = New System.Drawing.Point(3, 5)
-        Me.Txt_FilePath.Name = "Txt_FilePath"
-        Me.Txt_FilePath.Size = New System.Drawing.Size(549, 20)
-        Me.Txt_FilePath.TabIndex = 0
-        Me.Txt_FilePath.Text = "C:\Users\Will Eagan\Source\Repos\CureReportBuilder\CureReportBuilder\Sample Files" &
-    "\DA-18-20 - Copy.csv"
-        '
-        'Btn_OpenFile
-        '
-        Me.Btn_OpenFile.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Btn_OpenFile.Location = New System.Drawing.Point(558, 3)
-        Me.Btn_OpenFile.Name = "Btn_OpenFile"
-        Me.Btn_OpenFile.Size = New System.Drawing.Size(69, 25)
-        Me.Btn_OpenFile.TabIndex = 1
-        Me.Btn_OpenFile.Text = "Open File"
-        Me.Btn_OpenFile.UseVisualStyleBackColor = True
+        Me.Txt_Technician.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Txt_Technician.Location = New System.Drawing.Point(3, 16)
+        Me.Txt_Technician.Name = "Txt_Technician"
+        Me.Txt_Technician.Size = New System.Drawing.Size(155, 20)
+        Me.Txt_Technician.TabIndex = 1
+        Me.Txt_Technician.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'TabPage2
         '
@@ -592,7 +669,7 @@ Partial Class MainForm
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(660, 407)
+        Me.TabPage2.Size = New System.Drawing.Size(752, 481)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "TabPage2"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -693,7 +770,7 @@ Partial Class MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(668, 485)
+        Me.ClientSize = New System.Drawing.Size(1188, 708)
         Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.MenuStrip1)
@@ -707,7 +784,11 @@ Partial Class MainForm
         Me.StatusStrip1.PerformLayout()
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
-        Me.TabPage1.PerformLayout()
+        Me.TableLayoutPanel7.ResumeLayout(False)
+        Me.TableLayoutPanel7.PerformLayout()
+        Me.Box_CureDataLocation.ResumeLayout(False)
+        Me.TableLayoutPanel1.ResumeLayout(False)
+        Me.TableLayoutPanel1.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)
         Me.TableLayoutPanel3.ResumeLayout(False)
         Me.Box_CureProfile.ResumeLayout(False)
@@ -716,29 +797,30 @@ Partial Class MainForm
         Me.Box_DocRev.PerformLayout()
         Me.Box_CureDoc.ResumeLayout(False)
         Me.Box_CureDoc.PerformLayout()
-        Me.Box_Technician.ResumeLayout(False)
-        Me.Box_Technician.PerformLayout()
+        Me.Box_RunParams.ResumeLayout(False)
+        Me.Box_RunParams.PerformLayout()
+        Me.Box_PartInfo.ResumeLayout(False)
+        Me.Box_PartNumber.ResumeLayout(False)
+        Me.Box_PartNumber.PerformLayout()
+        Me.Box_Revision.ResumeLayout(False)
+        Me.Box_Revision.PerformLayout()
+        Me.Box_PartDesc.ResumeLayout(False)
+        Me.Box_PartDesc.PerformLayout()
+        Me.Box_Qty.ResumeLayout(False)
+        Me.Box_Qty.PerformLayout()
         Me.Box_Vac.ResumeLayout(False)
         CType(Me.Data_Vac, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Box_TC.ResumeLayout(False)
         CType(Me.Data_TC, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.Box_DataRecorder.ResumeLayout(False)
-        Me.Box_DataRecorder.PerformLayout()
-        Me.Box_Qty.ResumeLayout(False)
-        Me.Box_Qty.PerformLayout()
         Me.Box_JobNumber.ResumeLayout(False)
         Me.Box_JobNumber.PerformLayout()
-        Me.Box_PartDesc.ResumeLayout(False)
-        Me.Box_PartDesc.PerformLayout()
         Me.Box_ProgramNumber.ResumeLayout(False)
         Me.Box_ProgramNumber.PerformLayout()
-        Me.Box_Revision.ResumeLayout(False)
-        Me.Box_Revision.PerformLayout()
-        Me.Box_PartNumber.ResumeLayout(False)
-        Me.Box_PartNumber.PerformLayout()
-        Me.Box_CureDataLocation.ResumeLayout(False)
-        Me.TableLayoutPanel1.ResumeLayout(False)
-        Me.TableLayoutPanel1.PerformLayout()
+        Me.Box_DataRecorder.ResumeLayout(False)
+        Me.Box_DataRecorder.PerformLayout()
+        Me.Box_RunLine.ResumeLayout(False)
+        Me.Box_Technician.ResumeLayout(False)
+        Me.Box_Technician.PerformLayout()
         Me.TabPage2.ResumeLayout(False)
         Me.TabPage2.PerformLayout()
         Me.Box_TemplatePath.ResumeLayout(False)
@@ -782,7 +864,7 @@ Partial Class MainForm
     Friend WithEvents Box_Revision As GroupBox
     Friend WithEvents Txt_Revision As TextBox
     Friend WithEvents Box_PartNumber As GroupBox
-    Friend WithEvents TxtPartNumber As TextBox
+    Friend WithEvents Txt_PartNumber As TextBox
     Friend WithEvents Data_TC As DataGridView
     Friend WithEvents Box_CureProfile As GroupBox
     Friend WithEvents Combo_CureProfile As ComboBox
@@ -806,5 +888,9 @@ Partial Class MainForm
     Friend WithEvents Box_TemplatePath As GroupBox
     Friend WithEvents TableLayoutPanel5 As TableLayoutPanel
     Friend WithEvents Txt_TemplatePath As TextBox
-    Friend WithEvents Button1 As Button
+    Friend WithEvents Btn_Run As Button
+    Friend WithEvents Box_PartInfo As GroupBox
+    Friend WithEvents TableLayoutPanel7 As TableLayoutPanel
+    Friend WithEvents Box_RunParams As GroupBox
+    Friend WithEvents Box_RunLine As TableLayoutPanel
 End Class

@@ -5,13 +5,11 @@ Imports Microsoft.Office.Interop
 
 Public Class MainForm
 
-    Dim lCalcSave As Long
-    Dim bScreenUpdate As Boolean
-
     Public cureProfiles() As CureProfile
     Dim curePro As CureProfile = New CureProfile("null")
 
     Public partValues As New Dictionary(Of String, String) From {{"JobNum", ""}, {"PONum", ""}, {"PartNum", ""}, {"PartRev", ""}, {"PartNom", ""}, {"ProgramNum", ""}, {"PartQty", ""}, {"DataPath", ""}}
+    Dim equipSerialNum As String = ""
 
     Public loadedDataSet(,) As String
 
@@ -39,8 +37,8 @@ Public Class MainForm
     Dim minVac As DataSet = New DataSet(0, "minVac")
     Dim maxVac As DataSet = New DataSet(0, "maxVac")
 
-    Dim usrRunTC() As Integer = {1, 2, 4, 4}
-    Dim usrRunVac() As Integer = {2, 3} ', 5}
+    Dim usrRunTC() As Integer
+    Dim usrRunVac() As Integer
 
 
 
@@ -56,31 +54,57 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Btn_Run.Click
         testRun()
     End Sub
 
     Sub testRun()
-        'loadCSVin("C:\Users\Will Eagan\Source\repos\CureReportBuilder\CureReportBuilder\Sample Files\DA-18-20 - Copy (2).csv")
-        'loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\DA-18-20.csv")
-        'loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\BATCH 38 JOB 101573, 101574 1-23-20 - Copy.CSV")
-        ''loadCSVin("C:\Users\Will Eagan\source\repos\CureReportBuilder\CureReportBuilder\Sample Files\Autoclave Simple.CSV")
 
-        loadCSVin("S:\Manufacturing\Post Cure Reports\Programs\D11675 - ARRW SHROUD\RAW DATA\102673\102673 S2537.csv")
-
-        partValues("JobNum") = "102673"
+        partValues("JobNum") = Txt_JobNumber.Text
         partValues("PONum") =
-        partValues("PartNum") = "48777-100"
-        partValues("PartRev") = "E"
-        partValues("PartNom") = "ARRW COMPOSITE  SHROUD"
-        partValues("ProgramNum") = "D11675"
-        partValues("PartQty") = 1
-        Me.Txt_DataRecorder.Text = "S2537"
-
-        curePro = cureProfiles(0)
+        partValues("PartNum") = Txt_PartNumber.Text
+        partValues("PartRev") = Txt_Revision.Text
+        partValues("PartNom") = Txt_PartDesc.Text
+        partValues("ProgramNum") = Txt_ProgramNumber.Text
+        partValues("PartQty") = Txt_Qty.Text
+        equipSerialNum = Txt_DataRecorder.Text
 
 
-        Call loadCureData()
+        'Get used TC lines
+        If curePro.checkTemp Then
+            usrRunTC.clearArr()
+
+            For i = 0 To Data_TC.Rows.Count - 1
+                If Data_TC.Item(0, i).Value Then
+                    usrRunTC.AddValArr(Data_TC.Item(1, i).Value)
+                End If
+            Next
+
+            If usrRunTC Is Nothing Then
+                For i = 0 To Data_TC.Rows.Count - 1
+                    usrRunTC.AddValArr(Data_TC.Item(1, i).Value)
+                Next
+            End If
+        End If
+
+
+        'Get used vac ports
+        If curePro.checkVac Then
+            usrRunVac.clearArr()
+
+            For i = 0 To Data_Vac.Rows.Count - 1
+                If Data_Vac.Item(0, i).Value Then
+                    usrRunVac.AddValArr(Data_Vac.Item(1, i).Value)
+                End If
+            Next
+
+            If usrRunVac Is Nothing Then
+                For i = 0 To Data_Vac.Rows.Count - 1
+                    usrRunVac.AddValArr(Data_Vac.Item(1, i).Value)
+                Next
+            End If
+        End If
+
 
         Call runCalc()
 
@@ -88,6 +112,8 @@ Public Class MainForm
     End Sub
 #Region "Output"
     Sub formatFont(inCell As Object, checkStr As String, Optional fontSize As Double = 11, Optional bold As Boolean = False, Optional italic As Boolean = False, Optional underline As Boolean = False, Optional color As Color = Nothing, Optional checkExists As Boolean = True)
+        'Exit sub to skip formatting
+        'Exit Sub
 
         If checkStr = "" Then Exit Sub
 
@@ -105,15 +131,25 @@ Public Class MainForm
             Exit Sub
         End If
 
-        inCell.Characters(Start:=startPos, Length:=Len(checkStr)).Font.Size = fontSize
-        inCell.Characters(Start:=startPos, Length:=Len(checkStr)).Font.Bold = bold
-        inCell.Characters(Start:=startPos, Length:=Len(checkStr)).Font.Italic = italic
-        inCell.Characters(Start:=startPos, Length:=Len(checkStr)).Font.Underline = underline
+        If fontSize <> 11 Then
+            inCell.Characters(Start:=startPos, Length:=Len(checkStr)).Font.Size = fontSize
+        End If
 
-        If color = Nothing Then color = Color.Black
-        inCell.Characters(Start:=startPos, Length:=Len(checkStr)).Font.Color = color
+        If bold Then
+            inCell.Characters(Start:=startPos, Length:=Len(checkStr)).Font.Bold = bold
+        End If
 
+        If italic Then
+            inCell.Characters(Start:=startPos, Length:=Len(checkStr)).Font.Italic = italic
+        End If
 
+        If underline Then
+            inCell.Characters(Start:=startPos, Length:=Len(checkStr)).Font.Underline = underline
+        End If
+
+        If color <> Nothing Then
+            inCell.Characters(Start:=startPos, Length:=Len(checkStr)).Font.Color = color
+        End If
 
     End Sub
 
@@ -147,7 +183,7 @@ Public Class MainForm
         Dim Excel As Object
         Excel = CreateObject("Excel.Application")
         Excel.Visible = False
-        Excel.Workbooks.Open("C:\Users\Will.Eagan\Source\repos\CureReportBuilder\CureReportBuilder\Sample Files\Cure Report_Template.xlsx")
+        Excel.Workbooks.Open(Txt_TemplatePath.Text)
 
         SwitchOff(Excel, True)
 
@@ -164,15 +200,19 @@ Public Class MainForm
         mainSheet.Cells(2, 4) = "Part" & vbNewLine & partValues("PartNum") & vbNewLine & "Rev. " & partValues("PartRev") & vbNewLine & partValues("PartNom") & vbNewLine & "Qty: " & partValues("PartQty")
         formatFont(mainSheet.Cells(2, 4), "Part", 14, True, False, True)
 
-        mainSheet.Cells(2, 8) = "Cure" & vbNewLine & "Start: " & dateArr(cureStart).ToString("dd-MMM-yyyy h:mm tt") & vbNewLine & "End: " & dateArr(cureEnd).ToString("dd-MMM-yyyy h:mm tt") & vbNewLine & "Duration: " & Math.Round((dateArr(cureEnd) - dateArr(cureStart)).TotalMinutes, 1) & " min"
+
+        Dim hours As Integer = Math.Round((dateArr(cureEnd) - dateArr(cureStart)).TotalMinutes, 1) \ 60
+        Dim minutes As Integer = Math.Round((dateArr(cureEnd) - dateArr(cureStart)).TotalMinutes, 1) - (hours * 60)
+
+        mainSheet.Cells(2, 8) = "Cure" & vbNewLine & "Start: " & dateArr(cureStart).ToString("dd-MMM-yyyy h:mm tt") & vbNewLine & "End: " & dateArr(cureEnd).ToString("dd-MMM-yyyy h:mm tt") & vbNewLine & "Duration: " & hours & " hrs | " & minutes & " min" 'Math.Round((dateArr(cureEnd) - dateArr(cureStart)).TotalMinutes, 1) & " min"
         formatFont(mainSheet.Cells(2, 8), "Cure", 14, True, False, True)
 
-        mainSheet.Cells(5, 1) = "Equipment" & vbNewLine & machType & " | " & Me.Txt_DataRecorder.Text
+        mainSheet.Cells(5, 1) = "Equipment" & vbNewLine & machType & " | " & equipSerialNum
         formatFont(mainSheet.Cells(5, 1), "Equipment", 14, True, False, True)
 
         If curePro.curePass Then
             mainSheet.Cells(6, 4) = "PASS"
-            formatFont(mainSheet.Cells(6, 4), "PASS", 30, True, False, True, Color.Green)
+            formatFont(mainSheet.Cells(6, 4), "PASS", 30, True, False, False, Color.Green)
         Else
             mainSheet.Cells(6, 4) = "FAIL"
             formatFont(mainSheet.Cells(6, 4), "FAIL", 30, True, False, True, Color.Red)
@@ -217,11 +257,11 @@ Public Class MainForm
                 If currentStep.stepTerminate = False Then
                     endStr = "Failed to Terminate"
                 Else
-                    endStr = "End Time: " & endTime & " min"
+                    endStr = "End: " & endTime & " min"
                 End If
 
 
-                mainSheet.Cells(curRow, 1) = currentStep.stepName & vbNewLine & "(" & stepPass & ")" & vbNewLine & "Start Time: " & startTime & " min" & vbNewLine & endStr
+                mainSheet.Cells(curRow, 1) = currentStep.stepName & vbNewLine & "(" & stepPass & ")" & vbNewLine & "Start: " & startTime & " min" & vbNewLine & endStr
 
                 formatFont(mainSheet.Cells(curRow, 1), currentStep.stepName, 11, True, False, False)
 
@@ -231,7 +271,7 @@ Public Class MainForm
                     formatFont(mainSheet.Cells(curRow, 1), "(" & stepPass & ")", 11, False, False, False, Color.Red)
                 End If
 
-                formatFont(mainSheet.Cells(curRow, 1), "Start Time: " & startTime & " min", 9, False, False, False)
+                formatFont(mainSheet.Cells(curRow, 1), "Start: " & startTime & " min", 9, False, False, False)
                 formatFont(mainSheet.Cells(curRow, 1), endStr, 9, False, False, False)
 
                 If currentStep.stepTerminate = False Then
@@ -360,16 +400,16 @@ Public Class MainForm
                     tempStr = "Temperature (°F)" & vbNewLine
 
                     If Math.Abs(currentStep.tempSet("SetPoint")) = Math.Abs(currentStep.tempSet("NegTol")) Then
-                        tempStr = tempStr & "Max: " & currentStep.tempResult("Max") & vbNewLine
+                        tempStr = tempStr & "Max: " & String.Format("{0}", currentStep.tempResult("Max")) & vbNewLine
                     ElseIf Math.Abs(currentStep.tempSet("SetPoint")) = Math.Abs(currentStep.tempSet("PosTol")) Then
-                        tempStr = tempStr & "Min: " & currentStep.tempResult("Min") & vbNewLine
+                        tempStr = tempStr & "Min: " & String.Format("{0}", currentStep.tempResult("Min")) & vbNewLine
                     Else
-                        tempStr = tempStr & "Max: " & currentStep.tempResult("Max") & " | Min: " & currentStep.tempResult("Min") & "  | Avg.: " & currentStep.tempResult("Avg") & vbNewLine
+                        tempStr = tempStr & "Max: " & String.Format("{0}", currentStep.tempResult("Max")) & " | Min: " & String.Format("{0}", currentStep.tempResult("Min")) & "  | Avg: " & String.Format("{0}", currentStep.tempResult("Avg")) & vbNewLine
                     End If
 
                     If currentStep.tempSet("RampRate") <> 0 Then
                         tempRmpStr = "Temp. Ramp (°F/min)" & vbNewLine
-                        tempRmpStr = tempRmpStr & "Max: " & currentStep.tempResult("MaxRamp") & " | Min: " & currentStep.tempResult("MinRamp") & "  | Avg.: " & currentStep.tempResult("AvgRamp") & vbNewLine
+                        tempRmpStr = tempRmpStr & "Max: " & String.Format("{0:0.0}", currentStep.tempResult("MaxRamp")) & " | Min: " & String.Format("{0:0.0}", currentStep.tempResult("MinRamp")) & "  | Avg: " & String.Format("{0:0.0}", currentStep.tempResult("AvgRamp")) & vbNewLine
                     End If
                 End If
 
@@ -377,16 +417,16 @@ Public Class MainForm
                     pressStr = "Pressure (psi)" & vbNewLine
 
                     If Math.Abs(currentStep.pressureSet("SetPoint")) = Math.Abs(currentStep.pressureSet("NegTol")) Then
-                        pressStr = pressStr & "Max: " & currentStep.pressureResult("Max") & vbNewLine
+                        pressStr = pressStr & "Max: " & String.Format("{0:0.0}", currentStep.pressureResult("Max")) & vbNewLine
                     ElseIf Math.Abs(currentStep.pressureSet("SetPoint")) = Math.Abs(currentStep.pressureSet("PosTol")) Then
-                        pressStr = "Min: " & currentStep.pressureResult("Min") & vbNewLine
+                        pressStr = "Min: " & String.Format("{0:0.0}", currentStep.pressureResult("Min")) & vbNewLine
                     Else
-                        pressStr = pressStr & "Max: " & currentStep.pressureResult("Max") & " | Min: " & currentStep.pressureResult("Min") & " | Avg.: " & currentStep.pressureResult("Avg") & vbNewLine
+                        pressStr = pressStr & "Max: " & String.Format("{0:0.0}", currentStep.pressureResult("Max")) & " | Min: " & String.Format("{0:0.0}", currentStep.pressureResult("Min")) & " | Avg: " & String.Format("{0:0.0}", currentStep.pressureResult("Avg")) & vbNewLine
                     End If
 
                     If currentStep.pressureSet("RampRate") <> 0 Then
                         pressRmpStr = "Pressure Ramp (psi/min)" & vbNewLine
-                        pressRmpStr = pressRmpStr & "Max: " & currentStep.pressureResult("MaxRamp") & " | Min: " & currentStep.pressureResult("MinRamp") & "  | Avg.: " & currentStep.pressureResult("AvgRamp") & vbNewLine
+                        pressRmpStr = pressRmpStr & "Max: " & String.Format("{0:0.0}", currentStep.pressureResult("MaxRamp")) & " | Min: " & String.Format("{0:0.0}", currentStep.pressureResult("MinRamp")) & "  | Avg: " & String.Format("{0:0.0}", currentStep.pressureResult("AvgRamp")) & vbNewLine
                     End If
                 End If
 
@@ -394,11 +434,11 @@ Public Class MainForm
                     vacStr = "Vacuum (inHg)" & vbNewLine
 
                     If Math.Abs(currentStep.vacSet("SetPoint")) = Math.Abs(currentStep.vacSet("NegTol")) Then
-                        vacStr = vacStr & "Max: " & currentStep.vacResult("Max") & vbNewLine
+                        vacStr = vacStr & "Max: " & String.Format("{0:0.0}", currentStep.vacResult("Max")) & vbNewLine
                     ElseIf Math.Abs(currentStep.vacSet("SetPoint")) = Math.Abs(currentStep.vacSet("PosTol")) Then
-                        vacStr = vacStr & "Min: " & currentStep.vacResult("Min") & vbNewLine
+                        vacStr = vacStr & "Min: " & String.Format("{0:0.0}", currentStep.vacResult("Min")) & vbNewLine
                     Else
-                        vacStr = vacStr & "Max: " & currentStep.vacResult("Max") & " | Min: " & currentStep.vacResult("Min") & " | Avg.: " & currentStep.vacResult("Avg") & vbNewLine
+                        vacStr = vacStr & "Max: " & String.Format("{0:0.0}", currentStep.vacResult("Max")) & " | Min: " & String.Format("{0:0.0}", currentStep.vacResult("Min")) & " | Avg: " & String.Format("{0:0.0}", currentStep.vacResult("Avg")) & vbNewLine
                     End If
 
                 End If
@@ -853,10 +893,15 @@ Public Class MainForm
                 'Check temp for passing
                 If curePro.CureSteps(i).tempResult("Min") < curePro.CureSteps(i).tempSet("SetPoint") + curePro.CureSteps(i).tempSet("NegTol") Then curePro.CureSteps(i).tempPass = False
                 If curePro.CureSteps(i).tempResult("Max") > curePro.CureSteps(i).tempSet("SetPoint") + curePro.CureSteps(i).tempSet("PosTol") Then curePro.CureSteps(i).tempPass = False
-                If curePro.CureSteps(i).tempResult("MinRamp") < curePro.CureSteps(i).tempSet("RampRate") + curePro.CureSteps(i).tempSet("RampNegTol") Then curePro.CureSteps(i).tempRampPass = False
-                If curePro.CureSteps(i).tempResult("MaxRamp") > curePro.CureSteps(i).tempSet("RampRate") + curePro.CureSteps(i).tempSet("RampPosTol") Then curePro.CureSteps(i).tempRampPass = False
+
+                'Check temp ramp for passing if not equal to 0
+                If curePro.CureSteps(i).tempSet("RampRate") <> 0 Then
+                    If curePro.CureSteps(i).tempResult("MinRamp") < curePro.CureSteps(i).tempSet("RampRate") + curePro.CureSteps(i).tempSet("RampNegTol") Then curePro.CureSteps(i).tempRampPass = False
+                    If curePro.CureSteps(i).tempResult("MaxRamp") > curePro.CureSteps(i).tempSet("RampRate") + curePro.CureSteps(i).tempSet("RampPosTol") Then curePro.CureSteps(i).tempRampPass = False
+                End If
             Else
                 curePro.CureSteps(i).tempPass = True
+                curePro.CureSteps(i).tempRampPass = True
             End If
 
             'Check autoclave only features
@@ -906,10 +951,15 @@ Public Class MainForm
                 'Check pressure for passing
                 If curePro.CureSteps(i).pressureResult("Min") < curePro.CureSteps(i).pressureSet("SetPoint") + curePro.CureSteps(i).pressureSet("NegTol") Then curePro.CureSteps(i).pressurePass = False
                 If curePro.CureSteps(i).pressureResult("Max") > curePro.CureSteps(i).pressureSet("SetPoint") + curePro.CureSteps(i).pressureSet("PosTol") Then curePro.CureSteps(i).pressurePass = False
-                If curePro.CureSteps(i).pressureResult("MinRamp") < curePro.CureSteps(i).pressureSet("RampRate") + curePro.CureSteps(i).pressureSet("RampNegTol") Then curePro.CureSteps(i).pressureRampPass = False
-                If curePro.CureSteps(i).pressureResult("MaxRamp") > curePro.CureSteps(i).pressureSet("RampRate") + curePro.CureSteps(i).pressureSet("RampPosTol") Then curePro.CureSteps(i).pressureRampPass = False
+
+                'Check pressure ramp if not set to 0
+                If curePro.CureSteps(i).pressureSet("RampRate") <> 0 Then
+                    If curePro.CureSteps(i).pressureResult("MinRamp") < curePro.CureSteps(i).pressureSet("RampRate") + curePro.CureSteps(i).pressureSet("RampNegTol") Then curePro.CureSteps(i).pressureRampPass = False
+                    If curePro.CureSteps(i).pressureResult("MaxRamp") > curePro.CureSteps(i).pressureSet("RampRate") + curePro.CureSteps(i).pressureSet("RampPosTol") Then curePro.CureSteps(i).pressureRampPass = False
+                End If
             Else
                 curePro.CureSteps(i).pressurePass = True
+                curePro.CureSteps(i).pressureRampPass = True
             End If
 
             'Calculate vac results for a given step
@@ -965,7 +1015,8 @@ Public Class MainForm
             If meetTerms(curePro.CureSteps(currentStep), i) Then
                 curePro.CureSteps(currentStep).stepEnd = i
                 If UBound(curePro.CureSteps) = currentStep Then
-                    curePro.CureSteps(currentStep).stepEnd = cureEnd
+                    cureEnd = curePro.CureSteps(currentStep).stepEnd
+                    dateValues("endTime") = dateArr(curePro.CureSteps(currentStep).stepEnd)
                     currentStep += 1
                     Exit For
                 End If
@@ -1032,12 +1083,11 @@ Public Class MainForm
 
             If termCond("Condition") = "GREATER" Then
                 If termCond("TCNum") = "Lag" Then
-                    Dim test = lagTC.values(currentStep)
                     If lagTC.values(currentStep) > termCond("Goal") Then
                         Return True
                     End If
                 ElseIf termCond("TCNum") = "Lead" Then
-                    If lagTC.values(currentStep) > termCond("Goal") Then
+                    If leadTC.values(currentStep) > termCond("Goal") Then
                         Return True
                     End If
                 ElseIf termCond("TCNum") = "Air" Then
@@ -1054,7 +1104,7 @@ Public Class MainForm
                         Return True
                     End If
                 ElseIf termCond("TCNum") = "Lead" Then
-                    If lagTC.values(currentStep) < termCond("Goal") Then
+                    If leadTC.values(currentStep) < termCond("Goal") Then
                         Return True
                     End If
                 ElseIf termCond("TCNum") = "Air" Then
@@ -1094,6 +1144,7 @@ Public Class MainForm
     Sub startEndTime()
         Dim start_end_temp As Double = 140
 
+        'Get start time
         Dim i As Integer
         For i = 0 To dataCnt
             If leadTC.values(i) > start_end_temp And dateValues("startTime") = Nothing Then
@@ -1102,10 +1153,13 @@ Public Class MainForm
                 Exit For
             End If
         Next
+
+        'If the start time wasn't triggered then the cure starts at 0
         If cureStart = 0 Then
             dateValues("startTime") = dateArr(0)
         End If
 
+        'Get end time
         Dim runStart As Boolean = False
         For i = 0 To dataCnt
             If lagTC.values(i) > start_end_temp And runStart = False Then
@@ -1122,6 +1176,7 @@ Public Class MainForm
             End If
         Next
 
+        'If cureEnd didn't get set then the end of data is the end
         If cureEnd = 0 Then
             dateValues("endTime") = dateArr(dataCnt)
             cureEnd = dataCnt
@@ -1387,18 +1442,52 @@ Public Class MainForm
         Call errorReset()
 
         If IO.File.Exists(inFile) AndAlso IO.Path.GetExtension(inFile).ToLower = ".csv" Then
+
+            Txt_JobNumber.Text = System.Text.RegularExpressions.Regex.Match(inFile, "\d{6}").Value
+            Txt_DataRecorder.Text = System.Text.RegularExpressions.Regex.Match(inFile, "S(\d{4})").Value
+
             Using MyReader As New Microsoft.VisualBasic.FileIO.TextFieldParser(inFile)
                 MyReader.TextFieldType = FileIO.FieldType.Delimited
                 MyReader.SetDelimiters({",", vbTab})
                 Dim currentRow As String()
+                Dim headerSet As Boolean = False
 
                 While Not MyReader.EndOfData
                     Try
                         currentRow = MyReader.ReadFields()
 
+                        'Only check rows with greater than 4 columns
                         If UBound(currentRow) > 3 Then
-                            If currentRow(3) = "ooOoo" Then Exit Sub
+
+                            'Stop input for stop line symbol in Omega files
+                            If currentRow(3) = "ooOoo" Then
+                                Call setHeaderRow()
+                                Exit Sub
+                            End If
+
+                            'Stop input if first or second item isn't a date/time after 6 lines
+                            If Not loadedDataSet Is Nothing AndAlso headerSet = True Then
+                                If Not IsDate(currentRow(0)) And Not IsDate(currentRow(1)) Then
+                                    Call setHeaderRow()
+                                    Exit Sub
+                                End If
+                            End If
+
                             loadedDataSet.AddArr(currentRow)
+
+
+                            If headerSet = False Then
+                                If IsDate(currentRow(0)) Then
+                                    headerRow = UBound(loadedDataSet, 2)
+                                    headerSet = True
+                                ElseIf currentRow(0) <> "Date:" Then
+                                    If IsDate(currentRow(1)) Then
+                                        headerRow = UBound(loadedDataSet, 2)
+                                        headerSet = True
+                                    End If
+                                End If
+                            End If
+
                         End If
 
 
@@ -1408,7 +1497,6 @@ Public Class MainForm
                         'Finds file type
                         If InStr(currentRow(0), "Omega", 0) <> 0 Then
                             machType = "Omega"
-                            headerRow = 0
                             headerCount = 2
                             If curePro.Name = "null" Then
                                 curePro.checkPressure = False
@@ -1421,7 +1509,6 @@ Public Class MainForm
 
                         ElseIf currentRow(0) = "No." AndAlso InStr(currentRow(1), "Date", 0) <> 0 AndAlso InStr(currentRow(2), "Time", 0) <> 0 AndAlso InStr(currentRow(3), "Millitm", 0) <> 0 AndAlso InStr(currentRow(4), "{Air_TC}", 0) <> 0 Then
                             machType = "Autoclave"
-                            headerRow = 0
                             headerCount = 2
                         End If
 
@@ -1430,8 +1517,20 @@ Public Class MainForm
                     End Try
                 End While
             End Using
+
+            Call setHeaderRow()
+        Else
+            Throw New Exception("Input file is not a .csv, please load a new file.")
         End If
 
+    End Sub
+
+    Sub setHeaderRow()
+        headerRow = headerRow - headerCount
+
+        If headerRow < 0 Then
+            Throw New Exception("Header row cannot be less than 0. Please check to make sure your file has the correct amount of header lines for it's type.")
+        End If
     End Sub
 
 #Region "Cure profile inport/export"
@@ -1464,6 +1563,8 @@ Public Class MainForm
 
         If cureProfiles Is Nothing Then
             Throw New Exception("No cure profiles were found at your specified path.")
+        Else
+            Combo_CureProfile.SelectedIndex = 0
         End If
 
 
@@ -1495,10 +1596,14 @@ Public Class MainForm
         If IO.File.Exists(Txt_FilePath.Text) Then
             Call loadCSVin(Txt_FilePath.Text)
             Call loadCureData()
+            Box_RunParams.Enabled = True
+            Box_RunLine.Enabled = True
         ElseIf OpenCSVFileDialog.ShowDialog <> Windows.Forms.DialogResult.Cancel Then
             Txt_FilePath.Text = OpenCSVFileDialog.FileName
             Call loadCSVin(Txt_FilePath.Text)
             Call loadCureData()
+            Box_RunParams.Enabled = True
+            Box_RunLine.Enabled = True
         End If
     End Sub
 
@@ -1534,13 +1639,15 @@ Public Class MainForm
     Private Sub Combo_CureProfile_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Combo_CureProfile.SelectedIndexChanged
 
         If cureProfiles(Combo_CureProfile.SelectedIndex).Name <> Combo_CureProfile.Text Then
-            Throw New Exception("Cure profile does not line up with loaded array.")
+            Throw New Exception("Cure profile does not line up with loaded array, please reload cure profiles.")
         End If
 
         curePro = cureProfiles(Combo_CureProfile.SelectedIndex)
 
         Txt_CureDoc.Text = curePro.cureDoc
         Txt_DocRev.Text = curePro.cureDocRev
+
+        Box_CureDataLocation.Enabled = True
     End Sub
 
 

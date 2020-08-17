@@ -121,7 +121,7 @@
 				Type,Temp
 				Condition,LESS
 				Goal,150
-				TCNum,Lag
+				TCNum,Lead
 			</termCond1>
 			<termCond2>
 				Type,None
