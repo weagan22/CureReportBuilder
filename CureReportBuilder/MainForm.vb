@@ -61,7 +61,7 @@ Public Class MainForm
     Sub testRun()
 
         partValues("JobNum") = Txt_JobNumber.Text
-        partValues("PONum") =
+        partValues("PONum") = ""
         partValues("PartNum") = Txt_PartNumber.Text
         partValues("PartRev") = Txt_Revision.Text
         partValues("PartNom") = Txt_PartDesc.Text
@@ -81,6 +81,7 @@ Public Class MainForm
             Next
 
             If usrRunTC Is Nothing Then
+                If MsgBox("No TC's were selected, are you sure you would like to run with all of them?", vbOKCancel, "TC Check") = vbCancel Then Exit Sub
                 For i = 0 To Data_TC.Rows.Count - 1
                     usrRunTC.AddValArr(Data_TC.Item(1, i).Value)
                 Next
@@ -99,6 +100,7 @@ Public Class MainForm
             Next
 
             If usrRunVac Is Nothing Then
+                If MsgBox("No Vac ports were selected, are you sure you would like to run with all of them?", vbOKCancel, "Vac Check") = vbCancel Then Exit Sub
                 For i = 0 To Data_Vac.Rows.Count - 1
                     usrRunVac.AddValArr(Data_Vac.Item(1, i).Value)
                 Next
@@ -187,9 +189,6 @@ Public Class MainForm
 
         SwitchOff(Excel, True)
 
-
-        Dim testTimeStart As DateTime = Now()
-
         Dim mainSheet As Excel.Worksheet = Excel.Sheets.Item(1)
         Dim dataSheet As Excel.Worksheet = Excel.Sheets.Item(3)
 
@@ -204,7 +203,7 @@ Public Class MainForm
         Dim hours As Integer = Math.Round((dateArr(cureEnd) - dateArr(cureStart)).TotalMinutes, 1) \ 60
         Dim minutes As Integer = Math.Round((dateArr(cureEnd) - dateArr(cureStart)).TotalMinutes, 1) - (hours * 60)
 
-        mainSheet.Cells(2, 8) = "Cure" & vbNewLine & "Start: " & dateArr(cureStart).ToString("dd-MMM-yyyy | h:mm tt") & vbNewLine & "Finish: " & dateArr(cureEnd).ToString("dd-MMM-yyyy | h:mm tt") & vbNewLine & "Duration: " & hours & " hrs | " & minutes & " min" 'Math.Round((dateArr(cureEnd) - dateArr(cureStart)).TotalMinutes, 1) & " min"
+        mainSheet.Cells(2, 8) = "Cure" & vbNewLine & "Start: " & dateArr(cureStart).ToString("dd-MMM-yyyy | h:mm tt") & vbNewLine & "Finish: " & dateArr(cureEnd).ToString("dd-MMM-yyyy | h:mm tt") & vbNewLine & "Duration: " & hours & ":" & minutes 'Math.Round((dateArr(cureEnd) - dateArr(cureStart)).TotalMinutes, 1) & " min"
         formatFont(mainSheet.Cells(2, 8), "Cure", 14, True, False, True)
 
         mainSheet.Cells(5, 1) = "Equipment" & vbNewLine & machType & " | " & equipSerialNum
@@ -532,7 +531,7 @@ Public Class MainForm
                 Call addToChart(mainSheet, dataSheet, curCol - 1, "Air TC (°F)", vessel_TC, 1)
             End If
 
-            If UBound(partTC_Arr) > 0 Then
+            If UBound(usrRunTC) > 0 Then
                 outputDataToColumn(dataSheet, curCol, "Lead TC" & vbNewLine & "(°F)", arr2Str(leadTC.values, 1), cureStart, cureEnd)
                 Call addToChart(mainSheet, dataSheet, curCol - 1, "Lead TC (°F)", leadTC, 1)
                 outputDataToColumn(dataSheet, curCol, "Lag TC" & vbNewLine & "(°F)", arr2Str(lagTC.values, 1), cureStart, cureEnd)
@@ -545,7 +544,7 @@ Public Class MainForm
                     If partTC_Arr(i).Number = usrRunTC(z) Then
                         outputDataToColumn(dataSheet, curCol, "TC " & partTC_Arr(i).Number & vbNewLine & "(°F)", arr2Str(partTC_Arr(i).values, 1), cureStart, cureEnd)
                         outputDataToColumn(dataSheet, curCol, "TC " & partTC_Arr(i).Number & " - Ramp" & vbNewLine & "(°F/min)", arr2Str(partTC_Arr(i).ramp, 2), cureStart, cureEnd)
-                        If UBound(partTC_Arr) = 0 Then
+                        If UBound(usrRunTC) = 0 Then
                             Call addToChart(mainSheet, dataSheet, curCol - 2, "TC -" & partTC_Arr(i).Number & "- (°F)", partTC_Arr(i), 1)
                         End If
                     End If
@@ -560,7 +559,7 @@ Public Class MainForm
         End If
 
         If curePro.checkVac Then
-            If UBound(vac_Arr) > 0 Then
+            If UBound(usrRunVac) > 0 Then
                 outputDataToColumn(dataSheet, curCol, "Max Vac" & vbNewLine & "(inHg)", arr2Str(maxVac.values, 1), cureStart, cureEnd)
                 Call addToChart(mainSheet, dataSheet, curCol - 1, "Max Vacuum (inHg)", maxVac, 2)
                 outputDataToColumn(dataSheet, curCol, "Min Vac" & vbNewLine & "(inHg)", arr2Str(minVac.values, 1), cureStart, cureEnd)
@@ -572,7 +571,7 @@ Public Class MainForm
                 For z = 0 To UBound(usrRunVac)
                     If vac_Arr(i).Number = usrRunVac(z) Then
                         outputDataToColumn(dataSheet, curCol, "Vac Port " & vac_Arr(i).Number & vbNewLine & "(inHg)", arr2Str(vac_Arr(i).values, 1), cureStart, cureEnd)
-                        If UBound(vac_Arr) = 0 Then
+                        If UBound(usrRunVac) = 0 Then
                             Call addToChart(mainSheet, dataSheet, curCol - 1, "Vac Port -" & vac_Arr(i).Number & "- (inHg)", vac_Arr(i), 1)
                         End If
                     End If
@@ -586,14 +585,17 @@ Public Class MainForm
         dataSheet.UsedRange.Rows.AutoFit()
         dataSheet.UsedRange.HorizontalAlignment = 3
 
-
+        For i = 0 To UBound(curePro.CureSteps) - 1
+            Dim stepTime As Double = (dateArr(curePro.CureSteps(i).stepEnd) - dateArr(cureStart)).TotalMinutes
+            addStepChart(mainSheet, stepTime)
+        Next
 
 
         mainSheet.Activate()
 
 
         SwitchOff(Excel, False)
-        Dim test As Double = (Now - testTimeStart).TotalMinutes
+
         Excel.Visible = True
     End Sub
     Sub clearChart(mainSheet As Excel.Worksheet)
@@ -639,6 +641,10 @@ Public Class MainForm
 
         ser.AxisGroup = axisGroup
 
+        ser.MarkerStyle = Excel.XlMarkerStyle.xlMarkerStyleNone
+        ser.Format.Line.Visible = True
+        ser.Format.Line.Weight = 1
+
         Dim valMax As Double = startDataSet.Max()
 
         If valMax > mainChart.Axes(2, axisGroup).MaximumScale Then
@@ -651,6 +657,30 @@ Public Class MainForm
         End If
 
 
+    End Sub
+
+    Sub addStepChart(mainSheet As Excel.Worksheet, intime As Double)
+        Dim mainChart As Excel.Chart = mainSheet.ChartObjects.Item(1).Chart
+        Dim mainChartSeriesCollect As Excel.SeriesCollection = mainChart.SeriesCollection
+
+        Dim ser As Excel.Series
+        ser = mainChartSeriesCollect.NewSeries
+
+        Dim avgVal As Double = (mainChart.Axes(1).MinimumScale + mainChart.Axes(1).MaximumScale) / 2
+
+        ser.Values = avgVal
+        ser.XValues = intime
+        ser.Name = ""
+
+
+        ser.MarkerStyle = Excel.XlMarkerStyle.xlMarkerStyleNone
+        ser.Format.Line.Visible = False
+
+        ser.HasErrorBars = True
+        ser.ErrorBars.EndStyle = Excel.XlEndStyleCap.xlNoCap
+
+        ser.ErrorBar(Excel.XlErrorBarDirection.xlY, Excel.XlErrorBarInclude.xlErrorBarIncludeBoth, Excel.XlErrorBarType.xlErrorBarTypePercent, 100)
+        ser.ErrorBar(Excel.XlErrorBarDirection.xlX, Excel.XlErrorBarInclude.xlErrorBarIncludeNone, Excel.XlErrorBarType.xlErrorBarTypeFixedValue)
     End Sub
 
 
