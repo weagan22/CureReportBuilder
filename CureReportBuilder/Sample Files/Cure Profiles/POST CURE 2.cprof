@@ -85,7 +85,7 @@
 				Type,Temp
 				Condition,LESS
 				Goal,410
-				TCNum,Lead
+				TCNum,Lag
 			</termCond2>
 			<termCondOper>
 				termCondOper,AND

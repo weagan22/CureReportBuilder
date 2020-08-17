@@ -204,7 +204,7 @@ Public Class MainForm
         Dim hours As Integer = Math.Round((dateArr(cureEnd) - dateArr(cureStart)).TotalMinutes, 1) \ 60
         Dim minutes As Integer = Math.Round((dateArr(cureEnd) - dateArr(cureStart)).TotalMinutes, 1) - (hours * 60)
 
-        mainSheet.Cells(2, 8) = "Cure" & vbNewLine & "Start: " & dateArr(cureStart).ToString("dd-MMM-yyyy h:mm tt") & vbNewLine & "End: " & dateArr(cureEnd).ToString("dd-MMM-yyyy h:mm tt") & vbNewLine & "Duration: " & hours & " hrs | " & minutes & " min" 'Math.Round((dateArr(cureEnd) - dateArr(cureStart)).TotalMinutes, 1) & " min"
+        mainSheet.Cells(2, 8) = "Cure" & vbNewLine & "Start: " & dateArr(cureStart).ToString("dd-MMM-yyyy | h:mm tt") & vbNewLine & "Finish: " & dateArr(cureEnd).ToString("dd-MMM-yyyy | h:mm tt") & vbNewLine & "Duration: " & hours & " hrs | " & minutes & " min" 'Math.Round((dateArr(cureEnd) - dateArr(cureStart)).TotalMinutes, 1) & " min"
         formatFont(mainSheet.Cells(2, 8), "Cure", 14, True, False, True)
 
         mainSheet.Cells(5, 1) = "Equipment" & vbNewLine & machType & " | " & equipSerialNum
@@ -221,7 +221,8 @@ Public Class MainForm
         mainSheet.Cells(5, 8) = "Cure Document" & vbNewLine & curePro.cureDoc & vbNewLine & "Rev. " & curePro.cureDocRev & vbNewLine & "Profile: " & curePro.Name
         formatFont(mainSheet.Cells(5, 8), "Cure Document", 14, True, False, True)
 
-
+        mainSheet.Cells(34, 3) = Txt_Technician.Text
+        mainSheet.Cells(34, 9) = Today.Date().ToString("MM-dd-yyyy")
 
 
         Dim curRow As Integer = 40
@@ -245,7 +246,7 @@ Public Class MainForm
             'Fill out data in cell 1
             If currentStep.hardFail Then
                 mainSheet.Cells(curRow, 1) = currentStep.stepName
-                formatFont(mainSheet.Cells(curRow, 1), currentStep.stepName, 11, True, False, False)
+                formatFont(mainSheet.Cells(curRow, 1), currentStep.stepName, 14, True, False, False)
             Else
                 Dim stepPass As String = "FAIL"
                 If currentStep.stepPass Then stepPass = "PASS"
@@ -257,13 +258,13 @@ Public Class MainForm
                 If currentStep.stepTerminate = False Then
                     endStr = "Failed to Terminate"
                 Else
-                    endStr = "End: " & endTime & " min"
+                    endStr = "Finish: " & endTime & " min"
                 End If
 
 
                 mainSheet.Cells(curRow, 1) = currentStep.stepName & vbNewLine & "(" & stepPass & ")" & vbNewLine & "Start: " & startTime & " min" & vbNewLine & endStr
 
-                formatFont(mainSheet.Cells(curRow, 1), currentStep.stepName, 11, True, False, False)
+                formatFont(mainSheet.Cells(curRow, 1), currentStep.stepName, 14, True, False, False)
 
                 If currentStep.stepPass = True Then
                     formatFont(mainSheet.Cells(curRow, 1), "(" & stepPass & ")", 11, False, False, False)
@@ -365,11 +366,11 @@ Public Class MainForm
 
             'Format cell 2
 
-            formatFont(mainSheet.Cells(curRow, 3), tempStr, 9)
-            formatFont(mainSheet.Cells(curRow, 3), tempRmpStr, 9)
-            formatFont(mainSheet.Cells(curRow, 3), pressStr, 9)
-            formatFont(mainSheet.Cells(curRow, 3), pressRmpStr, 9)
-            formatFont(mainSheet.Cells(curRow, 3), vacStr, 9)
+            formatFont(mainSheet.Cells(curRow, 3), tempStr, 9,, True)
+            formatFont(mainSheet.Cells(curRow, 3), tempRmpStr, 9,, True)
+            formatFont(mainSheet.Cells(curRow, 3), pressStr, 9,, True)
+            formatFont(mainSheet.Cells(curRow, 3), pressRmpStr, 9,, True)
+            formatFont(mainSheet.Cells(curRow, 3), vacStr, 9,, True)
 
             If Strings.Right(term1Str, 1) = vbLf Then
                 term1Str = Strings.Left(term1Str, Len(term1Str) - 1)
@@ -378,9 +379,9 @@ Public Class MainForm
                 term2Str = Strings.Left(term2Str, Len(term2Str) - 1)
             End If
 
-            formatFont(mainSheet.Cells(curRow, 3), "Terminate", 11, True, False, True)
-            formatFont(mainSheet.Cells(curRow, 3), term1Str, 9)
-            formatFont(mainSheet.Cells(curRow, 3), term2Str, 9)
+            formatFont(mainSheet.Cells(curRow, 3), "Terminate", 9, True, True, True)
+            formatFont(mainSheet.Cells(curRow, 3), term1Str, 9,, True)
+            formatFont(mainSheet.Cells(curRow, 3), term2Str, 9,, True)
 
 
             'Fill out cell 3
@@ -455,46 +456,46 @@ Public Class MainForm
                 'Format cell 3
 
                 If currentStep.tempPass Then
-                    formatFont(mainSheet.Cells(curRow, 7), tempStr, 9,, True)
+                    formatFont(mainSheet.Cells(curRow, 7), tempStr, 9)
                     formatFont(mainSheet.Cells(curRow, 7), "Temperature (°F)", 11, True,,,, False)
                 Else
-                    formatFont(mainSheet.Cells(curRow, 7), tempStr, 9,, True, True, Color.Red)
+                    formatFont(mainSheet.Cells(curRow, 7), tempStr, 9,,, True, Color.Red)
                     formatFont(mainSheet.Cells(curRow, 7), "Temperature (°F)", 11, True,, True, Color.Red, False)
                 End If
 
                 If currentStep.tempSet("RampRate") <> 0 Then
                     If currentStep.tempRampPass Then
-                        formatFont(mainSheet.Cells(curRow, 7), tempRmpStr, 9,, True)
+                        formatFont(mainSheet.Cells(curRow, 7), tempRmpStr, 9)
                         formatFont(mainSheet.Cells(curRow, 7), "Temp. Ramp (°F/min)", 11, True,,,, False)
                     Else
-                        formatFont(mainSheet.Cells(curRow, 7), tempRmpStr, 9,, True, True, Color.Red)
+                        formatFont(mainSheet.Cells(curRow, 7), tempRmpStr, 9,,, True, Color.Red)
                         formatFont(mainSheet.Cells(curRow, 7), "Temp. Ramp (°F/min)", 11, True,, True, Color.Red, False)
                     End If
                 End If
 
                 If currentStep.pressurePass Then
-                    formatFont(mainSheet.Cells(curRow, 7), pressStr, 9,, True)
+                    formatFont(mainSheet.Cells(curRow, 7), pressStr, 9)
                     formatFont(mainSheet.Cells(curRow, 7), "Pressure (psi)", 11, True,,,, False)
                 Else
-                    formatFont(mainSheet.Cells(curRow, 7), pressStr, 9,, True, True, Color.Red)
+                    formatFont(mainSheet.Cells(curRow, 7), pressStr, 9,,, True, Color.Red)
                     formatFont(mainSheet.Cells(curRow, 7), "Pressure (psi)", 11, True,, True, Color.Red, False)
                 End If
 
                 If currentStep.pressureSet("RampRate") <> 0 Then
                     If currentStep.pressureRampPass Then
-                        formatFont(mainSheet.Cells(curRow, 7), pressRmpStr, 9,, True)
+                        formatFont(mainSheet.Cells(curRow, 7), pressRmpStr, 9)
                         formatFont(mainSheet.Cells(curRow, 7), "Pressure Ramp (psi/min)", 11, True,,,, False)
                     Else
-                        formatFont(mainSheet.Cells(curRow, 7), pressRmpStr, 9,, True, True, Color.Red)
+                        formatFont(mainSheet.Cells(curRow, 7), pressRmpStr, 9,,, True, Color.Red)
                         formatFont(mainSheet.Cells(curRow, 7), "Pressure Ramp (psi/min)", 11, True,, True, Color.Red, False)
                     End If
                 End If
 
                 If currentStep.vacPass Then
-                    formatFont(mainSheet.Cells(curRow, 7), vacStr, 9,, True)
+                    formatFont(mainSheet.Cells(curRow, 7), vacStr, 9)
                     formatFont(mainSheet.Cells(curRow, 7), "Vacuum (inHg)", 11, True,,,, False)
                 Else
-                    formatFont(mainSheet.Cells(curRow, 7), vacStr, 9,, True, True, Color.Red)
+                    formatFont(mainSheet.Cells(curRow, 7), vacStr, 9,,, True, Color.Red)
                     formatFont(mainSheet.Cells(curRow, 7), "Vacuum (inHg)", 11, True,, True, Color.Red, False)
                 End If
             End If

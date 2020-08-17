@@ -124,7 +124,7 @@ Partial Class MainForm
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(1188, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(759, 24)
         Me.MenuStrip1.TabIndex = 0
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -144,9 +144,9 @@ Partial Class MainForm
         'StatusStrip1
         '
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 686)
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 525)
         Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Size = New System.Drawing.Size(1188, 22)
+        Me.StatusStrip1.Size = New System.Drawing.Size(759, 22)
         Me.StatusStrip1.TabIndex = 1
         '
         'ToolStripStatusLabel1
@@ -159,10 +159,11 @@ Partial Class MainForm
         '
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
-        Me.TabControl1.Location = New System.Drawing.Point(0, 27)
+        Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TabControl1.Location = New System.Drawing.Point(0, 24)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(760, 507)
+        Me.TabControl1.Size = New System.Drawing.Size(759, 501)
         Me.TabControl1.TabIndex = 2
         '
         'TabPage1
@@ -171,7 +172,7 @@ Partial Class MainForm
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(752, 481)
+        Me.TabPage1.Size = New System.Drawing.Size(751, 475)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "TabPage1"
         Me.TabPage1.UseVisualStyleBackColor = True
@@ -193,7 +194,7 @@ Partial Class MainForm
         Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60.0!))
         Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60.0!))
-        Me.TableLayoutPanel7.Size = New System.Drawing.Size(746, 475)
+        Me.TableLayoutPanel7.Size = New System.Drawing.Size(745, 469)
         Me.TableLayoutPanel7.TabIndex = 13
         '
         'Box_CureDataLocation
@@ -204,7 +205,7 @@ Partial Class MainForm
         Me.Box_CureDataLocation.Enabled = False
         Me.Box_CureDataLocation.Location = New System.Drawing.Point(23, 153)
         Me.Box_CureDataLocation.Name = "Box_CureDataLocation"
-        Me.Box_CureDataLocation.Size = New System.Drawing.Size(720, 54)
+        Me.Box_CureDataLocation.Size = New System.Drawing.Size(719, 54)
         Me.Box_CureDataLocation.TabIndex = 0
         Me.Box_CureDataLocation.TabStop = False
         Me.Box_CureDataLocation.Text = "Cure Data Location"
@@ -221,7 +222,7 @@ Partial Class MainForm
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(714, 35)
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(713, 35)
         Me.TableLayoutPanel1.TabIndex = 2
         '
         'Txt_FilePath
@@ -229,14 +230,14 @@ Partial Class MainForm
         Me.Txt_FilePath.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Txt_FilePath.Location = New System.Drawing.Point(3, 7)
         Me.Txt_FilePath.Name = "Txt_FilePath"
-        Me.Txt_FilePath.Size = New System.Drawing.Size(633, 20)
+        Me.Txt_FilePath.Size = New System.Drawing.Size(632, 20)
         Me.Txt_FilePath.TabIndex = 0
         Me.Txt_FilePath.Text = "File path..."
         '
         'Btn_OpenFile
         '
         Me.Btn_OpenFile.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Btn_OpenFile.Location = New System.Drawing.Point(642, 3)
+        Me.Btn_OpenFile.Location = New System.Drawing.Point(641, 3)
         Me.Btn_OpenFile.Name = "Btn_OpenFile"
         Me.Btn_OpenFile.Size = New System.Drawing.Size(69, 29)
         Me.Btn_OpenFile.TabIndex = 1
@@ -247,7 +248,7 @@ Partial Class MainForm
         '
         Me.GroupBox1.Anchor = System.Windows.Forms.AnchorStyles.Top
         Me.GroupBox1.Controls.Add(Me.TableLayoutPanel3)
-        Me.GroupBox1.Location = New System.Drawing.Point(251, 3)
+        Me.GroupBox1.Location = New System.Drawing.Point(250, 3)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(264, 136)
         Me.GroupBox1.TabIndex = 11
@@ -358,7 +359,7 @@ Partial Class MainForm
         Me.Box_RunParams.Enabled = False
         Me.Box_RunParams.Location = New System.Drawing.Point(23, 213)
         Me.Box_RunParams.Name = "Box_RunParams"
-        Me.Box_RunParams.Size = New System.Drawing.Size(720, 199)
+        Me.Box_RunParams.Size = New System.Drawing.Size(719, 193)
         Me.Box_RunParams.TabIndex = 13
         Me.Box_RunParams.TabStop = False
         '
@@ -623,11 +624,11 @@ Partial Class MainForm
         Me.Box_RunLine.Controls.Add(Me.Box_Technician, 0, 0)
         Me.Box_RunLine.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Box_RunLine.Enabled = False
-        Me.Box_RunLine.Location = New System.Drawing.Point(23, 418)
+        Me.Box_RunLine.Location = New System.Drawing.Point(23, 412)
         Me.Box_RunLine.Name = "Box_RunLine"
         Me.Box_RunLine.RowCount = 1
         Me.Box_RunLine.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.Box_RunLine.Size = New System.Drawing.Size(720, 54)
+        Me.Box_RunLine.Size = New System.Drawing.Size(719, 54)
         Me.Box_RunLine.TabIndex = 14
         '
         'Btn_Run
@@ -635,7 +636,7 @@ Partial Class MainForm
         Me.Btn_Run.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Btn_Run.FlatAppearance.BorderSize = 2
         Me.Btn_Run.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.Btn_Run.Location = New System.Drawing.Point(557, 3)
+        Me.Btn_Run.Location = New System.Drawing.Point(556, 3)
         Me.Btn_Run.Name = "Btn_Run"
         Me.Btn_Run.Size = New System.Drawing.Size(160, 48)
         Me.Btn_Run.TabIndex = 12
@@ -646,7 +647,7 @@ Partial Class MainForm
         '
         Me.Box_Technician.Anchor = System.Windows.Forms.AnchorStyles.Right
         Me.Box_Technician.Controls.Add(Me.Txt_Technician)
-        Me.Box_Technician.Location = New System.Drawing.Point(390, 5)
+        Me.Box_Technician.Location = New System.Drawing.Point(389, 5)
         Me.Box_Technician.Name = "Box_Technician"
         Me.Box_Technician.Size = New System.Drawing.Size(161, 44)
         Me.Box_Technician.TabIndex = 10
@@ -770,7 +771,7 @@ Partial Class MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1188, 708)
+        Me.ClientSize = New System.Drawing.Size(759, 547)
         Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.MenuStrip1)
