@@ -10,25 +10,25 @@
 		<Step0>
 			stepName,Ramp Up
 			<pressureSet>
-				setPoint,80
-				PosTol,10
-				NegTol,-80
+				setPoint,70
+				PosTol,20
+				NegTol,-70
 				RampRate,1.5
 				RampPosTol,1
 				RampNegTol,-1
 			</pressureSet>
 			<tempSet>
-				setPoint,350
-				PosTol,20
-				NegTol,-350
+				setPoint,345
+				PosTol,25
+				NegTol,-345
 				RampRate,5
 				RampPosTol,0
 				RampNegTol,-5
 			</tempSet>
 			<vacSet>
-				setPoint,-29
-				PosTol,14
-				NegTol,0
+				setPoint,-15
+				PosTol,0
+				NegTol,-15
 				RampRate,0
 				RampPosTol,0
 				RampNegTol,0
@@ -68,9 +68,9 @@
 				RampNegTol,0
 			</tempSet>
 			<vacSet>
-				setPoint,-29
-				PosTol,14
-				NegTol,0
+				setPoint,-15
+				PosTol,0
+				NegTol,-15
 				RampRate,0
 				RampPosTol,0
 				RampNegTol,0
@@ -144,9 +144,9 @@
 				RampNegTol,0
 			</pressureSet>
 			<tempSet>
-				setPoint,350
-				PosTol,20
-				NegTol,-350
+				setPoint,150
+				PosTol,220
+				NegTol,-150
 				RampRate,-5
 				RampPosTol,10
 				RampNegTol,0
@@ -176,13 +176,13 @@
 			</termCondOper>
 		</Step3>
 		<Step4>
-			stepName,Ramp Down
+			stepName,Ramp Down Pressure
 			<pressureSet>
-				setPoint,80
-				PosTol,10
-				NegTol,-80
+				setPoint,0
+				PosTol,90
+				NegTol,0
 				RampRate,-10
-				RampPosTol,20
+				RampPosTol,10
 				RampNegTol,0
 			</pressureSet>
 			<tempSet>

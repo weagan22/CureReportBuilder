@@ -13,12 +13,16 @@
 
         ReDim ramp(UBound(values))
 
-        Dim startVal As Integer = stepRate \ 2
-        'If startVal = 0 Then startVal = 2
-
         Dim i As Integer
-        For i = startVal To UBound(values) - (stepRate \ 2)
-            ramp(i) = LinReg(MainForm.dateArr, values, i - (stepRate \ 2), i + (stepRate \ 2))
+        For i = 0 To UBound(values)
+
+            Dim startVal As Integer = i - (stepRate \ 2)
+            If startVal < 0 Then startVal = 0
+
+            Dim endVal As Integer = i + (stepRate \ 2)
+            If endVal > UBound(values) Then endVal = UBound(values)
+
+            ramp(i) = LinReg(MainForm.dateArr, values, startVal, endVal)
         Next
     End Sub
 
@@ -78,7 +82,7 @@
         Return total / addCnt
     End Function
 
-    Public Function MinRamp(Optional indexStart As Integer = 0, Optional indexEnd As Integer = 0) As Double
+    Public Function MinRamp(Optional indexStart As Integer = 0, Optional indexEnd As Integer = 0, Optional goal As Double = -1, Optional greatThan As Boolean = True) As Double
 
         Dim holder As Double
 
@@ -86,17 +90,37 @@
 
         Dim i As Integer
         For i = indexStart To indexEnd
-            If i = indexStart Then
-                holder = ramp(i)
-            ElseIf ramp(i) < holder Then
-                holder = ramp(i)
+            If goal = -1 Then
+                If i = indexStart Then
+                    holder = ramp(i)
+                ElseIf ramp(i) < holder Then
+                    holder = ramp(i)
+                End If
+            Else
+                If greatThan Then
+                    If values(i) < goal Then
+                        If i = indexStart Then
+                            holder = ramp(i)
+                        ElseIf ramp(i) < holder Then
+                            holder = ramp(i)
+                        End If
+                    End If
+                Else
+                    If values(i) > goal Then
+                        If i = indexStart Then
+                            holder = ramp(i)
+                        ElseIf ramp(i) < holder Then
+                            holder = ramp(i)
+                        End If
+                    End If
+                End If
             End If
         Next
 
         Return holder
     End Function
 
-    Public Function MaxRamp(Optional indexStart As Integer = 0, Optional indexEnd As Integer = 0) As Double
+    Public Function MaxRamp(Optional indexStart As Integer = 0, Optional indexEnd As Integer = 0, Optional goal As Double = -1, Optional greatThan As Boolean = True) As Double
 
         Dim holder As Double
 
@@ -104,10 +128,30 @@
 
         Dim i As Integer
         For i = indexStart To indexEnd
-            If i = indexStart Then
-                holder = ramp(i)
-            ElseIf ramp(i) > holder Then
-                holder = ramp(i)
+            If goal = -1 Then
+                If i = indexStart Then
+                    holder = ramp(i)
+                ElseIf ramp(i) > holder Then
+                    holder = ramp(i)
+                End If
+            Else
+                If greatThan Then
+                    If values(i) < goal Then
+                        If i = indexStart Then
+                            holder = ramp(i)
+                        ElseIf ramp(i) > holder Then
+                            holder = ramp(i)
+                        End If
+                    End If
+                Else
+                    If values(i) > goal Then
+                        If i = indexStart Then
+                            holder = ramp(i)
+                        ElseIf ramp(i) > holder Then
+                            holder = ramp(i)
+                        End If
+                    End If
+                End If
             End If
         Next
 

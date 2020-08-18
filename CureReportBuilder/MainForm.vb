@@ -302,52 +302,48 @@ Public Class MainForm
             Dim pressRmpStr As String = ""
             Dim vacStr As String = ""
 
-            Dim optionNeg As String = ""
 
-            If curePro.checkTemp Then
+
+            If curePro.checkTemp And currentStep.tempSet("SetPoint") <> -1 Then
                 If Math.Abs(currentStep.tempSet("SetPoint")) = Math.Abs(currentStep.tempSet("NegTol")) Then
                     tempStr = "Temperature: Max " & currentStep.tempSet("SetPoint") + currentStep.tempSet("PosTol") & "°F"
                 ElseIf Math.Abs(currentStep.tempSet("SetPoint")) = Math.Abs(currentStep.tempSet("PosTol")) Then
                     tempStr = "Temperature: Min " & currentStep.tempSet("SetPoint") + currentStep.tempSet("NegTol") & "°F"
                 Else
-                    optionNegTest(currentStep.tempSet("NegTol"), optionNeg)
-                    tempStr = "Temperature: " & currentStep.tempSet("SetPoint") & "°F +" & currentStep.tempSet("PosTol") & "/" & optionNeg & currentStep.tempSet("NegTol") & "°F"
+
+                    tempStr = "Temperature: " & currentStep.tempSet("SetPoint") & "°F " & plusMinusVal(currentStep.tempSet("PosTol"), currentStep.tempSet("NegTol")) & "°F"
                 End If
                 tempStr = tempStr & vbNewLine
 
                 If currentStep.tempSet("RampRate") <> 0 Then
-                    optionNegTest(currentStep.tempSet("RampNegTol"), optionNeg)
-                    tempRmpStr = "Temp. Ramp: " & currentStep.tempSet("RampRate") & "°F/min +" & currentStep.tempSet("RampPosTol") & "/" & optionNeg & currentStep.tempSet("RampNegTol") & "°F/min"
+                    tempRmpStr = "Temp. Ramp: " & currentStep.tempSet("RampRate") & "°F/min " & plusMinusVal(currentStep.tempSet("RampPosTol"), currentStep.tempSet("RampNegTol")) & "°F/min"
                     tempRmpStr = tempRmpStr & vbNewLine
                 End If
             End If
 
-            If curePro.checkPressure Then
+            If curePro.checkPressure And currentStep.pressureSet("SetPoint") <> -1 Then
                 If Math.Abs(currentStep.pressureSet("SetPoint")) = Math.Abs(currentStep.pressureSet("NegTol")) Then
                     pressStr = "Pressure: Max " & currentStep.pressureSet("SetPoint") + currentStep.pressureSet("PosTol") & " psi"
                 ElseIf Math.Abs(currentStep.pressureSet("SetPoint")) = Math.Abs(currentStep.pressureSet("PosTol")) Then
                     pressStr = "Pressure Min " & currentStep.pressureSet("SetPoint") + currentStep.pressureSet("NegTol") & " psi"
                 Else
-                    optionNegTest(currentStep.pressureSet("NegTol"), optionNeg)
-                    pressStr = pressStr & "Pressure: " & currentStep.pressureSet("SetPoint") & " psi +" & currentStep.pressureSet("PosTol") & "/" & optionNeg & currentStep.pressureSet("NegTol") & " psi"
+                    pressStr = pressStr & "Pressure: " & currentStep.pressureSet("SetPoint") & " psi " & plusMinusVal(currentStep.pressureSet("PosTol"), currentStep.pressureSet("NegTol")) & " psi"
                 End If
                 pressStr = pressStr & vbNewLine
 
                 If currentStep.pressureSet("RampRate") <> 0 Then
-                    optionNegTest(currentStep.pressureSet("RampNegTol"), optionNeg)
-                    pressRmpStr = pressRmpStr & "Pressure Ramp: " & currentStep.pressureSet("RampRate") & " psi/min +" & currentStep.pressureSet("RampPosTol") & "/" & optionNeg & currentStep.pressureSet("RampNegTol") & " psi/min"
+                    pressRmpStr = pressRmpStr & "Pressure Ramp: " & currentStep.pressureSet("RampRate") & " psi/min " & plusMinusVal(currentStep.pressureSet("RampPosTol"), currentStep.pressureSet("RampNegTol")) & " psi/min"
                     pressRmpStr = pressRmpStr & vbNewLine
                 End If
             End If
 
-            If curePro.checkVac Then
+            If curePro.checkVac And currentStep.vacSet("SetPoint") <> -1 Then
                 If Math.Abs(currentStep.vacSet("SetPoint")) = Math.Abs(currentStep.vacSet("NegTol")) Then
-                    vacStr = "Vacuum: Max " & currentStep.vacSet("SetPoint") + currentStep.vacSet("PosTol") & " inHg"
+                    vacStr = "Vacuum: Min " & currentStep.vacSet("SetPoint") + currentStep.vacSet("PosTol") & " inHg"
                 ElseIf Math.Abs(currentStep.vacSet("SetPoint")) = Math.Abs(currentStep.vacSet("PosTol")) Then
-                    vacStr = "Vacuum: Min " & currentStep.vacSet("SetPoint") + currentStep.vacSet("NegTol") & " inHg"
+                    vacStr = "Vacuum: Max " & currentStep.vacSet("SetPoint") + currentStep.vacSet("NegTol") & " inHg"
                 Else
-                    optionNegTest(currentStep.vacSet("NegTol"), optionNeg)
-                    vacStr = vacStr & "Vacuum: " & currentStep.vacSet("SetPoint") & " inHg +" & currentStep.vacSet("PosTol") & "/" & optionNeg & currentStep.vacSet("NegTol") & " inHg"
+                    vacStr = vacStr & "Vacuum: " & currentStep.vacSet("SetPoint") & " inHg " & plusMinusVal(currentStep.vacSet("PosTol"), currentStep.vacSet("NegTol")) & " inHg"
                 End If
                 vacStr = vacStr & vbNewLine
             End If
@@ -410,7 +406,7 @@ Public Class MainForm
                 pressRmpStr = ""
                 vacStr = ""
 
-                If curePro.checkTemp Then
+                If curePro.checkTemp And currentStep.tempSet("SetPoint") <> -1 Then
                     tempStr = "Temperature (°F)" & vbNewLine
 
                     If Math.Abs(currentStep.tempSet("SetPoint")) = Math.Abs(currentStep.tempSet("NegTol")) Then
@@ -427,7 +423,7 @@ Public Class MainForm
                     End If
                 End If
 
-                If curePro.checkPressure Then
+                If curePro.checkPressure And currentStep.pressureSet("SetPoint") <> -1 Then
                     pressStr = "Pressure (psi)" & vbNewLine
 
                     If Math.Abs(currentStep.pressureSet("SetPoint")) = Math.Abs(currentStep.pressureSet("NegTol")) Then
@@ -444,15 +440,15 @@ Public Class MainForm
                     End If
                 End If
 
-                If curePro.checkVac Then
+                If curePro.checkVac And currentStep.vacSet("SetPoint") <> -1 Then
                     vacStr = "Vacuum (inHg)" & vbNewLine
 
                     If Math.Abs(currentStep.vacSet("SetPoint")) = Math.Abs(currentStep.vacSet("NegTol")) Then
-                        vacStr = vacStr & "Max: " & String.Format("{0:0.0}", currentStep.vacResult("Max")) & vbNewLine
-                    ElseIf Math.Abs(currentStep.vacSet("SetPoint")) = Math.Abs(currentStep.vacSet("PosTol")) Then
                         vacStr = vacStr & "Min: " & String.Format("{0:0.0}", currentStep.vacResult("Min")) & vbNewLine
+                    ElseIf Math.Abs(currentStep.vacSet("SetPoint")) = Math.Abs(currentStep.vacSet("PosTol")) Then
+                        vacStr = vacStr & "Max: " & String.Format("{0:0.0}", currentStep.vacResult("Max")) & vbNewLine
                     Else
-                        vacStr = vacStr & "Max: " & String.Format("{0:0.0}", currentStep.vacResult("Max")) & " | Min: " & String.Format("{0:0.0}", currentStep.vacResult("Min")) & " | Avg: " & String.Format("{0:0.0}", currentStep.vacResult("Avg")) & vbNewLine
+                        vacStr = vacStr & "Max: " & String.Format("{0:0.0}", currentStep.vacResult("Min")) & " | Min: " & String.Format("{0:0.0}", currentStep.vacResult("Max")) & " | Avg: " & String.Format("{0:0.0}", currentStep.vacResult("Avg")) & vbNewLine
                     End If
 
                 End If
@@ -612,6 +608,24 @@ Public Class MainForm
 
         Excel.Visible = True
     End Sub
+
+    Function plusMinusVal(plusVal As Double, minusVal As Double) As String
+        Dim optionNeg As String = ""
+
+        If minusVal = 0 Then
+            optionNeg = "-"
+        Else
+            optionNeg = ""
+        End If
+
+        If Math.Abs(plusVal) = Math.Abs(minusVal) Then
+            Return "±" & Math.Abs(plusVal)
+        Else
+            Return "+" & plusVal & "/" & optionNeg & minusVal
+        End If
+
+    End Function
+
     Sub clearChart(mainSheet As Excel.Worksheet)
         Dim mainChart As Excel.Chart = mainSheet.ChartObjects.Item(1).Chart
         Dim mainChartSeriesCollect As Excel.SeriesCollection = mainChart.SeriesCollection
@@ -742,15 +756,6 @@ Public Class MainForm
         cNum += 1
     End Sub
 
-
-    Sub optionNegTest(negTolValue As Integer, ByRef optionNeg As String)
-        If negTolValue = 0 Then
-            optionNeg = "-"
-        Else
-            optionNeg = ""
-        End If
-    End Sub
-
     Function termToStr(termCond As Dictionary(Of String, Object), currentStep As CureStep) As String
 
         Dim currentStr As String = ""
@@ -828,23 +833,27 @@ Public Class MainForm
 
             Dim indexStart As Integer = curePro.CureSteps(i).stepStart
             Dim indexEnd As Integer = curePro.CureSteps(i).stepEnd
+            Dim goal As Double = -1
+            Dim greaterThanGoal As Boolean = True
 
             Dim total As Double = 0
             Dim addCnt As Integer = 0
 
+
+
             'Calculate temp results for a given step
-            If curePro.checkTemp = True Then
+            If curePro.checkTemp = True And curePro.CureSteps(i).tempSet("SetPoint") <> -1 Then
 
                 ''Max temp
                 If Not firstStep Then
                     If curePro.CureSteps(i - 1).tempSet("RampRate") < 0 Then
-                        indexStart = indexStart + Math.Round(curePro.CureSteps(i - 1).tempSet("RampRate") / (dateArr(1) - dateArr(0)).TotalMinutes, 0)
+                        indexStart = indexStart + Math.Abs(Math.Round(curePro.CureSteps(i - 1).tempSet("RampRate") / (dateArr(1) - dateArr(0)).TotalMinutes, 0))
                     End If
                 End If
 
                 If Not lastStep Then
                     If curePro.CureSteps(i + 1).tempSet("RampRate") > 0 Then
-                        indexEnd = indexEnd - Math.Round(curePro.CureSteps(i - 1).tempSet("RampRate") / (dateArr(1) - dateArr(0)).TotalMinutes, 0)
+                        indexEnd = indexEnd - Math.Abs(Math.Round(curePro.CureSteps(i - 1).tempSet("RampRate") / (dateArr(1) - dateArr(0)).TotalMinutes, 0))
                     End If
                 End If
 
@@ -852,15 +861,18 @@ Public Class MainForm
 
 
                 ''Min temp
+                indexStart = curePro.CureSteps(i).stepStart
+                indexEnd = curePro.CureSteps(i).stepEnd
+
                 If Not firstStep Then
                     If curePro.CureSteps(i - 1).tempSet("RampRate") > 0 Then
-                        indexStart = indexStart + Math.Round(curePro.CureSteps(i - 1).tempSet("RampRate") / (dateArr(1) - dateArr(0)).TotalMinutes, 0)
+                        indexStart = indexStart + Math.Abs(Math.Round(curePro.CureSteps(i - 1).tempSet("RampRate") / (dateArr(1) - dateArr(0)).TotalMinutes, 0))
                     End If
                 End If
 
                 If Not lastStep Then
                     If curePro.CureSteps(i + 1).tempSet("RampRate") < 0 Then
-                        indexEnd = indexEnd - Math.Round(curePro.CureSteps(i - 1).tempSet("RampRate") / (dateArr(1) - dateArr(0)).TotalMinutes, 0)
+                        indexEnd = indexEnd - Math.Abs(Math.Round(curePro.CureSteps(i - 1).tempSet("RampRate") / (dateArr(1) - dateArr(0)).TotalMinutes, 0))
                     End If
                 End If
 
@@ -884,22 +896,39 @@ Public Class MainForm
 
                 curePro.CureSteps(i).tempResult("Avg") = Math.Round(total / addCnt, 0)
 
+
+
+
+                ''##Temp Ramps##
+                goal = -1
+                greaterThanGoal = True
+
+                If curePro.CureSteps(i).tempSet("RampRate") > 0 Then
+                    goal = curePro.CureSteps(i).tempSet("SetPoint")
+                    greaterThanGoal = True
+                ElseIf curePro.CureSteps(i).tempSet("RampRate") < 0 Then
+                    goal = curePro.CureSteps(i).tempSet("SetPoint")
+                    greaterThanGoal = False
+                End If
+
                 ''Max temp ramp
                 Dim holder As Double = 0
                 indexStart = curePro.CureSteps(i).stepStart
                 indexEnd = curePro.CureSteps(i).stepEnd
 
+
                 For z = 0 To UBound(partTC_Arr)
                     For y = 0 To UBound(usrRunTC)
                         If holder = 0 Then
-                            holder = partTC_Arr(z).MaxRamp(indexStart, indexEnd)
-                        ElseIf partTC_Arr(z).MaxRamp(indexStart, indexEnd) > holder Then
-                            holder = partTC_Arr(z).MaxRamp(indexStart, indexEnd)
+                            holder = partTC_Arr(z).MaxRamp(indexStart, indexEnd, goal, greaterThanGoal)
+                        ElseIf partTC_Arr(z).MaxRamp(indexStart, indexEnd, goal, greaterThanGoal) > holder Then
+                            holder = partTC_Arr(z).MaxRamp(indexStart, indexEnd, goal, greaterThanGoal)
                         End If
                     Next
                 Next
 
                 curePro.CureSteps(i).tempResult("MaxRamp") = Math.Round(holder, 1)
+
 
                 ''Min temp ramp
                 holder = 0
@@ -909,9 +938,9 @@ Public Class MainForm
                 For z = 0 To UBound(partTC_Arr)
                     For y = 0 To UBound(usrRunTC)
                         If holder = 0 Then
-                            holder = partTC_Arr(z).MinRamp(indexStart, indexEnd)
-                        ElseIf partTC_Arr(z).MinRamp(indexStart, indexEnd) < holder Then
-                            holder = partTC_Arr(z).MinRamp(indexStart, indexEnd)
+                            holder = partTC_Arr(z).MinRamp(indexStart, indexEnd, goal, greaterThanGoal)
+                        ElseIf partTC_Arr(z).MinRamp(indexStart, indexEnd, goal, greaterThanGoal) < holder Then
+                            holder = partTC_Arr(z).MinRamp(indexStart, indexEnd, goal, greaterThanGoal)
                         End If
                     Next
                 Next
@@ -936,8 +965,14 @@ Public Class MainForm
                 curePro.CureSteps(i).tempResult("AvgRamp") = Math.Round(total / addCnt, 1)
 
                 'Check temp for passing
-                If curePro.CureSteps(i).tempResult("Min") < curePro.CureSteps(i).tempSet("SetPoint") + curePro.CureSteps(i).tempSet("NegTol") Then curePro.CureSteps(i).tempPass = False
-                If curePro.CureSteps(i).tempResult("Max") > curePro.CureSteps(i).tempSet("SetPoint") + curePro.CureSteps(i).tempSet("PosTol") Then curePro.CureSteps(i).tempPass = False
+                If Math.Abs(curePro.CureSteps(i).tempSet("SetPoint")) = Math.Abs(curePro.CureSteps(i).tempSet("NegTol")) Then
+                    If curePro.CureSteps(i).tempResult("Max") > curePro.CureSteps(i).tempSet("SetPoint") + curePro.CureSteps(i).tempSet("PosTol") Then curePro.CureSteps(i).tempPass = False
+                ElseIf Math.Abs(curePro.CureSteps(i).tempSet("SetPoint")) = Math.Abs(curePro.CureSteps(i).tempSet("PosTol")) Then
+                    If curePro.CureSteps(i).tempResult("Min") < curePro.CureSteps(i).tempSet("SetPoint") + curePro.CureSteps(i).tempSet("NegTol") Then curePro.CureSteps(i).tempPass = False
+                Else
+                    If curePro.CureSteps(i).tempResult("Min") < curePro.CureSteps(i).tempSet("SetPoint") + curePro.CureSteps(i).tempSet("NegTol") Then curePro.CureSteps(i).tempPass = False
+                    If curePro.CureSteps(i).tempResult("Max") > curePro.CureSteps(i).tempSet("SetPoint") + curePro.CureSteps(i).tempSet("PosTol") Then curePro.CureSteps(i).tempPass = False
+                End If
 
                 'Check temp ramp for passing if not equal to 0
                 If curePro.CureSteps(i).tempSet("RampRate") <> 0 Then
@@ -949,72 +984,108 @@ Public Class MainForm
                 curePro.CureSteps(i).tempRampPass = True
             End If
 
+
+
             'Check autoclave only features
 
             'Calculate pressure results for a given step
-            If curePro.checkPressure Then
+            If curePro.checkPressure And curePro.CureSteps(i).pressureSet("SetPoint") <> -1 Then
+
                 ''Max pressure
+                indexStart = curePro.CureSteps(i).stepStart
+                indexEnd = curePro.CureSteps(i).stepEnd
+
                 If Not firstStep Then
                     If curePro.CureSteps(i - 1).pressureSet("RampRate") < 0 Then
-                        indexStart = indexStart + Math.Round(curePro.CureSteps(i - 1).pressureSet("RampRate") / (dateArr(1) - dateArr(0)).TotalMinutes, 0)
+                        indexStart = indexStart + Math.Abs(Math.Round(curePro.CureSteps(i - 1).pressureSet("RampRate") / (dateArr(1) - dateArr(0)).TotalMinutes, 0))
                     End If
                 End If
 
                 If Not lastStep Then
                     If curePro.CureSteps(i + 1).pressureSet("RampRate") > 0 Then
-                        indexEnd = indexEnd - Math.Round(curePro.CureSteps(i - 1).pressureSet("RampRate") / (dateArr(1) - dateArr(0)).TotalMinutes, 0)
+                        indexEnd = indexEnd - Math.Abs(Math.Round(curePro.CureSteps(i - 1).pressureSet("RampRate") / (dateArr(1) - dateArr(0)).TotalMinutes, 0))
                     End If
                 End If
+
                 curePro.CureSteps(i).pressureResult("Max") = Math.Round(vesselPress.Max(indexStart, indexEnd), 1)
 
+
                 ''Min pressure
+                indexStart = curePro.CureSteps(i).stepStart
+                indexEnd = curePro.CureSteps(i).stepEnd
                 If Not firstStep Then
                     If curePro.CureSteps(i - 1).pressureSet("RampRate") > 0 Then
-                        indexStart = indexStart + Math.Round(curePro.CureSteps(i - 1).pressureSet("RampRate") / (dateArr(1) - dateArr(0)).TotalMinutes, 0)
+                        indexStart = indexStart + Math.Abs(Math.Round(curePro.CureSteps(i - 1).pressureSet("RampRate") / (dateArr(1) - dateArr(0)).TotalMinutes, 0))
                     End If
                 End If
 
                 If Not lastStep Then
                     If curePro.CureSteps(i + 1).pressureSet("RampRate") < 0 Then
-                        indexEnd = indexEnd - Math.Round(curePro.CureSteps(i - 1).pressureSet("RampRate") / (dateArr(1) - dateArr(0)).TotalMinutes, 0)
+                        indexEnd = indexEnd - Math.Abs(Math.Round(curePro.CureSteps(i - 1).pressureSet("RampRate") / (dateArr(1) - dateArr(0)).TotalMinutes, 0))
                     End If
 
                 End If
                 curePro.CureSteps(i).pressureResult("Min") = Math.Round(vesselPress.Min(indexStart, indexEnd), 1)
+
 
                 ''Average pressure
                 indexStart = curePro.CureSteps(i).stepStart
                 indexEnd = curePro.CureSteps(i).stepEnd
                 curePro.CureSteps(i).pressureResult("Avg") = Math.Round(vesselPress.Average(indexStart, indexEnd), 1)
 
-                curePro.CureSteps(i).pressureResult("MaxRamp") = Math.Round(vesselPress.MaxRamp(indexStart, indexEnd), 1)
-                curePro.CureSteps(i).pressureResult("MinRamp") = Math.Round(vesselPress.MinRamp(indexStart, indexEnd), 1)
+
+
+
+                ''##Pressure ramps##
+                goal = -1
+                greaterThanGoal = True
+
+                If curePro.CureSteps(i).pressureSet("RampRate") > 0 Then
+                    goal = curePro.CureSteps(i).pressureSet("SetPoint")
+                    greaterThanGoal = True
+                ElseIf curePro.CureSteps(i).pressureSet("RampRate") < 0 Then
+                    goal = curePro.CureSteps(i).pressureSet("SetPoint")
+                    greaterThanGoal = False
+                End If
+
+                ''Max pressure ramp
+                curePro.CureSteps(i).pressureResult("MaxRamp") = Math.Round(vesselPress.MaxRamp(indexStart, indexEnd, goal, greaterThanGoal), 1)
+
+                ''Min pressure ramp
+                curePro.CureSteps(i).pressureResult("MinRamp") = Math.Round(vesselPress.MinRamp(indexStart, indexEnd, goal, greaterThanGoal), 1)
+
+                ''Avg pressure ramp
                 curePro.CureSteps(i).pressureResult("AvgRamp") = Math.Round(vesselPress.AverageRamp(indexStart, indexEnd), 1)
 
 
 
                 'Check pressure for passing
-                If curePro.CureSteps(i).pressureSet("SetPoint") <> -1 Then
+                If Math.Abs(curePro.CureSteps(i).pressureSet("SetPoint")) = Math.Abs(curePro.CureSteps(i).pressureSet("NegTol")) Then
+                    If curePro.CureSteps(i).pressureResult("Max") > curePro.CureSteps(i).pressureSet("SetPoint") + curePro.CureSteps(i).pressureSet("PosTol") Then curePro.CureSteps(i).pressurePass = False
+                ElseIf Math.Abs(curePro.CureSteps(i).pressureSet("SetPoint")) = Math.Abs(curePro.CureSteps(i).pressureSet("PosTol")) Then
+                    If curePro.CureSteps(i).pressureResult("Min") < curePro.CureSteps(i).pressureSet("SetPoint") + curePro.CureSteps(i).pressureSet("NegTol") Then curePro.CureSteps(i).pressurePass = False
+                Else
                     If curePro.CureSteps(i).pressureResult("Min") < curePro.CureSteps(i).pressureSet("SetPoint") + curePro.CureSteps(i).pressureSet("NegTol") Then curePro.CureSteps(i).pressurePass = False
                     If curePro.CureSteps(i).pressureResult("Max") > curePro.CureSteps(i).pressureSet("SetPoint") + curePro.CureSteps(i).pressureSet("PosTol") Then curePro.CureSteps(i).pressurePass = False
-                Else
-                    curePro.CureSteps(i).pressurePass = True
                 End If
 
                 'Check pressure ramp if not set to 0
                 If curePro.CureSteps(i).pressureSet("RampRate") <> 0 Then
-                        If curePro.CureSteps(i).pressureResult("MinRamp") < curePro.CureSteps(i).pressureSet("RampRate") + curePro.CureSteps(i).pressureSet("RampNegTol") Then curePro.CureSteps(i).pressureRampPass = False
-                        If curePro.CureSteps(i).pressureResult("MaxRamp") > curePro.CureSteps(i).pressureSet("RampRate") + curePro.CureSteps(i).pressureSet("RampPosTol") Then curePro.CureSteps(i).pressureRampPass = False
-                    End If
-                Else
-                    curePro.CureSteps(i).pressurePass = True
+                    If curePro.CureSteps(i).pressureResult("MinRamp") < curePro.CureSteps(i).pressureSet("RampRate") + curePro.CureSteps(i).pressureSet("RampNegTol") Then curePro.CureSteps(i).pressureRampPass = False
+                    If curePro.CureSteps(i).pressureResult("MaxRamp") > curePro.CureSteps(i).pressureSet("RampRate") + curePro.CureSteps(i).pressureSet("RampPosTol") Then curePro.CureSteps(i).pressureRampPass = False
+                End If
+            Else
+                curePro.CureSteps(i).pressurePass = True
                 curePro.CureSteps(i).pressureRampPass = True
             End If
 
             'Calculate vac results for a given step
-            If curePro.checkVac Then
-                curePro.CureSteps(i).vacResult("Max") = Math.Round(maxVac.Max(indexStart, indexEnd), 1)
-                curePro.CureSteps(i).vacResult("Min") = Math.Round(minVac.Min(indexStart, indexEnd), 1)
+            If curePro.checkVac And curePro.CureSteps(i).vacSet("SetPoint") <> -1 Then
+                indexStart = curePro.CureSteps(i).stepStart
+                indexEnd = curePro.CureSteps(i).stepEnd
+
+                curePro.CureSteps(i).vacResult("Max") = Math.Round(maxVac.Min(indexStart, indexEnd), 1)
+                curePro.CureSteps(i).vacResult("Min") = Math.Round(minVac.Max(indexStart, indexEnd), 1)
 
                 ''Average vac
                 total = 0
@@ -1034,11 +1105,13 @@ Public Class MainForm
                 curePro.CureSteps(i).vacResult("Avg") = Math.Round(total / addCnt, 1)
 
                 'Check vacuum for passing
-                If curePro.CureSteps(i).vacSet("SetPoint") <> -1 Then
-                    If curePro.CureSteps(i).vacResult("Min") < curePro.CureSteps(i).vacSet("SetPoint") + curePro.CureSteps(i).vacSet("NegTol") Then curePro.CureSteps(i).vacPass = False
-                    If curePro.CureSteps(i).vacResult("Max") > curePro.CureSteps(i).vacSet("SetPoint") + curePro.CureSteps(i).vacSet("PosTol") Then curePro.CureSteps(i).vacPass = False
+                If Math.Abs(curePro.CureSteps(i).vacSet("SetPoint")) = Math.Abs(curePro.CureSteps(i).vacSet("NegTol")) Then
+                    If curePro.CureSteps(i).vacResult("Min") > curePro.CureSteps(i).vacSet("SetPoint") + curePro.CureSteps(i).vacSet("PosTol") Then curePro.CureSteps(i).vacPass = False
+                ElseIf Math.Abs(curePro.CureSteps(i).vacSet("SetPoint")) = Math.Abs(curePro.CureSteps(i).vacSet("PosTol")) Then
+                    If curePro.CureSteps(i).vacResult("Max") < curePro.CureSteps(i).vacSet("SetPoint") + curePro.CureSteps(i).vacSet("NegTol") Then curePro.CureSteps(i).vacPass = False
                 Else
-                    curePro.CureSteps(i).vacPass = True
+                    If curePro.CureSteps(i).vacResult("Min") > curePro.CureSteps(i).vacSet("SetPoint") + curePro.CureSteps(i).vacSet("PosTol") Then curePro.CureSteps(i).vacPass = False
+                    If curePro.CureSteps(i).vacResult("Max") < curePro.CureSteps(i).vacSet("SetPoint") + curePro.CureSteps(i).vacSet("NegTol") Then curePro.CureSteps(i).vacPass = False
                 End If
 
             Else
@@ -1061,7 +1134,7 @@ Public Class MainForm
     Sub cureStepTest()
         Dim currentStep As Integer = 0
         Dim i As Integer
-        For i = cureStart To cureEnd
+        For i = cureStart To dataCnt
             If curePro.CureSteps(currentStep).stepStart = 0 Then
                 curePro.CureSteps(currentStep).stepStart = i
             End If
@@ -1507,6 +1580,8 @@ Public Class MainForm
         'Reset dateValues to null values
         dateValues("startTime") = Nothing
         dateValues("endTime") = Nothing
+
+        curePro = cureProfiles(Combo_CureProfile.SelectedIndex)
 
     End Sub
 
