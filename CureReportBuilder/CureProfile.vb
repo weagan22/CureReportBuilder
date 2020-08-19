@@ -10,6 +10,7 @@ Public Class CureProfile
     Public checkPressure As Boolean = True
     Public checkVac As Boolean = True
 
+    Public fileEditDate As Date
 
     Public CureSteps() As CureStep
 

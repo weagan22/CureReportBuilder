@@ -85,6 +85,64 @@ Partial Class MainForm
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.Txt_CureProfilesPath = New System.Windows.Forms.TextBox()
         Me.Btn_LoadProfileFiles = New System.Windows.Forms.Button()
+        Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.Box_vacStepEdit = New System.Windows.Forms.GroupBox()
+        Me.Check_vacMinEdit = New System.Windows.Forms.CheckBox()
+        Me.Check_vacMaxEdit = New System.Windows.Forms.CheckBox()
+        Me.Check_vacStepEdit = New System.Windows.Forms.CheckBox()
+        Me.Box_vacNegTolEdit = New System.Windows.Forms.GroupBox()
+        Me.Txt_vacNegTolEdit = New System.Windows.Forms.TextBox()
+        Me.Box_vacPosTolEdit = New System.Windows.Forms.GroupBox()
+        Me.Txt_vacPosTolEdit = New System.Windows.Forms.TextBox()
+        Me.Box_vacSetEdit = New System.Windows.Forms.GroupBox()
+        Me.Txt_vacSetEdit = New System.Windows.Forms.TextBox()
+        Me.Box_pressureStepEdit = New System.Windows.Forms.GroupBox()
+        Me.Check_pressureMinEdit = New System.Windows.Forms.CheckBox()
+        Me.Check_pressureMaxEdit = New System.Windows.Forms.CheckBox()
+        Me.Check_pressureStepEdit = New System.Windows.Forms.CheckBox()
+        Me.Box_pressureRampNegTolEdit = New System.Windows.Forms.GroupBox()
+        Me.Txt_pressureRampNegTolEdit = New System.Windows.Forms.TextBox()
+        Me.Box_pressureRampPosTolEdit = New System.Windows.Forms.GroupBox()
+        Me.Txt_pressureRampPosTolEdit = New System.Windows.Forms.TextBox()
+        Me.Box_pressureRampEdit = New System.Windows.Forms.GroupBox()
+        Me.Txt_pressureRampEdit = New System.Windows.Forms.TextBox()
+        Me.Box_pressureNegTolEdit = New System.Windows.Forms.GroupBox()
+        Me.Txt_pressureNegTolEdit = New System.Windows.Forms.TextBox()
+        Me.Box_pressurePosTolEdit = New System.Windows.Forms.GroupBox()
+        Me.Txt_pressurePosTolEdit = New System.Windows.Forms.TextBox()
+        Me.Box_pressureSetEdit = New System.Windows.Forms.GroupBox()
+        Me.Txt_pressureSetEdit = New System.Windows.Forms.TextBox()
+        Me.Box_tempStepEdit = New System.Windows.Forms.GroupBox()
+        Me.Check_tempMinEdit = New System.Windows.Forms.CheckBox()
+        Me.Check_tempMaxEdit = New System.Windows.Forms.CheckBox()
+        Me.Check_tempStepEdit = New System.Windows.Forms.CheckBox()
+        Me.Box_TempRampNegTolEdit = New System.Windows.Forms.GroupBox()
+        Me.Txt_TempRampNegTolEdit = New System.Windows.Forms.TextBox()
+        Me.Box_TempRampPosTolEdit = New System.Windows.Forms.GroupBox()
+        Me.Txt_TempRampPosTolEdit = New System.Windows.Forms.TextBox()
+        Me.Box_TempRampEdit = New System.Windows.Forms.GroupBox()
+        Me.Txt_TempRampEdit = New System.Windows.Forms.TextBox()
+        Me.Box_TempNegTolEdit = New System.Windows.Forms.GroupBox()
+        Me.Txt_TempNegTolEdit = New System.Windows.Forms.TextBox()
+        Me.Box_TempPosTolEdit = New System.Windows.Forms.GroupBox()
+        Me.Txt_TempPosTolEdit = New System.Windows.Forms.TextBox()
+        Me.Box_TempSetEdit = New System.Windows.Forms.GroupBox()
+        Me.Txt_TempSetEdit = New System.Windows.Forms.TextBox()
+        Me.Box_StepNameEdit = New System.Windows.Forms.GroupBox()
+        Me.Txt_StepNameEdit = New System.Windows.Forms.TextBox()
+        Me.Box_CheckEdit = New System.Windows.Forms.GroupBox()
+        Me.Check_Vac = New System.Windows.Forms.CheckBox()
+        Me.Check_TempEdit = New System.Windows.Forms.CheckBox()
+        Me.Check_PressureEdit = New System.Windows.Forms.CheckBox()
+        Me.Box_CureNameEdit = New System.Windows.Forms.GroupBox()
+        Me.Txt_CureNameEdit = New System.Windows.Forms.TextBox()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.Txt_DocRevEdit = New System.Windows.Forms.TextBox()
+        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.Txt_CureDocEdit = New System.Windows.Forms.TextBox()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Combo_CureProfileEdit = New System.Windows.Forms.ComboBox()
         Me.OpenCSVFileDialog = New System.Windows.Forms.OpenFileDialog()
         Me.OpenCureProfileFileDialog = New System.Windows.Forms.OpenFileDialog()
         Me.MenuStrip1.SuspendLayout()
@@ -122,6 +180,32 @@ Partial Class MainForm
         Me.TableLayoutPanel5.SuspendLayout()
         Me.Box_CureProfiles.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
+        Me.TabPage3.SuspendLayout()
+        Me.GroupBox4.SuspendLayout()
+        Me.Box_vacStepEdit.SuspendLayout()
+        Me.Box_vacNegTolEdit.SuspendLayout()
+        Me.Box_vacPosTolEdit.SuspendLayout()
+        Me.Box_vacSetEdit.SuspendLayout()
+        Me.Box_pressureStepEdit.SuspendLayout()
+        Me.Box_pressureRampNegTolEdit.SuspendLayout()
+        Me.Box_pressureRampPosTolEdit.SuspendLayout()
+        Me.Box_pressureRampEdit.SuspendLayout()
+        Me.Box_pressureNegTolEdit.SuspendLayout()
+        Me.Box_pressurePosTolEdit.SuspendLayout()
+        Me.Box_pressureSetEdit.SuspendLayout()
+        Me.Box_tempStepEdit.SuspendLayout()
+        Me.Box_TempRampNegTolEdit.SuspendLayout()
+        Me.Box_TempRampPosTolEdit.SuspendLayout()
+        Me.Box_TempRampEdit.SuspendLayout()
+        Me.Box_TempNegTolEdit.SuspendLayout()
+        Me.Box_TempPosTolEdit.SuspendLayout()
+        Me.Box_TempSetEdit.SuspendLayout()
+        Me.Box_StepNameEdit.SuspendLayout()
+        Me.Box_CheckEdit.SuspendLayout()
+        Me.Box_CureNameEdit.SuspendLayout()
+        Me.GroupBox2.SuspendLayout()
+        Me.GroupBox3.SuspendLayout()
+        Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
         'MenuStrip1
@@ -129,7 +213,7 @@ Partial Class MainForm
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(761, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(800, 24)
         Me.MenuStrip1.TabIndex = 0
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -143,7 +227,7 @@ Partial Class MainForm
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(92, 22)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(93, 22)
         Me.ExitToolStripMenuItem.Text = "Exit"
         '
         'StatusStrip1
@@ -151,7 +235,7 @@ Partial Class MainForm
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1})
         Me.StatusStrip1.Location = New System.Drawing.Point(0, 526)
         Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Size = New System.Drawing.Size(761, 22)
+        Me.StatusStrip1.Size = New System.Drawing.Size(800, 22)
         Me.StatusStrip1.TabIndex = 1
         '
         'ToolStripStatusLabel1
@@ -164,11 +248,12 @@ Partial Class MainForm
         '
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
+        Me.TabControl1.Controls.Add(Me.TabPage3)
         Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl1.Location = New System.Drawing.Point(0, 24)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(761, 502)
+        Me.TabControl1.Size = New System.Drawing.Size(800, 502)
         Me.TabControl1.TabIndex = 2
         '
         'TabPage1
@@ -177,7 +262,7 @@ Partial Class MainForm
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(753, 476)
+        Me.TabPage1.Size = New System.Drawing.Size(792, 476)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Run Cure"
         Me.TabPage1.UseVisualStyleBackColor = True
@@ -199,7 +284,7 @@ Partial Class MainForm
         Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60.0!))
         Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60.0!))
-        Me.TableLayoutPanel7.Size = New System.Drawing.Size(747, 470)
+        Me.TableLayoutPanel7.Size = New System.Drawing.Size(786, 470)
         Me.TableLayoutPanel7.TabIndex = 13
         '
         'Box_CureDataLocation
@@ -210,7 +295,7 @@ Partial Class MainForm
         Me.Box_CureDataLocation.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Box_CureDataLocation.Location = New System.Drawing.Point(23, 153)
         Me.Box_CureDataLocation.Name = "Box_CureDataLocation"
-        Me.Box_CureDataLocation.Size = New System.Drawing.Size(721, 54)
+        Me.Box_CureDataLocation.Size = New System.Drawing.Size(760, 54)
         Me.Box_CureDataLocation.TabIndex = 0
         Me.Box_CureDataLocation.TabStop = False
         Me.Box_CureDataLocation.Text = "Cure Data Location"
@@ -227,7 +312,7 @@ Partial Class MainForm
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(715, 35)
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(754, 35)
         Me.TableLayoutPanel1.TabIndex = 2
         '
         'Txt_FilePath
@@ -236,7 +321,7 @@ Partial Class MainForm
         Me.Txt_FilePath.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Txt_FilePath.Location = New System.Drawing.Point(3, 7)
         Me.Txt_FilePath.Name = "Txt_FilePath"
-        Me.Txt_FilePath.Size = New System.Drawing.Size(634, 20)
+        Me.Txt_FilePath.Size = New System.Drawing.Size(673, 20)
         Me.Txt_FilePath.TabIndex = 0
         Me.Txt_FilePath.Text = "File path..."
         '
@@ -244,7 +329,7 @@ Partial Class MainForm
         '
         Me.Btn_OpenFile.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Btn_OpenFile.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Btn_OpenFile.Location = New System.Drawing.Point(643, 3)
+        Me.Btn_OpenFile.Location = New System.Drawing.Point(682, 3)
         Me.Btn_OpenFile.Name = "Btn_OpenFile"
         Me.Btn_OpenFile.Size = New System.Drawing.Size(69, 29)
         Me.Btn_OpenFile.TabIndex = 1
@@ -262,7 +347,7 @@ Partial Class MainForm
         Me.Box_RunParams.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Box_RunParams.Location = New System.Drawing.Point(23, 213)
         Me.Box_RunParams.Name = "Box_RunParams"
-        Me.Box_RunParams.Size = New System.Drawing.Size(721, 194)
+        Me.Box_RunParams.Size = New System.Drawing.Size(760, 194)
         Me.Box_RunParams.TabIndex = 13
         Me.Box_RunParams.TabStop = False
         '
@@ -541,7 +626,7 @@ Partial Class MainForm
         Me.Box_RunLine.Name = "Box_RunLine"
         Me.Box_RunLine.RowCount = 1
         Me.Box_RunLine.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.Box_RunLine.Size = New System.Drawing.Size(721, 54)
+        Me.Box_RunLine.Size = New System.Drawing.Size(760, 54)
         Me.Box_RunLine.TabIndex = 14
         '
         'Btn_Run
@@ -549,9 +634,9 @@ Partial Class MainForm
         Me.Btn_Run.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Btn_Run.FlatAppearance.BorderSize = 2
         Me.Btn_Run.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.Btn_Run.Location = New System.Drawing.Point(558, 3)
+        Me.Btn_Run.Location = New System.Drawing.Point(588, 3)
         Me.Btn_Run.Name = "Btn_Run"
-        Me.Btn_Run.Size = New System.Drawing.Size(160, 48)
+        Me.Btn_Run.Size = New System.Drawing.Size(169, 48)
         Me.Btn_Run.TabIndex = 12
         Me.Btn_Run.Text = "Run Output"
         Me.Btn_Run.UseVisualStyleBackColor = True
@@ -560,7 +645,7 @@ Partial Class MainForm
         '
         Me.Box_Technician.Anchor = System.Windows.Forms.AnchorStyles.Right
         Me.Box_Technician.Controls.Add(Me.Txt_Technician)
-        Me.Box_Technician.Location = New System.Drawing.Point(391, 5)
+        Me.Box_Technician.Location = New System.Drawing.Point(421, 5)
         Me.Box_Technician.Name = "Box_Technician"
         Me.Box_Technician.Size = New System.Drawing.Size(161, 44)
         Me.Box_Technician.TabIndex = 10
@@ -590,7 +675,7 @@ Partial Class MainForm
         Me.TableLayoutPanel6.Name = "TableLayoutPanel6"
         Me.TableLayoutPanel6.RowCount = 1
         Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel6.Size = New System.Drawing.Size(721, 144)
+        Me.TableLayoutPanel6.Size = New System.Drawing.Size(760, 144)
         Me.TableLayoutPanel6.TabIndex = 15
         '
         'Box_CureProfChoice
@@ -599,7 +684,7 @@ Partial Class MainForm
         Me.Box_CureProfChoice.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Box_CureProfChoice.Location = New System.Drawing.Point(3, 3)
         Me.Box_CureProfChoice.Name = "Box_CureProfChoice"
-        Me.Box_CureProfChoice.Size = New System.Drawing.Size(375, 138)
+        Me.Box_CureProfChoice.Size = New System.Drawing.Size(414, 138)
         Me.Box_CureProfChoice.TabIndex = 11
         Me.Box_CureProfChoice.TabStop = False
         '
@@ -615,7 +700,7 @@ Partial Class MainForm
         Me.TableLayoutPanel3.RowCount = 2
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel3.Size = New System.Drawing.Size(369, 119)
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(408, 119)
         Me.TableLayoutPanel3.TabIndex = 12
         '
         'Box_CureProfile
@@ -625,7 +710,7 @@ Partial Class MainForm
         Me.Box_CureProfile.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.5!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Underline), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Box_CureProfile.Location = New System.Drawing.Point(3, 3)
         Me.Box_CureProfile.Name = "Box_CureProfile"
-        Me.Box_CureProfile.Size = New System.Drawing.Size(363, 53)
+        Me.Box_CureProfile.Size = New System.Drawing.Size(402, 53)
         Me.Box_CureProfile.TabIndex = 7
         Me.Box_CureProfile.TabStop = False
         Me.Box_CureProfile.Text = "Cure Profile"
@@ -638,7 +723,7 @@ Partial Class MainForm
         Me.Combo_CureProfile.FormattingEnabled = True
         Me.Combo_CureProfile.Location = New System.Drawing.Point(6, 16)
         Me.Combo_CureProfile.Name = "Combo_CureProfile"
-        Me.Combo_CureProfile.Size = New System.Drawing.Size(351, 21)
+        Me.Combo_CureProfile.Size = New System.Drawing.Size(390, 21)
         Me.Combo_CureProfile.TabIndex = 6
         '
         'TableLayoutPanel4
@@ -653,14 +738,14 @@ Partial Class MainForm
         Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
         Me.TableLayoutPanel4.RowCount = 1
         Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel4.Size = New System.Drawing.Size(363, 54)
+        Me.TableLayoutPanel4.Size = New System.Drawing.Size(402, 54)
         Me.TableLayoutPanel4.TabIndex = 8
         '
         'Box_DocRev
         '
         Me.Box_DocRev.Controls.Add(Me.Txt_DocRev)
         Me.Box_DocRev.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Box_DocRev.Location = New System.Drawing.Point(306, 3)
+        Me.Box_DocRev.Location = New System.Drawing.Point(345, 3)
         Me.Box_DocRev.Name = "Box_DocRev"
         Me.Box_DocRev.Size = New System.Drawing.Size(54, 48)
         Me.Box_DocRev.TabIndex = 3
@@ -683,7 +768,7 @@ Partial Class MainForm
         Me.Box_CureDoc.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Box_CureDoc.Location = New System.Drawing.Point(3, 3)
         Me.Box_CureDoc.Name = "Box_CureDoc"
-        Me.Box_CureDoc.Size = New System.Drawing.Size(297, 48)
+        Me.Box_CureDoc.Size = New System.Drawing.Size(336, 48)
         Me.Box_CureDoc.TabIndex = 3
         Me.Box_CureDoc.TabStop = False
         Me.Box_CureDoc.Text = "Document"
@@ -694,14 +779,14 @@ Partial Class MainForm
         Me.Txt_CureDoc.Enabled = False
         Me.Txt_CureDoc.Location = New System.Drawing.Point(3, 16)
         Me.Txt_CureDoc.Name = "Txt_CureDoc"
-        Me.Txt_CureDoc.Size = New System.Drawing.Size(291, 20)
+        Me.Txt_CureDoc.Size = New System.Drawing.Size(330, 20)
         Me.Txt_CureDoc.TabIndex = 1
         Me.Txt_CureDoc.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'PictureBox1
         '
         Me.PictureBox1.Image = Global.CureReportBuilder.My.Resources.Resources.Systima_Composites_2018
-        Me.PictureBox1.Location = New System.Drawing.Point(404, 3)
+        Me.PictureBox1.Location = New System.Drawing.Point(443, 3)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(294, 138)
         Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
@@ -715,7 +800,7 @@ Partial Class MainForm
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(753, 476)
+        Me.TabPage2.Size = New System.Drawing.Size(792, 476)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Settings"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -800,6 +885,587 @@ Partial Class MainForm
         Me.Btn_LoadProfileFiles.Text = "Load Profiles"
         Me.Btn_LoadProfileFiles.UseVisualStyleBackColor = True
         '
+        'TabPage3
+        '
+        Me.TabPage3.Controls.Add(Me.GroupBox4)
+        Me.TabPage3.Controls.Add(Me.Box_CheckEdit)
+        Me.TabPage3.Controls.Add(Me.Box_CureNameEdit)
+        Me.TabPage3.Controls.Add(Me.GroupBox2)
+        Me.TabPage3.Controls.Add(Me.GroupBox3)
+        Me.TabPage3.Controls.Add(Me.GroupBox1)
+        Me.TabPage3.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage3.Name = "TabPage3"
+        Me.TabPage3.Size = New System.Drawing.Size(792, 476)
+        Me.TabPage3.TabIndex = 2
+        Me.TabPage3.Text = "CureProfileEdit"
+        Me.TabPage3.UseVisualStyleBackColor = True
+        '
+        'GroupBox4
+        '
+        Me.GroupBox4.Controls.Add(Me.Box_vacStepEdit)
+        Me.GroupBox4.Controls.Add(Me.Box_pressureStepEdit)
+        Me.GroupBox4.Controls.Add(Me.Box_tempStepEdit)
+        Me.GroupBox4.Controls.Add(Me.Box_StepNameEdit)
+        Me.GroupBox4.Location = New System.Drawing.Point(8, 113)
+        Me.GroupBox4.Name = "GroupBox4"
+        Me.GroupBox4.Size = New System.Drawing.Size(776, 360)
+        Me.GroupBox4.TabIndex = 18
+        Me.GroupBox4.TabStop = False
+        Me.GroupBox4.Text = "GroupBox4"
+        '
+        'Box_vacStepEdit
+        '
+        Me.Box_vacStepEdit.Controls.Add(Me.Check_vacMinEdit)
+        Me.Box_vacStepEdit.Controls.Add(Me.Check_vacMaxEdit)
+        Me.Box_vacStepEdit.Controls.Add(Me.Check_vacStepEdit)
+        Me.Box_vacStepEdit.Controls.Add(Me.Box_vacNegTolEdit)
+        Me.Box_vacStepEdit.Controls.Add(Me.Box_vacPosTolEdit)
+        Me.Box_vacStepEdit.Controls.Add(Me.Box_vacSetEdit)
+        Me.Box_vacStepEdit.Location = New System.Drawing.Point(278, 121)
+        Me.Box_vacStepEdit.Name = "Box_vacStepEdit"
+        Me.Box_vacStepEdit.Size = New System.Drawing.Size(225, 213)
+        Me.Box_vacStepEdit.TabIndex = 18
+        Me.Box_vacStepEdit.TabStop = False
+        Me.Box_vacStepEdit.Text = "Vacuum Step"
+        '
+        'Check_vacMinEdit
+        '
+        Me.Check_vacMinEdit.AutoSize = True
+        Me.Check_vacMinEdit.Location = New System.Drawing.Point(7, 68)
+        Me.Check_vacMinEdit.Name = "Check_vacMinEdit"
+        Me.Check_vacMinEdit.Size = New System.Drawing.Size(67, 17)
+        Me.Check_vacMinEdit.TabIndex = 24
+        Me.Check_vacMinEdit.Text = "Min Only"
+        Me.Check_vacMinEdit.UseVisualStyleBackColor = True
+        '
+        'Check_vacMaxEdit
+        '
+        Me.Check_vacMaxEdit.AutoSize = True
+        Me.Check_vacMaxEdit.Location = New System.Drawing.Point(7, 45)
+        Me.Check_vacMaxEdit.Name = "Check_vacMaxEdit"
+        Me.Check_vacMaxEdit.Size = New System.Drawing.Size(70, 17)
+        Me.Check_vacMaxEdit.TabIndex = 23
+        Me.Check_vacMaxEdit.Text = "Max Only"
+        Me.Check_vacMaxEdit.UseVisualStyleBackColor = True
+        '
+        'Check_vacStepEdit
+        '
+        Me.Check_vacStepEdit.AutoSize = True
+        Me.Check_vacStepEdit.Checked = True
+        Me.Check_vacStepEdit.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Check_vacStepEdit.Location = New System.Drawing.Point(7, 20)
+        Me.Check_vacStepEdit.Name = "Check_vacStepEdit"
+        Me.Check_vacStepEdit.Size = New System.Drawing.Size(57, 17)
+        Me.Check_vacStepEdit.TabIndex = 22
+        Me.Check_vacStepEdit.Text = "Check"
+        Me.Check_vacStepEdit.UseVisualStyleBackColor = True
+        '
+        'Box_vacNegTolEdit
+        '
+        Me.Box_vacNegTolEdit.Controls.Add(Me.Txt_vacNegTolEdit)
+        Me.Box_vacNegTolEdit.Location = New System.Drawing.Point(108, 110)
+        Me.Box_vacNegTolEdit.Name = "Box_vacNegTolEdit"
+        Me.Box_vacNegTolEdit.Size = New System.Drawing.Size(129, 43)
+        Me.Box_vacNegTolEdit.TabIndex = 19
+        Me.Box_vacNegTolEdit.TabStop = False
+        Me.Box_vacNegTolEdit.Text = "NegTol (inHg)"
+        '
+        'Txt_vacNegTolEdit
+        '
+        Me.Txt_vacNegTolEdit.Location = New System.Drawing.Point(6, 19)
+        Me.Txt_vacNegTolEdit.Name = "Txt_vacNegTolEdit"
+        Me.Txt_vacNegTolEdit.Size = New System.Drawing.Size(100, 20)
+        Me.Txt_vacNegTolEdit.TabIndex = 0
+        Me.Txt_vacNegTolEdit.Text = "-50"
+        '
+        'Box_vacPosTolEdit
+        '
+        Me.Box_vacPosTolEdit.Controls.Add(Me.Txt_vacPosTolEdit)
+        Me.Box_vacPosTolEdit.Location = New System.Drawing.Point(108, 65)
+        Me.Box_vacPosTolEdit.Name = "Box_vacPosTolEdit"
+        Me.Box_vacPosTolEdit.Size = New System.Drawing.Size(129, 43)
+        Me.Box_vacPosTolEdit.TabIndex = 18
+        Me.Box_vacPosTolEdit.TabStop = False
+        Me.Box_vacPosTolEdit.Text = "PosTol (inHg)"
+        '
+        'Txt_vacPosTolEdit
+        '
+        Me.Txt_vacPosTolEdit.Location = New System.Drawing.Point(6, 19)
+        Me.Txt_vacPosTolEdit.Name = "Txt_vacPosTolEdit"
+        Me.Txt_vacPosTolEdit.Size = New System.Drawing.Size(100, 20)
+        Me.Txt_vacPosTolEdit.TabIndex = 0
+        Me.Txt_vacPosTolEdit.Text = "50"
+        '
+        'Box_vacSetEdit
+        '
+        Me.Box_vacSetEdit.Controls.Add(Me.Txt_vacSetEdit)
+        Me.Box_vacSetEdit.Location = New System.Drawing.Point(97, 20)
+        Me.Box_vacSetEdit.Name = "Box_vacSetEdit"
+        Me.Box_vacSetEdit.Size = New System.Drawing.Size(129, 43)
+        Me.Box_vacSetEdit.TabIndex = 17
+        Me.Box_vacSetEdit.TabStop = False
+        Me.Box_vacSetEdit.Text = "Set Point (inHg)"
+        '
+        'Txt_vacSetEdit
+        '
+        Me.Txt_vacSetEdit.Location = New System.Drawing.Point(6, 19)
+        Me.Txt_vacSetEdit.Name = "Txt_vacSetEdit"
+        Me.Txt_vacSetEdit.Size = New System.Drawing.Size(100, 20)
+        Me.Txt_vacSetEdit.TabIndex = 0
+        Me.Txt_vacSetEdit.Text = "500"
+        '
+        'Box_pressureStepEdit
+        '
+        Me.Box_pressureStepEdit.Controls.Add(Me.Check_pressureMinEdit)
+        Me.Box_pressureStepEdit.Controls.Add(Me.Check_pressureMaxEdit)
+        Me.Box_pressureStepEdit.Controls.Add(Me.Check_pressureStepEdit)
+        Me.Box_pressureStepEdit.Controls.Add(Me.Box_pressureRampNegTolEdit)
+        Me.Box_pressureStepEdit.Controls.Add(Me.Box_pressureRampPosTolEdit)
+        Me.Box_pressureStepEdit.Controls.Add(Me.Box_pressureRampEdit)
+        Me.Box_pressureStepEdit.Controls.Add(Me.Box_pressureNegTolEdit)
+        Me.Box_pressureStepEdit.Controls.Add(Me.Box_pressurePosTolEdit)
+        Me.Box_pressureStepEdit.Controls.Add(Me.Box_pressureSetEdit)
+        Me.Box_pressureStepEdit.Location = New System.Drawing.Point(509, 29)
+        Me.Box_pressureStepEdit.Name = "Box_pressureStepEdit"
+        Me.Box_pressureStepEdit.Size = New System.Drawing.Size(254, 305)
+        Me.Box_pressureStepEdit.TabIndex = 17
+        Me.Box_pressureStepEdit.TabStop = False
+        Me.Box_pressureStepEdit.Text = "Pressure Step"
+        '
+        'Check_pressureMinEdit
+        '
+        Me.Check_pressureMinEdit.AutoSize = True
+        Me.Check_pressureMinEdit.Location = New System.Drawing.Point(7, 68)
+        Me.Check_pressureMinEdit.Name = "Check_pressureMinEdit"
+        Me.Check_pressureMinEdit.Size = New System.Drawing.Size(67, 17)
+        Me.Check_pressureMinEdit.TabIndex = 24
+        Me.Check_pressureMinEdit.Text = "Min Only"
+        Me.Check_pressureMinEdit.UseVisualStyleBackColor = True
+        '
+        'Check_pressureMaxEdit
+        '
+        Me.Check_pressureMaxEdit.AutoSize = True
+        Me.Check_pressureMaxEdit.Location = New System.Drawing.Point(7, 45)
+        Me.Check_pressureMaxEdit.Name = "Check_pressureMaxEdit"
+        Me.Check_pressureMaxEdit.Size = New System.Drawing.Size(70, 17)
+        Me.Check_pressureMaxEdit.TabIndex = 23
+        Me.Check_pressureMaxEdit.Text = "Max Only"
+        Me.Check_pressureMaxEdit.UseVisualStyleBackColor = True
+        '
+        'Check_pressureStepEdit
+        '
+        Me.Check_pressureStepEdit.AutoSize = True
+        Me.Check_pressureStepEdit.Checked = True
+        Me.Check_pressureStepEdit.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Check_pressureStepEdit.Location = New System.Drawing.Point(7, 20)
+        Me.Check_pressureStepEdit.Name = "Check_pressureStepEdit"
+        Me.Check_pressureStepEdit.Size = New System.Drawing.Size(57, 17)
+        Me.Check_pressureStepEdit.TabIndex = 22
+        Me.Check_pressureStepEdit.Text = "Check"
+        Me.Check_pressureStepEdit.UseVisualStyleBackColor = True
+        '
+        'Box_pressureRampNegTolEdit
+        '
+        Me.Box_pressureRampNegTolEdit.Controls.Add(Me.Txt_pressureRampNegTolEdit)
+        Me.Box_pressureRampNegTolEdit.Location = New System.Drawing.Point(108, 255)
+        Me.Box_pressureRampNegTolEdit.Name = "Box_pressureRampNegTolEdit"
+        Me.Box_pressureRampNegTolEdit.Size = New System.Drawing.Size(141, 43)
+        Me.Box_pressureRampNegTolEdit.TabIndex = 21
+        Me.Box_pressureRampNegTolEdit.TabStop = False
+        Me.Box_pressureRampNegTolEdit.Text = "Ramp NegTol (psi/min)"
+        '
+        'Txt_pressureRampNegTolEdit
+        '
+        Me.Txt_pressureRampNegTolEdit.Location = New System.Drawing.Point(6, 19)
+        Me.Txt_pressureRampNegTolEdit.Name = "Txt_pressureRampNegTolEdit"
+        Me.Txt_pressureRampNegTolEdit.Size = New System.Drawing.Size(100, 20)
+        Me.Txt_pressureRampNegTolEdit.TabIndex = 0
+        Me.Txt_pressureRampNegTolEdit.Text = "0"
+        '
+        'Box_pressureRampPosTolEdit
+        '
+        Me.Box_pressureRampPosTolEdit.Controls.Add(Me.Txt_pressureRampPosTolEdit)
+        Me.Box_pressureRampPosTolEdit.Location = New System.Drawing.Point(108, 206)
+        Me.Box_pressureRampPosTolEdit.Name = "Box_pressureRampPosTolEdit"
+        Me.Box_pressureRampPosTolEdit.Size = New System.Drawing.Size(141, 43)
+        Me.Box_pressureRampPosTolEdit.TabIndex = 19
+        Me.Box_pressureRampPosTolEdit.TabStop = False
+        Me.Box_pressureRampPosTolEdit.Text = "Ramp PosTol (psi/min)"
+        '
+        'Txt_pressureRampPosTolEdit
+        '
+        Me.Txt_pressureRampPosTolEdit.Location = New System.Drawing.Point(6, 19)
+        Me.Txt_pressureRampPosTolEdit.Name = "Txt_pressureRampPosTolEdit"
+        Me.Txt_pressureRampPosTolEdit.Size = New System.Drawing.Size(100, 20)
+        Me.Txt_pressureRampPosTolEdit.TabIndex = 0
+        Me.Txt_pressureRampPosTolEdit.Text = "0"
+        '
+        'Box_pressureRampEdit
+        '
+        Me.Box_pressureRampEdit.Controls.Add(Me.Txt_pressureRampEdit)
+        Me.Box_pressureRampEdit.Location = New System.Drawing.Point(97, 161)
+        Me.Box_pressureRampEdit.Name = "Box_pressureRampEdit"
+        Me.Box_pressureRampEdit.Size = New System.Drawing.Size(129, 43)
+        Me.Box_pressureRampEdit.TabIndex = 20
+        Me.Box_pressureRampEdit.TabStop = False
+        Me.Box_pressureRampEdit.Text = "Ramp Rate (psi/min)"
+        '
+        'Txt_pressureRampEdit
+        '
+        Me.Txt_pressureRampEdit.Location = New System.Drawing.Point(6, 19)
+        Me.Txt_pressureRampEdit.Name = "Txt_pressureRampEdit"
+        Me.Txt_pressureRampEdit.Size = New System.Drawing.Size(100, 20)
+        Me.Txt_pressureRampEdit.TabIndex = 0
+        Me.Txt_pressureRampEdit.Text = "0"
+        '
+        'Box_pressureNegTolEdit
+        '
+        Me.Box_pressureNegTolEdit.Controls.Add(Me.Txt_pressureNegTolEdit)
+        Me.Box_pressureNegTolEdit.Location = New System.Drawing.Point(108, 110)
+        Me.Box_pressureNegTolEdit.Name = "Box_pressureNegTolEdit"
+        Me.Box_pressureNegTolEdit.Size = New System.Drawing.Size(129, 43)
+        Me.Box_pressureNegTolEdit.TabIndex = 19
+        Me.Box_pressureNegTolEdit.TabStop = False
+        Me.Box_pressureNegTolEdit.Text = "NegTol (psi)"
+        '
+        'Txt_pressureNegTolEdit
+        '
+        Me.Txt_pressureNegTolEdit.Location = New System.Drawing.Point(6, 19)
+        Me.Txt_pressureNegTolEdit.Name = "Txt_pressureNegTolEdit"
+        Me.Txt_pressureNegTolEdit.Size = New System.Drawing.Size(100, 20)
+        Me.Txt_pressureNegTolEdit.TabIndex = 0
+        Me.Txt_pressureNegTolEdit.Text = "-50"
+        '
+        'Box_pressurePosTolEdit
+        '
+        Me.Box_pressurePosTolEdit.Controls.Add(Me.Txt_pressurePosTolEdit)
+        Me.Box_pressurePosTolEdit.Location = New System.Drawing.Point(108, 65)
+        Me.Box_pressurePosTolEdit.Name = "Box_pressurePosTolEdit"
+        Me.Box_pressurePosTolEdit.Size = New System.Drawing.Size(129, 43)
+        Me.Box_pressurePosTolEdit.TabIndex = 18
+        Me.Box_pressurePosTolEdit.TabStop = False
+        Me.Box_pressurePosTolEdit.Text = "PosTol (psi)"
+        '
+        'Txt_pressurePosTolEdit
+        '
+        Me.Txt_pressurePosTolEdit.Location = New System.Drawing.Point(6, 19)
+        Me.Txt_pressurePosTolEdit.Name = "Txt_pressurePosTolEdit"
+        Me.Txt_pressurePosTolEdit.Size = New System.Drawing.Size(100, 20)
+        Me.Txt_pressurePosTolEdit.TabIndex = 0
+        Me.Txt_pressurePosTolEdit.Text = "50"
+        '
+        'Box_pressureSetEdit
+        '
+        Me.Box_pressureSetEdit.Controls.Add(Me.Txt_pressureSetEdit)
+        Me.Box_pressureSetEdit.Location = New System.Drawing.Point(97, 20)
+        Me.Box_pressureSetEdit.Name = "Box_pressureSetEdit"
+        Me.Box_pressureSetEdit.Size = New System.Drawing.Size(129, 43)
+        Me.Box_pressureSetEdit.TabIndex = 17
+        Me.Box_pressureSetEdit.TabStop = False
+        Me.Box_pressureSetEdit.Text = "Set Point (psi)"
+        '
+        'Txt_pressureSetEdit
+        '
+        Me.Txt_pressureSetEdit.Location = New System.Drawing.Point(6, 19)
+        Me.Txt_pressureSetEdit.Name = "Txt_pressureSetEdit"
+        Me.Txt_pressureSetEdit.Size = New System.Drawing.Size(100, 20)
+        Me.Txt_pressureSetEdit.TabIndex = 0
+        Me.Txt_pressureSetEdit.Text = "500"
+        '
+        'Box_tempStepEdit
+        '
+        Me.Box_tempStepEdit.Controls.Add(Me.Check_tempMinEdit)
+        Me.Box_tempStepEdit.Controls.Add(Me.Check_tempMaxEdit)
+        Me.Box_tempStepEdit.Controls.Add(Me.Check_tempStepEdit)
+        Me.Box_tempStepEdit.Controls.Add(Me.Box_TempRampNegTolEdit)
+        Me.Box_tempStepEdit.Controls.Add(Me.Box_TempRampPosTolEdit)
+        Me.Box_tempStepEdit.Controls.Add(Me.Box_TempRampEdit)
+        Me.Box_tempStepEdit.Controls.Add(Me.Box_TempNegTolEdit)
+        Me.Box_tempStepEdit.Controls.Add(Me.Box_TempPosTolEdit)
+        Me.Box_tempStepEdit.Controls.Add(Me.Box_TempSetEdit)
+        Me.Box_tempStepEdit.Location = New System.Drawing.Point(6, 29)
+        Me.Box_tempStepEdit.Name = "Box_tempStepEdit"
+        Me.Box_tempStepEdit.Size = New System.Drawing.Size(254, 305)
+        Me.Box_tempStepEdit.TabIndex = 16
+        Me.Box_tempStepEdit.TabStop = False
+        Me.Box_tempStepEdit.Text = "Temperature Step"
+        '
+        'Check_tempMinEdit
+        '
+        Me.Check_tempMinEdit.AutoSize = True
+        Me.Check_tempMinEdit.Location = New System.Drawing.Point(7, 68)
+        Me.Check_tempMinEdit.Name = "Check_tempMinEdit"
+        Me.Check_tempMinEdit.Size = New System.Drawing.Size(67, 17)
+        Me.Check_tempMinEdit.TabIndex = 24
+        Me.Check_tempMinEdit.Text = "Min Only"
+        Me.Check_tempMinEdit.UseVisualStyleBackColor = True
+        '
+        'Check_tempMaxEdit
+        '
+        Me.Check_tempMaxEdit.AutoSize = True
+        Me.Check_tempMaxEdit.Location = New System.Drawing.Point(7, 45)
+        Me.Check_tempMaxEdit.Name = "Check_tempMaxEdit"
+        Me.Check_tempMaxEdit.Size = New System.Drawing.Size(70, 17)
+        Me.Check_tempMaxEdit.TabIndex = 23
+        Me.Check_tempMaxEdit.Text = "Max Only"
+        Me.Check_tempMaxEdit.UseVisualStyleBackColor = True
+        '
+        'Check_tempStepEdit
+        '
+        Me.Check_tempStepEdit.AutoSize = True
+        Me.Check_tempStepEdit.Checked = True
+        Me.Check_tempStepEdit.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Check_tempStepEdit.Location = New System.Drawing.Point(7, 20)
+        Me.Check_tempStepEdit.Name = "Check_tempStepEdit"
+        Me.Check_tempStepEdit.Size = New System.Drawing.Size(87, 17)
+        Me.Check_tempStepEdit.TabIndex = 22
+        Me.Check_tempStepEdit.Text = "Check Temp"
+        Me.Check_tempStepEdit.UseVisualStyleBackColor = True
+        '
+        'Box_TempRampNegTolEdit
+        '
+        Me.Box_TempRampNegTolEdit.Controls.Add(Me.Txt_TempRampNegTolEdit)
+        Me.Box_TempRampNegTolEdit.Location = New System.Drawing.Point(120, 255)
+        Me.Box_TempRampNegTolEdit.Name = "Box_TempRampNegTolEdit"
+        Me.Box_TempRampNegTolEdit.Size = New System.Drawing.Size(129, 43)
+        Me.Box_TempRampNegTolEdit.TabIndex = 21
+        Me.Box_TempRampNegTolEdit.TabStop = False
+        Me.Box_TempRampNegTolEdit.Text = "Ramp NegTol (°F/min)"
+        '
+        'Txt_TempRampNegTolEdit
+        '
+        Me.Txt_TempRampNegTolEdit.Location = New System.Drawing.Point(6, 19)
+        Me.Txt_TempRampNegTolEdit.Name = "Txt_TempRampNegTolEdit"
+        Me.Txt_TempRampNegTolEdit.Size = New System.Drawing.Size(100, 20)
+        Me.Txt_TempRampNegTolEdit.TabIndex = 0
+        Me.Txt_TempRampNegTolEdit.Text = "0"
+        '
+        'Box_TempRampPosTolEdit
+        '
+        Me.Box_TempRampPosTolEdit.Controls.Add(Me.Txt_TempRampPosTolEdit)
+        Me.Box_TempRampPosTolEdit.Location = New System.Drawing.Point(120, 206)
+        Me.Box_TempRampPosTolEdit.Name = "Box_TempRampPosTolEdit"
+        Me.Box_TempRampPosTolEdit.Size = New System.Drawing.Size(129, 43)
+        Me.Box_TempRampPosTolEdit.TabIndex = 19
+        Me.Box_TempRampPosTolEdit.TabStop = False
+        Me.Box_TempRampPosTolEdit.Text = "Ramp PosTol (°F/min)"
+        '
+        'Txt_TempRampPosTolEdit
+        '
+        Me.Txt_TempRampPosTolEdit.Location = New System.Drawing.Point(6, 19)
+        Me.Txt_TempRampPosTolEdit.Name = "Txt_TempRampPosTolEdit"
+        Me.Txt_TempRampPosTolEdit.Size = New System.Drawing.Size(100, 20)
+        Me.Txt_TempRampPosTolEdit.TabIndex = 0
+        Me.Txt_TempRampPosTolEdit.Text = "0"
+        '
+        'Box_TempRampEdit
+        '
+        Me.Box_TempRampEdit.Controls.Add(Me.Txt_TempRampEdit)
+        Me.Box_TempRampEdit.Location = New System.Drawing.Point(97, 161)
+        Me.Box_TempRampEdit.Name = "Box_TempRampEdit"
+        Me.Box_TempRampEdit.Size = New System.Drawing.Size(129, 43)
+        Me.Box_TempRampEdit.TabIndex = 20
+        Me.Box_TempRampEdit.TabStop = False
+        Me.Box_TempRampEdit.Text = "Ramp Rate (°F/min)"
+        '
+        'Txt_TempRampEdit
+        '
+        Me.Txt_TempRampEdit.Location = New System.Drawing.Point(6, 19)
+        Me.Txt_TempRampEdit.Name = "Txt_TempRampEdit"
+        Me.Txt_TempRampEdit.Size = New System.Drawing.Size(100, 20)
+        Me.Txt_TempRampEdit.TabIndex = 0
+        Me.Txt_TempRampEdit.Text = "0"
+        '
+        'Box_TempNegTolEdit
+        '
+        Me.Box_TempNegTolEdit.Controls.Add(Me.Txt_TempNegTolEdit)
+        Me.Box_TempNegTolEdit.Location = New System.Drawing.Point(120, 109)
+        Me.Box_TempNegTolEdit.Name = "Box_TempNegTolEdit"
+        Me.Box_TempNegTolEdit.Size = New System.Drawing.Size(129, 43)
+        Me.Box_TempNegTolEdit.TabIndex = 19
+        Me.Box_TempNegTolEdit.TabStop = False
+        Me.Box_TempNegTolEdit.Text = "NegTol (°F)"
+        '
+        'Txt_TempNegTolEdit
+        '
+        Me.Txt_TempNegTolEdit.Location = New System.Drawing.Point(6, 19)
+        Me.Txt_TempNegTolEdit.Name = "Txt_TempNegTolEdit"
+        Me.Txt_TempNegTolEdit.Size = New System.Drawing.Size(100, 20)
+        Me.Txt_TempNegTolEdit.TabIndex = 0
+        Me.Txt_TempNegTolEdit.Text = "-50"
+        '
+        'Box_TempPosTolEdit
+        '
+        Me.Box_TempPosTolEdit.Controls.Add(Me.Txt_TempPosTolEdit)
+        Me.Box_TempPosTolEdit.Location = New System.Drawing.Point(120, 64)
+        Me.Box_TempPosTolEdit.Name = "Box_TempPosTolEdit"
+        Me.Box_TempPosTolEdit.Size = New System.Drawing.Size(129, 43)
+        Me.Box_TempPosTolEdit.TabIndex = 18
+        Me.Box_TempPosTolEdit.TabStop = False
+        Me.Box_TempPosTolEdit.Text = "PosTol (°F)"
+        '
+        'Txt_TempPosTolEdit
+        '
+        Me.Txt_TempPosTolEdit.Location = New System.Drawing.Point(6, 19)
+        Me.Txt_TempPosTolEdit.Name = "Txt_TempPosTolEdit"
+        Me.Txt_TempPosTolEdit.Size = New System.Drawing.Size(100, 20)
+        Me.Txt_TempPosTolEdit.TabIndex = 0
+        Me.Txt_TempPosTolEdit.Text = "50"
+        '
+        'Box_TempSetEdit
+        '
+        Me.Box_TempSetEdit.Controls.Add(Me.Txt_TempSetEdit)
+        Me.Box_TempSetEdit.Location = New System.Drawing.Point(97, 19)
+        Me.Box_TempSetEdit.Name = "Box_TempSetEdit"
+        Me.Box_TempSetEdit.Size = New System.Drawing.Size(129, 43)
+        Me.Box_TempSetEdit.TabIndex = 17
+        Me.Box_TempSetEdit.TabStop = False
+        Me.Box_TempSetEdit.Text = "Set Point (°F)"
+        '
+        'Txt_TempSetEdit
+        '
+        Me.Txt_TempSetEdit.Location = New System.Drawing.Point(6, 19)
+        Me.Txt_TempSetEdit.Name = "Txt_TempSetEdit"
+        Me.Txt_TempSetEdit.Size = New System.Drawing.Size(100, 20)
+        Me.Txt_TempSetEdit.TabIndex = 0
+        Me.Txt_TempSetEdit.Text = "500"
+        '
+        'Box_StepNameEdit
+        '
+        Me.Box_StepNameEdit.Controls.Add(Me.Txt_StepNameEdit)
+        Me.Box_StepNameEdit.Location = New System.Drawing.Point(291, 40)
+        Me.Box_StepNameEdit.Name = "Box_StepNameEdit"
+        Me.Box_StepNameEdit.Size = New System.Drawing.Size(151, 46)
+        Me.Box_StepNameEdit.TabIndex = 12
+        Me.Box_StepNameEdit.TabStop = False
+        Me.Box_StepNameEdit.Text = "Step Name"
+        '
+        'Txt_StepNameEdit
+        '
+        Me.Txt_StepNameEdit.Location = New System.Drawing.Point(6, 19)
+        Me.Txt_StepNameEdit.Name = "Txt_StepNameEdit"
+        Me.Txt_StepNameEdit.Size = New System.Drawing.Size(139, 20)
+        Me.Txt_StepNameEdit.TabIndex = 11
+        '
+        'Box_CheckEdit
+        '
+        Me.Box_CheckEdit.Controls.Add(Me.Check_Vac)
+        Me.Box_CheckEdit.Controls.Add(Me.Check_TempEdit)
+        Me.Box_CheckEdit.Controls.Add(Me.Check_PressureEdit)
+        Me.Box_CheckEdit.Location = New System.Drawing.Point(584, 9)
+        Me.Box_CheckEdit.Name = "Box_CheckEdit"
+        Me.Box_CheckEdit.Size = New System.Drawing.Size(118, 100)
+        Me.Box_CheckEdit.TabIndex = 15
+        Me.Box_CheckEdit.TabStop = False
+        Me.Box_CheckEdit.Text = "Check"
+        '
+        'Check_Vac
+        '
+        Me.Check_Vac.AutoSize = True
+        Me.Check_Vac.Location = New System.Drawing.Point(20, 65)
+        Me.Check_Vac.Name = "Check_Vac"
+        Me.Check_Vac.Size = New System.Drawing.Size(65, 17)
+        Me.Check_Vac.TabIndex = 16
+        Me.Check_Vac.Text = "Vacuum"
+        Me.Check_Vac.UseVisualStyleBackColor = True
+        '
+        'Check_TempEdit
+        '
+        Me.Check_TempEdit.AutoSize = True
+        Me.Check_TempEdit.Location = New System.Drawing.Point(20, 19)
+        Me.Check_TempEdit.Name = "Check_TempEdit"
+        Me.Check_TempEdit.Size = New System.Drawing.Size(86, 17)
+        Me.Check_TempEdit.TabIndex = 15
+        Me.Check_TempEdit.Text = "Temperature"
+        Me.Check_TempEdit.UseVisualStyleBackColor = True
+        '
+        'Check_PressureEdit
+        '
+        Me.Check_PressureEdit.AutoSize = True
+        Me.Check_PressureEdit.Location = New System.Drawing.Point(20, 42)
+        Me.Check_PressureEdit.Name = "Check_PressureEdit"
+        Me.Check_PressureEdit.Size = New System.Drawing.Size(67, 17)
+        Me.Check_PressureEdit.TabIndex = 14
+        Me.Check_PressureEdit.Text = "Pressure"
+        Me.Check_PressureEdit.UseVisualStyleBackColor = True
+        '
+        'Box_CureNameEdit
+        '
+        Me.Box_CureNameEdit.Controls.Add(Me.Txt_CureNameEdit)
+        Me.Box_CureNameEdit.Location = New System.Drawing.Point(385, 10)
+        Me.Box_CureNameEdit.Name = "Box_CureNameEdit"
+        Me.Box_CureNameEdit.Size = New System.Drawing.Size(213, 58)
+        Me.Box_CureNameEdit.TabIndex = 13
+        Me.Box_CureNameEdit.TabStop = False
+        Me.Box_CureNameEdit.Text = "Cure Name"
+        '
+        'Txt_CureNameEdit
+        '
+        Me.Txt_CureNameEdit.Location = New System.Drawing.Point(6, 19)
+        Me.Txt_CureNameEdit.Name = "Txt_CureNameEdit"
+        Me.Txt_CureNameEdit.Size = New System.Drawing.Size(183, 20)
+        Me.Txt_CureNameEdit.TabIndex = 11
+        '
+        'GroupBox2
+        '
+        Me.GroupBox2.Controls.Add(Me.Txt_DocRevEdit)
+        Me.GroupBox2.Location = New System.Drawing.Point(317, 59)
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.Size = New System.Drawing.Size(54, 48)
+        Me.GroupBox2.TabIndex = 9
+        Me.GroupBox2.TabStop = False
+        Me.GroupBox2.Text = "Rev"
+        '
+        'Txt_DocRevEdit
+        '
+        Me.Txt_DocRevEdit.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Txt_DocRevEdit.Location = New System.Drawing.Point(3, 16)
+        Me.Txt_DocRevEdit.Name = "Txt_DocRevEdit"
+        Me.Txt_DocRevEdit.Size = New System.Drawing.Size(48, 20)
+        Me.Txt_DocRevEdit.TabIndex = 1
+        Me.Txt_DocRevEdit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'GroupBox3
+        '
+        Me.GroupBox3.Controls.Add(Me.Txt_CureDocEdit)
+        Me.GroupBox3.Location = New System.Drawing.Point(8, 59)
+        Me.GroupBox3.Name = "GroupBox3"
+        Me.GroupBox3.Size = New System.Drawing.Size(297, 48)
+        Me.GroupBox3.TabIndex = 10
+        Me.GroupBox3.TabStop = False
+        Me.GroupBox3.Text = "Document"
+        '
+        'Txt_CureDocEdit
+        '
+        Me.Txt_CureDocEdit.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Txt_CureDocEdit.Location = New System.Drawing.Point(3, 16)
+        Me.Txt_CureDocEdit.Name = "Txt_CureDocEdit"
+        Me.Txt_CureDocEdit.Size = New System.Drawing.Size(291, 20)
+        Me.Txt_CureDocEdit.TabIndex = 1
+        Me.Txt_CureDocEdit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'GroupBox1
+        '
+        Me.GroupBox1.Controls.Add(Me.Combo_CureProfileEdit)
+        Me.GroupBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.5!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Underline), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox1.Location = New System.Drawing.Point(8, 3)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(363, 53)
+        Me.GroupBox1.TabIndex = 8
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "Cure Profile"
+        '
+        'Combo_CureProfileEdit
+        '
+        Me.Combo_CureProfileEdit.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Combo_CureProfileEdit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.Combo_CureProfileEdit.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Combo_CureProfileEdit.FormattingEnabled = True
+        Me.Combo_CureProfileEdit.Location = New System.Drawing.Point(6, 16)
+        Me.Combo_CureProfileEdit.Name = "Combo_CureProfileEdit"
+        Me.Combo_CureProfileEdit.Size = New System.Drawing.Size(351, 21)
+        Me.Combo_CureProfileEdit.TabIndex = 6
+        '
         'OpenCSVFileDialog
         '
         Me.OpenCSVFileDialog.Filter = "CSV Files (*.csv)|*.csv|All Files (*.*)|*.*"
@@ -816,7 +1482,7 @@ Partial Class MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(761, 548)
+        Me.ClientSize = New System.Drawing.Size(800, 548)
         Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.MenuStrip1)
@@ -876,6 +1542,55 @@ Partial Class MainForm
         Me.Box_CureProfiles.ResumeLayout(False)
         Me.TableLayoutPanel2.ResumeLayout(False)
         Me.TableLayoutPanel2.PerformLayout()
+        Me.TabPage3.ResumeLayout(False)
+        Me.GroupBox4.ResumeLayout(False)
+        Me.Box_vacStepEdit.ResumeLayout(False)
+        Me.Box_vacStepEdit.PerformLayout()
+        Me.Box_vacNegTolEdit.ResumeLayout(False)
+        Me.Box_vacNegTolEdit.PerformLayout()
+        Me.Box_vacPosTolEdit.ResumeLayout(False)
+        Me.Box_vacPosTolEdit.PerformLayout()
+        Me.Box_vacSetEdit.ResumeLayout(False)
+        Me.Box_vacSetEdit.PerformLayout()
+        Me.Box_pressureStepEdit.ResumeLayout(False)
+        Me.Box_pressureStepEdit.PerformLayout()
+        Me.Box_pressureRampNegTolEdit.ResumeLayout(False)
+        Me.Box_pressureRampNegTolEdit.PerformLayout()
+        Me.Box_pressureRampPosTolEdit.ResumeLayout(False)
+        Me.Box_pressureRampPosTolEdit.PerformLayout()
+        Me.Box_pressureRampEdit.ResumeLayout(False)
+        Me.Box_pressureRampEdit.PerformLayout()
+        Me.Box_pressureNegTolEdit.ResumeLayout(False)
+        Me.Box_pressureNegTolEdit.PerformLayout()
+        Me.Box_pressurePosTolEdit.ResumeLayout(False)
+        Me.Box_pressurePosTolEdit.PerformLayout()
+        Me.Box_pressureSetEdit.ResumeLayout(False)
+        Me.Box_pressureSetEdit.PerformLayout()
+        Me.Box_tempStepEdit.ResumeLayout(False)
+        Me.Box_tempStepEdit.PerformLayout()
+        Me.Box_TempRampNegTolEdit.ResumeLayout(False)
+        Me.Box_TempRampNegTolEdit.PerformLayout()
+        Me.Box_TempRampPosTolEdit.ResumeLayout(False)
+        Me.Box_TempRampPosTolEdit.PerformLayout()
+        Me.Box_TempRampEdit.ResumeLayout(False)
+        Me.Box_TempRampEdit.PerformLayout()
+        Me.Box_TempNegTolEdit.ResumeLayout(False)
+        Me.Box_TempNegTolEdit.PerformLayout()
+        Me.Box_TempPosTolEdit.ResumeLayout(False)
+        Me.Box_TempPosTolEdit.PerformLayout()
+        Me.Box_TempSetEdit.ResumeLayout(False)
+        Me.Box_TempSetEdit.PerformLayout()
+        Me.Box_StepNameEdit.ResumeLayout(False)
+        Me.Box_StepNameEdit.PerformLayout()
+        Me.Box_CheckEdit.ResumeLayout(False)
+        Me.Box_CheckEdit.PerformLayout()
+        Me.Box_CureNameEdit.ResumeLayout(False)
+        Me.Box_CureNameEdit.PerformLayout()
+        Me.GroupBox2.ResumeLayout(False)
+        Me.GroupBox2.PerformLayout()
+        Me.GroupBox3.ResumeLayout(False)
+        Me.GroupBox3.PerformLayout()
+        Me.GroupBox1.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -943,4 +1658,62 @@ Partial Class MainForm
     Friend WithEvents TableLayoutPanel6 As TableLayoutPanel
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents Btn_ClearCells As Button
+    Friend WithEvents TabPage3 As TabPage
+    Friend WithEvents GroupBox2 As GroupBox
+    Friend WithEvents Txt_DocRevEdit As TextBox
+    Friend WithEvents GroupBox3 As GroupBox
+    Friend WithEvents Txt_CureDocEdit As TextBox
+    Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents Combo_CureProfileEdit As ComboBox
+    Friend WithEvents Box_tempStepEdit As GroupBox
+    Friend WithEvents Box_TempRampNegTolEdit As GroupBox
+    Friend WithEvents Txt_TempRampNegTolEdit As TextBox
+    Friend WithEvents Box_TempRampPosTolEdit As GroupBox
+    Friend WithEvents Txt_TempRampPosTolEdit As TextBox
+    Friend WithEvents Box_TempRampEdit As GroupBox
+    Friend WithEvents Txt_TempRampEdit As TextBox
+    Friend WithEvents Box_TempNegTolEdit As GroupBox
+    Friend WithEvents Txt_TempNegTolEdit As TextBox
+    Friend WithEvents Box_TempPosTolEdit As GroupBox
+    Friend WithEvents Txt_TempPosTolEdit As TextBox
+    Friend WithEvents Box_TempSetEdit As GroupBox
+    Friend WithEvents Txt_TempSetEdit As TextBox
+    Friend WithEvents Box_CheckEdit As GroupBox
+    Friend WithEvents Check_Vac As CheckBox
+    Friend WithEvents Check_TempEdit As CheckBox
+    Friend WithEvents Check_PressureEdit As CheckBox
+    Friend WithEvents Box_CureNameEdit As GroupBox
+    Friend WithEvents Txt_CureNameEdit As TextBox
+    Friend WithEvents Box_StepNameEdit As GroupBox
+    Friend WithEvents Txt_StepNameEdit As TextBox
+    Friend WithEvents Check_tempStepEdit As CheckBox
+    Friend WithEvents Check_tempMinEdit As CheckBox
+    Friend WithEvents Check_tempMaxEdit As CheckBox
+    Friend WithEvents Box_pressureStepEdit As GroupBox
+    Friend WithEvents Check_pressureMinEdit As CheckBox
+    Friend WithEvents Check_pressureMaxEdit As CheckBox
+    Friend WithEvents Check_pressureStepEdit As CheckBox
+    Friend WithEvents Box_pressureRampNegTolEdit As GroupBox
+    Friend WithEvents Txt_pressureRampNegTolEdit As TextBox
+    Friend WithEvents Box_pressureRampPosTolEdit As GroupBox
+    Friend WithEvents Txt_pressureRampPosTolEdit As TextBox
+    Friend WithEvents Box_pressureRampEdit As GroupBox
+    Friend WithEvents Txt_pressureRampEdit As TextBox
+    Friend WithEvents Box_pressureNegTolEdit As GroupBox
+    Friend WithEvents Txt_pressureNegTolEdit As TextBox
+    Friend WithEvents Box_pressurePosTolEdit As GroupBox
+    Friend WithEvents Txt_pressurePosTolEdit As TextBox
+    Friend WithEvents Box_pressureSetEdit As GroupBox
+    Friend WithEvents Txt_pressureSetEdit As TextBox
+    Friend WithEvents GroupBox4 As GroupBox
+    Friend WithEvents Box_vacStepEdit As GroupBox
+    Friend WithEvents Check_vacMinEdit As CheckBox
+    Friend WithEvents Check_vacMaxEdit As CheckBox
+    Friend WithEvents Check_vacStepEdit As CheckBox
+    Friend WithEvents Box_vacNegTolEdit As GroupBox
+    Friend WithEvents Txt_vacNegTolEdit As TextBox
+    Friend WithEvents Box_vacPosTolEdit As GroupBox
+    Friend WithEvents Txt_vacPosTolEdit As TextBox
+    Friend WithEvents Box_vacSetEdit As GroupBox
+    Friend WithEvents Txt_vacSetEdit As TextBox
 End Class

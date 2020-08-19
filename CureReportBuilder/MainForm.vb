@@ -75,6 +75,7 @@ Public Class MainForm
         partValues("PartNom") = Txt_PartDesc.Text
         partValues("ProgramNum") = Txt_ProgramNumber.Text
         partValues("PartQty") = Txt_Qty.Text
+        partValues("DataPath") = Txt_FilePath.Text
         equipSerialNum = Txt_DataRecorder.Text
 
 
@@ -114,7 +115,6 @@ Public Class MainForm
                 Next
             End If
         End If
-
 
         Call runCalc()
 
@@ -204,7 +204,10 @@ Public Class MainForm
         SwitchOff(Excel, True)
 
         Dim mainSheet As Excel.Worksheet = Excel.Sheets.Item(1)
+        Dim userSheet As Excel.Worksheet = Excel.Sheets.Item(2)
         Dim dataSheet As Excel.Worksheet = Excel.Sheets.Item(3)
+
+        runInfoOutput(userSheet)
 
         mainSheet.Cells(2, 1) = "Job" & vbNewLine & partValues("JobNum") & vbNewLine & "Program" & vbNewLine & partValues("ProgramNum")
         formatFont(mainSheet.Cells(2, 1), "Job", 14, True, False, True)
@@ -609,6 +612,60 @@ Public Class MainForm
         Excel.Visible = True
     End Sub
 
+    Sub runInfoOutput(infoSht As Excel.Worksheet)
+
+        Dim cRow As Integer = 1
+
+        outputExcelVal(infoSht, "RunDate", Now, cRow)
+        outputExcelVal(infoSht, "comp", Environment.MachineName, cRow)
+        outputExcelVal(infoSht, "compUser", Environment.UserName, cRow)
+
+        outputExcelVal(infoSht, "JobNum", partValues("JobNum"), cRow)
+        outputExcelVal(infoSht, "PONum", partValues("PONum"), cRow)
+        outputExcelVal(infoSht, "PartNum", partValues("PartNum"), cRow)
+        outputExcelVal(infoSht, "PartRev", partValues("PartRev"), cRow)
+        outputExcelVal(infoSht, "PartNom", partValues("PartNom"), cRow)
+        outputExcelVal(infoSht, "ProgramNum", partValues("ProgramNum"), cRow)
+        outputExcelVal(infoSht, "PartQty", partValues("PartQty"), cRow)
+        outputExcelVal(infoSht, "DataPath", partValues("DataPath"), cRow)
+
+        outputExcelVal(infoSht, "equipSerialNum", equipSerialNum, cRow)
+        outputExcelVal(infoSht, "dataCnt", dataCnt, cRow)
+        outputExcelVal(infoSht, "headerRow", headerRow, cRow)
+        outputExcelVal(infoSht, "headerCount", headerCount, cRow)
+        outputExcelVal(infoSht, "cureStart", cureStart, cRow)
+        outputExcelVal(infoSht, "cureEnd", cureEnd, cRow)
+        outputExcelVal(infoSht, "startTime", dateValues("startTime"), cRow)
+        outputExcelVal(infoSht, "endTime", dateValues("endTime"), cRow)
+        outputExcelVal(infoSht, "machType", machType, cRow)
+
+        If curePro.checkTemp Then
+            For i = 0 To UBound(usrRunTC)
+                outputExcelVal(infoSht, "usrRunTC", usrRunTC(i), cRow)
+            Next
+        End If
+
+        If curePro.checkVac Then
+            For i = 0 To UBound(usrRunVac)
+                outputExcelVal(infoSht, "usrRunVac", usrRunVac(i), cRow)
+            Next
+        End If
+
+
+        outputExcelVal(infoSht, "cureProFileDate", curePro.fileEditDate, cRow)
+        outputExcelVal(infoSht, "curePro", curePro.serializeCure, cRow)
+
+
+
+    End Sub
+
+    Sub outputExcelVal(sheet As Excel.Worksheet, inDesc As String, inVal As String, ByRef cRow As Integer)
+
+        sheet.Cells(cRow, 1) = inDesc
+        sheet.Cells(cRow, 2) = inVal
+        cRow += 1
+    End Sub
+
     Function plusMinusVal(plusVal As Double, minusVal As Double) As String
         Dim optionNeg As String = ""
 
@@ -627,7 +684,7 @@ Public Class MainForm
     End Function
 
     Sub clearChart(mainSheet As Excel.Worksheet)
-        Dim mainChart As Excel.Chart = mainSheet.ChartObjects.Item(1).Chart
+        Dim mainChart As Excel.Chart = mainSheet.ChartObjects.Item("DataChart").Chart
         Dim mainChartSeriesCollect As Excel.SeriesCollection = mainChart.SeriesCollection
 
         For i = mainChartSeriesCollect.Count To 1 Step -1
@@ -642,7 +699,7 @@ Public Class MainForm
     End Sub
 
     Sub setChartX(mainSheet As Excel.Worksheet)
-        Dim mainChart As Excel.Chart = mainSheet.ChartObjects.Item(1).Chart
+        Dim mainChart As Excel.Chart = mainSheet.ChartObjects.Item("DataChart").Chart
         Dim mainChartSeriesCollect As Excel.SeriesCollection = mainChart.SeriesCollection
 
         mainChart.Axes(1).MinimumScale = 0
@@ -650,7 +707,7 @@ Public Class MainForm
     End Sub
 
     Sub addToChart(mainSheet As Excel.Worksheet, dataSheet As Excel.Worksheet, cNum As Integer, seriesName As String, startDataSet As DataSet, Optional axisGroup As Integer = 1)
-        Dim mainChart As Excel.Chart = mainSheet.ChartObjects.Item(1).Chart
+        Dim mainChart As Excel.Chart = mainSheet.ChartObjects.Item("DataChart").Chart
         Dim mainChartSeriesCollect As Excel.SeriesCollection = mainChart.SeriesCollection
 
         Dim cureTimesRng As Excel.Range = dataSheet.Range(dataSheet.Cells(2, 2), dataSheet.Cells(cureEnd - cureStart + 2, 2))
@@ -688,8 +745,16 @@ Public Class MainForm
     End Sub
 
     Sub addStepChart(mainSheet As Excel.Worksheet, intime As Double)
-        Dim mainChart As Excel.Chart = mainSheet.ChartObjects.Item(1).Chart
+        Dim mainChart As Excel.Chart = mainSheet.ChartObjects.Item("StepChart").Chart
         Dim mainChartSeriesCollect As Excel.SeriesCollection = mainChart.SeriesCollection
+
+        Dim dataChart As Excel.Chart = mainSheet.ChartObjects.Item("dataChart").Chart
+
+        mainChart.Axes(1).MinimumScale = dataChart.Axes(1).MinimumScale
+        mainChart.Axes(1).MaximumScale = dataChart.Axes(1).MaximumScale
+
+        mainChart.Axes(2).MinimumScale = dataChart.Axes(2).MinimumScale
+        mainChart.Axes(2).MaximumScale = dataChart.Axes(2).MaximumScale
 
         Dim ser As Excel.Series
         ser = mainChartSeriesCollect.NewSeries
@@ -709,6 +774,9 @@ Public Class MainForm
 
         ser.ErrorBar(Excel.XlErrorBarDirection.xlY, Excel.XlErrorBarInclude.xlErrorBarIncludeBoth, Excel.XlErrorBarType.xlErrorBarTypePercent, 100)
         ser.ErrorBar(Excel.XlErrorBarDirection.xlX, Excel.XlErrorBarInclude.xlErrorBarIncludeNone, Excel.XlErrorBarType.xlErrorBarTypeFixedValue)
+
+        mainSheet.Shapes.Item("StepChart").ZOrder(Microsoft.Office.Core.MsoZOrderCmd.msoSendToBack)
+
     End Sub
 
 
@@ -1711,6 +1779,7 @@ Public Class MainForm
     Sub loadCureProfiles(inPath As String)
 
         Combo_CureProfile.Items.Clear()
+        Combo_CureProfileEdit.Items.Clear()
         cureProfiles.clearArr()
 
         If IO.File.Exists(inPath) Then
@@ -1725,6 +1794,7 @@ Public Class MainForm
             Throw New Exception("No cure profiles were found at your specified path.")
         Else
             Combo_CureProfile.SelectedIndex = 0
+            Combo_CureProfileEdit.SelectedIndex = 0
         End If
 
 
@@ -1746,7 +1816,9 @@ Public Class MainForm
                 End If
 
                 cureProfiles(UBound(cureProfiles)).deserializeCure(cureDef(i))
+                cureProfiles(UBound(cureProfiles)).fileEditDate = IO.File.GetLastWriteTime(inPath)
                 Combo_CureProfile.Items.Add(cureProfiles(UBound(cureProfiles)).Name)
+                Combo_CureProfileEdit.Items.Add(cureProfiles(UBound(cureProfiles)).Name)
             Next
         End If
     End Sub
@@ -1816,6 +1888,8 @@ Public Class MainForm
             Throw New Exception("Cure profile does not line up with loaded array, please reload cure profiles.")
         End If
 
+        Combo_CureProfileEdit.SelectedIndex = Combo_CureProfile.SelectedIndex
+
         curePro = cureProfiles(Combo_CureProfile.SelectedIndex)
 
         Txt_CureDoc.Text = curePro.cureDoc
@@ -1850,6 +1924,367 @@ Public Class MainForm
     Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
         Me.Close()
     End Sub
+
+
+    Private Sub Combo_CureProfileEdit_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Combo_CureProfileEdit.SelectedIndexChanged
+
+        If cureProfiles(Combo_CureProfileEdit.SelectedIndex).Name <> Combo_CureProfileEdit.Text Then
+            Throw New Exception("Cure profile does not line up with loaded array, please reload cure profiles.")
+        End If
+
+        Combo_CureProfile.SelectedIndex = Combo_CureProfileEdit.SelectedIndex
+    End Sub
+
+
+
+    Function numericCheck(sender As Object)
+        If Not IsNumeric(sender.Text) Then
+            If sender.Text = "-" Then
+                Return False
+            End If
+            sender.Text = "0"
+        End If
+
+        If sender.Text = "-0" Then
+            sender.Text = "-"
+            sender.SelectionStart = 1
+            Return False
+        End If
+
+        Return True
+    End Function
+
+#Region "Temp step intelligence"
+    Private Sub Txt_tempSetEdit_TextChanged(sender As Object, e As EventArgs) Handles Txt_TempSetEdit.TextChanged
+        If numericCheck(Txt_TempSetEdit) Then
+            Call Txt_tempPosTolEdit_TextChanged(sender, e)
+            Call Txt_tempNegTolEdit_TextChanged(sender, e)
+        End If
+
+        Check_tempMaxEdit_CheckedChanged(sender, e)
+        Check_tempMinEdit_CheckedChanged(sender, e)
+    End Sub
+
+    Private Sub Txt_tempPosTolEdit_TextChanged(sender As Object, e As EventArgs) Handles Txt_TempPosTolEdit.TextChanged
+
+        If numericCheck(Txt_TempPosTolEdit) Then
+            If Math.Abs(CDbl(Txt_TempPosTolEdit.Text)) = Math.Abs(CDbl(Txt_TempSetEdit.Text)) Then
+                Txt_TempPosTolEdit.BackColor = Color.PeachPuff
+            Else
+                Txt_TempPosTolEdit.BackColor = SystemColors.Window
+            End If
+        End If
+
+    End Sub
+
+    Private Sub Txt_tempNegTolEdit_TextChanged(sender As Object, e As EventArgs) Handles Txt_TempNegTolEdit.TextChanged
+        If numericCheck(Txt_TempNegTolEdit) Then
+            If Math.Abs(CDbl(Txt_TempNegTolEdit.Text)) = Math.Abs(CDbl(Txt_TempSetEdit.Text)) Then
+                Txt_TempNegTolEdit.BackColor = Color.PeachPuff
+            Else
+                Txt_TempNegTolEdit.BackColor = SystemColors.Window
+            End If
+        End If
+
+    End Sub
+
+    Private Sub Txt_TempRampEdit_TextChanged(sender As Object, e As EventArgs) Handles Txt_TempRampEdit.TextChanged
+        numericCheck(Txt_TempRampEdit)
+
+
+        If Txt_TempRampEdit.Text = "0" Then
+            Txt_TempRampPosTolEdit.Text = 0
+            Txt_TempRampNegTolEdit.Text = 0
+            Box_TempRampPosTolEdit.Enabled = False
+            Box_TempRampNegTolEdit.Enabled = False
+        Else
+            Box_TempRampPosTolEdit.Enabled = True
+            Box_TempRampNegTolEdit.Enabled = True
+        End If
+    End Sub
+
+    Private Sub Txt_TempRampPosTolEdit_TextChanged(sender As Object, e As EventArgs) Handles Txt_TempRampPosTolEdit.TextChanged
+        numericCheck(sender)
+    End Sub
+
+    Private Sub Txt_TempRampNegTolEdit_TextChanged(sender As Object, e As EventArgs) Handles Txt_TempRampNegTolEdit.TextChanged
+        numericCheck(sender)
+    End Sub
+
+    Private Sub Check_tempStepEdit_CheckedChanged(sender As Object, e As EventArgs) Handles Check_tempStepEdit.CheckedChanged
+        If Check_tempStepEdit.Checked Then
+            Box_TempSetEdit.Enabled = True
+            Box_TempPosTolEdit.Enabled = True
+            Box_TempNegTolEdit.Enabled = True
+            Box_TempRampEdit.Enabled = True
+            Box_TempRampPosTolEdit.Enabled = True
+            Box_TempRampNegTolEdit.Enabled = True
+            Check_tempMaxEdit.Enabled = True
+            Check_tempMinEdit.Enabled = True
+
+            Txt_TempSetEdit.Text = 250
+            Txt_TempPosTolEdit.Text = 20
+            Txt_TempNegTolEdit.Text = -10
+            Txt_TempRampEdit.Text = 3
+            Txt_TempRampPosTolEdit.Text = 0
+            Txt_TempRampNegTolEdit.Text = -3
+            Check_tempMaxEdit.Checked = False
+            Check_tempMinEdit.Checked = False
+        Else
+            Txt_TempSetEdit.Text = -1
+            Txt_TempPosTolEdit.Text = 0
+            Txt_TempNegTolEdit.Text = 0
+            Txt_TempRampEdit.Text = 0
+            Txt_TempRampPosTolEdit.Text = 0
+            Txt_TempRampNegTolEdit.Text = 0
+            Check_tempMaxEdit.Checked = False
+            Check_tempMinEdit.Checked = False
+
+            Check_tempMaxEdit.Enabled = False
+            Check_tempMinEdit.Enabled = False
+            Box_TempSetEdit.Enabled = False
+            Box_TempPosTolEdit.Enabled = False
+            Box_TempNegTolEdit.Enabled = False
+            Box_TempRampEdit.Enabled = False
+            Box_TempRampPosTolEdit.Enabled = False
+            Box_TempRampNegTolEdit.Enabled = False
+        End If
+    End Sub
+
+    Private Sub Check_tempMaxEdit_CheckedChanged(sender As Object, e As EventArgs) Handles Check_tempMaxEdit.CheckedChanged
+        If Check_tempMaxEdit.Checked Then
+            Check_tempMinEdit.Checked = False
+
+            Box_TempNegTolEdit.Enabled = False
+            Txt_TempNegTolEdit.Text = "-" & Txt_TempSetEdit.Text
+        Else
+            Box_TempNegTolEdit.Enabled = True
+        End If
+    End Sub
+
+    Private Sub Check_tempMinEdit_CheckedChanged(sender As Object, e As EventArgs) Handles Check_tempMinEdit.CheckedChanged
+        If Check_tempMinEdit.Checked Then
+            Check_tempMaxEdit.Checked = False
+
+            Box_TempPosTolEdit.Enabled = False
+            Txt_TempPosTolEdit.Text = Txt_TempSetEdit.Text
+        Else
+            Box_TempPosTolEdit.Enabled = True
+        End If
+    End Sub
+#End Region
+
+#Region "Pressure step intelligence"
+    Private Sub Txt_pressureSetEdit_TextChanged(sender As Object, e As EventArgs) Handles Txt_pressureSetEdit.TextChanged
+        If numericCheck(Txt_pressureSetEdit) Then
+            Call Txt_pressurePosTolEdit_TextChanged(sender, e)
+            Call Txt_pressureNegTolEdit_TextChanged(sender, e)
+        End If
+
+        Check_pressureMaxEdit_CheckedChanged(sender, e)
+        Check_pressureMinEdit_CheckedChanged(sender, e)
+    End Sub
+
+    Private Sub Txt_pressurePosTolEdit_TextChanged(sender As Object, e As EventArgs) Handles Txt_pressurePosTolEdit.TextChanged
+        If numericCheck(Txt_pressurePosTolEdit) Then
+            If Math.Abs(CDbl(Txt_pressurePosTolEdit.Text)) = Math.Abs(CDbl(Txt_pressureSetEdit.Text)) Then
+                Txt_pressurePosTolEdit.BackColor = Color.PeachPuff
+            Else
+                Txt_pressurePosTolEdit.BackColor = SystemColors.Window
+            End If
+        End If
+
+    End Sub
+
+    Private Sub Txt_pressureNegTolEdit_TextChanged(sender As Object, e As EventArgs) Handles Txt_pressureNegTolEdit.TextChanged
+        If numericCheck(Txt_pressureNegTolEdit) Then
+            If Math.Abs(CDbl(Txt_pressureNegTolEdit.Text)) = Math.Abs(CDbl(Txt_pressureSetEdit.Text)) Then
+                Txt_pressureNegTolEdit.BackColor = Color.PeachPuff
+            Else
+                Txt_pressureNegTolEdit.BackColor = SystemColors.Window
+            End If
+        End If
+    End Sub
+
+    Private Sub Txt_pressureRampEdit_TextChanged(sender As Object, e As EventArgs) Handles Txt_pressureRampEdit.TextChanged
+        numericCheck(sender)
+
+        If Txt_pressureRampEdit.Text = "0" Then
+            Txt_pressureRampPosTolEdit.Text = 0
+            Txt_pressureRampNegTolEdit.Text = 0
+            Box_pressureRampPosTolEdit.Enabled = False
+            Box_pressureRampNegTolEdit.Enabled = False
+        Else
+            Box_pressureRampPosTolEdit.Enabled = True
+            Box_pressureRampNegTolEdit.Enabled = True
+        End If
+    End Sub
+
+    Private Sub Txt_pressureRampPosTolEdit_TextChanged(sender As Object, e As EventArgs) Handles Txt_pressureRampPosTolEdit.TextChanged
+        numericCheck(sender)
+    End Sub
+
+    Private Sub Txt_pressureRampNegTolEdit_TextChanged(sender As Object, e As EventArgs) Handles Txt_pressureRampNegTolEdit.TextChanged
+        numericCheck(sender)
+    End Sub
+
+    Private Sub Check_pressureStepEdit_CheckedChanged(sender As Object, e As EventArgs) Handles Check_pressureStepEdit.CheckedChanged
+        If Check_pressureStepEdit.Checked Then
+            Box_pressureSetEdit.Enabled = True
+            Box_pressurePosTolEdit.Enabled = True
+            Box_pressureNegTolEdit.Enabled = True
+            Box_pressureRampEdit.Enabled = True
+            Box_pressureRampPosTolEdit.Enabled = True
+            Box_pressureRampNegTolEdit.Enabled = True
+            Check_pressureMaxEdit.Enabled = True
+            Check_pressureMinEdit.Enabled = True
+
+            Txt_pressureSetEdit.Text = 80
+            Txt_pressurePosTolEdit.Text = 20
+            Txt_pressureNegTolEdit.Text = -10
+            Txt_pressureRampEdit.Text = 3
+            Txt_pressureRampPosTolEdit.Text = 0
+            Txt_pressureRampNegTolEdit.Text = -3
+            Check_pressureMaxEdit.Checked = False
+            Check_pressureMinEdit.Checked = False
+        Else
+            Txt_pressureSetEdit.Text = -1
+            Txt_pressurePosTolEdit.Text = 0
+            Txt_pressureNegTolEdit.Text = 0
+            Txt_pressureRampEdit.Text = 0
+            Txt_pressureRampPosTolEdit.Text = 0
+            Txt_pressureRampNegTolEdit.Text = 0
+            Check_pressureMaxEdit.Checked = False
+            Check_pressureMinEdit.Checked = False
+
+            Check_pressureMaxEdit.Enabled = False
+            Check_pressureMinEdit.Enabled = False
+            Box_pressureSetEdit.Enabled = False
+            Box_pressurePosTolEdit.Enabled = False
+            Box_pressureNegTolEdit.Enabled = False
+            Box_pressureRampEdit.Enabled = False
+            Box_pressureRampPosTolEdit.Enabled = False
+            Box_pressureRampNegTolEdit.Enabled = False
+        End If
+    End Sub
+
+    Private Sub Check_pressureMaxEdit_CheckedChanged(sender As Object, e As EventArgs) Handles Check_pressureMaxEdit.CheckedChanged
+        If Check_pressureMaxEdit.Checked Then
+            Check_pressureMinEdit.Checked = False
+
+            Box_pressureNegTolEdit.Enabled = False
+            Txt_pressureNegTolEdit.Text = "-" & Txt_pressureSetEdit.Text
+        Else
+            Box_pressureNegTolEdit.Enabled = True
+        End If
+    End Sub
+
+    Private Sub Check_pressureMinEdit_CheckedChanged(sender As Object, e As EventArgs) Handles Check_pressureMinEdit.CheckedChanged
+        If Check_pressureMinEdit.Checked Then
+            Check_pressureMaxEdit.Checked = False
+
+            Box_pressurePosTolEdit.Enabled = False
+            Txt_pressurePosTolEdit.Text = Txt_pressureSetEdit.Text
+        Else
+            Box_pressurePosTolEdit.Enabled = True
+        End If
+    End Sub
+#End Region
+
+#Region "Vacuum step intelligence"
+    Private Sub Txt_vacSetEdit_TextChanged(sender As Object, e As EventArgs) Handles Txt_vacSetEdit.TextChanged
+        If numericCheck(Txt_vacSetEdit) Then
+            Call Txt_vacPosTolEdit_TextChanged(sender, e)
+            Call Txt_vacNegTolEdit_TextChanged(sender, e)
+        End If
+
+        Check_vacMaxEdit_CheckedChanged(sender, e)
+        Check_vacMinEdit_CheckedChanged(sender, e)
+    End Sub
+
+    Private Sub Txt_vacPosTolEdit_TextChanged(sender As Object, e As EventArgs) Handles Txt_vacPosTolEdit.TextChanged
+
+        If numericCheck(Txt_vacPosTolEdit) Then
+            If Math.Abs(CDbl(Txt_vacPosTolEdit.Text)) = Math.Abs(CDbl(Txt_vacSetEdit.Text)) Then
+                Txt_vacPosTolEdit.BackColor = Color.PeachPuff
+            Else
+                Txt_vacPosTolEdit.BackColor = SystemColors.Window
+            End If
+        End If
+
+    End Sub
+
+    Private Sub Txt_vacNegTolEdit_TextChanged(sender As Object, e As EventArgs) Handles Txt_vacNegTolEdit.TextChanged
+        If numericCheck(Txt_vacNegTolEdit) Then
+            If Math.Abs(CDbl(Txt_vacNegTolEdit.Text)) = Math.Abs(CDbl(Txt_vacSetEdit.Text)) Then
+                Txt_vacNegTolEdit.BackColor = Color.PeachPuff
+            Else
+                Txt_vacNegTolEdit.BackColor = SystemColors.Window
+            End If
+        End If
+
+    End Sub
+
+
+    Private Sub Check_vacStepEdit_CheckedChanged(sender As Object, e As EventArgs) Handles Check_vacStepEdit.CheckedChanged
+        If Check_vacStepEdit.Checked Then
+            Box_vacSetEdit.Enabled = True
+            Box_vacPosTolEdit.Enabled = True
+            Box_vacNegTolEdit.Enabled = True
+            Check_vacMaxEdit.Enabled = True
+            Check_vacMinEdit.Enabled = True
+
+            Txt_vacSetEdit.Text = -15
+            Txt_vacPosTolEdit.Text = 2
+            Txt_vacNegTolEdit.Text = -10
+            Check_vacMaxEdit.Checked = False
+            Check_vacMinEdit.Checked = False
+        Else
+            Txt_vacSetEdit.Text = -1
+            Txt_vacPosTolEdit.Text = 0
+            Txt_vacNegTolEdit.Text = 0
+            Check_vacMaxEdit.Checked = False
+            Check_vacMinEdit.Checked = False
+
+            Check_vacMaxEdit.Enabled = False
+            Check_vacMinEdit.Enabled = False
+            Box_vacSetEdit.Enabled = False
+            Box_vacPosTolEdit.Enabled = False
+            Box_vacNegTolEdit.Enabled = False
+        End If
+    End Sub
+
+    Private Sub Check_vacMaxEdit_CheckedChanged(sender As Object, e As EventArgs) Handles Check_vacMaxEdit.CheckedChanged
+        If Check_vacMaxEdit.Checked Then
+            Check_vacMinEdit.Checked = False
+
+            Box_vacPosTolEdit.Enabled = False
+            Box_vacNegTolEdit.Enabled = False
+            Txt_vacPosTolEdit.Text = Txt_vacSetEdit.Text
+            Txt_vacNegTolEdit.Text = 0
+        ElseIf Not Check_vacMinEdit.Checked Then
+            Box_vacPosTolEdit.Enabled = True
+            Box_vacNegTolEdit.Enabled = True
+        End If
+    End Sub
+
+    Private Sub Check_vacMinEdit_CheckedChanged(sender As Object, e As EventArgs) Handles Check_vacMinEdit.CheckedChanged
+        If Check_vacMinEdit.Checked Then
+            Check_vacMaxEdit.Checked = False
+
+            Box_vacPosTolEdit.Enabled = False
+            Box_vacNegTolEdit.Enabled = False
+
+            Txt_vacPosTolEdit.Text = 0
+            Txt_vacNegTolEdit.Text = Txt_vacSetEdit.Text
+        ElseIf Not Check_vacMaxEdit.Checked Then
+            Box_vacPosTolEdit.Enabled = True
+            Box_vacNegTolEdit.Enabled = True
+        End If
+    End Sub
+#End Region
+
+
 End Class
 
 
