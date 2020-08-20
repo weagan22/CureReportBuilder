@@ -18,9 +18,9 @@
 				RampNegTol,0
 			</pressureSet>
 			<tempSet>
-				setPoint,420
-				PosTol,20
-				NegTol,-420
+				setPoint,410
+				PosTol,30
+				NegTol,-410
 				RampRate,3
 				RampPosTol,0
 				RampNegTol,-6
@@ -102,9 +102,9 @@
 				RampNegTol,0
 			</pressureSet>
 			<tempSet>
-				setPoint,420
-				PosTol,20
-				NegTol,-420
+				setPoint,150
+				PosTol,290
+				NegTol,-150
 				RampRate,-2.5
 				RampPosTol,5
 				RampNegTol,0

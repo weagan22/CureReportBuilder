@@ -40,10 +40,13 @@ Public Class MainForm
     Dim usrRunTC() As Integer
     Dim usrRunVac() As Integer
 
+    Dim STOP_Txt_FilePath_TextChanged As Boolean = False
+
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'Call errorReset()
+        Call errorReset()
 
+        TabControl1.TabPages.Remove(TabPage3)
 
 
         Txt_Technician.Text = Replace(Environment.UserName, ".", " ")
@@ -192,7 +195,7 @@ Public Class MainForm
     Sub outputResults()
         Dim Excel As Object
         Excel = CreateObject("Excel.Application")
-        Excel.Visible = False
+        Excel.Visible = True
 
         Try
             Excel.Workbooks.Open(Txt_TemplatePath.Text)
@@ -201,7 +204,7 @@ Public Class MainForm
             Exit Sub
         End Try
 
-        SwitchOff(Excel, True)
+        'SwitchOff(Excel, True)
 
         Dim mainSheet As Excel.Worksheet = Excel.Sheets.Item(1)
         Dim userSheet As Excel.Worksheet = Excel.Sheets.Item(2)
@@ -251,11 +254,11 @@ Public Class MainForm
             Excel.ActiveSheet.Range(mainSheet.Cells(curRow, 3), mainSheet.Cells(curRow, 6)).Merge
             Excel.ActiveSheet.Range(mainSheet.Cells(curRow, 7), mainSheet.Cells(curRow, 9)).Merge
 
-            Excel.ActiveSheet.Range(mainSheet.Cells(curRow, 1), mainSheet.Cells(curRow, 2)).HorizontalAlignment = 3
-            Excel.ActiveSheet.Range(mainSheet.Cells(curRow, 3), mainSheet.Cells(curRow, 6)).HorizontalAlignment = 3
-            Excel.ActiveSheet.Range(mainSheet.Cells(curRow, 7), mainSheet.Cells(curRow, 9)).HorizontalAlignment = 3
+            Excel.ActiveSheet.Range(mainSheet.Cells(curRow, 1), mainSheet.Cells(curRow, 10)).HorizontalAlignment = 3
+            'Excel.ActiveSheet.Range(mainSheet.Cells(curRow, 3), mainSheet.Cells(curRow, 6)).HorizontalAlignment = 3
+            'Excel.ActiveSheet.Range(mainSheet.Cells(curRow, 7), mainSheet.Cells(curRow, 9)).HorizontalAlignment = 3
 
-            Excel.ActiveSheet.Range(mainSheet.Cells(curRow, 1), mainSheet.Cells(curRow, 9)).VerticalAlignment = -4108
+            Excel.ActiveSheet.Range(mainSheet.Cells(curRow, 1), mainSheet.Cells(curRow, 10)).VerticalAlignment = -4108
 
             Excel.ActiveSheet.Range(mainSheet.Cells(curRow, 1), mainSheet.Cells(curRow, 10)).Borders(9).LineStyle = 1
 
@@ -541,14 +544,15 @@ Public Class MainForm
         If curePro.checkTemp Then
             If machType = "Autoclave" Then
                 outputDataToColumn(dataSheet, curCol, "Air TC" & vbNewLine & "(°F)", arr2Str(vessel_TC.values, 1), cureStart, cureEnd)
-                Call addToChart(mainSheet, dataSheet, curCol - 1, "Air TC (°F)", vessel_TC, 1)
+                'Adds air Tc to the chart, seems cluttered. Add back in ny uncommenting
+                'Call addToChart(mainSheet, dataSheet, curCol - 1, "Air TC (°F)", vessel_TC, 1)
             End If
 
             If UBound(usrRunTC) > 0 Then
                 outputDataToColumn(dataSheet, curCol, "Lead TC" & vbNewLine & "(°F)", arr2Str(leadTC.values, 1), cureStart, cureEnd)
-                Call addToChart(mainSheet, dataSheet, curCol - 1, "Lead TC (°F)", leadTC, 1)
+                Call addToChart(mainSheet, dataSheet, curCol - 1, "Lead TC (°F)", leadTC, 1,, Color.Red)
                 outputDataToColumn(dataSheet, curCol, "Lag TC" & vbNewLine & "(°F)", arr2Str(lagTC.values, 1), cureStart, cureEnd)
-                Call addToChart(mainSheet, dataSheet, curCol - 1, "Lag TC (°F)", lagTC, 1)
+                Call addToChart(mainSheet, dataSheet, curCol - 1, "Lag TC (°F)", lagTC, 1,, Color.Blue)
             End If
 
             For i = 0 To UBound(partTC_Arr)
@@ -558,7 +562,7 @@ Public Class MainForm
                         outputDataToColumn(dataSheet, curCol, "TC " & partTC_Arr(i).Number & vbNewLine & "(°F)", arr2Str(partTC_Arr(i).values, 1), cureStart, cureEnd)
                         outputDataToColumn(dataSheet, curCol, "TC " & partTC_Arr(i).Number & " - Ramp" & vbNewLine & "(°F/min)", arr2Str(partTC_Arr(i).ramp, 2), cureStart, cureEnd)
                         If UBound(usrRunTC) = 0 Then
-                            Call addToChart(mainSheet, dataSheet, curCol - 2, "TC -" & partTC_Arr(i).Number & "- (°F)", partTC_Arr(i), 1)
+                            Call addToChart(mainSheet, dataSheet, curCol - 2, "TC -" & partTC_Arr(i).Number & "- (°F)", partTC_Arr(i), 1,, Color.Blue)
                         End If
                     End If
                 Next
@@ -567,16 +571,17 @@ Public Class MainForm
 
         If curePro.checkPressure Then
             outputDataToColumn(dataSheet, curCol, "Pressure" & vbNewLine & "(psi)", arr2Str(vesselPress.values, 1), cureStart, cureEnd)
-            Call addToChart(mainSheet, dataSheet, curCol - 1, "Pressure (psi)", vesselPress, 2)
+            Call addToChart(mainSheet, dataSheet, curCol - 1, "Pressure (psi)", vesselPress, 2, True, Color.Gray)
             outputDataToColumn(dataSheet, curCol, "Pressure Ramp" & vbNewLine & "(psi/min)", arr2Str(vesselPress.ramp, 2), cureStart, cureEnd)
         End If
 
         If curePro.checkVac Then
             If UBound(usrRunVac) > 0 Then
                 outputDataToColumn(dataSheet, curCol, "Max Vac" & vbNewLine & "(inHg)", arr2Str(maxVac.values, 1), cureStart, cureEnd)
-                Call addToChart(mainSheet, dataSheet, curCol - 1, "Max Vacuum (inHg)", maxVac, 2)
+                'Adds max vac to the chart, never relavent
+                'Call addToChart(mainSheet, dataSheet, curCol - 1, "Max Vacuum (inHg)", maxVac, 2)
                 outputDataToColumn(dataSheet, curCol, "Min Vac" & vbNewLine & "(inHg)", arr2Str(minVac.values, 1), cureStart, cureEnd)
-                Call addToChart(mainSheet, dataSheet, curCol - 1, "Min Vacuum (inHg)", minVac, 2)
+                Call addToChart(mainSheet, dataSheet, curCol - 1, "Min Vacuum (inHg)", minVac, 2,, Color.Green)
             End If
 
             For i = 0 To UBound(vac_Arr)
@@ -585,7 +590,7 @@ Public Class MainForm
                     If vac_Arr(i).Number = usrRunVac(z) Then
                         outputDataToColumn(dataSheet, curCol, "Vac Port " & vac_Arr(i).Number & vbNewLine & "(inHg)", arr2Str(vac_Arr(i).values, 1), cureStart, cureEnd)
                         If UBound(usrRunVac) = 0 Then
-                            Call addToChart(mainSheet, dataSheet, curCol - 1, "Vac Port -" & vac_Arr(i).Number & "- (inHg)", vac_Arr(i), 1)
+                            Call addToChart(mainSheet, dataSheet, curCol - 1, "Vac Port -" & vac_Arr(i).Number & "- (inHg)", vac_Arr(i), 2,, Color.Green)
                         End If
                     End If
                 Next
@@ -652,7 +657,8 @@ Public Class MainForm
         End If
 
 
-        outputExcelVal(infoSht, "cureProFileDate", curePro.fileEditDate, cRow)
+        outputExcelVal(infoSht, "cureProFileDate", cureProfiles(Combo_CureProfile.SelectedIndex).fileEditDate, cRow)
+
         outputExcelVal(infoSht, "curePro", curePro.serializeCure, cRow)
 
 
@@ -694,8 +700,6 @@ Public Class MainForm
         mainChart.Axes(2, 1).MaximumScale = 140
         mainChart.Axes(2, 1).MinimumScale = 100
 
-        'mainChart.Axes(2, 2).MaximumScale = 0
-        'mainChart.Axes(2, 2).MinimumScale = -30
     End Sub
 
     Sub setChartX(mainSheet As Excel.Worksheet)
@@ -706,7 +710,7 @@ Public Class MainForm
         mainChart.Axes(1).MaximumScale = Math.Round((dateArr(cureEnd) - dateArr(cureStart)).TotalMinutes, 0)
     End Sub
 
-    Sub addToChart(mainSheet As Excel.Worksheet, dataSheet As Excel.Worksheet, cNum As Integer, seriesName As String, startDataSet As DataSet, Optional axisGroup As Integer = 1)
+    Sub addToChart(mainSheet As Excel.Worksheet, dataSheet As Excel.Worksheet, cNum As Integer, seriesName As String, startDataSet As DataSet, Optional axisGroup As Integer = 1, Optional lineDashed As Boolean = False, Optional lineColor As Color = Nothing)
         Dim mainChart As Excel.Chart = mainSheet.ChartObjects.Item("DataChart").Chart
         Dim mainChartSeriesCollect As Excel.SeriesCollection = mainChart.SeriesCollection
 
@@ -730,6 +734,14 @@ Public Class MainForm
         ser.Format.Line.Visible = True
         ser.Format.Line.Weight = 1
 
+        If lineDashed Then
+            ser.Format.Line.DashStyle = Microsoft.Office.Core.MsoLineDashStyle.msoLineLongDash
+        End If
+
+        If Not lineColor = Nothing Then
+            ser.Format.Line.ForeColor.RGB = RGB(lineColor.R, lineColor.G, lineColor.B)
+        End If
+
         Dim valMax As Double = startDataSet.Max()
 
         If valMax > mainChart.Axes(2, axisGroup).MaximumScale Then
@@ -739,6 +751,8 @@ Public Class MainForm
         If axisGroup = 2 Then
             mainChart.Axes(2, axisGroup).HasTitle = True
             mainChart.Axes(2, axisGroup).AxisTitle.Text = "Pressure (psi) | Vacuum (inHg)"
+            mainChart.Axes(2, axisGroup).MinimumScale = -30
+            mainChart.Axes(2, axisGroup).MajorUnit = 10
         End If
 
 
@@ -987,10 +1001,12 @@ Public Class MainForm
 
                 For z = 0 To UBound(partTC_Arr)
                     For y = 0 To UBound(usrRunTC)
-                        If holder = 0 Then
-                            holder = partTC_Arr(z).MaxRamp(indexStart, indexEnd, goal, greaterThanGoal)
-                        ElseIf partTC_Arr(z).MaxRamp(indexStart, indexEnd, goal, greaterThanGoal) > holder Then
-                            holder = partTC_Arr(z).MaxRamp(indexStart, indexEnd, goal, greaterThanGoal)
+                        If partTC_Arr(z).Number = usrRunTC(y) Then
+                            If holder = 0 Then
+                                holder = partTC_Arr(z).MaxRamp(indexStart, indexEnd, goal, greaterThanGoal)
+                            ElseIf partTC_Arr(z).MaxRamp(indexStart, indexEnd, goal, greaterThanGoal) > holder Then
+                                holder = partTC_Arr(z).MaxRamp(indexStart, indexEnd, goal, greaterThanGoal)
+                            End If
                         End If
                     Next
                 Next
@@ -1005,13 +1021,16 @@ Public Class MainForm
 
                 For z = 0 To UBound(partTC_Arr)
                     For y = 0 To UBound(usrRunTC)
-                        If holder = 0 Then
-                            holder = partTC_Arr(z).MinRamp(indexStart, indexEnd, goal, greaterThanGoal)
-                        ElseIf partTC_Arr(z).MinRamp(indexStart, indexEnd, goal, greaterThanGoal) < holder Then
-                            holder = partTC_Arr(z).MinRamp(indexStart, indexEnd, goal, greaterThanGoal)
+                        If partTC_Arr(z).Number = usrRunTC(y) Then
+                            If holder = 0 Then
+                                holder = partTC_Arr(z).MinRamp(indexStart, indexEnd, goal, greaterThanGoal)
+                            ElseIf partTC_Arr(z).MinRamp(indexStart, indexEnd, goal, greaterThanGoal) < holder Then
+                                holder = partTC_Arr(z).MinRamp(indexStart, indexEnd, goal, greaterThanGoal)
+                            End If
                         End If
                     Next
                 Next
+
                 curePro.CureSteps(i).tempResult("MinRamp") = Math.Round(holder, 1)
 
 
@@ -1456,7 +1475,7 @@ Public Class MainForm
         dataCnt = UBound(dateArr)
 
         'Calculate ramp rates over a set period for smoothing, numerator sets the number of minutes to look at
-        stepVal = 5 / ((dateArr(1) - dateArr(0)).TotalMinutes)
+        stepVal = 10 / ((dateArr(UBound(dateArr)) - dateArr(0)).TotalMinutes / dataCnt)
         If stepVal = 1 Then stepVal = 2
 
         If curePro.checkTemp = True Then
@@ -1649,7 +1668,12 @@ Public Class MainForm
         dateValues("startTime") = Nothing
         dateValues("endTime") = Nothing
 
-        curePro = cureProfiles(Combo_CureProfile.SelectedIndex)
+        If Not cureProfiles Is Nothing Then
+            curePro = Nothing
+            curePro = New CureProfile()
+            curePro.deserializeCure(cureProfiles(Combo_CureProfile.SelectedIndex).serializeCure)
+        End If
+
 
     End Sub
 
@@ -1675,80 +1699,80 @@ Public Class MainForm
 
 
             Using MyReader As New Microsoft.VisualBasic.FileIO.TextFieldParser(inFile)
-                    MyReader.TextFieldType = FileIO.FieldType.Delimited
-                    MyReader.SetDelimiters({",", vbTab})
-                    Dim currentRow As String()
-                    Dim headerSet As Boolean = False
+                MyReader.TextFieldType = FileIO.FieldType.Delimited
+                MyReader.SetDelimiters({",", vbTab})
+                Dim currentRow As String()
+                Dim headerSet As Boolean = False
 
-                    While Not MyReader.EndOfData
-                        Try
-                            currentRow = MyReader.ReadFields()
+                While Not MyReader.EndOfData
+                    Try
+                        currentRow = MyReader.ReadFields()
 
-                            'Only check rows with greater than 4 columns
-                            If UBound(currentRow) > 3 Then
+                        'Only check rows with greater than 4 columns
+                        If UBound(currentRow) > 3 Then
 
-                                'Stop input for stop line symbol in Omega files
-                                If currentRow(3) = "ooOoo" Then
+                            'Stop input for stop line symbol in Omega files
+                            If currentRow(3) = "ooOoo" Then
+                                Call setHeaderRow()
+                                Exit Sub
+                            End If
+
+                            'Stop input if first or second item isn't a date/time after 6 lines
+                            If Not loadedDataSet Is Nothing AndAlso headerSet = True Then
+                                If Not IsDate(currentRow(0)) And Not IsDate(currentRow(1)) Then
                                     Call setHeaderRow()
                                     Exit Sub
                                 End If
+                            End If
 
-                                'Stop input if first or second item isn't a date/time after 6 lines
-                                If Not loadedDataSet Is Nothing AndAlso headerSet = True Then
-                                    If Not IsDate(currentRow(0)) And Not IsDate(currentRow(1)) Then
-                                        Call setHeaderRow()
-                                        Exit Sub
-                                    End If
-                                End If
-
-                                loadedDataSet.AddArr(currentRow)
+                            loadedDataSet.AddArr(currentRow)
 
 
-                                If headerSet = False Then
-                                    If IsDate(currentRow(0)) Then
+                            If headerSet = False Then
+                                If IsDate(currentRow(0)) Then
+                                    headerRow = UBound(loadedDataSet, 2)
+                                    headerSet = True
+                                ElseIf currentRow(0) <> "Date:" Then
+                                    If IsDate(currentRow(1)) Then
                                         headerRow = UBound(loadedDataSet, 2)
                                         headerSet = True
-                                    ElseIf currentRow(0) <> "Date:" Then
-                                        If IsDate(currentRow(1)) Then
-                                            headerRow = UBound(loadedDataSet, 2)
-                                            headerSet = True
-                                        End If
                                     End If
                                 End If
-
                             End If
 
+                        End If
 
 
 
 
-                            'Finds file type
-                            If InStr(currentRow(0), "Omega", 0) <> 0 Then
-                                machType = "Omega"
-                                headerCount = 2
-                                If curePro.Name = "null" Then
-                                    curePro.checkPressure = False
-                                    curePro.checkVac = False
-                                ElseIf curePro.checkPressure <> False And curePro.checkVac <> False Then
-                                    Throw New Exception("Omega TC reader data cannot be used to check this cure profile as is contains either pressure or vacuum requirements.")
-                                End If
 
-                                Box_DataRecorder.Visible = True
-
-                            ElseIf currentRow(0) = "No." AndAlso InStr(currentRow(1), "Date", 0) <> 0 AndAlso InStr(currentRow(2), "Time", 0) <> 0 AndAlso InStr(currentRow(3), "Millitm", 0) <> 0 AndAlso InStr(currentRow(4), "{Air_TC}", 0) <> 0 Then
-                                machType = "Autoclave"
-                                headerCount = 2
+                        'Finds file type
+                        If InStr(currentRow(0), "Omega", 0) <> 0 Then
+                            machType = "Omega"
+                            headerCount = 2
+                            If curePro.Name = "null" Then
+                                curePro.checkPressure = False
+                                curePro.checkVac = False
+                            ElseIf curePro.checkPressure <> False And curePro.checkVac <> False Then
+                                Throw New Exception("Omega TC reader data cannot be used to check this cure profile as is contains either pressure or vacuum requirements.")
                             End If
 
-                        Catch ex As Microsoft.VisualBasic.FileIO.MalformedLineException
-                            MsgBox("Line " & ex.Message & "is not valid and will be skipped.")
-                        End Try
-                    End While
-                End Using
+                            Box_DataRecorder.Visible = True
 
-                Call setHeaderRow()
-            Else
-                Throw New Exception("Input file is not a .csv, please load a new file.")
+                        ElseIf currentRow(0) = "No." AndAlso InStr(currentRow(1), "Date", 0) <> 0 AndAlso InStr(currentRow(2), "Time", 0) <> 0 AndAlso InStr(currentRow(3), "Millitm", 0) <> 0 AndAlso InStr(currentRow(4), "{Air_TC}", 0) <> 0 Then
+                            machType = "Autoclave"
+                            headerCount = 2
+                        End If
+
+                    Catch ex As Microsoft.VisualBasic.FileIO.MalformedLineException
+                        MsgBox("Line " & ex.Message & "is not valid and will be skipped.")
+                    End Try
+                End While
+            End Using
+
+            Call setHeaderRow()
+        Else
+            Throw New Exception("Input file is not a .csv, please load a new file.")
         End If
 
     End Sub
@@ -1835,20 +1859,41 @@ Public Class MainForm
         Box_DataRecorder.Visible = False
         Box_TC.Visible = False
         Box_Vac.Visible = False
+
+        If Txt_FilePath.Text = "File path..." Then
+            Exit Sub
+        End If
+
         Try
             Call loadCSVin(Txt_FilePath.Text)
             Call loadCureData()
             Box_RunParams.Enabled = True
             Box_RunLine.Enabled = True
         Catch ex As Exception
-            If MsgBox(ex.Message, vbOKCancel, "Error") = vbCancel Then Me.Close()
+            If MsgBox(ex.Message, vbOKCancel, "Error") = vbCancel Then
+                Box_RunParams.Enabled = False
+                Box_RunLine.Enabled = False
+                errorReset()
+                Txt_FilePath.Text = "File path..."
+            End If
+
             Box_RunLine.Enabled = False
         End Try
 
     End Sub
 
     Private Sub Txt_FilePath_TextChanged(sender As Object, e As EventArgs) Handles Txt_FilePath.TextChanged
+
+        If STOP_Txt_FilePath_TextChanged Then Exit Sub
+
+        If IO.File.Exists(Txt_FilePath.Text.Trim("""")) Then
+            STOP_Txt_FilePath_TextChanged = True
+            Txt_FilePath.Text = Txt_FilePath.Text.Trim("""")
+            STOP_Txt_FilePath_TextChanged = False
+        End If
+
         If IO.File.Exists(Txt_FilePath.Text) Then
+
             Txt_FilePath.BackColor = SystemColors.Window
             Call openCureFile()
         Else
@@ -2280,6 +2325,16 @@ Public Class MainForm
         ElseIf Not Check_vacMaxEdit.Checked Then
             Box_vacPosTolEdit.Enabled = True
             Box_vacNegTolEdit.Enabled = True
+        End If
+    End Sub
+
+    Private Sub Check_TempEdit_CheckedChanged(sender As Object, e As EventArgs) Handles Check_TempEdit.CheckedChanged
+        If Not Check_TempEdit.Checked Then
+            Check_tempStepEdit.Checked = False
+            Box_tempStepEdit.Enabled = False
+        Else
+            Check_tempStepEdit.Checked = True
+            Box_tempStepEdit.Enabled = True
         End If
     End Sub
 #End Region
