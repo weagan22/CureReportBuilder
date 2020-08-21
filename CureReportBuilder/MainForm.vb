@@ -8,6 +8,8 @@ Public Class MainForm
     Public cureProfiles() As CureProfile
     Dim curePro As CureProfile = New CureProfile("null")
 
+    Public autoclaveSNum As New Dictionary(Of String, Integer) From {{"Controller", 2601}, {"Air TC1", 2600}, {"Air TC2", 2603}, {"PT", 2599}, {"VT1", 2593}, {"VT2", 2598}, {"VT3", 2595}, {"VT4", 2594}, {"VT5", 2597}, {"VT6", 2596}}
+
     Public partValues As New Dictionary(Of String, String) From {{"JobNum", ""}, {"PONum", ""}, {"PartNum", ""}, {"PartRev", ""}, {"PartNom", ""}, {"ProgramNum", ""}, {"PartQty", ""}, {"DataPath", ""}}
     Dim equipSerialNum As String = ""
 
@@ -79,8 +81,21 @@ Public Class MainForm
         partValues("ProgramNum") = Txt_ProgramNumber.Text
         partValues("PartQty") = Txt_Qty.Text
         partValues("DataPath") = Txt_FilePath.Text
-        equipSerialNum = Txt_DataRecorder.Text
 
+        If machType = "Omega" Then
+            equipSerialNum = Txt_DataRecorder.Text
+        End If
+
+
+
+        Dim rowCnt As Integer = 1
+
+        If machType = "Autoclave" Then
+            addToEquip(equipSerialNum, "Controller", rowCnt)
+            addToEquip(equipSerialNum, "Air TC1", rowCnt)
+            addToEquip(equipSerialNum, "Air TC2", rowCnt)
+            addToEquip(equipSerialNum, "PT", rowCnt)
+        End If
 
         'Get used TC lines
         If curePro.checkTemp Then
@@ -117,12 +132,38 @@ Public Class MainForm
                     usrRunVac.AddValArr(Data_Vac.Item(1, i).Value)
                 Next
             End If
+
+            For i = 0 To UBound(usrRunVac)
+                addToEquip(equipSerialNum, "VT" & usrRunVac(i), rowCnt)
+            Next
+        End If
+
+        If machType = "Autoclave" Then
+            If Strings.Right(equipSerialNum, 3) = " | " Then
+                equipSerialNum = Strings.Left(equipSerialNum, Len(equipSerialNum) - 3)
+            ElseIf Strings.Right(equipSerialNum, 1) = vbCrLf Then
+                equipSerialNum = Strings.Left(equipSerialNum, Len(equipSerialNum) - 1)
+            End If
         End If
 
         Call runCalc()
 
         Call outputResults()
     End Sub
+
+    Sub addToEquip(ByRef equipSerialNum As String, name As String, ByRef rowCnt As Integer)
+
+        rowCnt += 1
+
+        If rowCnt = 2 Then
+            rowCnt = 0
+            equipSerialNum = equipSerialNum & name & ": S" & autoclaveSNum(name) & vbNewLine
+        Else
+            equipSerialNum = equipSerialNum & name & ": S" & autoclaveSNum(name) & " | "
+        End If
+
+    End Sub
+
 #Region "Output"
     Sub formatFont(inCell As Object, checkStr As String, Optional fontSize As Double = 11, Optional bold As Boolean = False, Optional italic As Boolean = False, Optional underline As Boolean = False, Optional color As Color = Nothing, Optional checkExists As Boolean = True)
         'Exit sub to skip formatting
