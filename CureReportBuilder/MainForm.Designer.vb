@@ -227,7 +227,7 @@ Partial Class MainForm
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(93, 22)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(92, 22)
         Me.ExitToolStripMenuItem.Text = "Exit"
         '
         'StatusStrip1
@@ -1492,7 +1492,7 @@ Partial Class MainForm
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "MainForm"
-        Me.Text = "Cure Report Builder 0.1.0"
+        Me.Text = "Cure Report Builder 0.1.1"
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
         Me.StatusStrip1.ResumeLayout(False)
