@@ -223,7 +223,7 @@ Public Class MainForm
         Dim hours As Integer = Math.Round((dateArr(cureEnd) - dateArr(cureStart)).TotalMinutes, 1) \ 60
         Dim minutes As Integer = Math.Round((dateArr(cureEnd) - dateArr(cureStart)).TotalMinutes, 1) - (hours * 60)
 
-        mainSheet.Cells(2, 8) = "Cure" & vbNewLine & "Start: " & dateArr(cureStart).ToString("dd-MMM-yyyy | h:mm tt") & vbNewLine & "Finish: " & dateArr(cureEnd).ToString("dd-MMM-yyyy | h:mm tt") & vbNewLine & "Duration: " & hours & ":" & minutes 'Math.Round((dateArr(cureEnd) - dateArr(cureStart)).TotalMinutes, 1) & " min"
+        mainSheet.Cells(2, 8) = "Cure" & vbNewLine & "Start: " & dateArr(cureStart).ToString("dd-MMM-yyyy | h:mm tt") & vbNewLine & "Finish: " & dateArr(cureEnd).ToString("dd-MMM-yyyy | h:mm tt") & vbNewLine & "Duration: " & hours & "h:" & minutes & "m" 'Math.Round((dateArr(cureEnd) - dateArr(cureStart)).TotalMinutes, 1) & " min"
         formatFont(mainSheet.Cells(2, 8), "Cure", 14, True, False, True)
 
         mainSheet.Cells(5, 1) = "Equipment" & vbNewLine & machType & " | " & equipSerialNum
@@ -255,8 +255,6 @@ Public Class MainForm
             Excel.ActiveSheet.Range(mainSheet.Cells(curRow, 7), mainSheet.Cells(curRow, 9)).Merge
 
             Excel.ActiveSheet.Range(mainSheet.Cells(curRow, 1), mainSheet.Cells(curRow, 10)).HorizontalAlignment = 3
-            'Excel.ActiveSheet.Range(mainSheet.Cells(curRow, 3), mainSheet.Cells(curRow, 6)).HorizontalAlignment = 3
-            'Excel.ActiveSheet.Range(mainSheet.Cells(curRow, 7), mainSheet.Cells(curRow, 9)).HorizontalAlignment = 3
 
             Excel.ActiveSheet.Range(mainSheet.Cells(curRow, 1), mainSheet.Cells(curRow, 10)).VerticalAlignment = -4108
 
@@ -270,18 +268,18 @@ Public Class MainForm
                 Dim stepPass As String = "FAIL"
                 If currentStep.stepPass Then stepPass = "PASS"
 
-                Dim startTime As Integer = (dateArr(currentStep.stepStart) - dateArr(cureStart)).TotalMinutes
-                Dim endTime As Integer = (dateArr(currentStep.stepEnd) - dateArr(cureStart)).TotalMinutes
+                Dim startTime As Double = (dateArr(currentStep.stepStart) - dateArr(cureStart)).TotalMinutes
+                Dim endTime As Double = (dateArr(currentStep.stepEnd) - dateArr(cureStart)).TotalMinutes
 
                 Dim endStr As String = ""
                 If currentStep.stepTerminate = False Then
                     endStr = "Failed to Terminate"
                 Else
-                    endStr = "Finish: " & endTime & " min"
+                    endStr = "Finish: " & endTime.ToString("0.0") & " min"
                 End If
 
 
-                mainSheet.Cells(curRow, 1) = currentStep.stepName & vbNewLine & "(" & stepPass & ")" & vbNewLine & "Start: " & startTime & " min" & vbNewLine & endStr
+                mainSheet.Cells(curRow, 1) = currentStep.stepName & vbNewLine & "(" & stepPass & ")" & vbNewLine & "Start: " & startTime.ToString("0.0") & " min" & vbNewLine & endStr
 
                 formatFont(mainSheet.Cells(curRow, 1), currentStep.stepName, 14, True, False, False)
 
@@ -291,7 +289,7 @@ Public Class MainForm
                     formatFont(mainSheet.Cells(curRow, 1), "(" & stepPass & ")", 11, False, False, False, Color.Red)
                 End If
 
-                formatFont(mainSheet.Cells(curRow, 1), "Start: " & startTime & " min", 9, False, False, False)
+                formatFont(mainSheet.Cells(curRow, 1), "Start: " & startTime.ToString("0.0") & " min", 9, False, False, False)
                 formatFont(mainSheet.Cells(curRow, 1), endStr, 9, False, False, False)
 
                 If currentStep.stepTerminate = False Then
@@ -415,34 +413,53 @@ Public Class MainForm
                 If curePro.checkTemp And currentStep.tempSet("SetPoint") <> -1 Then
                     tempStr = "Temperature (°F)" & vbNewLine
 
+
+
+
+
+
                     If Math.Abs(currentStep.tempSet("SetPoint")) = Math.Abs(currentStep.tempSet("NegTol")) Then
-                        tempStr = tempStr & "Max: " & String.Format("{0}", currentStep.tempResult("Max")) & vbNewLine
+                        tempStr = tempStr & "Max: " & String.Format("{0}", Math.Round(currentStep.tempResult("Max"), 0)) & vbNewLine
                     ElseIf Math.Abs(currentStep.tempSet("SetPoint")) = Math.Abs(currentStep.tempSet("PosTol")) Then
-                        tempStr = tempStr & "Min: " & String.Format("{0}", currentStep.tempResult("Min")) & vbNewLine
+                        tempStr = tempStr & "Min: " & String.Format("{0}", Math.Round(currentStep.tempResult("Min"), 0)) & vbNewLine
                     Else
-                        tempStr = tempStr & "Max: " & String.Format("{0}", currentStep.tempResult("Max")) & " | Min: " & String.Format("{0}", currentStep.tempResult("Min")) & "  | Avg: " & String.Format("{0}", currentStep.tempResult("Avg")) & vbNewLine
+                        tempStr = tempStr & "Max: " & String.Format("{0}", Math.Round(currentStep.tempResult("Max"), 0))
+                        tempStr = tempStr & " | Min: " & String.Format("{0}", Math.Round(currentStep.tempResult("Min"), 0))
+                        tempStr = tempStr & "  | Avg: " & String.Format("{0}", Math.Round(currentStep.tempResult("Avg"), 0)) & vbNewLine
                     End If
 
                     If currentStep.tempSet("RampRate") <> 0 Then
                         tempRmpStr = "Temp. Ramp (°F/min)" & vbNewLine
-                        tempRmpStr = tempRmpStr & "Max: " & String.Format("{0:0.0}", currentStep.tempResult("MaxRamp")) & " | Min: " & String.Format("{0:0.0}", currentStep.tempResult("MinRamp")) & "  | Avg: " & String.Format("{0:0.0}", currentStep.tempResult("AvgRamp")) & vbNewLine
+                        tempRmpStr = tempRmpStr & "Max: " & String.Format("{0:0.0}", Math.Round(currentStep.tempResult("MaxRamp"), 1))
+                        tempRmpStr = tempRmpStr & " | Min: " & String.Format("{0:0.0}", Math.Round(currentStep.tempResult("MinRamp"), 1))
+                        tempRmpStr = tempRmpStr & "  | Avg: " & String.Format("{0:0.0}", Math.Round(currentStep.tempResult("AvgRamp"), 1)) & vbNewLine
                     End If
+
+
+
+
+
+
                 End If
 
                 If curePro.checkPressure And currentStep.pressureSet("SetPoint") <> -1 Then
                     pressStr = "Pressure (psi)" & vbNewLine
 
                     If Math.Abs(currentStep.pressureSet("SetPoint")) = Math.Abs(currentStep.pressureSet("NegTol")) Then
-                        pressStr = pressStr & "Max: " & String.Format("{0:0.0}", currentStep.pressureResult("Max")) & vbNewLine
+                        pressStr = pressStr & "Max: " & String.Format("{0:0.0}", Math.Round(currentStep.pressureResult("Max"), 1)) & vbNewLine
                     ElseIf Math.Abs(currentStep.pressureSet("SetPoint")) = Math.Abs(currentStep.pressureSet("PosTol")) Then
-                        pressStr = "Min: " & String.Format("{0:0.0}", currentStep.pressureResult("Min")) & vbNewLine
+                        pressStr = "Min: " & String.Format("{0:0.0}", Math.Round(currentStep.pressureResult("Min"), 1)) & vbNewLine
                     Else
-                        pressStr = pressStr & "Max: " & String.Format("{0:0.0}", currentStep.pressureResult("Max")) & " | Min: " & String.Format("{0:0.0}", currentStep.pressureResult("Min")) & " | Avg: " & String.Format("{0:0.0}", currentStep.pressureResult("Avg")) & vbNewLine
+                        pressStr = pressStr & "Max: " & String.Format("{0:0.0}", Math.Round(currentStep.pressureResult("Max"), 1))
+                        pressStr = pressStr & " | Min: " & String.Format("{0:0.0}", Math.Round(currentStep.pressureResult("Min"), 1))
+                        pressStr = pressStr & " | Avg: " & String.Format("{0:0.0}", Math.Round(currentStep.pressureResult("Avg"), 1)) & vbNewLine
                     End If
 
                     If currentStep.pressureSet("RampRate") <> 0 Then
                         pressRmpStr = "Pressure Ramp (psi/min)" & vbNewLine
-                        pressRmpStr = pressRmpStr & "Max: " & String.Format("{0:0.0}", currentStep.pressureResult("MaxRamp")) & " | Min: " & String.Format("{0:0.0}", currentStep.pressureResult("MinRamp")) & "  | Avg: " & String.Format("{0:0.0}", currentStep.pressureResult("AvgRamp")) & vbNewLine
+                        pressRmpStr = pressRmpStr & "Max: " & String.Format("{0:0.0}", Math.Round(currentStep.pressureResult("MaxRamp"), 1))
+                        pressRmpStr = pressRmpStr & " | Min: " & String.Format("{0:0.0}", Math.Round(currentStep.pressureResult("MinRamp"), 1))
+                        pressRmpStr = pressRmpStr & "  | Avg: " & String.Format("{0:0.0}", Math.Round(currentStep.pressureResult("AvgRamp"), 1)) & vbNewLine
                     End If
                 End If
 
@@ -450,11 +467,13 @@ Public Class MainForm
                     vacStr = "Vacuum (inHg)" & vbNewLine
 
                     If Math.Abs(currentStep.vacSet("SetPoint")) = Math.Abs(currentStep.vacSet("NegTol")) Then
-                        vacStr = vacStr & "Min: " & String.Format("{0:0.0}", currentStep.vacResult("Min")) & vbNewLine
+                        vacStr = vacStr & "Min: " & String.Format("{0:0.0}", Math.Round(currentStep.vacResult("Min"), 1)) & vbNewLine
                     ElseIf Math.Abs(currentStep.vacSet("SetPoint")) = Math.Abs(currentStep.vacSet("PosTol")) Then
-                        vacStr = vacStr & "Max: " & String.Format("{0:0.0}", currentStep.vacResult("Max")) & vbNewLine
+                        vacStr = vacStr & "Max: " & String.Format("{0:0.0}", Math.Round(currentStep.vacResult("Max"), 1)) & vbNewLine
                     Else
-                        vacStr = vacStr & "Max: " & String.Format("{0:0.0}", currentStep.vacResult("Min")) & " | Min: " & String.Format("{0:0.0}", currentStep.vacResult("Max")) & " | Avg: " & String.Format("{0:0.0}", currentStep.vacResult("Avg")) & vbNewLine
+                        vacStr = vacStr & "Max: " & String.Format("{0:0.0}", Math.Round(currentStep.vacResult("Min"), 1))
+                        vacStr = vacStr & " | Min: " & String.Format("{0:0.0}", Math.Round(currentStep.vacResult("Max"), 1))
+                        vacStr = vacStr & " | Avg: " & String.Format("{0:0.0}", Math.Round(currentStep.vacResult("Avg"), 1)) & vbNewLine
                     End If
 
                 End If
@@ -611,7 +630,6 @@ Public Class MainForm
 
         mainSheet.Activate()
 
-
         SwitchOff(Excel, False)
 
         Excel.Visible = True
@@ -745,13 +763,14 @@ Public Class MainForm
         Dim valMax As Double = startDataSet.Max()
 
         If valMax > mainChart.Axes(2, axisGroup).MaximumScale Then
-            mainChart.Axes(2, axisGroup).MaximumScale = valMax
+            mainChart.Axes(2, axisGroup).MaximumScale = valMax + ((valMax - 100) * 0.05)
         End If
 
         If axisGroup = 2 Then
             mainChart.Axes(2, axisGroup).HasTitle = True
             mainChart.Axes(2, axisGroup).AxisTitle.Text = "Pressure (psi) | Vacuum (inHg)"
             mainChart.Axes(2, axisGroup).MinimumScale = -30
+            mainChart.Axes(2, axisGroup).MaximumScale = 120
             mainChart.Axes(2, axisGroup).MajorUnit = 10
         End If
 
@@ -786,7 +805,7 @@ Public Class MainForm
         ser.HasErrorBars = True
         ser.ErrorBars.EndStyle = Excel.XlEndStyleCap.xlNoCap
 
-        ser.ErrorBar(Excel.XlErrorBarDirection.xlY, Excel.XlErrorBarInclude.xlErrorBarIncludeBoth, Excel.XlErrorBarType.xlErrorBarTypePercent, 100)
+        ser.ErrorBar(Excel.XlErrorBarDirection.xlY, Excel.XlErrorBarInclude.xlErrorBarIncludeBoth, Excel.XlErrorBarType.xlErrorBarTypePercent, 110)
         ser.ErrorBar(Excel.XlErrorBarDirection.xlX, Excel.XlErrorBarInclude.xlErrorBarIncludeNone, Excel.XlErrorBarType.xlErrorBarTypeFixedValue)
 
         mainSheet.Shapes.Item("StepChart").ZOrder(Microsoft.Office.Core.MsoZOrderCmd.msoSendToBack)
@@ -921,7 +940,7 @@ Public Class MainForm
             Dim total As Double = 0
             Dim addCnt As Integer = 0
 
-
+            Dim stepDuration As Double = (dateArr(UBound(dateArr)) - dateArr(0)).TotalMinutes / dataCnt
 
             'Calculate temp results for a given step
             If curePro.checkTemp = True And curePro.CureSteps(i).tempSet("SetPoint") <> -1 Then
@@ -929,13 +948,13 @@ Public Class MainForm
                 ''Max temp
                 If Not firstStep Then
                     If curePro.CureSteps(i - 1).tempSet("RampRate") < 0 Then
-                        indexStart = indexStart + Math.Abs(Math.Round(curePro.CureSteps(i - 1).tempSet("RampRate") / (dateArr(1) - dateArr(0)).TotalMinutes, 0))
+                        indexStart = indexStart + Math.Abs(Math.Round(curePro.CureSteps(i - 1).tempSet("RampRate") / stepDuration, 0))
                     End If
                 End If
 
                 If Not lastStep Then
                     If curePro.CureSteps(i + 1).tempSet("RampRate") > 0 Then
-                        indexEnd = indexEnd - Math.Abs(Math.Round(curePro.CureSteps(i - 1).tempSet("RampRate") / (dateArr(1) - dateArr(0)).TotalMinutes, 0))
+                        indexEnd = indexEnd - Math.Abs(Math.Round(curePro.CureSteps(i + 1).tempSet("RampRate") / stepDuration, 0))
                     End If
                 End If
 
@@ -948,13 +967,13 @@ Public Class MainForm
 
                 If Not firstStep Then
                     If curePro.CureSteps(i - 1).tempSet("RampRate") > 0 Then
-                        indexStart = indexStart + Math.Abs(Math.Round(curePro.CureSteps(i - 1).tempSet("RampRate") / (dateArr(1) - dateArr(0)).TotalMinutes, 0))
+                        indexStart = indexStart + Math.Abs(Math.Round(curePro.CureSteps(i - 1).tempSet("RampRate") / stepDuration, 0))
                     End If
                 End If
 
                 If Not lastStep Then
                     If curePro.CureSteps(i + 1).tempSet("RampRate") < 0 Then
-                        indexEnd = indexEnd - Math.Abs(Math.Round(curePro.CureSteps(i - 1).tempSet("RampRate") / (dateArr(1) - dateArr(0)).TotalMinutes, 0))
+                        indexEnd = indexEnd - Math.Abs(Math.Round(curePro.CureSteps(i + 1).tempSet("RampRate") / stepDuration, 0))
                     End If
                 End If
 
@@ -1084,13 +1103,13 @@ Public Class MainForm
 
                 If Not firstStep Then
                     If curePro.CureSteps(i - 1).pressureSet("RampRate") < 0 Then
-                        indexStart = indexStart + Math.Abs(Math.Round(curePro.CureSteps(i - 1).pressureSet("RampRate") / (dateArr(1) - dateArr(0)).TotalMinutes, 0))
+                        indexStart = indexStart + Math.Abs(Math.Round(curePro.CureSteps(i - 1).pressureSet("RampRate") / stepDuration, 0))
                     End If
                 End If
 
                 If Not lastStep Then
                     If curePro.CureSteps(i + 1).pressureSet("RampRate") > 0 Then
-                        indexEnd = indexEnd - Math.Abs(Math.Round(curePro.CureSteps(i - 1).pressureSet("RampRate") / (dateArr(1) - dateArr(0)).TotalMinutes, 0))
+                        indexEnd = indexEnd - Math.Abs(Math.Round(curePro.CureSteps(i + 1).pressureSet("RampRate") / stepDuration, 0))
                     End If
                 End If
 
@@ -1102,13 +1121,13 @@ Public Class MainForm
                 indexEnd = curePro.CureSteps(i).stepEnd
                 If Not firstStep Then
                     If curePro.CureSteps(i - 1).pressureSet("RampRate") > 0 Then
-                        indexStart = indexStart + Math.Abs(Math.Round(curePro.CureSteps(i - 1).pressureSet("RampRate") / (dateArr(1) - dateArr(0)).TotalMinutes, 0))
+                        indexStart = indexStart + Math.Abs(Math.Round(curePro.CureSteps(i - 1).pressureSet("RampRate") / stepDuration, 0))
                     End If
                 End If
 
                 If Not lastStep Then
                     If curePro.CureSteps(i + 1).pressureSet("RampRate") < 0 Then
-                        indexEnd = indexEnd - Math.Abs(Math.Round(curePro.CureSteps(i - 1).pressureSet("RampRate") / (dateArr(1) - dateArr(0)).TotalMinutes, 0))
+                        indexEnd = indexEnd - Math.Abs(Math.Round(curePro.CureSteps(i + 1).pressureSet("RampRate") / stepDuration, 0))
                     End If
 
                 End If
@@ -1222,12 +1241,16 @@ Public Class MainForm
         Dim currentStep As Integer = 0
         Dim i As Integer
         For i = cureStart To dataCnt
-            If curePro.CureSteps(currentStep).stepStart = 0 Then
+            If curePro.CureSteps(currentStep).stepStart = -1 And currentStep <> 0 Then
+                curePro.CureSteps(currentStep).stepStart = i - 1
+            ElseIf curePro.CureSteps(currentStep).stepStart = -1 Then
                 curePro.CureSteps(currentStep).stepStart = i
             End If
 
+            'Step start and end do not line up
+
             If meetTerms(curePro.CureSteps(currentStep), i) Then
-                curePro.CureSteps(currentStep).stepEnd = i
+                curePro.CureSteps(currentStep).stepEnd = i - 1
                 If UBound(curePro.CureSteps) = currentStep Then
                     cureEnd = curePro.CureSteps(currentStep).stepEnd
                     dateValues("endTime") = dateArr(curePro.CureSteps(currentStep).stepEnd)

@@ -279,7 +279,7 @@ Public Class CureStep
     Public hardFail As Boolean = False
     Public stepTerminate As Boolean = True
 
-    Public stepStart As Integer = 0
+    Public stepStart As Integer = -1
     Public stepEnd As Integer = 0
 
 
