@@ -322,7 +322,7 @@ Partial Class MainForm
         Me.Txt_FilePath.Location = New System.Drawing.Point(3, 7)
         Me.Txt_FilePath.Name = "Txt_FilePath"
         Me.Txt_FilePath.Size = New System.Drawing.Size(673, 20)
-        Me.Txt_FilePath.TabIndex = 0
+        Me.Txt_FilePath.TabIndex = 2
         Me.Txt_FilePath.Text = "File path..."
         '
         'Btn_OpenFile
@@ -332,7 +332,7 @@ Partial Class MainForm
         Me.Btn_OpenFile.Location = New System.Drawing.Point(682, 3)
         Me.Btn_OpenFile.Name = "Btn_OpenFile"
         Me.Btn_OpenFile.Size = New System.Drawing.Size(69, 29)
-        Me.Btn_OpenFile.TabIndex = 1
+        Me.Btn_OpenFile.TabIndex = 3
         Me.Btn_OpenFile.Text = "Open File"
         Me.Btn_OpenFile.UseVisualStyleBackColor = True
         '
@@ -371,6 +371,7 @@ Partial Class MainForm
         Me.Btn_ClearCells.Name = "Btn_ClearCells"
         Me.Btn_ClearCells.Size = New System.Drawing.Size(104, 38)
         Me.Btn_ClearCells.TabIndex = 4
+        Me.Btn_ClearCells.TabStop = False
         Me.Btn_ClearCells.Text = "Clear Cells"
         Me.Btn_ClearCells.UseVisualStyleBackColor = True
         '
@@ -390,7 +391,7 @@ Partial Class MainForm
         Me.Txt_PartNumber.Location = New System.Drawing.Point(3, 16)
         Me.Txt_PartNumber.Name = "Txt_PartNumber"
         Me.Txt_PartNumber.Size = New System.Drawing.Size(108, 20)
-        Me.Txt_PartNumber.TabIndex = 1
+        Me.Txt_PartNumber.TabIndex = 7
         Me.Txt_PartNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Box_Revision
@@ -409,7 +410,7 @@ Partial Class MainForm
         Me.Txt_Revision.Location = New System.Drawing.Point(3, 16)
         Me.Txt_Revision.Name = "Txt_Revision"
         Me.Txt_Revision.Size = New System.Drawing.Size(57, 20)
-        Me.Txt_Revision.TabIndex = 1
+        Me.Txt_Revision.TabIndex = 8
         Me.Txt_Revision.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Box_PartDesc
@@ -418,7 +419,7 @@ Partial Class MainForm
         Me.Box_PartDesc.Location = New System.Drawing.Point(6, 69)
         Me.Box_PartDesc.Name = "Box_PartDesc"
         Me.Box_PartDesc.Size = New System.Drawing.Size(351, 44)
-        Me.Box_PartDesc.TabIndex = 3
+        Me.Box_PartDesc.TabIndex = 5
         Me.Box_PartDesc.TabStop = False
         Me.Box_PartDesc.Text = "Part Nomenclature"
         '
@@ -428,7 +429,7 @@ Partial Class MainForm
         Me.Txt_PartDesc.Location = New System.Drawing.Point(3, 16)
         Me.Txt_PartDesc.Name = "Txt_PartDesc"
         Me.Txt_PartDesc.Size = New System.Drawing.Size(345, 20)
-        Me.Txt_PartDesc.TabIndex = 1
+        Me.Txt_PartDesc.TabIndex = 10
         Me.Txt_PartDesc.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Box_Qty
@@ -437,7 +438,7 @@ Partial Class MainForm
         Me.Box_Qty.Location = New System.Drawing.Point(198, 20)
         Me.Box_Qty.Name = "Box_Qty"
         Me.Box_Qty.Size = New System.Drawing.Size(51, 44)
-        Me.Box_Qty.TabIndex = 3
+        Me.Box_Qty.TabIndex = 4
         Me.Box_Qty.TabStop = False
         Me.Box_Qty.Text = "Qty"
         '
@@ -447,7 +448,7 @@ Partial Class MainForm
         Me.Txt_Qty.Location = New System.Drawing.Point(3, 16)
         Me.Txt_Qty.Name = "Txt_Qty"
         Me.Txt_Qty.Size = New System.Drawing.Size(45, 20)
-        Me.Txt_Qty.TabIndex = 1
+        Me.Txt_Qty.TabIndex = 9
         Me.Txt_Qty.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Box_Vac
@@ -560,7 +561,7 @@ Partial Class MainForm
         Me.Box_JobNumber.Location = New System.Drawing.Point(6, 19)
         Me.Box_JobNumber.Name = "Box_JobNumber"
         Me.Box_JobNumber.Size = New System.Drawing.Size(114, 44)
-        Me.Box_JobNumber.TabIndex = 4
+        Me.Box_JobNumber.TabIndex = 3
         Me.Box_JobNumber.TabStop = False
         Me.Box_JobNumber.Text = "Job Number"
         '
@@ -570,7 +571,7 @@ Partial Class MainForm
         Me.Txt_JobNumber.Location = New System.Drawing.Point(3, 16)
         Me.Txt_JobNumber.Name = "Txt_JobNumber"
         Me.Txt_JobNumber.Size = New System.Drawing.Size(108, 20)
-        Me.Txt_JobNumber.TabIndex = 1
+        Me.Txt_JobNumber.TabIndex = 4
         Me.Txt_JobNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Box_ProgramNumber
@@ -579,7 +580,7 @@ Partial Class MainForm
         Me.Box_ProgramNumber.Location = New System.Drawing.Point(126, 19)
         Me.Box_ProgramNumber.Name = "Box_ProgramNumber"
         Me.Box_ProgramNumber.Size = New System.Drawing.Size(114, 44)
-        Me.Box_ProgramNumber.TabIndex = 3
+        Me.Box_ProgramNumber.TabIndex = 4
         Me.Box_ProgramNumber.TabStop = False
         Me.Box_ProgramNumber.Text = "Program Number"
         '
@@ -589,7 +590,7 @@ Partial Class MainForm
         Me.Txt_ProgramNumber.Location = New System.Drawing.Point(3, 16)
         Me.Txt_ProgramNumber.Name = "Txt_ProgramNumber"
         Me.Txt_ProgramNumber.Size = New System.Drawing.Size(108, 20)
-        Me.Txt_ProgramNumber.TabIndex = 1
+        Me.Txt_ProgramNumber.TabIndex = 5
         Me.Txt_ProgramNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Box_DataRecorder
@@ -598,7 +599,7 @@ Partial Class MainForm
         Me.Box_DataRecorder.Location = New System.Drawing.Point(246, 19)
         Me.Box_DataRecorder.Name = "Box_DataRecorder"
         Me.Box_DataRecorder.Size = New System.Drawing.Size(142, 44)
-        Me.Box_DataRecorder.TabIndex = 3
+        Me.Box_DataRecorder.TabIndex = 5
         Me.Box_DataRecorder.TabStop = False
         Me.Box_DataRecorder.Text = "Data Recorder ID (S#)"
         Me.Box_DataRecorder.Visible = False
@@ -609,7 +610,7 @@ Partial Class MainForm
         Me.Txt_DataRecorder.Location = New System.Drawing.Point(3, 16)
         Me.Txt_DataRecorder.Name = "Txt_DataRecorder"
         Me.Txt_DataRecorder.Size = New System.Drawing.Size(136, 20)
-        Me.Txt_DataRecorder.TabIndex = 1
+        Me.Txt_DataRecorder.TabIndex = 6
         Me.Txt_DataRecorder.Text = "S"
         Me.Txt_DataRecorder.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -658,7 +659,7 @@ Partial Class MainForm
         Me.Txt_Technician.Location = New System.Drawing.Point(3, 16)
         Me.Txt_Technician.Name = "Txt_Technician"
         Me.Txt_Technician.Size = New System.Drawing.Size(155, 20)
-        Me.Txt_Technician.TabIndex = 1
+        Me.Txt_Technician.TabIndex = 11
         Me.Txt_Technician.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'TableLayoutPanel6
@@ -724,7 +725,7 @@ Partial Class MainForm
         Me.Combo_CureProfile.Location = New System.Drawing.Point(6, 16)
         Me.Combo_CureProfile.Name = "Combo_CureProfile"
         Me.Combo_CureProfile.Size = New System.Drawing.Size(390, 21)
-        Me.Combo_CureProfile.TabIndex = 6
+        Me.Combo_CureProfile.TabIndex = 1
         '
         'TableLayoutPanel4
         '
@@ -760,6 +761,7 @@ Partial Class MainForm
         Me.Txt_DocRev.Name = "Txt_DocRev"
         Me.Txt_DocRev.Size = New System.Drawing.Size(48, 20)
         Me.Txt_DocRev.TabIndex = 1
+        Me.Txt_DocRev.TabStop = False
         Me.Txt_DocRev.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Box_CureDoc
@@ -781,6 +783,7 @@ Partial Class MainForm
         Me.Txt_CureDoc.Name = "Txt_CureDoc"
         Me.Txt_CureDoc.Size = New System.Drawing.Size(330, 20)
         Me.Txt_CureDoc.TabIndex = 1
+        Me.Txt_CureDoc.TabStop = False
         Me.Txt_CureDoc.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'PictureBox1

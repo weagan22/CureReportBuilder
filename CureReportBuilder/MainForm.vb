@@ -753,7 +753,7 @@ Public Class MainForm
         ser.Format.Line.Weight = 1
 
         If lineDashed Then
-            ser.Format.Line.DashStyle = Microsoft.Office.Core.MsoLineDashStyle.msoLineLongDash
+            ser.Format.Line.DashStyle = 7 'Microsoft.Office.Core.MsoLineDashStyle.msoLineLongDash
         End If
 
         If Not lineColor = Nothing Then
@@ -808,7 +808,7 @@ Public Class MainForm
         ser.ErrorBar(Excel.XlErrorBarDirection.xlY, Excel.XlErrorBarInclude.xlErrorBarIncludeBoth, Excel.XlErrorBarType.xlErrorBarTypePercent, 110)
         ser.ErrorBar(Excel.XlErrorBarDirection.xlX, Excel.XlErrorBarInclude.xlErrorBarIncludeNone, Excel.XlErrorBarType.xlErrorBarTypeFixedValue)
 
-        mainSheet.Shapes.Item("StepChart").ZOrder(Microsoft.Office.Core.MsoZOrderCmd.msoSendToBack)
+        mainSheet.Shapes.Item("StepChart").ZOrder(1) 'Microsoft.Office.Core.MsoZOrderCmd.msoSendToBack)
 
     End Sub
 
