@@ -977,6 +977,7 @@ Public Class MainForm
             Dim indexEnd As Integer = curePro.CureSteps(i).stepEnd
             Dim goal As Double = -1
             Dim greaterThanGoal As Boolean = True
+            Dim holder As Double = 0
 
             Dim total As Double = 0
             Dim addCnt As Integer = 0
@@ -999,6 +1000,12 @@ Public Class MainForm
                     End If
                 End If
 
+                ''Handles a very short step: just look at max of whole step, no buffer
+                If indexEnd <= indexStart Then
+                    indexStart = curePro.CureSteps(i).stepStart
+                    indexEnd = curePro.CureSteps(i).stepEnd
+                End If
+
                 curePro.CureSteps(i).tempResult("Max") = Math.Round(leadTC.Max(indexStart, indexEnd), 0)
 
 
@@ -1016,6 +1023,12 @@ Public Class MainForm
                     If curePro.CureSteps(i + 1).tempSet("RampRate") < 0 Then
                         indexEnd = indexEnd - Math.Abs(Math.Round(curePro.CureSteps(i + 1).tempSet("RampRate") / stepDuration, 0))
                     End If
+                End If
+
+                ''Handles a very short step: just look at min of whole step, no buffer
+                If indexEnd <= indexStart Then
+                    indexStart = curePro.CureSteps(i).stepStart
+                    indexEnd = curePro.CureSteps(i).stepEnd
                 End If
 
                 curePro.CureSteps(i).tempResult("Min") = Math.Round(lagTC.Min(indexStart, indexEnd), 0)
@@ -1053,11 +1066,19 @@ Public Class MainForm
                     greaterThanGoal = False
                 End If
 
-                ''Max temp ramp
-                Dim holder As Double = 0
-                indexStart = curePro.CureSteps(i).stepStart
-                indexEnd = curePro.CureSteps(i).stepEnd
+                ''Buffer start and end by half the linear regression step length so ramp is only from the step region
+                indexStart = curePro.CureSteps(i).stepStart + (stepVal / 2)
+                indexEnd = curePro.CureSteps(i).stepEnd - (stepVal / 2)
 
+                ''For very short step (<linear reg step) just look at the middle point 
+                If indexEnd < indexStart Then
+                    Dim midPoint As Integer = indexStart + ((indexEnd - indexStart) / 2)
+                    indexStart = midPoint
+                    indexEnd = midPoint
+                End If
+
+                ''Max temp ramp
+                holder = 0
 
                 For z = 0 To UBound(partTC_Arr)
                     For y = 0 To UBound(usrRunTC)
@@ -1076,8 +1097,6 @@ Public Class MainForm
 
                 ''Min temp ramp
                 holder = 0
-                indexStart = curePro.CureSteps(i).stepStart
-                indexEnd = curePro.CureSteps(i).stepEnd
 
                 For z = 0 To UBound(partTC_Arr)
                     For y = 0 To UBound(usrRunTC)
@@ -1097,8 +1116,6 @@ Public Class MainForm
                 ''Average temp ramp
                 total = 0
                 addCnt = 0
-                indexStart = curePro.CureSteps(i).stepStart
-                indexEnd = curePro.CureSteps(i).stepEnd
 
                 For z = 0 To UBound(partTC_Arr)
                     For y = 0 To UBound(usrRunTC)
@@ -1154,6 +1171,12 @@ Public Class MainForm
                     End If
                 End If
 
+                ''Handles a very short step: just look at max of whole step, no buffer
+                If indexEnd <= indexStart Then
+                    indexStart = curePro.CureSteps(i).stepStart
+                    indexEnd = curePro.CureSteps(i).stepEnd
+                End If
+
                 curePro.CureSteps(i).pressureResult("Max") = Math.Round(vesselPress.Max(indexStart, indexEnd), 1)
 
 
@@ -1172,12 +1195,20 @@ Public Class MainForm
                     End If
 
                 End If
+
+                ''Handles a very short step: just look at max of whole step, no buffer
+                If indexEnd <= indexStart Then
+                    indexStart = curePro.CureSteps(i).stepStart
+                    indexEnd = curePro.CureSteps(i).stepEnd
+                End If
+
                 curePro.CureSteps(i).pressureResult("Min") = Math.Round(vesselPress.Min(indexStart, indexEnd), 1)
 
 
                 ''Average pressure
                 indexStart = curePro.CureSteps(i).stepStart
                 indexEnd = curePro.CureSteps(i).stepEnd
+
                 curePro.CureSteps(i).pressureResult("Avg") = Math.Round(vesselPress.Average(indexStart, indexEnd), 1)
 
 
@@ -1193,6 +1224,17 @@ Public Class MainForm
                 ElseIf curePro.CureSteps(i).pressureSet("RampRate") < 0 Then
                     goal = curePro.CureSteps(i).pressureSet("SetPoint")
                     greaterThanGoal = False
+                End If
+
+                ''Buffer start and end by half the linear regression step length so ramp is only from the step region
+                indexStart = curePro.CureSteps(i).stepStart + (stepVal / 2)
+                indexEnd = curePro.CureSteps(i).stepEnd - (stepVal / 2)
+
+                ''For very short step (<linear reg step) just look at the middle point 
+                If indexEnd < indexStart Then
+                    Dim midPoint As Integer = indexStart + ((indexEnd - indexStart) / 2)
+                    indexStart = midPoint
+                    indexEnd = midPoint
                 End If
 
                 ''Max pressure ramp
@@ -1540,7 +1582,14 @@ Public Class MainForm
 
         'Calculate ramp rates over a set period for smoothing, numerator sets the number of minutes to look at
         stepVal = 10 / ((dateArr(UBound(dateArr)) - dateArr(0)).TotalMinutes / dataCnt)
-        If stepVal = 1 Then stepVal = 2
+
+        'Make sure step is even so it is evenly distributed around point of interest
+        If stepVal Mod 2 = 1 Then
+            stepVal -= 1
+        End If
+
+        'If stepVal was 0 or 1 then increase to 2 so that a linear regression can be performed
+        If stepVal = 0 Then stepVal = 2
 
         If curePro.checkTemp = True Then
             partTC_Arr.clearArr()
