@@ -62,6 +62,7 @@
                 holder = values(i)
             End If
 
+            '!!!!!!!!!!!!!! Needs more work must work for vac and pressure too!
             If Not stp2Chk Is Nothing Then
                 If Math.Abs(stp2Chk.tempSet("SetPoint")) <> Math.Abs(stp2Chk.tempSet("PosTol")) Then
                     If holder > stp2Chk.tempSet("SetPoint") + stp2Chk.tempSet("PosTol") Then
