@@ -1462,12 +1462,21 @@ Public Class MainForm
 
 #Region "Derived arrays from data"
     Sub startEndTime()
-        Dim start_end_temp As Double = 140
+        Dim start_end_temp As Double = 150
+        Dim start_end_press As Double = 5
 
         'Get start time
         Dim i As Integer
         For i = 0 To dataCnt
-            If leadTC.values(i) > start_end_temp And dateValues("startTime") = Nothing Then
+            Dim currentPress As Double = 0
+
+            If curePro.checkPressure Then
+                currentPress = vesselPress.values(i)
+            Else
+                currentPress = 0
+            End If
+
+            If leadTC.values(i) > start_end_temp Or currentPress > start_end_press And dateValues("startTime") = Nothing Then
                 dateValues("startTime") = dateArr(i)
                 cureStart = i
                 Exit For
@@ -1479,16 +1488,34 @@ Public Class MainForm
             dateValues("startTime") = dateArr(0)
         End If
 
+
+
         'Get end time
         Dim runStart As Boolean = False
         For i = 0 To dataCnt
-            If lagTC.values(i) > start_end_temp And runStart = False Then
+
+            Dim currentPress As Double = 0
+
+            If curePro.checkPressure Then
+                currentPress = vesselPress.values(i)
+            Else
+                currentPress = start_end_press + 1
+            End If
+
+            If lagTC.values(i) > start_end_temp And currentPress > start_end_press And runStart = False Then
                 runStart = True
                 i += 5
             End If
 
+
+            If curePro.checkPressure Then
+                currentPress = vesselPress.values(i)
+            Else
+                currentPress = start_end_press - 1
+            End If
+
             If runStart = True Then
-                If leadTC.values(i) < start_end_temp Then
+                If leadTC.values(i) < start_end_temp And currentPress < start_end_press Then
                     dateValues("endTime") = dateArr(i)
                     cureEnd = i
                     Exit For
