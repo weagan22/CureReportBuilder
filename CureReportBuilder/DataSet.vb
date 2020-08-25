@@ -61,6 +61,22 @@
             ElseIf values(i) > holder Then
                 holder = values(i)
             End If
+
+
+            If Math.Abs(stp2Chk.tempSet("SetPoint")) = Math.Abs(stp2Chk.tempSet("NegTol")) Then
+                If stp2Chk.tempResult("Max") > stp2Chk.tempSet("SetPoint") + stp2Chk.tempSet("PosTol") Then
+                    If stp2Chk.tempOver.TotalSeconds = -1 Then
+                        stp2Chk.tempOver = dateArr(inde)
+                    End If
+
+                    stp2Chk.tempPass = False
+                End If
+            ElseIf Math.Abs(stp2Chk.tempSet("SetPoint")) = Math.Abs(stp2Chk.tempSet("PosTol")) Then
+            Else
+                If stp2Chk.tempResult("Max") > stp2Chk.tempSet("SetPoint") + stp2Chk.tempSet("PosTol") Then
+                    stp2Chk.tempPass = False
+                End If
+            End If
         Next
 
         Return holder

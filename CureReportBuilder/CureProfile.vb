@@ -275,6 +275,17 @@ Public Class CureStep
     Public pressureRampPass As Boolean = True
     Public tempRampPass As Boolean = True
 
+    Public pressureOver As TimeSpan = New TimeSpan(0, 0, -1)
+    Public pressureUnder As TimeSpan = New TimeSpan(0, 0, -1)
+    Public tempOver As TimeSpan = New TimeSpan(0, 0, -1)
+    Public tempUnder As TimeSpan = New TimeSpan(0, 0, -1)
+    Public vacOver As TimeSpan = New TimeSpan(0, 0, -1)
+    Public vacUnder As TimeSpan = New TimeSpan(0, 0, -1)
+    Public pressureRampOver As TimeSpan = New TimeSpan(0, 0, -1)
+    Public pressureRampUnder As TimeSpan = New TimeSpan(0, 0, -1)
+    Public tempRampOver As TimeSpan = New TimeSpan(0, 0, -1)
+    Public tempRampUnder As TimeSpan = New TimeSpan(0, 0, -1)
+
     Public stepPass As Boolean = False
     Public hardFail As Boolean = False
     Public stepTerminate As Boolean = True
