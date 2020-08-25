@@ -48,7 +48,7 @@
         Return holder
     End Function
 
-    Public Function Max(Optional indexStart As Integer = 0, Optional indexEnd As Integer = 0) As Double
+    Public Function Max(Optional indexStart As Integer = 0, Optional indexEnd As Integer = 0, Optional stp2Chk As CureStep = Nothing) As Double
 
         Dim holder As Double
 
@@ -62,21 +62,22 @@
                 holder = values(i)
             End If
 
+            If Not stp2Chk Is Nothing Then
+                If Math.Abs(stp2Chk.tempSet("SetPoint")) <> Math.Abs(stp2Chk.tempSet("PosTol")) Then
+                    If holder > stp2Chk.tempSet("SetPoint") + stp2Chk.tempSet("PosTol") Then
+                        If stp2Chk.tempOver.TotalSeconds = -1 Then
+                            stp2Chk.tempOver = MainForm.dateArr(i) - MainForm.dateArr(i - 1)
+                        End If
 
-            If Math.Abs(stp2Chk.tempSet("SetPoint")) = Math.Abs(stp2Chk.tempSet("NegTol")) Then
-                If stp2Chk.tempResult("Max") > stp2Chk.tempSet("SetPoint") + stp2Chk.tempSet("PosTol") Then
-                    If stp2Chk.tempOver.TotalSeconds = -1 Then
-                        stp2Chk.tempOver = dateArr(inde)
+                        If i < MainForm.dataCnt Then
+                            stp2Chk.tempOver = stp2Chk.tempOver + (MainForm.dateArr(i + 1) - MainForm.dateArr(i))
+                        End If
+
+                        stp2Chk.tempPass = False
                     End If
-
-                    stp2Chk.tempPass = False
-                End If
-            ElseIf Math.Abs(stp2Chk.tempSet("SetPoint")) = Math.Abs(stp2Chk.tempSet("PosTol")) Then
-            Else
-                If stp2Chk.tempResult("Max") > stp2Chk.tempSet("SetPoint") + stp2Chk.tempSet("PosTol") Then
-                    stp2Chk.tempPass = False
                 End If
             End If
+
         Next
 
         Return holder

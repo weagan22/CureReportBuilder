@@ -15,7 +15,7 @@ Public Class MainForm
 
     Public loadedDataSet(,) As String
 
-    Dim dataCnt As Integer = 0
+    Public dataCnt As Integer = 0
     Dim headerRow As Integer = 0
     Dim headerCount As Integer = 2
 
@@ -1359,7 +1359,7 @@ Public Class MainForm
             indexEnd = stp2Chk.stepEnd
         End If
 
-        stp2Chk.tempResult("Max") = Math.Round(leadTC.Max(indexStart, indexEnd), 0)
+        stp2Chk.tempResult("Max") = Math.Round(leadTC.Max(indexStart, indexEnd, stp2Chk), 0)
 
     End Sub
 
