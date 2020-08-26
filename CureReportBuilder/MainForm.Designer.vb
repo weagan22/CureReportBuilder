@@ -55,7 +55,7 @@ Partial Class MainForm
         Me.Box_TC = New System.Windows.Forms.GroupBox()
         Me.Data_TC = New System.Windows.Forms.DataGridView()
         Me.Used = New System.Windows.Forms.DataGridViewCheckBoxColumn()
-        Me.TCNum = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Modifier = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Box_JobNumber = New System.Windows.Forms.GroupBox()
         Me.Txt_JobNumber = New System.Windows.Forms.TextBox()
         Me.Box_ProgramNumber = New System.Windows.Forms.GroupBox()
@@ -524,7 +524,7 @@ Partial Class MainForm
         Me.Data_TC.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
         Me.Data_TC.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.Data_TC.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.Data_TC.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Used, Me.TCNum})
+        Me.Data_TC.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Used, Me.Modifier})
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
         DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -547,13 +547,13 @@ Partial Class MainForm
         Me.Used.Name = "Used"
         Me.Used.Width = 38
         '
-        'TCNum
+        'Modifier
         '
-        Me.TCNum.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.TCNum.HeaderText = "TC Number"
-        Me.TCNum.Name = "TCNum"
-        Me.TCNum.ReadOnly = True
-        Me.TCNum.Width = 86
+        Me.Modifier.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.Modifier.HeaderText = "TC Number"
+        Me.Modifier.Name = "Modifier"
+        Me.Modifier.ReadOnly = True
+        Me.Modifier.Width = 86
         '
         'Box_JobNumber
         '
@@ -1492,7 +1492,7 @@ Partial Class MainForm
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "MainForm"
-        Me.Text = "Cure Report Builder 0.2.2"
+        Me.Text = "Cure Report Builder 0.2.3"
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
         Me.StatusStrip1.ResumeLayout(False)
@@ -1635,7 +1635,7 @@ Partial Class MainForm
     Friend WithEvents Combo_CureProfile As ComboBox
     Friend WithEvents Box_TC As GroupBox
     Friend WithEvents Used As DataGridViewCheckBoxColumn
-    Friend WithEvents TCNum As DataGridViewTextBoxColumn
+    Friend WithEvents Modifier As DataGridViewTextBoxColumn
     Friend WithEvents Box_Vac As GroupBox
     Friend WithEvents Data_Vac As DataGridView
     Friend WithEvents DataGridViewCheckBoxColumn1 As DataGridViewCheckBoxColumn

@@ -126,14 +126,14 @@ Public Class CureProfile
             inputValue(exStep.termCond1("Type"), readtext.ReadLine)
             inputValue(exStep.termCond1("Condition"), readtext.ReadLine)
             inputValue(exStep.termCond1("Goal"), readtext.ReadLine)
-            inputValue(exStep.termCond1("TCNum"), readtext.ReadLine)
+            inputValue(exStep.termCond1("Modifier"), readtext.ReadLine)
             If Trim(readtext.ReadLine) <> "</termCond1>" Then Throw New Exception("deserializeCure unrecognized data type")
 
             If Trim(readtext.ReadLine) <> "<termCond2>" Then Throw New Exception("deserializeCure unrecognized data type")
             inputValue(exStep.termCond2("Type"), readtext.ReadLine)
             inputValue(exStep.termCond2("Condition"), readtext.ReadLine)
             inputValue(exStep.termCond2("Goal"), readtext.ReadLine)
-            inputValue(exStep.termCond2("TCNum"), readtext.ReadLine)
+            inputValue(exStep.termCond2("Modifier"), readtext.ReadLine)
             If Trim(readtext.ReadLine) <> "</termCond2>" Then Throw New Exception("deserializeCure unrecognized data type")
 
             If Trim(readtext.ReadLine) <> "<termCondOper>" Then Throw New Exception("deserializeCure unrecognized data type")
@@ -213,14 +213,14 @@ Public Class CureProfile
             addToSer("Type," & exStep.termCond1("Type"), retSer, 4)
             addToSer("Condition," & exStep.termCond1("Condition"), retSer, 4)
             addToSer("Goal," & exStep.termCond1("Goal"), retSer, 4)
-            addToSer("TCNum," & exStep.termCond1("TCNum"), retSer, 4)
+            addToSer("Modifier," & exStep.termCond1("Modifier"), retSer, 4)
             addToSer("</" & "termCond1" & ">", retSer, 3)
 
             addToSer("<" & "termCond2" & ">", retSer, 3)
             addToSer("Type," & exStep.termCond2("Type"), retSer, 4)
             addToSer("Condition," & exStep.termCond2("Condition"), retSer, 4)
             addToSer("Goal," & exStep.termCond2("Goal"), retSer, 4)
-            addToSer("TCNum," & exStep.termCond2("TCNum"), retSer, 4)
+            addToSer("Modifier," & exStep.termCond2("Modifier"), retSer, 4)
             addToSer("</" & "termCond2" & ">", retSer, 3)
 
             addToSer("<" & "termCondOper" & ">", retSer, 3)
@@ -260,8 +260,8 @@ Public Class CureStep
     Public tempSet As New Dictionary(Of String, Double) From {{"SetPoint", 0}, {"PosTol", 0}, {"NegTol", 0}, {"RampRate", 0}, {"RampPosTol", 0}, {"RampNegTol", 0}}
     Public vacSet As New Dictionary(Of String, Double) From {{"SetPoint", 0}, {"PosTol", 0}, {"NegTol", 0}, {"RampRate", 0}, {"RampPosTol", 0}, {"RampNegTol", 0}}
 
-    Public termCond1 As New Dictionary(Of String, Object) From {{"Type", ""}, {"Condition", ""}, {"Goal", 0.0}, {"TCNum", 0}}
-    Public termCond2 As New Dictionary(Of String, Object) From {{"Type", ""}, {"Condition", ""}, {"Goal", 0.0}, {"TCNum", 0}}
+    Public termCond1 As New Dictionary(Of String, Object) From {{"Type", ""}, {"Condition", ""}, {"Goal", 0.0}, {"Modifier", 0}}
+    Public termCond2 As New Dictionary(Of String, Object) From {{"Type", ""}, {"Condition", ""}, {"Goal", 0.0}, {"Modifier", 0}}
     Public termCondOper As String
 
 

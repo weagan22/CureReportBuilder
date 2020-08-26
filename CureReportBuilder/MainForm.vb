@@ -912,7 +912,7 @@ Public Class MainForm
 
 
         ElseIf termCond("Type") = "Temp" Then
-            currentStr = currentStr & termCond("TCNum")
+            currentStr = currentStr & termCond("Modifier")
 
             If termCond("Condition") = "GREATER" Then
                 currentStr = currentStr & " > "
@@ -1402,37 +1402,37 @@ Public Class MainForm
         ElseIf termCond("Type") = "Temp" Then
 
             If termCond("Condition") = "GREATER" Then
-                If termCond("TCNum") = "Lag" Then
+                If termCond("Modifier") = "Lag" Then
                     If lagTC.values(currentStep) > termCond("Goal") Then
                         Return True
                     End If
-                ElseIf termCond("TCNum") = "Lead" Then
+                ElseIf termCond("Modifier") = "Lead" Then
                     If leadTC.values(currentStep) > termCond("Goal") Then
                         Return True
                     End If
-                ElseIf termCond("TCNum") = "Air" Then
+                ElseIf termCond("Modifier") = "Air" Then
                     If vessel_TC.values(currentStep) > termCond("Goal") Then
                         Return True
                     End If
                 Else
-                    Throw New Exception("Terminating condition TCNum for step " & cureStep.stepName & " is not valid")
+                    Throw New Exception("Terminating condition Modifier for step " & cureStep.stepName & " is not valid")
                 End If
 
             ElseIf termCond("Condition") = "LESS" Then
-                If termCond("TCNum") = "Lag" Then
+                If termCond("Modifier") = "Lag" Then
                     If lagTC.values(currentStep) < termCond("Goal") Then
                         Return True
                     End If
-                ElseIf termCond("TCNum") = "Lead" Then
+                ElseIf termCond("Modifier") = "Lead" Then
                     If leadTC.values(currentStep) < termCond("Goal") Then
                         Return True
                     End If
-                ElseIf termCond("TCNum") = "Air" Then
+                ElseIf termCond("Modifier") = "Air" Then
                     If vessel_TC.values(currentStep) < termCond("Goal") Then
                         Return True
                     End If
                 Else
-                    Throw New Exception("Terminating condition TCNum for step " & cureStep.stepName & " is not valid")
+                    Throw New Exception("Terminating condition Modifier for step " & cureStep.stepName & " is not valid")
                 End If
             Else
                 Throw New Exception("Terminating condition Condition for step " & cureStep.stepName & " is not valid")
