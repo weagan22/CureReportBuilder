@@ -1324,16 +1324,53 @@ Public Class MainForm
         Dim currentStep As Integer = 0
         Dim i As Integer
         For i = cureStart To dataCnt
+            'Set the start of the step
             If curePro.CureSteps(currentStep).stepStart = -1 And currentStep <> 0 Then
                 curePro.CureSteps(currentStep).stepStart = i - 1
             ElseIf curePro.CureSteps(currentStep).stepStart = -1 Then
                 curePro.CureSteps(currentStep).stepStart = i
             End If
 
-            'Step start and end do not line up
-
+            'Check if you meet the terminating conditions to end the step
             If meetTerms(curePro.CureSteps(currentStep), i) Then
                 curePro.CureSteps(currentStep).stepEnd = i - 1
+
+
+                'If not the last step and the termination type is time check to see if the remaining time needs to be passed to the next step.
+                If UBound(curePro.CureSteps) <> currentStep Then
+                    If curePro.CureSteps(currentStep).termCond1("Type") = "Time" Then
+                        If curePro.CureSteps(currentStep).termCond1("Modifier") = "Pass" Then
+                            Dim timeToPass As Double = 0
+                            timeToPass = curePro.CureSteps(currentStep).termCond1("Goal") - (dateArr(curePro.CureSteps(currentStep).stepEnd) - dateArr(curePro.CureSteps(currentStep).stepStart)).TotalMinutes
+                            If timeToPass < 0 Then timeToPass = 0
+
+                            If curePro.CureSteps(currentStep + 1).termCond1("Type") = "Time" Then
+                                curePro.CureSteps(currentStep + 1).termCond1("Goal") = timeToPass
+                            ElseIf curePro.CureSteps(currentStep + 1).termCond2("Type") = "Time" Then
+                                curePro.CureSteps(currentStep + 1).termCond2("Goal") = timeToPass
+                            Else
+                                Throw New Exception("No 'Time' terminating condition to pass time to on step " & curePro.CureSteps(currentStep + 1).stepName)
+                            End If
+                        End If
+                    End If
+                    If curePro.CureSteps(currentStep).termCond2("Type") = "Time" Then
+                        If curePro.CureSteps(currentStep).termCond2("Modifier") = "Pass" Then
+                            Dim timeToPass As Double = 0
+                            timeToPass = curePro.CureSteps(currentStep).termCond2("Goal") - (dateArr(curePro.CureSteps(currentStep).stepEnd) - dateArr(curePro.CureSteps(currentStep).stepStart)).TotalMinutes
+                            If timeToPass < 0 Then timeToPass = 0
+
+                            If curePro.CureSteps(currentStep + 1).termCond1("Type") = "Time" Then
+                                curePro.CureSteps(currentStep + 1).termCond1("Goal") = timeToPass
+                            ElseIf curePro.CureSteps(currentStep + 1).termCond2("Type") = "Time" Then
+                                curePro.CureSteps(currentStep + 1).termCond2("Goal") = timeToPass
+                            Else
+                                Throw New Exception("No 'Time' terminating condition to pass time to on step " & curePro.CureSteps(currentStep + 1).stepName)
+                            End If
+                        End If
+                    End If
+                End If
+
+                'If the last step has completed then exit the loop and set cure end to the end of this step
                 If UBound(curePro.CureSteps) = currentStep Then
                     cureEnd = curePro.CureSteps(currentStep).stepEnd
                     dateValues("endTime") = dateArr(curePro.CureSteps(currentStep).stepEnd)
@@ -1345,7 +1382,7 @@ Public Class MainForm
             End If
         Next
 
-
+        'Check to see if the cure was completed and fail any steps that were not reached.
         If UBound(curePro.CureSteps) > currentStep Then
             For i = currentStep To UBound(curePro.CureSteps)
                 curePro.CureSteps(i).hardFail = True
