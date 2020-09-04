@@ -907,7 +907,12 @@ Public Class MainForm
 
 
         ElseIf termCond("Type") = "Time" Then
-            currentStr = currentStr & "After " & termCond("Goal") & " min"
+            If termCond("Modifier") = "Recieve" Then
+                currentStr = currentStr & "Time continued from previous step."
+            Else
+                currentStr = currentStr & "After " & termCond("Goal") & " min"
+            End If
+
             currentStr = currentStr & vbNewLine
 
 
