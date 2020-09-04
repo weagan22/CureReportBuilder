@@ -37,19 +37,61 @@
 				Type,Temp
 				Condition,GREATER
 				Goal,180
-				TCNum,Lag
+				Modifier,Lag
 			</termCond1>
 			<termCond2>
 				Type,None
 				Condition,0
 				Goal,0
-				TCNum,0
+				Modifier,0
 			</termCond2>
 			<termCondOper>
 				termCondOper,AND
 			</termCondOper>
 		</Step0>
 		<Step1>
+			stepName,Temp Hold
+			<pressureSet>
+				setPoint,-1
+				PosTol,0
+				NegTol,0
+				RampRate,0
+				RampPosTol,0
+				RampNegTol,0
+			</pressureSet>
+			<tempSet>
+				setPoint,200
+				PosTol,20
+				NegTol,-20
+				RampRate,0
+				RampPosTol,0
+				RampNegTol,0
+			</tempSet>
+			<vacSet>
+				setPoint,-15
+				PosTol,0
+				NegTol,-15
+				RampRate,0
+				RampPosTol,0
+				RampNegTol,0
+			</vacSet>
+			<termCond1>
+				Type,Time
+				Condition,GREATER
+				Goal,20
+				Modifier,Pass
+			</termCond1>
+			<termCond2>
+				Type,Press
+				Condition,GREATER
+				Goal,2
+				Modifier,0
+			</termCond2>
+			<termCondOper>
+				termCondOper,AND
+			</termCondOper>
+		</Step1>
+		<Step2>
 			stepName,Ramp Pressure
 			<pressureSet>
 				setPoint,70
@@ -76,58 +118,16 @@
 				RampNegTol,0
 			</vacSet>
 			<termCond1>
-				Type,Press
-				Condition,GREATER
-				Goal,70
-				TCNum,0
-			</termCond1>
-			<termCond2>
-				Type,None
-				Condition,0
-				Goal,0
-				TCNum,0
-			</termCond2>
-			<termCondOper>
-				termCondOper,AND
-			</termCondOper>
-		</Step1>
-		<Step2>
-			stepName,Dwell
-			<pressureSet>
-				setPoint,80
-				PosTol,10
-				NegTol,-10
-				RampRate,0
-				RampPosTol,0
-				RampNegTol,0
-			</pressureSet>
-			<tempSet>
-				setPoint,200
-				PosTol,20
-				NegTol,-20
-				RampRate,0
-				RampPosTol,0
-				RampNegTol,0
-			</tempSet>
-			<vacSet>
-				setPoint,-15
-				PosTol,0
-				NegTol,-15
-				RampRate,0
-				RampPosTol,0
-				RampNegTol,0
-			</vacSet>
-			<termCond1>
 				Type,Time
 				Condition,GREATER
-				Goal,30
-				TCNum,0
+				Goal,0
+				Modifier,Recieve
 			</termCond1>
 			<termCond2>
-				Type,None
-				Condition,0
-				Goal,0
-				TCNum,0
+				Type,Temp
+				Condition,GREATER
+				Goal,220
+				Modifier,Lead
 			</termCond2>
 			<termCondOper>
 				termCondOper,AND
@@ -136,9 +136,9 @@
 		<Step3>
 			stepName,Ramp Up
 			<pressureSet>
-				setPoint,80
-				PosTol,10
-				NegTol,-10
+				setPoint,70
+				PosTol,20
+				NegTol,-70
 				RampRate,0
 				RampPosTol,0
 				RampNegTol,0
@@ -163,13 +163,13 @@
 				Type,Temp
 				Condition,GREATER
 				Goal,295
-				TCNum,Lag
+				Modifier,Lag
 			</termCond1>
 			<termCond2>
-				Type,None
-				Condition,0
-				Goal,0
-				TCNum,0
+				Type,Press
+				Condition,GREATER
+				Goal,70
+				Modifier,0
 			</termCond2>
 			<termCondOper>
 				termCondOper,AND
@@ -205,13 +205,13 @@
 				Type,Temp
 				Condition,LESS
 				Goal,295
-				TCNum,Lag
+				Modifier,Lag
 			</termCond1>
 			<termCond2>
 				Type,Time
 				Condition,GREATER
 				Goal,60
-				TCNum,0
+				Modifier,0
 			</termCond2>
 			<termCondOper>
 				termCondOper,AND
@@ -247,13 +247,13 @@
 				Type,Temp
 				Condition,LESS
 				Goal,150
-				TCNum,Lead
+				Modifier,Lead
 			</termCond1>
 			<termCond2>
 				Type,None
 				Condition,0
 				Goal,0
-				TCNum,0
+				Modifier,0
 			</termCond2>
 			<termCondOper>
 				termCondOper,AND
@@ -289,13 +289,13 @@
 				Type,Press
 				Condition,LESS
 				Goal,5
-				TCNum,0
+				Modifier,0
 			</termCond1>
 			<termCond2>
 				Type,None
 				Condition,0
 				Goal,0
-				TCNum,0
+				Modifier,0
 			</termCond2>
 			<termCondOper>
 				termCondOper,AND

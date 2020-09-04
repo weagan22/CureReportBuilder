@@ -37,13 +37,13 @@
 				Type,Temp
 				Condition,GREATER
 				Goal,410
-				TCNum,Lag
+				Modifier,Lag
 			</termCond1>
 			<termCond2>
 				Type,None
 				Condition,
 				Goal,0
-				TCNum,0
+				Modifier,0
 			</termCond2>
 			<termCondOper>
 				termCondOper,AND
@@ -79,13 +79,13 @@
 				Type,Time
 				Condition,GREATER
 				Goal,60
-				TCNum,
+				Modifier,
 			</termCond1>
 			<termCond2>
 				Type,Temp
 				Condition,LESS
 				Goal,410
-				TCNum,Lag
+				Modifier,Lag
 			</termCond2>
 			<termCondOper>
 				termCondOper,AND
@@ -121,13 +121,13 @@
 				Type,Temp
 				Condition,LESS
 				Goal,150
-				TCNum,Lead
+				Modifier,Lead
 			</termCond1>
 			<termCond2>
 				Type,None
 				Condition,0
 				Goal,0
-				TCNum,0
+				Modifier,0
 			</termCond2>
 			<termCondOper>
 				termCondOper,AND

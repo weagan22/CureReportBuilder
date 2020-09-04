@@ -1,29 +1,29 @@
 <Cure>
-	Name,CURE A1
+	Name,CURE A4
 	cureDoc,SPS-201
 	cureDocRev,B
 	checkTemp,True
 	checkPressure,True
 	checkVac,True
 	<Steps>
-		stepCount,4
+		stepCount,6
 		<Step0>
-			stepName,Ramp Up
+			stepName,Temp Ramp
 			<pressureSet>
-				setPoint,70
-				PosTol,20
-				NegTol,-70
-				RampRate,1.5
-				RampPosTol,1
-				RampNegTol,-1
+				setPoint,-1
+				PosTol,0
+				NegTol,0
+				RampRate,0
+				RampPosTol,0
+				RampNegTol,0
 			</pressureSet>
 			<tempSet>
-				setPoint,345
-				PosTol,25
-				NegTol,-345
+				setPoint,205
+				PosTol,40
+				NegTol,-205
 				RampRate,5
 				RampPosTol,0
-				RampNegTol,-5
+				RampNegTol,-10
 			</tempSet>
 			<vacSet>
 				setPoint,-15
@@ -36,13 +36,13 @@
 			<termCond1>
 				Type,Temp
 				Condition,GREATER
-				Goal,345
-				TCNum,Lag
+				Goal,205
+				Modifier,Lag
 			</termCond1>
 			<termCond2>
-				Type,Press
-				Condition,GREATER
-				Goal,70
+				Type,None
+				Condition,0
+				Goal,0
 				Modifier,0
 			</termCond2>
 			<termCondOper>
@@ -50,19 +50,19 @@
 			</termCondOper>
 		</Step0>
 		<Step1>
-			stepName,Dwell W/Vac
+			stepName,Temp Hold
 			<pressureSet>
-				setPoint,80
-				PosTol,10
-				NegTol,-10
+				setPoint,-1
+				PosTol,0
+				NegTol,0
 				RampRate,0
 				RampPosTol,0
 				RampNegTol,0
 			</pressureSet>
 			<tempSet>
-				setPoint,350
+				setPoint,225
 				PosTol,20
-				NegTol,-5
+				NegTol,-20
 				RampRate,0
 				RampPosTol,0
 				RampNegTol,0
@@ -78,20 +78,104 @@
 			<termCond1>
 				Type,Time
 				Condition,GREATER
-				Goal,20
-				Modifier,0
+				Goal,60
+				Modifier,Pass
 			</termCond1>
 			<termCond2>
-				Type,None
-				Condition,
-				Goal,
-				Modifier,
+				Type,Press
+				Condition,GREATER
+				Goal,2
+				Modifier,0
+			</termCond2>
+			<termCondOper>
+				termCondOper,OR
+			</termCondOper>
+		</Step1>
+		<Step2>
+			stepName,Ramp Pressure
+			<pressureSet>
+				setPoint,70
+				PosTol,20
+				NegTol,-70
+				RampRate,1.5
+				RampPosTol,1
+				RampNegTol,-1
+			</pressureSet>
+			<tempSet>
+				setPoint,225
+				PosTol,20
+				NegTol,-20
+				RampRate,0
+				RampPosTol,0
+				RampNegTol,0
+			</tempSet>
+			<vacSet>
+				setPoint,-15
+				PosTol,0
+				NegTol,-15
+				RampRate,0
+				RampPosTol,0
+				RampNegTol,0
+			</vacSet>
+			<termCond1>
+				Type,Time
+				Condition,GREATER
+				Goal,0
+				Modifier,Recieve
+			</termCond1>
+			<termCond2>
+				Type,Temp
+				Condition,GREATER
+				Goal,245
+				Modifier,Lead
 			</termCond2>
 			<termCondOper>
 				termCondOper,AND
 			</termCondOper>
-		</Step1>
-		<Step2>
+		</Step2>
+		<Step3>
+			stepName,Ramp Up
+			<pressureSet>
+				setPoint,70
+				PosTol,20
+				NegTol,-70
+				RampRate,0
+				RampPosTol,0
+				RampNegTol,0
+			</pressureSet>
+			<tempSet>
+				setPoint,345
+				PosTol,25
+				NegTol,-345
+				RampRate,5
+				RampPosTol,0
+				RampNegTol,-6
+			</tempSet>
+			<vacSet>
+				setPoint,-15
+				PosTol,0
+				NegTol,-15
+				RampRate,0
+				RampPosTol,0
+				RampNegTol,0
+			</vacSet>
+			<termCond1>
+				Type,Temp
+				Condition,GREATER
+				Goal,345
+				Modifier,Lag
+			</termCond1>
+			<termCond2>
+				Type,Press
+				Condition,GREATER
+				Goal,70
+				Modifier,0
+			</termCond2>
+			<termCondOper>
+				termCondOper,AND
+			</termCondOper>
+		</Step3>
+		<Step4>
 			stepName,Dwell
 			<pressureSet>
 				setPoint,80
@@ -110,9 +194,9 @@
 				RampNegTol,0
 			</tempSet>
 			<vacSet>
-				setPoint,-1
+				setPoint,-15
 				PosTol,0
-				NegTol,0
+				NegTol,-15
 				RampRate,0
 				RampPosTol,0
 				RampNegTol,0
@@ -126,14 +210,14 @@
 			<termCond2>
 				Type,Time
 				Condition,GREATER
-				Goal,100
+				Goal,120
 				Modifier,0
 			</termCond2>
 			<termCondOper>
 				termCondOper,AND
 			</termCondOper>
-		</Step2>
-		<Step3>
+		</Step4>
+		<Step5>
 			stepName,Ramp Down
 			<pressureSet>
 				setPoint,80
@@ -167,21 +251,21 @@
 			</termCond1>
 			<termCond2>
 				Type,None
-				Condition,
+				Condition,0
 				Goal,0
 				Modifier,0
 			</termCond2>
 			<termCondOper>
 				termCondOper,AND
 			</termCondOper>
-		</Step3>
-		<Step4>
+		</Step5>
+		<Step6>
 			stepName,Ramp Down Pressure
 			<pressureSet>
-				setPoint,0
-				PosTol,90
-				NegTol,0
-				RampRate,-10
+				setPoint,5
+				PosTol,85
+				NegTol,-5
+				RampRate,-5
 				RampPosTol,10
 				RampNegTol,0
 			</pressureSet>
@@ -205,17 +289,17 @@
 				Type,Press
 				Condition,LESS
 				Goal,5
-				Modifier,Lead
+				Modifier,0
 			</termCond1>
 			<termCond2>
 				Type,None
-				Condition,
+				Condition,0
 				Goal,0
 				Modifier,0
 			</termCond2>
 			<termCondOper>
 				termCondOper,AND
 			</termCondOper>
-		</Step4>
+		</Step6>
 	</Steps>
 </Cure>
