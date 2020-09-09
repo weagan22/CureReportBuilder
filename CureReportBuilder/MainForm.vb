@@ -50,7 +50,6 @@ Public Class MainForm
 
         TabControl1.TabPages.Remove(TabPage3)
 
-
         Txt_Technician.Text = Replace(Environment.UserName, ".", " ")
         Txt_CureProfilesPath.Text = My.Settings.CureProfilePath
         Txt_TemplatePath.Text = My.Settings.ReportTemplatePath
@@ -63,7 +62,159 @@ Public Class MainForm
 
         Me.Show()
 
+        Call batchRun()
+    End Sub
 
+    Sub batchRun()
+        Dim inPath As String = "C:\Users\Will.Eagan\Desktop\CuresToRun.txt"
+
+        Dim curesToRun() As String
+
+        If IO.File.Exists(inPath) Then
+            curesToRun = Split(IO.File.ReadAllText(inPath), "~#####~")
+
+
+            For i = 0 To UBound(curesToRun)
+
+                If curesToRun(i) = "" Then Exit Sub
+
+                Dim cureParameters() As String
+                cureParameters = Split(curesToRun(i), vbCrLf)
+
+                Dim paramIndex As Integer = 0
+
+                If cureParameters(0) = "" Then
+                    paramIndex = 1
+                End If
+
+                Dim cureProStr() As String = Split(cureParameters(paramIndex), ">")
+                If cureProStr(0) <> "<curePro" Then Throw New Exception()
+                Combo_CureProfile.SelectedIndex = Combo_CureProfile.Items.IndexOf(cureProStr(1))
+                paramIndex += 1
+
+
+                cureProStr = Split(cureParameters(paramIndex), ">")
+                If cureProStr(0) <> "<DataPath" Then Throw New Exception()
+                Txt_FilePath.Text = cureProStr(1)
+                partValues("DataPath") = Txt_FilePath.Text
+                paramIndex += 1
+
+                cureProStr = Split(cureParameters(paramIndex), ">")
+                If cureProStr(0) <> "<CompletedBy" Then Throw New Exception()
+                Txt_Technician.Text = cureProStr(1)
+                paramIndex += 1
+
+                cureProStr = Split(cureParameters(paramIndex), ">")
+                If cureProStr(0) <> "<JobNum" Then Throw New Exception()
+                partValues("JobNum") = cureProStr(1)
+                paramIndex += 1
+
+                cureProStr = Split(cureParameters(paramIndex), ">")
+                If cureProStr(0) <> "<PartNum" Then Throw New Exception()
+                partValues("PartNum") = cureProStr(1)
+                paramIndex += 1
+
+                cureProStr = Split(cureParameters(paramIndex), ">")
+                If cureProStr(0) <> "<PartRev" Then Throw New Exception()
+                partValues("PartRev") = cureProStr(1)
+                paramIndex += 1
+
+                cureProStr = Split(cureParameters(paramIndex), ">")
+                If cureProStr(0) <> "<PartNom" Then Throw New Exception()
+                partValues("PartNom") = cureProStr(1)
+                paramIndex += 1
+
+                cureProStr = Split(cureParameters(paramIndex), ">")
+                If cureProStr(0) <> "<ProgramNum" Then Throw New Exception()
+                partValues("ProgramNum") = cureProStr(1)
+                paramIndex += 1
+
+                cureProStr = Split(cureParameters(paramIndex), ">")
+                If cureProStr(0) <> "<PartQty" Then Throw New Exception()
+                partValues("PartQty") = cureProStr(1)
+                paramIndex += 1
+
+
+                If machType = "Omega" Then
+                    cureProStr = Split(cureParameters(paramIndex), ">")
+                    If cureProStr(0) <> "<equipSerialNum" Then Throw New Exception()
+                    equipSerialNum = cureProStr(1)
+                End If
+                paramIndex += 1
+
+
+
+                Dim rowCnt As Integer = 1
+
+                If machType = "Autoclave" Then
+                    addToEquip(equipSerialNum, "Controller", rowCnt)
+                    addToEquip(equipSerialNum, "Air TC1", rowCnt)
+                    addToEquip(equipSerialNum, "Air TC2", rowCnt)
+                    addToEquip(equipSerialNum, "PT", rowCnt)
+                End If
+
+                'Get used TC lines
+                If curePro.checkTemp Then
+                    usrRunTC.clearArr()
+
+                    cureProStr = Split(cureParameters(paramIndex), ">")
+                    If cureProStr(0) <> "<usrRunTC" Then Throw New Exception()
+                    Dim holder() As String = Split(cureProStr(1), ",")
+                    For j = 0 To UBound(holder)
+                        If holder(j) <> "" Then
+                            usrRunTC.AddValArr(CInt(holder(j)))
+                        End If
+                    Next
+                    paramIndex += 1
+
+                    If usrRunTC Is Nothing Then
+                        For j = 0 To Data_TC.Rows.Count - 1
+                            usrRunTC.AddValArr(Data_TC.Item(1, j).Value)
+                        Next
+                    End If
+                End If
+
+
+                'Get used vac ports
+                If curePro.checkVac Then
+                    usrRunVac.clearArr()
+
+                    cureProStr = Split(cureParameters(paramIndex), ">")
+                    If cureProStr(0) <> "<usrRunVac" Then Throw New Exception()
+                    Dim holder() As String = Split(cureProStr(1), ",")
+                    For j = 0 To UBound(holder)
+                        If holder(j) <> "" Then
+                            usrRunVac.AddValArr(CInt(holder(j)))
+                        End If
+                    Next
+                    paramIndex += 1
+
+                    If usrRunVac Is Nothing Then
+                        For j = 0 To Data_Vac.Rows.Count - 1
+                            usrRunVac.AddValArr(Data_Vac.Item(1, j).Value)
+                        Next
+                    End If
+
+                    For j = 0 To UBound(usrRunVac)
+                        addToEquip(equipSerialNum, "VT" & usrRunVac(j), rowCnt)
+                    Next
+                End If
+
+                If machType = "Autoclave" Then
+                    If Strings.Right(equipSerialNum, 3) = " | " Then
+                        equipSerialNum = Strings.Left(equipSerialNum, Len(equipSerialNum) - 3)
+                    ElseIf Strings.Right(equipSerialNum, 1) = vbCrLf Then
+                        equipSerialNum = Strings.Left(equipSerialNum, Len(equipSerialNum) - 1)
+                    End If
+                End If
+
+                Call runCalc()
+
+                Call outputResults()
+
+
+            Next
+        End If
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Btn_Run.Click
@@ -85,7 +236,6 @@ Public Class MainForm
         If machType = "Omega" Then
             equipSerialNum = Txt_DataRecorder.Text
         End If
-
 
 
         Dim rowCnt As Integer = 1
@@ -236,7 +386,7 @@ Public Class MainForm
     Sub outputResults()
         Dim Excel As Object
         Excel = CreateObject("Excel.Application")
-        Excel.Visible = True
+        Excel.Visible = False
 
         Try
             Excel.Workbooks.Open(Txt_TemplatePath.Text)
@@ -245,7 +395,7 @@ Public Class MainForm
             Exit Sub
         End Try
 
-        'SwitchOff(Excel, True)
+        SwitchOff(Excel, True)
 
         Dim mainSheet As Excel.Worksheet = Excel.Sheets.Item(1)
         Dim userSheet As Excel.Worksheet = Excel.Sheets.Item(2)
@@ -673,7 +823,13 @@ Public Class MainForm
 
         SwitchOff(Excel, False)
 
-        Excel.Visible = True
+        'Excel.Visible = True
+
+        Excel.ActiveWorkbook.SaveAs(My.Computer.FileSystem.SpecialDirectories.Desktop & "\CureReport_" & partValues("JobNum"), 51)
+        'mainSheet.ExportAsFixedFormat(0, My.Computer.FileSystem.SpecialDirectories.Desktop & "\CureReport_" & partValues("JobNum"))
+
+        Excel.Close
+        Excel.Quit
     End Sub
 
     Sub runInfoOutput(infoSht As Excel.Worksheet)
