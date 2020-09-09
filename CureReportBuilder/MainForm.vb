@@ -62,11 +62,27 @@ Public Class MainForm
 
         Me.Show()
 
-        Call batchRun()
+        'Call batchRun()
     End Sub
 
     Sub batchRun()
         Dim inPath As String = "C:\Users\Will.Eagan\Desktop\CuresToRun.txt"
+
+        ''Required input for batch run:
+        '<curePro>CURE A1
+        '<DataPath>S:\Manufacturing\Autoclave Cure Reports\Programs\D11675 - ARRW Shroud\BATCH RAW DATA\BATCH 155, JOB 102673, 102675, 5-26-20.CSV
+        '<CompletedBy>Evan Sjostedt
+        '<JobNum>102675
+        '<PartNum>48777-100
+        '<PartRev>E
+        '<PartNom>ARRW COMPOSITE SHROUD (MOLDED)
+        '<ProgramNum>D11675
+        '<PartQty>1
+        '<equipSerialNum>
+        '<usrRunTC>2
+        '<usrRunVac>5
+        '~#####~
+
 
         Dim curesToRun() As String
 
@@ -77,6 +93,10 @@ Public Class MainForm
             For i = 0 To UBound(curesToRun)
 
                 If curesToRun(i) = "" Then Exit Sub
+
+                Txt_FilePath.Text = "File path..."
+
+                Call errorReset()
 
                 Dim cureParameters() As String
                 cureParameters = Split(curesToRun(i), vbCrLf)
@@ -825,10 +845,13 @@ Public Class MainForm
 
         'Excel.Visible = True
 
-        Excel.ActiveWorkbook.SaveAs(My.Computer.FileSystem.SpecialDirectories.Desktop & "\CureReport_" & partValues("JobNum"), 51)
-        'mainSheet.ExportAsFixedFormat(0, My.Computer.FileSystem.SpecialDirectories.Desktop & "\CureReport_" & partValues("JobNum"))
+        If Not My.Computer.FileSystem.DirectoryExists(My.Computer.FileSystem.SpecialDirectories.Desktop & "\CureReports") Then
+            My.Computer.FileSystem.CreateDirectory(My.Computer.FileSystem.SpecialDirectories.Desktop & "\CureReports")
+        End If
 
-        Excel.Close
+        Excel.ActiveWorkbook.SaveAs(My.Computer.FileSystem.SpecialDirectories.Desktop & "\CureReports\CureReport_" & partValues("JobNum"), 51)
+        mainSheet.ExportAsFixedFormat(0, My.Computer.FileSystem.SpecialDirectories.Desktop & "\CureReports\CureReport_" & partValues("JobNum"),)
+
         Excel.Quit
     End Sub
 
