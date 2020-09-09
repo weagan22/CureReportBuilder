@@ -850,7 +850,13 @@ Public Class MainForm
         End If
 
         Excel.ActiveWorkbook.SaveAs(My.Computer.FileSystem.SpecialDirectories.Desktop & "\CureReports\CureReport_" & partValues("JobNum"), 51)
-        mainSheet.ExportAsFixedFormat(0, My.Computer.FileSystem.SpecialDirectories.Desktop & "\CureReports\CureReport_" & partValues("JobNum"),)
+
+        If curePro.curePass Then
+            mainSheet.ExportAsFixedFormat(0, My.Computer.FileSystem.SpecialDirectories.Desktop & "\CureReports\CureReport_" & partValues("JobNum"), 0,,,,, False,)
+        Else
+            mainSheet.ExportAsFixedFormat(0, My.Computer.FileSystem.SpecialDirectories.Desktop & "\CureReports\CureReport_" & partValues("JobNum"), 0,,,,, True,)
+        End If
+
 
         Excel.Quit
     End Sub
