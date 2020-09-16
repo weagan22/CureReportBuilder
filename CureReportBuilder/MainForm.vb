@@ -2,6 +2,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.Office.Interop
+Imports System.Data.SqlClient
 
 Public Class MainForm
 
@@ -46,6 +47,7 @@ Public Class MainForm
 
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
         Call errorReset()
 
         TabControl1.TabPages.Remove(TabPage3)
@@ -64,6 +66,29 @@ Public Class MainForm
 
         'Call batchRun()
     End Sub
+
+    Function getEpicorData(jobNum As Integer) As DataRow
+
+        If Len(jobNum.ToString) <> 6 Then
+            Throw New Exception("Job number for Epicor must be a 6 digit number.")
+        End If
+
+        Dim queryResult As DataTable = New DataTable()
+
+        Dim db As SqlConnection = New SqlConnection("Data Source = MAUI; Initial Catalog=EpicorERP; User ID = Reporting; Password=$ystima1; Integrated Security=false; trusted_connection=false;")
+
+        db.Open()
+        Dim adapter As SqlDataAdapter = New SqlDataAdapter("SELECT * FROM Erp.JobAsmbl WHERE JobNum = '" + jobNum.ToString + "' AND AssemblySeq = 1", db)
+        adapter.Fill(queryResult)
+        db.Close()
+
+        If queryResult.Rows.Count = 0 Then
+            Throw New Exception("Job number not found in Epicor")
+        End If
+
+        Return queryResult.Rows.Item(0)
+
+    End Function
 
     Sub batchRun()
         Dim inPath As String = "C:\Users\Will.Eagan\Desktop\CuresToRun.txt"
@@ -2702,6 +2727,17 @@ Public Class MainForm
         Else
             Check_tempStepEdit.Checked = True
             Box_tempStepEdit.Enabled = True
+        End If
+    End Sub
+
+    Private Sub Txt_JobNumber_TextChanged(sender As Object, e As EventArgs) Handles Txt_JobNumber.TextChanged
+        If Len(Txt_JobNumber.Text) = 6 And IsNumeric(Txt_JobNumber.Text) Then
+            Dim epicorData As DataRow = getEpicorData(Txt_JobNumber.Text)
+
+            Txt_PartNumber.Text = epicorData.Item("PartNum")
+            Txt_Revision.Text = epicorData.Item("RevisionNum")
+            Txt_Qty.Text = epicorData.Item("RequiredQty")
+            Txt_PartDesc.Text = epicorData.Item("Description")
         End If
     End Sub
 #End Region
