@@ -2732,12 +2732,19 @@ Public Class MainForm
 
     Private Sub Txt_JobNumber_TextChanged(sender As Object, e As EventArgs) Handles Txt_JobNumber.TextChanged
         If Len(Txt_JobNumber.Text) = 6 And IsNumeric(Txt_JobNumber.Text) Then
-            Dim epicorData As DataRow = getEpicorData(Txt_JobNumber.Text)
-
-            Txt_PartNumber.Text = epicorData.Item("PartNum")
-            Txt_Revision.Text = epicorData.Item("RevisionNum")
-            Txt_Qty.Text = epicorData.Item("RequiredQty")
-            Txt_PartDesc.Text = epicorData.Item("Description")
+            Try
+                Dim epicorData As DataRow = getEpicorData(Txt_JobNumber.Text)
+                Txt_PartNumber.Text = epicorData.Item("PartNum")
+                Txt_Revision.Text = epicorData.Item("RevisionNum")
+                Txt_Qty.Text = epicorData.Item("RequiredQty")
+                Txt_PartDesc.Text = epicorData.Item("Description")
+            Catch ex As Exception
+                Txt_PartNumber.Text = ""
+                Txt_Revision.Text = ""
+                Txt_Qty.Text = ""
+                Txt_PartDesc.Text = ""
+                MsgBox(ex.Message)
+            End Try
         End If
     End Sub
 #End Region
