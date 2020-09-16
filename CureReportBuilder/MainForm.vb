@@ -78,7 +78,10 @@ Public Class MainForm
         Dim db As SqlConnection = New SqlConnection("Data Source = MAUI; Initial Catalog=EpicorERP; User ID = Reporting; Password=$ystima1; Integrated Security=false; trusted_connection=false;")
 
         db.Open()
-        Dim adapter As SqlDataAdapter = New SqlDataAdapter("SELECT * FROM Erp.JobAsmbl WHERE JobNum = '" + jobNum.ToString + "' AND AssemblySeq = 1", db)
+        'Dim adapter As SqlDataAdapter = New SqlDataAdapter("SELECT * FROM Erp.JobAsmbl WHERE JobNum = '" + jobNum.ToString + "' AND AssemblySeq = 1", db)
+        Dim adapter As SqlDataAdapter = New SqlDataAdapter("SELECT Job.ProjectID, JOB.PhaseID, JOB.JobNum, ASM.PartNum, ASM.AssemblySeq, OP.OprSeq, ASM.RevisionNum, ASM.Description, ASM.QtyPer FROM Erp.JobAsmbl ASM LEFT JOIN Erp.JobHead JOB ON JOB.JobNum = ASM.JobNum INNER JOIN Erp.JobOper OP ON OP.JobNum = ASM.JobNum AND ASM.AssemblySeq = OP.AssemblySeq AND OP.OpCode = 'AUTOCURE' WHERE JOB.JobNum = '" + jobNum.ToString + "'", db)
+
+
         adapter.Fill(queryResult)
         db.Close()
 
@@ -2734,11 +2737,14 @@ Public Class MainForm
         If Len(Txt_JobNumber.Text) = 6 And IsNumeric(Txt_JobNumber.Text) Then
             Try
                 Dim epicorData As DataRow = getEpicorData(Txt_JobNumber.Text)
+                Txt_ProgramNumber.Text = epicorData.Item("PhaseID")
                 Txt_PartNumber.Text = epicorData.Item("PartNum")
                 Txt_Revision.Text = epicorData.Item("RevisionNum")
-                Txt_Qty.Text = epicorData.Item("RequiredQty")
+                Txt_Qty.Text = Math.Round(epicorData.Item("QtyPer"), 0)
                 Txt_PartDesc.Text = epicorData.Item("Description")
+
             Catch ex As Exception
+                Txt_ProgramNumber.Text = ""
                 Txt_PartNumber.Text = ""
                 Txt_Revision.Text = ""
                 Txt_Qty.Text = ""
