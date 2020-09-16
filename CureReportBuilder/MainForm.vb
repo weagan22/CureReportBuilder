@@ -2086,10 +2086,6 @@ Public Class MainForm
                 Txt_DataRecorder.Text = System.Text.RegularExpressions.Regex.Match(inFile, "S(\d{4})").Value
             End If
 
-            If System.Text.RegularExpressions.Regex.Match(inFile, "D(\d{5})").Value <> "" Then
-                Txt_ProgramNumber.Text = System.Text.RegularExpressions.Regex.Match(inFile, "D(\d{5})").Value
-            End If
-
 
 
 
@@ -2288,7 +2284,6 @@ Public Class MainForm
         End If
 
         If IO.File.Exists(Txt_FilePath.Text) Then
-
             Txt_FilePath.BackColor = SystemColors.Window
             Call openCureFile()
         Else
