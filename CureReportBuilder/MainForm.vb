@@ -79,8 +79,21 @@ Public Class MainForm
 
         db.Open()
         'Dim adapter As SqlDataAdapter = New SqlDataAdapter("SELECT * FROM Erp.JobAsmbl WHERE JobNum = '" + jobNum.ToString + "' AND AssemblySeq = 1", db)
-        Dim adapter As SqlDataAdapter = New SqlDataAdapter("SELECT Job.ProjectID, JOB.PhaseID, JOB.JobNum, ASM.PartNum, ASM.AssemblySeq, OP.OprSeq, ASM.RevisionNum, ASM.Description, ASM.QtyPer FROM Erp.JobAsmbl ASM LEFT JOIN Erp.JobHead JOB ON JOB.JobNum = ASM.JobNum INNER JOIN Erp.JobOper OP ON OP.JobNum = ASM.JobNum AND ASM.AssemblySeq = OP.AssemblySeq AND OP.OpCode = 'AUTOCURE' WHERE JOB.JobNum = '" + jobNum.ToString + "'", db)
-
+        Dim adapter As SqlDataAdapter = New SqlDataAdapter(
+            "SELECT 
+                Job.ProjectID, 
+                JOB.PhaseID, 
+                JOB.JobNum, 
+                ASM.PartNum, 
+                ASM.AssemblySeq, 
+                OP.OprSeq, 
+                ASM.RevisionNum, 
+                ASM.Description, 
+                ASM.QtyPer 
+            FROM Erp.JobAsmbl ASM
+            LEFT JOIN Erp.JobHead JOB ON JOB.JobNum = ASM.JobNum
+            INNER JOIN Erp.JobOper OP ON OP.JobNum = ASM.JobNum AND ASM.AssemblySeq = OP.AssemblySeq AND OP.OpCode = 'AUTOCURE'
+            WHERE JOB.JobNum = '" + jobNum.ToString + "'", db)
 
         adapter.Fill(queryResult)
         db.Close()
@@ -877,14 +890,19 @@ Public Class MainForm
             My.Computer.FileSystem.CreateDirectory(My.Computer.FileSystem.SpecialDirectories.Desktop & "\CureReports")
         End If
 
-        Excel.ActiveWorkbook.SaveAs(My.Computer.FileSystem.SpecialDirectories.Desktop & "\CureReports\CureReport_" & partValues("JobNum"), 51)
+        Dim postNameChange As String = ""
 
-        If curePro.curePass Then
-            mainSheet.ExportAsFixedFormat(0, My.Computer.FileSystem.SpecialDirectories.Desktop & "\CureReports\CureReport_" & partValues("JobNum"), 0,,,,, False,)
-        Else
-            mainSheet.ExportAsFixedFormat(0, My.Computer.FileSystem.SpecialDirectories.Desktop & "\CureReports\CureReport_" & partValues("JobNum"), 0,,,,, True,)
+        If InStr(curePro.Name, "POST") Then
+            postNameChange = "Post"
         End If
 
+        Excel.ActiveWorkbook.SaveAs(My.Computer.FileSystem.SpecialDirectories.Desktop & "\CureReports\" & postNameChange & "CureReport_" & partValues("JobNum"), 51)
+
+        If curePro.curePass Then
+            mainSheet.ExportAsFixedFormat(0, My.Computer.FileSystem.SpecialDirectories.Desktop & "\CureReports\" & postNameChange & "CureReport_" & partValues("JobNum"), 0,,,,, False,)
+        Else
+            mainSheet.ExportAsFixedFormat(0, My.Computer.FileSystem.SpecialDirectories.Desktop & "\CureReports\" & postNameChange & "CureReport_" & partValues("JobNum"), 0,,,,, True,)
+        End If
 
         Excel.Quit
     End Sub
