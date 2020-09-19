@@ -896,7 +896,9 @@ Public Class MainForm
             postNameChange = "Post"
         End If
 
-        Excel.ActiveWorkbook.SaveAs(My.Computer.FileSystem.SpecialDirectories.Desktop & "\CureReports\" & postNameChange & "CureReport_" & partValues("JobNum"), 51)
+        Excel.DisplayAlerts = False
+        Excel.ActiveWorkbook.SaveAs(My.Computer.FileSystem.SpecialDirectories.Desktop & "\CureReports\" & postNameChange & "CureReport_" & partValues("JobNum") & ".xlsx", 51)
+        Excel.DisplayAlerts = True
 
         If curePro.curePass Then
             mainSheet.ExportAsFixedFormat(0, My.Computer.FileSystem.SpecialDirectories.Desktop & "\CureReports\" & postNameChange & "CureReport_" & partValues("JobNum"), 0,,,,, False,)
