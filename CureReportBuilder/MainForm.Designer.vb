@@ -22,6 +22,7 @@ Partial Class MainForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
@@ -78,6 +79,17 @@ Partial Class MainForm
         Me.Txt_CureDoc = New System.Windows.Forms.TextBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.GroupBox6 = New System.Windows.Forms.GroupBox()
+        Me.Txt_RunInterval = New System.Windows.Forms.TextBox()
+        Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel10 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Txt_CureParamPath = New System.Windows.Forms.TextBox()
+        Me.Box_CureDataPath = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel9 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Txt_CureDataPath = New System.Windows.Forms.TextBox()
+        Me.Box_OutputPath = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel8 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Txt_OutputPath = New System.Windows.Forms.TextBox()
         Me.Box_TemplatePath = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
         Me.Txt_TemplatePath = New System.Windows.Forms.TextBox()
@@ -145,6 +157,7 @@ Partial Class MainForm
         Me.Combo_CureProfileEdit = New System.Windows.Forms.ComboBox()
         Me.OpenCSVFileDialog = New System.Windows.Forms.OpenFileDialog()
         Me.OpenCureProfileFileDialog = New System.Windows.Forms.OpenFileDialog()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.MenuStrip1.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
         Me.TabControl1.SuspendLayout()
@@ -176,6 +189,13 @@ Partial Class MainForm
         Me.Box_CureDoc.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage2.SuspendLayout()
+        Me.GroupBox6.SuspendLayout()
+        Me.GroupBox5.SuspendLayout()
+        Me.TableLayoutPanel10.SuspendLayout()
+        Me.Box_CureDataPath.SuspendLayout()
+        Me.TableLayoutPanel9.SuspendLayout()
+        Me.Box_OutputPath.SuspendLayout()
+        Me.TableLayoutPanel8.SuspendLayout()
         Me.Box_TemplatePath.SuspendLayout()
         Me.TableLayoutPanel5.SuspendLayout()
         Me.Box_CureProfiles.SuspendLayout()
@@ -227,7 +247,7 @@ Partial Class MainForm
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(92, 22)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(93, 22)
         Me.ExitToolStripMenuItem.Text = "Exit"
         '
         'StatusStrip1
@@ -798,6 +818,10 @@ Partial Class MainForm
         '
         'TabPage2
         '
+        Me.TabPage2.Controls.Add(Me.GroupBox6)
+        Me.TabPage2.Controls.Add(Me.GroupBox5)
+        Me.TabPage2.Controls.Add(Me.Box_CureDataPath)
+        Me.TabPage2.Controls.Add(Me.Box_OutputPath)
         Me.TabPage2.Controls.Add(Me.Box_TemplatePath)
         Me.TabPage2.Controls.Add(Me.Box_CureProfiles)
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
@@ -808,11 +832,128 @@ Partial Class MainForm
         Me.TabPage2.Text = "Settings"
         Me.TabPage2.UseVisualStyleBackColor = True
         '
+        'GroupBox6
+        '
+        Me.GroupBox6.Controls.Add(Me.Txt_RunInterval)
+        Me.GroupBox6.Location = New System.Drawing.Point(6, 331)
+        Me.GroupBox6.Name = "GroupBox6"
+        Me.GroupBox6.Size = New System.Drawing.Size(125, 59)
+        Me.GroupBox6.TabIndex = 6
+        Me.GroupBox6.TabStop = False
+        Me.GroupBox6.Text = "Run Check Interval (Min)"
+        '
+        'Txt_RunInterval
+        '
+        Me.Txt_RunInterval.Location = New System.Drawing.Point(6, 29)
+        Me.Txt_RunInterval.Name = "Txt_RunInterval"
+        Me.Txt_RunInterval.Size = New System.Drawing.Size(113, 20)
+        Me.Txt_RunInterval.TabIndex = 0
+        Me.Txt_RunInterval.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'GroupBox5
+        '
+        Me.GroupBox5.AutoSize = True
+        Me.GroupBox5.Controls.Add(Me.TableLayoutPanel10)
+        Me.GroupBox5.Location = New System.Drawing.Point(6, 258)
+        Me.GroupBox5.Name = "GroupBox5"
+        Me.GroupBox5.Size = New System.Drawing.Size(646, 57)
+        Me.GroupBox5.TabIndex = 5
+        Me.GroupBox5.TabStop = False
+        Me.GroupBox5.Text = "Cure Param Path"
+        '
+        'TableLayoutPanel10
+        '
+        Me.TableLayoutPanel10.ColumnCount = 2
+        Me.TableLayoutPanel10.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel10.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 102.0!))
+        Me.TableLayoutPanel10.Controls.Add(Me.Txt_CureParamPath, 0, 0)
+        Me.TableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel10.Location = New System.Drawing.Point(3, 16)
+        Me.TableLayoutPanel10.Name = "TableLayoutPanel10"
+        Me.TableLayoutPanel10.RowCount = 1
+        Me.TableLayoutPanel10.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel10.Size = New System.Drawing.Size(640, 38)
+        Me.TableLayoutPanel10.TabIndex = 2
+        '
+        'Txt_CureParamPath
+        '
+        Me.Txt_CureParamPath.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Txt_CureParamPath.Location = New System.Drawing.Point(3, 9)
+        Me.Txt_CureParamPath.Name = "Txt_CureParamPath"
+        Me.Txt_CureParamPath.Size = New System.Drawing.Size(532, 20)
+        Me.Txt_CureParamPath.TabIndex = 0
+        '
+        'Box_CureDataPath
+        '
+        Me.Box_CureDataPath.AutoSize = True
+        Me.Box_CureDataPath.Controls.Add(Me.TableLayoutPanel9)
+        Me.Box_CureDataPath.Location = New System.Drawing.Point(6, 195)
+        Me.Box_CureDataPath.Name = "Box_CureDataPath"
+        Me.Box_CureDataPath.Size = New System.Drawing.Size(646, 57)
+        Me.Box_CureDataPath.TabIndex = 4
+        Me.Box_CureDataPath.TabStop = False
+        Me.Box_CureDataPath.Text = "Cure Data Path"
+        '
+        'TableLayoutPanel9
+        '
+        Me.TableLayoutPanel9.ColumnCount = 2
+        Me.TableLayoutPanel9.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel9.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 102.0!))
+        Me.TableLayoutPanel9.Controls.Add(Me.Txt_CureDataPath, 0, 0)
+        Me.TableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel9.Location = New System.Drawing.Point(3, 16)
+        Me.TableLayoutPanel9.Name = "TableLayoutPanel9"
+        Me.TableLayoutPanel9.RowCount = 1
+        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel9.Size = New System.Drawing.Size(640, 38)
+        Me.TableLayoutPanel9.TabIndex = 2
+        '
+        'Txt_CureDataPath
+        '
+        Me.Txt_CureDataPath.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Txt_CureDataPath.Location = New System.Drawing.Point(3, 9)
+        Me.Txt_CureDataPath.Name = "Txt_CureDataPath"
+        Me.Txt_CureDataPath.Size = New System.Drawing.Size(532, 20)
+        Me.Txt_CureDataPath.TabIndex = 0
+        '
+        'Box_OutputPath
+        '
+        Me.Box_OutputPath.AutoSize = True
+        Me.Box_OutputPath.Controls.Add(Me.TableLayoutPanel8)
+        Me.Box_OutputPath.Location = New System.Drawing.Point(6, 132)
+        Me.Box_OutputPath.Name = "Box_OutputPath"
+        Me.Box_OutputPath.Size = New System.Drawing.Size(646, 57)
+        Me.Box_OutputPath.TabIndex = 3
+        Me.Box_OutputPath.TabStop = False
+        Me.Box_OutputPath.Text = "Output Path"
+        '
+        'TableLayoutPanel8
+        '
+        Me.TableLayoutPanel8.ColumnCount = 2
+        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 102.0!))
+        Me.TableLayoutPanel8.Controls.Add(Me.Txt_OutputPath, 0, 0)
+        Me.TableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel8.Location = New System.Drawing.Point(3, 16)
+        Me.TableLayoutPanel8.Name = "TableLayoutPanel8"
+        Me.TableLayoutPanel8.RowCount = 1
+        Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel8.Size = New System.Drawing.Size(640, 38)
+        Me.TableLayoutPanel8.TabIndex = 2
+        '
+        'Txt_OutputPath
+        '
+        Me.Txt_OutputPath.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Txt_OutputPath.Location = New System.Drawing.Point(3, 9)
+        Me.Txt_OutputPath.Name = "Txt_OutputPath"
+        Me.Txt_OutputPath.Size = New System.Drawing.Size(532, 20)
+        Me.Txt_OutputPath.TabIndex = 0
+        '
         'Box_TemplatePath
         '
         Me.Box_TemplatePath.AutoSize = True
         Me.Box_TemplatePath.Controls.Add(Me.TableLayoutPanel5)
-        Me.Box_TemplatePath.Location = New System.Drawing.Point(3, 116)
+        Me.Box_TemplatePath.Location = New System.Drawing.Point(6, 69)
         Me.Box_TemplatePath.Name = "Box_TemplatePath"
         Me.Box_TemplatePath.Size = New System.Drawing.Size(646, 57)
         Me.Box_TemplatePath.TabIndex = 2
@@ -1481,6 +1622,10 @@ Partial Class MainForm
         Me.OpenCureProfileFileDialog.Filter = "Cure Profile Files (*.cprof)|*.cprof|All Files (*.*)|*.*"
         Me.OpenCureProfileFileDialog.ValidateNames = False
         '
+        'Timer1
+        '
+        Me.Timer1.Interval = 100000
+        '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1539,6 +1684,17 @@ Partial Class MainForm
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage2.ResumeLayout(False)
         Me.TabPage2.PerformLayout()
+        Me.GroupBox6.ResumeLayout(False)
+        Me.GroupBox6.PerformLayout()
+        Me.GroupBox5.ResumeLayout(False)
+        Me.TableLayoutPanel10.ResumeLayout(False)
+        Me.TableLayoutPanel10.PerformLayout()
+        Me.Box_CureDataPath.ResumeLayout(False)
+        Me.TableLayoutPanel9.ResumeLayout(False)
+        Me.TableLayoutPanel9.PerformLayout()
+        Me.Box_OutputPath.ResumeLayout(False)
+        Me.TableLayoutPanel8.ResumeLayout(False)
+        Me.TableLayoutPanel8.PerformLayout()
         Me.Box_TemplatePath.ResumeLayout(False)
         Me.TableLayoutPanel5.ResumeLayout(False)
         Me.TableLayoutPanel5.PerformLayout()
@@ -1719,4 +1875,16 @@ Partial Class MainForm
     Friend WithEvents Txt_vacPosTolEdit As TextBox
     Friend WithEvents Box_vacSetEdit As GroupBox
     Friend WithEvents Txt_vacSetEdit As TextBox
+    Friend WithEvents Box_OutputPath As GroupBox
+    Friend WithEvents TableLayoutPanel8 As TableLayoutPanel
+    Friend WithEvents Txt_OutputPath As TextBox
+    Friend WithEvents Box_CureDataPath As GroupBox
+    Friend WithEvents TableLayoutPanel9 As TableLayoutPanel
+    Friend WithEvents Txt_CureDataPath As TextBox
+    Friend WithEvents GroupBox5 As GroupBox
+    Friend WithEvents TableLayoutPanel10 As TableLayoutPanel
+    Friend WithEvents Txt_CureParamPath As TextBox
+    Friend WithEvents GroupBox6 As GroupBox
+    Friend WithEvents Txt_RunInterval As TextBox
+    Friend WithEvents Timer1 As Timer
 End Class

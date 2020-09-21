@@ -8,5 +8,17 @@
     <Setting Name="ReportTemplatePath" Type="System.String" Scope="User">
       <Value Profile="(Default)">S:\Engineering\Functional Groups\Composites\Macros\CureReportFiles\Cure Report_Template.xlsx</Value>
     </Setting>
+    <Setting Name="OutputPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="CureDataPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="CureParamPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="RunInterval" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">-1</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

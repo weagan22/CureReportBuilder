@@ -55,6 +55,17 @@ Public Class MainForm
         Txt_Technician.Text = Replace(Environment.UserName, ".", " ")
         Txt_CureProfilesPath.Text = My.Settings.CureProfilePath
         Txt_TemplatePath.Text = My.Settings.ReportTemplatePath
+        Txt_OutputPath.Text = My.Settings.OutputPath
+        Txt_CureDataPath.Text = My.Settings.CureDataPath
+        Txt_CureParamPath.Text = My.Settings.CureParamPath
+        Txt_RunInterval.Text = My.Settings.RunInterval
+
+        'If My.Settings.RunInterval > 0 Then
+        '    Me.Timer1.Interval = My.Settings.RunInterval * 1000000
+        '    Me.Timer1.Enabled = True
+        'End If
+
+
 
         Try
             Call loadCureProfiles(Txt_CureProfilesPath.Text)
@@ -105,6 +116,10 @@ Public Class MainForm
         Return queryResult.Rows.Item(0)
 
     End Function
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+
+    End Sub
 
     Sub batchRun()
         Dim inPath As String = "C:\Users\Will.Eagan\Desktop\CuresToRun.txt"
@@ -886,24 +901,32 @@ Public Class MainForm
 
         'Excel.Visible = True
 
-        If Not My.Computer.FileSystem.DirectoryExists(My.Computer.FileSystem.SpecialDirectories.Desktop & "\CureReports") Then
-            My.Computer.FileSystem.CreateDirectory(My.Computer.FileSystem.SpecialDirectories.Desktop & "\CureReports")
+        Dim outputPath As String = Txt_OutputPath.Text
+        If Not My.Computer.FileSystem.DirectoryExists(outputPath) Then
+            outputPath = My.Computer.FileSystem.SpecialDirectories.Desktop
+        End If
+
+        If Not My.Computer.FileSystem.DirectoryExists(outputPath & "\CureReports") Then
+            My.Computer.FileSystem.CreateDirectory(outputPath & "\CureReports")
+        End If
+
+        If Not My.Computer.FileSystem.DirectoryExists(outputPath & "\CureReports\ExcelReports") Then
+            My.Computer.FileSystem.CreateDirectory(outputPath & "\CureReports\ExcelReports")
         End If
 
         Dim postNameChange As String = ""
-
         If InStr(curePro.Name, "POST") Then
             postNameChange = "Post"
         End If
 
         Excel.DisplayAlerts = False
-        Excel.ActiveWorkbook.SaveAs(My.Computer.FileSystem.SpecialDirectories.Desktop & "\CureReports\" & postNameChange & "CureReport_" & partValues("JobNum") & ".xlsx", 51)
+        Excel.ActiveWorkbook.SaveAs(outputPath & "\CureReports\ExcelReports\" & postNameChange & "CureReport_" & partValues("JobNum") & ".xlsx", 51)
         Excel.DisplayAlerts = True
 
         If curePro.curePass Then
-            mainSheet.ExportAsFixedFormat(0, My.Computer.FileSystem.SpecialDirectories.Desktop & "\CureReports\" & postNameChange & "CureReport_" & partValues("JobNum"), 0,,,,, False,)
+            mainSheet.ExportAsFixedFormat(0, outputPath & "\CureReports\" & postNameChange & "CureReport_" & partValues("JobNum"), 0,,,,, False,)
         Else
-            mainSheet.ExportAsFixedFormat(0, My.Computer.FileSystem.SpecialDirectories.Desktop & "\CureReports\" & postNameChange & "CureReport_" & partValues("JobNum"), 0,,,,, True,)
+            mainSheet.ExportAsFixedFormat(0, outputPath & "\CureReports\" & postNameChange & "CureReport_" & partValues("JobNum"), 0,,,,, True,)
         End If
 
         Excel.Quit
@@ -2364,6 +2387,50 @@ Public Class MainForm
 
     End Sub
 
+    Private Sub Txt_OutputPath_TextChanged(sender As Object, e As EventArgs) Handles Txt_OutputPath.TextChanged
+        If IO.Directory.Exists(Txt_OutputPath.Text) Then
+            My.Settings.OutputPath = Txt_OutputPath.Text
+            Txt_OutputPath.BackColor = SystemColors.Window
+        Else
+            Txt_OutputPath.BackColor = Color.PeachPuff
+        End If
+    End Sub
+
+    Private Sub Txt_CureDataPath_TextChanged(sender As Object, e As EventArgs) Handles Txt_CureDataPath.TextChanged
+        If IO.Directory.Exists(Txt_CureDataPath.Text) Then
+            My.Settings.CureDataPath = Txt_CureDataPath.Text
+            Txt_CureDataPath.BackColor = SystemColors.Window
+        Else
+            Txt_CureDataPath.BackColor = Color.PeachPuff
+        End If
+    End Sub
+
+    Private Sub Txt_CureParamPath_TextChanged(sender As Object, e As EventArgs) Handles Txt_CureParamPath.TextChanged
+        If IO.Directory.Exists(Txt_CureParamPath.Text) Then
+            My.Settings.CureParamPath = Txt_CureParamPath.Text
+            Txt_CureParamPath.BackColor = SystemColors.Window
+        Else
+            Txt_CureParamPath.BackColor = Color.PeachPuff
+        End If
+    End Sub
+
+    Private Sub Txt_RunInterval_TextChanged(sender As Object, e As EventArgs) Handles Txt_RunInterval.TextChanged
+        If IsNumeric(Txt_RunInterval.Text) AndAlso Txt_RunInterval.Text > 5 Then
+            My.Settings.RunInterval = Txt_RunInterval.Text
+            Me.Timer1.Interval = Txt_RunInterval.Text * 1000000
+            Me.Timer1.Enabled = True
+            Txt_RunInterval.BackColor = SystemColors.Window
+        ElseIf IsNumeric(Txt_RunInterval.Text) Then
+            My.Settings.RunInterval = Txt_RunInterval.Text
+            Me.Timer1.Enabled = False
+            Txt_RunInterval.BackColor = SystemColors.Window
+        Else
+            Me.Timer1.Enabled = False
+            Txt_RunInterval.BackColor = Color.PeachPuff
+        End If
+
+    End Sub
+
     Private Sub Btn_ClearCells_Click(sender As Object, e As EventArgs) Handles Btn_ClearCells.Click
         Txt_JobNumber.Text = ""
         Txt_ProgramNumber.Text = ""
@@ -2749,7 +2816,7 @@ Public Class MainForm
     End Sub
 
     Private Sub Txt_JobNumber_TextChanged(sender As Object, e As EventArgs) Handles Txt_JobNumber.TextChanged
-        If Len(Txt_JobNumber.Text) = 6 And IsNumeric(Txt_JobNumber.Text) Then
+        If Len(Txt_JobNumber.Text) = 6 And System.Text.RegularExpressions.Regex.IsMatch(Txt_JobNumber.Text, "^[0-9]+$") Then
             Try
                 Dim epicorData As DataRow = getEpicorData(Txt_JobNumber.Text)
                 Txt_ProgramNumber.Text = epicorData.Item("PhaseID")
@@ -2768,6 +2835,9 @@ Public Class MainForm
             End Try
         End If
     End Sub
+
+
+
 #End Region
 
 
