@@ -247,7 +247,7 @@ Partial Class MainForm
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(93, 22)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(92, 22)
         Me.ExitToolStripMenuItem.Text = "Exit"
         '
         'StatusStrip1
@@ -841,6 +841,7 @@ Partial Class MainForm
         Me.GroupBox6.TabIndex = 6
         Me.GroupBox6.TabStop = False
         Me.GroupBox6.Text = "Run Check Interval (Min)"
+        Me.GroupBox6.Visible = False
         '
         'Txt_RunInterval
         '
@@ -860,6 +861,7 @@ Partial Class MainForm
         Me.GroupBox5.TabIndex = 5
         Me.GroupBox5.TabStop = False
         Me.GroupBox5.Text = "Cure Param Path"
+        Me.GroupBox5.Visible = False
         '
         'TableLayoutPanel10
         '
@@ -893,6 +895,7 @@ Partial Class MainForm
         Me.Box_CureDataPath.TabIndex = 4
         Me.Box_CureDataPath.TabStop = False
         Me.Box_CureDataPath.Text = "Cure Data Path"
+        Me.Box_CureDataPath.Visible = False
         '
         'TableLayoutPanel9
         '
@@ -1637,7 +1640,7 @@ Partial Class MainForm
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "MainForm"
-        Me.Text = "Cure Report Builder 0.3.5"
+        Me.Text = "Cure Report Builder 0.3.6"
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
         Me.StatusStrip1.ResumeLayout(False)

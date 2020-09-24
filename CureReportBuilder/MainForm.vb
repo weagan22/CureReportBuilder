@@ -914,23 +914,53 @@ Public Class MainForm
             My.Computer.FileSystem.CreateDirectory(outputPath & "\CureReports\ExcelReports")
         End If
 
-        Dim postNameChange As String = ""
-        If InStr(curePro.Name, "POST") Then
-            postNameChange = "Post"
-        End If
+        'Dim postNameChange As String = ""
+        'If InStr(curePro.Name, "POST") Then
+        '    postNameChange = "Post"
+        'End If
+
+        Dim cureAcro As String = strToAcronym(curePro.Name)
 
         Excel.DisplayAlerts = False
-        Excel.ActiveWorkbook.SaveAs(outputPath & "\CureReports\ExcelReports\" & postNameChange & "CureReport_" & partValues("JobNum") & ".xlsx", 51)
+        Excel.ActiveWorkbook.SaveAs(outputPath & "\CureReports\ExcelReports\CureReport_" & cureAcro & "_" & partValues("JobNum") & ".xlsx", 51)
         Excel.DisplayAlerts = True
 
         If curePro.curePass Then
-            mainSheet.ExportAsFixedFormat(0, outputPath & "\CureReports\" & postNameChange & "CureReport_" & partValues("JobNum"), 0,,,,, False,)
+            mainSheet.ExportAsFixedFormat(0, outputPath & "\CureReports\CureReport_" & cureAcro & "_" & partValues("JobNum"), 0,,,,, False,)
         Else
-            mainSheet.ExportAsFixedFormat(0, outputPath & "\CureReports\" & postNameChange & "CureReport_" & partValues("JobNum"), 0,,,,, True,)
+            mainSheet.ExportAsFixedFormat(0, outputPath & "\CureReports\CureReport_" & cureAcro & "_" & partValues("JobNum"), 0,,,,, True,)
         End If
 
         Excel.Quit
     End Sub
+
+    Function strToAcronym(inStr As String) As String
+        Dim retAcro As String = ""
+
+        inStr = inStr.Trim()
+
+        Dim strVals() As String = Split(inStr, " ")
+
+        For i = 0 To UBound(strVals)
+            If System.Text.RegularExpressions.Regex.IsMatch(strVals(i), "^[a-zA-Z]+$") Then
+                retAcro = retAcro & Strings.UCase(Strings.Left(strVals(i), 1))
+            Else
+                'If i <> 0 Then
+                '    retAcro = retAcro & "-"
+                'End If
+
+                retAcro = retAcro & "(" & strVals(i) & ")"
+
+                'If i <> UBound(strVals) Then
+                '    retAcro = retAcro & "-"
+                'End If
+            End If
+
+        Next
+
+        Return retAcro
+
+    End Function
 
     Sub runInfoOutput(infoSht As Excel.Worksheet)
 
@@ -2214,7 +2244,7 @@ Public Class MainForm
     Sub setHeaderRow()
         headerRow = headerRow - headerCount
 
-        If headerRow <0 Then
+        If headerRow < 0 Then
             Throw New Exception("Header row cannot be less than 0. Please check to make sure your file has the correct amount of header lines for it's type.")
         End If
     End Sub
