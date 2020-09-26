@@ -3,8 +3,13 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.Office.Interop
 Imports System.Data.SqlClient
+Imports System.Runtime.InteropServices.Marshal
 
 Public Class MainForm
+
+    Private Declare Function GetWindowThreadProcessId Lib "user32.dll" Alias "GetWindowThreadProcessId" (ByVal hwnd As IntPtr, ByRef lpdwProcessId As Integer) As Integer
+
+    Dim excelProcID As Integer
 
     Public cureProfiles() As CureProfile
     Dim curePro As CureProfile = New CureProfile("null")
@@ -462,12 +467,14 @@ Public Class MainForm
     Sub outputResults()
         Dim Excel As Object
         Excel = CreateObject("Excel.Application")
+        Call GetWindowThreadProcessId(IntPtr.op_Explicit(Excel.hwnd), excelProcID)
         Excel.Visible = False
 
         Try
             Excel.Workbooks.Open(Txt_TemplatePath.Text)
         Catch ex As Exception
             MsgBox("Failed to open Excel Report Template.")
+            killExcel(excelProcID)
             Exit Sub
         End Try
 
@@ -931,7 +938,29 @@ Public Class MainForm
             mainSheet.ExportAsFixedFormat(0, outputPath & "\CureReports\CureReport_" & cureAcro & "_" & partValues("JobNum"), 0,,,,, True,)
         End If
 
-        Excel.Quit
+        GC.Collect()
+        GC.WaitForPendingFinalizers()
+
+        Excel.Quit()
+
+        FinalReleaseComObject(mainSheet)
+        FinalReleaseComObject(userSheet)
+        FinalReleaseComObject(dataSheet)
+        FinalReleaseComObject(Excel)
+
+        killExcel(excelProcID)
+    End Sub
+
+    Sub killExcel(procIdToKill As Integer)
+        Dim procs() = Process.GetProcessesByName("EXCEL")
+
+        For Each runExcel In procs
+            If runExcel.Id = procIdToKill Then
+                runExcel.Kill()
+            End If
+        Next
+
+        excelProcID = 0
     End Sub
 
     Function strToAcronym(inStr As String) As String
