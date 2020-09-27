@@ -1,0 +1,80 @@
+﻿<#@ template hostspecific="true" language="VB" #>
+<#@ output extension=".vb" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#
+    Dim output as String = File.ReadAllText(Me.Host.ResolvePath("AssemblyInfo.vb"))
+	Dim pattern as Regex = new Regex("AssemblyVersion\(""(?<major>\d+)\.(?<minor>\d+)\.(?<revision>\d+)\.(?<build>\d+)""\)")
+    Dim matches as MatchCollection = pattern.Matches(output)
+    If matches.Count = 1 Then
+        major = Convert.ToInt32(matches(0).Groups("major").Value)
+        minor = Convert.ToInt32(matches(0).Groups("minor").Value)
+		revision = Convert.ToInt32(matches(0).Groups("revision").Value)
+        build = Convert.ToInt32(matches(0).Groups("build").Value) + 1
+        If Me.Host.ResolveParameterValue("-","-","BuildConfiguration") = "Release" Then
+            revision += 1
+			build = 0
+		End if
+    End If
+	title = Regex.Match(output, "AssemblyTitle\(""(.*)""\)").Groups.Item(1).ToString
+	description = Regex.Match(output, "AssemblyDescription\(""(.*)""\)").Groups.Item(1).ToString
+	company = Regex.Match(output, "AssemblyCompany\(""(.*)""\)").Groups.Item(1).ToString
+	product = Regex.Match(output, "AssemblyProduct\(""(.*)""\)").Groups.Item(1).ToString
+	copyright = Regex.Match(output, "AssemblyCopyright\(""(.*)""\)").Groups.Item(1).ToString
+	trademark = Regex.Match(output, "AssemblyTrademark\(""(.*)""\)").Groups.Item(1).ToString
+	comVisible = Regex.Match(output, "ComVisible\((.*)\)").Groups.Item(1).ToString
+	guid = Regex.Match(output, "Guid\(""(.*)""\)").Groups.Item(1).ToString
+	lang = Regex.Match(output, "NeutralResourcesLanguage\(""(.*)""\)").Groups.Item(1).ToString
+#>
+Imports System.Resources
+Imports System
+Imports System.Reflection
+Imports System.Runtime.InteropServices
+
+' General Information about an assembly is controlled through the following
+' set of attributes. Change these attribute values to modify the information
+' associated with an assembly.
+
+' Review the values of the assembly attributes
+
+<Assembly: AssemblyTitle("<#= Me.title #>")>
+<Assembly: AssemblyDescription("<#= Me.description #>")>
+<Assembly: AssemblyCompany("<#= Me.company #>")>
+<Assembly: AssemblyProduct("<#= Me.product #>")>
+<Assembly: AssemblyCopyright("<#= Me.copyright #>")>
+<Assembly: AssemblyTrademark("<#= Me.trademark #>")>
+
+<Assembly: ComVisible(<#= Me.comVisible #>)>
+
+'The following GUID is for the ID of the typelib if this project is exposed to COM
+<Assembly: Guid("<#= Me.guid #>")>
+
+' Version information for an assembly consists of the following four values:
+'
+'      Major Version
+'      Minor Version
+'      Build Number
+'      Revision
+'
+' You can specify all the values or you can default the Build and Revision Numbers
+' by using the '*' as shown below:
+' <Assembly: AssemblyVersion("1.0.*")>
+
+<Assembly: AssemblyVersion("<#= Me.major #>.<#= Me.minor #>.<#= Me.revision #>.<#= Me.build #>")>
+<Assembly: AssemblyFileVersion("<#= Me.major #>.<#= Me.minor #>.<#= Me.revision #>.<#= Me.build #>")>
+<Assembly: NeutralResourcesLanguage("<#= Me.lang #>")>
+<#+
+	Dim title as String = ""
+	Dim Description as String = ""
+	Dim Company as String = ""
+	Dim Product as String = ""
+	Dim Copyright as String = ""
+	Dim Trademark as String = ""
+	Dim ComVisible as String = ""
+	Dim Guid as String = ""
+	Dim major as Integer = 1
+    Dim minor as Integer  = 0
+    Dim revision as Integer  = 0
+    Dim build as Integer  = 0
+	Dim lang as String
+#>

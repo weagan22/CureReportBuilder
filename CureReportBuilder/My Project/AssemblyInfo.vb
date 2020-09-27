@@ -1,4 +1,5 @@
-﻿Imports System
+﻿Imports System.Resources
+Imports System
 Imports System.Reflection
 Imports System.Runtime.InteropServices
 
@@ -8,10 +9,10 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("CureReportBuilder")>
+<Assembly: AssemblyTitle("Cure Report Builder")>
 <Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("CureReportBuilder")>
+<Assembly: AssemblyCompany("Systima Technologies")>
+<Assembly: AssemblyProduct("Cure Report Builder")>
 <Assembly: AssemblyCopyright("Copyright ©  2020")>
 <Assembly: AssemblyTrademark("")>
 
@@ -31,5 +32,6 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("1.0.0.0")>
-<Assembly: AssemblyFileVersion("1.0.0.0")>
+<Assembly: AssemblyVersion("0.3.6.1")>
+<Assembly: AssemblyFileVersion("0.3.6.1")>
+<Assembly: NeutralResourcesLanguage("")>

@@ -52,6 +52,8 @@ Public Class MainForm
 
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim vers As Version = My.Application.Info.Version
+        Me.Text = "Cure Report Builder " & vers.Major & "." & vers.Minor & "." & vers.Build
 
         Call errorReset()
 
