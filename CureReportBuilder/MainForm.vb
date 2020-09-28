@@ -2334,8 +2334,14 @@ Public Class MainForm
         If cureProfiles Is Nothing Then
             Throw New Exception("No cure profiles were found at your specified path.")
         Else
-            Combo_CureProfile.SelectedIndex = 0
-            Combo_CureProfileEdit.SelectedIndex = 0
+            Try
+                Combo_CureProfile.SelectedIndex = Combo_CureProfile.Items.IndexOf("CURE A1")
+                Combo_CureProfileEdit.SelectedIndex = Combo_CureProfile.Items.IndexOf("CURE A1")
+            Catch ex As Exception
+                Combo_CureProfile.SelectedIndex = 0
+                Combo_CureProfileEdit.SelectedIndex = 0
+            End Try
+
         End If
 
 
