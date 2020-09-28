@@ -125,7 +125,29 @@ Public Class MainForm
     End Function
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        Dim toRunList() As String
+        Dim cureDataPath As String = ""
+        Dim cureParamPath As String = ""
 
+        If System.IO.Directory.Exists(Txt_CureParamPath.Text) AndAlso System.IO.File.Exists(Txt_CureParamPath.Text & "\ToRunList.log") And System.IO.Directory.Exists(Txt_CureDataPath.Text) Then
+            cureDataPath = Txt_CureDataPath.Text
+            cureParamPath = Txt_CureParamPath.Text
+
+            Dim logReader As IO.StreamReader = New IO.StreamReader(cureParamPath & "\" & "ToRunList.log")
+            toRunList = Strings.Split(logReader.ReadToEnd, ",")
+            logReader.Close()
+        Else
+            Throw New Exception("Failed to reach all file paths to run.")
+        End If
+
+        For i = 0 To UBound(toRunList)
+
+
+
+
+
+
+        Next
     End Sub
 
     Sub batchRun()
