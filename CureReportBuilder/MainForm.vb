@@ -141,13 +141,44 @@ Public Class MainForm
         End If
 
         For i = 0 To UBound(toRunList)
+            errorReset()
+
+            'Check if cure param file exists
+
+            'Load in cure parameter file
+
+            'Set cure
+
+            'Find data file
+
+            'Load in data file
+
+            'If Epicor was loaded then Input cure parameters
+            'Else try to get Epicor values
+
+            'Input serial numbers
+
+            'Input TC's used
+
+            'Input vac used
 
 
+            Call runCalc()
 
+            Call outputResults()
 
-
-
+            'Add cure param name to runList
+            'Remove cure param name from toRunList
         Next
+
+        'Get current newToRunList
+
+        'Compare with runList and and toRunList
+        'Add any new items to the toRunList
+        'Output toRunList as it currently stands
+
+
+
     End Sub
 
     Sub batchRun()
