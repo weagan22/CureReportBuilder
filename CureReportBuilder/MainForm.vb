@@ -2,6 +2,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Data.SqlClient
+Imports System.Threading
 
 Public Class MainForm
 
@@ -103,36 +104,15 @@ Public Class MainForm
             Throw New Exception("Failed to reach all file paths to run.")
         End If
 
+        Dim threadArr() As Thread = Nothing
+
         For i = 0 To UBound(toRunList)
-            Dim cureCheck As CureCheck = New CureCheck
+            threadArr.AddValArr(New System.Threading.Thread(Sub() runCureCheckFromParamFile(1)))
+            threadArr(i).Start()
+        Next
 
-            'Check if cure param file exists
-
-            'Load in cure parameter file
-
-            'Set cure
-
-            'Find data file
-
-            'Load in data file
-
-            'If Epicor was loaded then Input cure parameters
-            'Else try to get Epicor values
-
-            'Input serial numbers
-
-            'Input TC's used
-
-            'Input vac used
-
-
-            Call cureCheck.runCalc()
-
-            Dim excelOutput As ExcelOutput = New ExcelOutput
-            Call excelOutput.outputResults(Txt_TemplatePath.Text, cureCheck, Txt_OutputPath.Text)
-
-            'Add cure param name to runList
-            'Remove cure param name from toRunList
+        For i = 0 To UBound(threadArr)
+            threadArr(i).Join()
         Next
 
         'Get current newToRunList
@@ -143,6 +123,38 @@ Public Class MainForm
 
 
 
+    End Sub
+
+    Sub runCureCheckFromParamFile(test As Integer)
+        Dim cureCheck As CureCheck = New CureCheck
+
+        'Check if cure param file exists
+
+        'Load in cure parameter file
+
+        'Set cure
+
+        'Find data file
+
+        'Load in data file
+
+        'If Epicor was loaded then Input cure parameters
+        'Else try to get Epicor values
+
+        'Input serial numbers
+
+        'Input TC's used
+
+        'Input vac used
+
+
+        Call cureCheck.runCalc()
+
+        Dim excelOutput As ExcelOutput = New ExcelOutput
+        Call excelOutput.outputResults(Txt_TemplatePath.Text, cureCheck, Txt_OutputPath.Text)
+
+        'Add cure param name to runList
+        'Remove cure param name from toRunList
     End Sub
 
     'Sub batchRun()
@@ -400,6 +412,8 @@ Public Class MainForm
 
         Dim excelOutput As ExcelOutput = New ExcelOutput
         Call excelOutput.outputResults(Txt_TemplatePath.Text, mainCureCheck, Txt_OutputPath.Text)
+
+        Call errorReset()
     End Sub
 
     Sub addToEquip(ByRef equipSerialNum As String, name As String, ByRef rowCnt As Integer)
@@ -634,7 +648,7 @@ Public Class MainForm
 
         Combo_CureProfileEdit.SelectedIndex = Combo_CureProfile.SelectedIndex
 
-        mainCureCheck.curePro = cureProfiles(Combo_CureProfile.SelectedIndex)
+        Call errorReset()
 
         Txt_CureDoc.Text = mainCureCheck.curePro.cureDoc
         Txt_DocRev.Text = mainCureCheck.curePro.cureDocRev
