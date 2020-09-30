@@ -9,7 +9,7 @@
         Type = inType
     End Sub
 
-    Public Sub calcRamp(stepRate As Integer)
+    Public Sub calcRamp(stepRate As Integer, dateArr() As DateTime)
 
         ReDim ramp(UBound(values))
 
@@ -22,7 +22,7 @@
             Dim endVal As Integer = i + (stepRate \ 2)
             If endVal > UBound(values) Then endVal = UBound(values)
 
-            ramp(i) = LinReg(MainForm.dateArr, values, startVal, endVal)
+            ramp(i) = LinReg(dateArr, values, startVal, endVal)
         Next
     End Sub
 
@@ -158,7 +158,15 @@
         Return holder
     End Function
 
-    Public Function AverageRamp(Optional indexStart As Integer = 0, Optional indexEnd As Integer = 0) As Double
+    Public Function AverageRamp(Optional indexStart As Integer = 0, Optional indexEnd As Integer = 0, Optional goal As Double = -1, Optional rampRate As Double = 0, Optional vals() As Double = Nothing) As Double
+
+        Dim greatThan As Boolean = True
+
+        If rampRate > 0 Then
+            greatThan = True
+        Else
+            greatThan = False
+        End If
 
         Dim total As Double = 0
         Dim addCnt As Integer = 0
@@ -167,8 +175,23 @@
 
         Dim i As Integer
         For i = indexStart To indexEnd
-            total = total + ramp(i)
-            addCnt = addCnt + 1
+            If goal = -1 Then
+                total = total + ramp(i)
+                addCnt = addCnt + 1
+            Else
+                If greatThan Then
+                    If vals(i) < goal Then
+                        total = total + ramp(i)
+                        addCnt = addCnt + 1
+                    End If
+                Else
+                    If vals(i) > goal Then
+                        total = total + ramp(i)
+                        addCnt = addCnt + 1
+                    End If
+                End If
+            End If
+
         Next
 
         Return total / addCnt
