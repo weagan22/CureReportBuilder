@@ -24,7 +24,10 @@
     Public cureStart As Integer = 0
     Public cureEnd As Integer = 0
 
-    Public dateValues As New Dictionary(Of String, DateTime) From {{"startTime", Nothing}, {"endTime", Nothing}}
+    'Public dateValues As New Dictionary(Of String, DateTime) From {{"startTime", Nothing}, {"endTime", Nothing}}
+    Public cureStartTime As DateTime = Nothing
+    Public cureEndTime As DateTime = Nothing
+
 
     Public machType As String = "Unknown"
 
@@ -84,19 +87,28 @@
 
             Dim stepDuration As Double = (dateArr(UBound(dateArr)) - dateArr(0)).TotalMinutes / dataCnt
 
+            'Check step time length
+            If curntStep.stepDuration <> -1 Or curntStep.stepDuration <> 0 Then
+                If (dateArr(curntStep.stepStart) - dateArr(curntStep.stepStart)).TotalMinutes > curntStep.stepDuration Then
+                    curntStep.timePass = False
+                End If
+            End If
+
+
+
             'Calculate temp results for a given step
-            If curePro.checkTemp = True And curntStep.tempSet("SetPoint") <> -1 Then
+            If curePro.checkTemp = True And curntStep.tempSetPoint <> -1 Then
 
                 ''Max temp
                 If Not firstStep Then
-                    If curePro.CureSteps(i - 1).tempSet("RampRate") < 0 Then
-                        indexStart = indexStart + Math.Abs(Math.Round(curePro.CureSteps(i - 1).tempSet("RampRate") / stepDuration, 0))
+                    If curePro.CureSteps(i - 1).tempRampRate < 0 Then
+                        indexStart = indexStart + Math.Abs(Math.Round(curePro.CureSteps(i - 1).tempRampRate / stepDuration, 0))
                     End If
                 End If
 
                 If Not lastStep Then
-                    If curePro.CureSteps(i + 1).tempSet("RampRate") > 0 Then
-                        indexEnd = indexEnd - Math.Abs(Math.Round(curePro.CureSteps(i + 1).tempSet("RampRate") / stepDuration, 0))
+                    If curePro.CureSteps(i + 1).tempRampRate > 0 Then
+                        indexEnd = indexEnd - Math.Abs(Math.Round(curePro.CureSteps(i + 1).tempRampRate / stepDuration, 0))
                     End If
                 End If
 
@@ -106,7 +118,7 @@
                     indexEnd = curntStep.stepEnd
                 End If
 
-                curntStep.tempResult("Max") = Math.Round(leadTC.Max(indexStart, indexEnd), 0)
+                curntStep.tempResultMax = Math.Round(leadTC.Max(indexStart, indexEnd), 0)
 
 
                 ''Min temp
@@ -114,14 +126,14 @@
                 indexEnd = curntStep.stepEnd
 
                 If Not firstStep Then
-                    If curePro.CureSteps(i - 1).tempSet("RampRate") > 0 Then
-                        indexStart = indexStart + Math.Abs(Math.Round(curePro.CureSteps(i - 1).tempSet("RampRate") / stepDuration, 0))
+                    If curePro.CureSteps(i - 1).tempRampRate > 0 Then
+                        indexStart = indexStart + Math.Abs(Math.Round(curePro.CureSteps(i - 1).tempRampRate / stepDuration, 0))
                     End If
                 End If
 
                 If Not lastStep Then
-                    If curePro.CureSteps(i + 1).tempSet("RampRate") < 0 Then
-                        indexEnd = indexEnd - Math.Abs(Math.Round(curePro.CureSteps(i + 1).tempSet("RampRate") / stepDuration, 0))
+                    If curePro.CureSteps(i + 1).tempRampRate < 0 Then
+                        indexEnd = indexEnd - Math.Abs(Math.Round(curePro.CureSteps(i + 1).tempRampRate / stepDuration, 0))
                     End If
                 End If
 
@@ -131,7 +143,7 @@
                     indexEnd = curntStep.stepEnd
                 End If
 
-                curntStep.tempResult("Min") = Math.Round(lagTC.Min(indexStart, indexEnd), 0)
+                curntStep.tempResultMin = Math.Round(lagTC.Min(indexStart, indexEnd), 0)
 
 
                 ''Average temp
@@ -149,7 +161,7 @@
                     Next
                 Next
 
-                curntStep.tempResult("Avg") = Math.Round(total / addCnt, 0)
+                curntStep.tempResultAvg = Math.Round(total / addCnt, 0)
 
 
 
@@ -158,11 +170,11 @@
                 goal = -1
                 greaterThanGoal = True
 
-                If curntStep.tempSet("RampRate") > 0 Then
-                    goal = curntStep.tempSet("SetPoint")
+                If curntStep.tempRampRate > 0 Then
+                    goal = curntStep.tempSetPoint
                     greaterThanGoal = True
-                ElseIf curntStep.tempSet("RampRate") < 0 Then
-                    goal = curntStep.tempSet("SetPoint")
+                ElseIf curntStep.tempRampRate < 0 Then
+                    goal = curntStep.tempSetPoint
                     greaterThanGoal = False
                 End If
 
@@ -192,7 +204,7 @@
                     Next
                 Next
 
-                curntStep.tempResult("MaxRamp") = Math.Round(holder, 1)
+                curntStep.tempResultMaxRamp = Math.Round(holder, 1)
 
 
                 ''Min temp ramp
@@ -210,7 +222,7 @@
                     Next
                 Next
 
-                curntStep.tempResult("MinRamp") = Math.Round(holder, 1)
+                curntStep.tempResultMinRamp = Math.Round(holder, 1)
 
 
                 ''Average temp ramp
@@ -220,54 +232,54 @@
                 For z = 0 To UBound(partTC_Arr)
                     For y = 0 To UBound(usrRunTC)
                         If partTC_Arr(z).Number = usrRunTC(y) Then
-                            total = total + partTC_Arr(z).AverageRamp(indexStart, indexEnd, curntStep.tempSet("SetPoint"), curntStep.tempSet("RampRate"), partTC_Arr(z).values)
+                            total = total + partTC_Arr(z).AverageRamp(indexStart, indexEnd, curntStep.tempSetPoint, curntStep.tempRampRate, partTC_Arr(z).values)
                             addCnt = addCnt + 1
                         End If
                     Next
                 Next
 
-                curntStep.tempResult("AvgRamp") = Math.Round(total / addCnt, 1)
+                curntStep.tempResultAvgRamp = Math.Round(total / addCnt, 1)
 
                 'Check temp for passing
-                If Math.Abs(curntStep.tempSet("SetPoint")) = Math.Abs(curntStep.tempSet("NegTol")) Then
-                    If curntStep.tempResult("Max") > curntStep.tempSet("SetPoint") + curntStep.tempSet("PosTol") Then curntStep.tempPass = False
-                ElseIf Math.Abs(curntStep.tempSet("SetPoint")) = Math.Abs(curntStep.tempSet("PosTol")) Then
-                    If curntStep.tempResult("Min") < curntStep.tempSet("SetPoint") + curntStep.tempSet("NegTol") Then curntStep.tempPass = False
+                If Math.Abs(curntStep.tempSetPoint) = Math.Abs(curntStep.tempNegTol) Then
+                    If curntStep.tempResultMax > curntStep.tempSetPoint + curntStep.tempPosTol Then curntStep.tempPass = False
+                ElseIf Math.Abs(curntStep.tempSetPoint) = Math.Abs(curntStep.tempPosTol) Then
+                    If curntStep.tempResultMin < curntStep.tempSetPoint + curntStep.tempNegTol Then curntStep.tempPass = False
                 Else
-                    If curntStep.tempResult("Min") < curntStep.tempSet("SetPoint") + curntStep.tempSet("NegTol") Then curntStep.tempPass = False
-                    If curntStep.tempResult("Max") > curntStep.tempSet("SetPoint") + curntStep.tempSet("PosTol") Then curntStep.tempPass = False
+                    If curntStep.tempResultMin < curntStep.tempSetPoint + curntStep.tempNegTol Then curntStep.tempPass = False
+                    If curntStep.tempResultMax > curntStep.tempSetPoint + curntStep.tempPosTol Then curntStep.tempPass = False
                 End If
 
                 'Check temp ramp for passing if not equal to 0
-                If curntStep.tempSet("RampRate") <> 0 Then
-                    If curntStep.tempResult("MinRamp") < curntStep.tempSet("RampRate") + curntStep.tempSet("RampNegTol") Then curntStep.tempRampPass = False
-                    If curntStep.tempResult("MaxRamp") > curntStep.tempSet("RampRate") + curntStep.tempSet("RampPosTol") Then curntStep.tempRampPass = False
+                If curntStep.tempRampRate <> 0 Then
+                    If curntStep.tempResultMinRamp < curntStep.tempRampRate + curntStep.tempRampNegTol Then curntStep.tempRampPass = False
+                    If curntStep.tempResultMaxRamp > curntStep.tempRampRate + curntStep.tempRampPosTol Then curntStep.tempRampPass = False
                 End If
             Else
-                curntStep.tempPass = True
-                curntStep.tempRampPass = True
-            End If
+                        curntStep.tempPass = True
+                        curntStep.tempRampPass = True
+                    End If
 
 
 
             'Check autoclave only features
 
             'Calculate pressure results for a given step
-            If curePro.checkPressure And curntStep.pressureSet("SetPoint") <> -1 Then
+            If curePro.checkPressure And curntStep.pressureSetPoint <> -1 Then
 
                 ''Max pressure
                 indexStart = curntStep.stepStart
                 indexEnd = curntStep.stepEnd
 
                 If Not firstStep Then
-                    If curePro.CureSteps(i - 1).pressureSet("RampRate") < 0 Then
-                        indexStart = indexStart + Math.Abs(Math.Round(curePro.CureSteps(i - 1).pressureSet("RampRate") / stepDuration, 0))
+                    If curePro.CureSteps(i - 1).pressureRampRate < 0 Then
+                        indexStart = indexStart + Math.Abs(Math.Round(curePro.CureSteps(i - 1).pressureRampRate / stepDuration, 0))
                     End If
                 End If
 
                 If Not lastStep Then
-                    If curePro.CureSteps(i + 1).pressureSet("RampRate") > 0 Then
-                        indexEnd = indexEnd - Math.Abs(Math.Round(curePro.CureSteps(i + 1).pressureSet("RampRate") / stepDuration, 0))
+                    If curePro.CureSteps(i + 1).pressureRampRate > 0 Then
+                        indexEnd = indexEnd - Math.Abs(Math.Round(curePro.CureSteps(i + 1).pressureRampRate / stepDuration, 0))
                     End If
                 End If
 
@@ -277,91 +289,91 @@
                     indexEnd = curntStep.stepEnd
                 End If
 
-                curntStep.pressureResult("Max") = Math.Round(vesselPress.Max(indexStart, indexEnd), 1)
+                curntStep.pressureResultMax = Math.Round(vesselPress.Max(indexStart, indexEnd), 1)
 
 
                 ''Min pressure
                 indexStart = curntStep.stepStart
-                indexEnd = curntStep.stepEnd
-                If Not firstStep Then
-                    If curePro.CureSteps(i - 1).pressureSet("RampRate") > 0 Then
-                        indexStart = indexStart + Math.Abs(Math.Round(curePro.CureSteps(i - 1).pressureSet("RampRate") / stepDuration, 0))
-                    End If
-                End If
+                            indexEnd = curntStep.stepEnd
+                            If Not firstStep Then
+                                If curePro.CureSteps(i - 1).pressureRampRate > 0 Then
+                                    indexStart = indexStart + Math.Abs(Math.Round(curePro.CureSteps(i - 1).pressureRampRate / stepDuration, 0))
+                                End If
+                            End If
 
-                If Not lastStep Then
-                    If curePro.CureSteps(i + 1).pressureSet("RampRate") < 0 Then
-                        indexEnd = indexEnd - Math.Abs(Math.Round(curePro.CureSteps(i + 1).pressureSet("RampRate") / stepDuration, 0))
-                    End If
+                            If Not lastStep Then
+                                If curePro.CureSteps(i + 1).pressureRampRate < 0 Then
+                                    indexEnd = indexEnd - Math.Abs(Math.Round(curePro.CureSteps(i + 1).pressureRampRate / stepDuration, 0))
+                                End If
 
-                End If
+                            End If
 
-                ''Handles a very short step: just look at max of whole step, no buffer
-                If indexEnd <= indexStart Then
-                    indexStart = curntStep.stepStart
-                    indexEnd = curntStep.stepEnd
-                End If
+                            ''Handles a very short step: just look at max of whole step, no buffer
+                            If indexEnd <= indexStart Then
+                                indexStart = curntStep.stepStart
+                                indexEnd = curntStep.stepEnd
+                            End If
 
-                curntStep.pressureResult("Min") = Math.Round(vesselPress.Min(indexStart, indexEnd), 1)
+                            curntStep.pressureResultMin = Math.Round(vesselPress.Min(indexStart, indexEnd), 1)
 
 
                 ''Average pressure
                 indexStart = curntStep.stepStart
-                indexEnd = curntStep.stepEnd
+                        indexEnd = curntStep.stepEnd
 
-                curntStep.pressureResult("Avg") = Math.Round(vesselPress.Average(indexStart, indexEnd), 1)
-
-
-
-
-                ''##Pressure ramps##
-                goal = -1
-                greaterThanGoal = True
-
-                If curntStep.pressureSet("RampRate") > 0 Then
-                    goal = curntStep.pressureSet("SetPoint")
-                    greaterThanGoal = True
-                ElseIf curntStep.pressureSet("RampRate") < 0 Then
-                    goal = curntStep.pressureSet("SetPoint")
-                    greaterThanGoal = False
-                End If
-
-                ''Buffer start and end by half the linear regression step length so ramp is only from the step region
-                indexStart = curntStep.stepStart + (stepVal / 2)
-                indexEnd = curntStep.stepEnd - (stepVal / 2)
-
-                ''For very short step (<linear reg step) just look at the middle point 
-                If indexEnd < indexStart Then
-                    Dim midPoint As Integer = indexStart + ((indexEnd - indexStart) / 2)
-                    indexStart = midPoint
-                    indexEnd = midPoint
-                End If
-
-                ''Max pressure ramp
-                curntStep.pressureResult("MaxRamp") = Math.Round(vesselPress.MaxRamp(indexStart, indexEnd, goal, greaterThanGoal), 1)
-
-                ''Min pressure ramp
-                curntStep.pressureResult("MinRamp") = Math.Round(vesselPress.MinRamp(indexStart, indexEnd, goal, greaterThanGoal), 1)
-
-                ''Avg pressure ramp
-                curntStep.pressureResult("AvgRamp") = Math.Round(vesselPress.AverageRamp(indexStart, indexEnd, curntStep.pressureSet("SetPoint"), curntStep.pressureSet("RampRate"), vesselPress.values), 1)
+                        curntStep.pressureResultAvg = Math.Round(vesselPress.Average(indexStart, indexEnd), 1)
 
 
 
-                'Check pressure for passing
-                If Math.Abs(curntStep.pressureSet("SetPoint")) = Math.Abs(curntStep.pressureSet("NegTol")) Then
-                    If curntStep.pressureResult("Max") > curntStep.pressureSet("SetPoint") + curntStep.pressureSet("PosTol") Then curntStep.pressurePass = False
-                ElseIf Math.Abs(curntStep.pressureSet("SetPoint")) = Math.Abs(curntStep.pressureSet("PosTol")) Then
-                    If curntStep.pressureResult("Min") < curntStep.pressureSet("SetPoint") + curntStep.pressureSet("NegTol") Then curntStep.pressurePass = False
+
+                        ''##Pressure ramps##
+                        goal = -1
+                        greaterThanGoal = True
+
+                        If curntStep.pressureRampRate > 0 Then
+                            goal = curntStep.pressureSetPoint
+                            greaterThanGoal = True
+                        ElseIf curntStep.pressureRampRate < 0 Then
+                            goal = curntStep.pressureSetPoint
+                            greaterThanGoal = False
+                        End If
+
+                        ''Buffer start and end by half the linear regression step length so ramp is only from the step region
+                        indexStart = curntStep.stepStart + (stepVal / 2)
+                        indexEnd = curntStep.stepEnd - (stepVal / 2)
+
+                        ''For very short step (<linear reg step) just look at the middle point 
+                        If indexEnd < indexStart Then
+                            Dim midPoint As Integer = indexStart + ((indexEnd - indexStart) / 2)
+                            indexStart = midPoint
+                            indexEnd = midPoint
+                        End If
+
+                        ''Max pressure ramp
+                        curntStep.pressureResultMaxRamp = Math.Round(vesselPress.MaxRamp(indexStart, indexEnd, goal, greaterThanGoal), 1)
+
+                        ''Min pressure ramp
+                        curntStep.pressureResultMinRamp = Math.Round(vesselPress.MinRamp(indexStart, indexEnd, goal, greaterThanGoal), 1)
+
+                        ''Avg pressure ramp
+                        curntStep.pressureResultAvgRamp = Math.Round(vesselPress.AverageRamp(indexStart, indexEnd, curntStep.pressureSetPoint, curntStep.pressureRampRate, vesselPress.values), 1)
+
+
+
+                        'Check pressure for passing
+                        If Math.Abs(curntStep.pressureSetPoint) = Math.Abs(curntStep.pressureNegTol) Then
+                            If curntStep.pressureResultMax > curntStep.pressureSetPoint + curntStep.pressurePosTol Then curntStep.pressurePass = False
+                        ElseIf Math.Abs(curntStep.pressureSetPoint) = Math.Abs(curntStep.pressurePosTol) Then
+                            If curntStep.pressureResultMin < curntStep.pressureSetPoint + curntStep.pressureNegTol Then curntStep.pressurePass = False
                 Else
-                    If curntStep.pressureResult("Min") < curntStep.pressureSet("SetPoint") + curntStep.pressureSet("NegTol") Then curntStep.pressurePass = False
-                    If curntStep.pressureResult("Max") > curntStep.pressureSet("SetPoint") + curntStep.pressureSet("PosTol") Then curntStep.pressurePass = False
-                End If
+                    If curntStep.pressureResultMin < curntStep.pressureSetPoint + curntStep.pressureNegTol Then curntStep.pressurePass = False
+                    If curntStep.pressureResultMax > curntStep.pressureSetPoint + curntStep.pressurePosTol Then curntStep.pressurePass = False
+                            End If
 
-                'Check pressure ramp if not set to 0
-                If curntStep.pressureSet("RampRate") <> 0 Then
-                    If curntStep.pressureResult("MinRamp") < curntStep.pressureSet("RampRate") + curntStep.pressureSet("RampNegTol") Then curntStep.pressureRampPass = False
-                    If curntStep.pressureResult("MaxRamp") > curntStep.pressureSet("RampRate") + curntStep.pressureSet("RampPosTol") Then curntStep.pressureRampPass = False
+                            'Check pressure ramp if not set to 0
+                            If curntStep.pressureRampRate <> 0 Then
+                                If curntStep.pressureResultMinRamp < curntStep.pressureRampRate + curntStep.pressureRampNegTol Then curntStep.pressureRampPass = False
+                    If curntStep.pressureResultMaxRamp > curntStep.pressureRampRate + curntStep.pressureRampPosTol Then curntStep.pressureRampPass = False
                 End If
             Else
                 curntStep.pressurePass = True
@@ -369,12 +381,12 @@
             End If
 
             'Calculate vac results for a given step
-            If curePro.checkVac And curntStep.vacSet("SetPoint") <> -1 Then
+            If curePro.checkVac And curntStep.vacSetPoint <> -1 Then
                 indexStart = curntStep.stepStart
                 indexEnd = curntStep.stepEnd
 
-                curntStep.vacResult("Max") = Math.Round(maxVac.Min(indexStart, indexEnd), 1)
-                curntStep.vacResult("Min") = Math.Round(minVac.Max(indexStart, indexEnd), 1)
+                curntStep.vacResultMax = Math.Round(maxVac.Min(indexStart, indexEnd), 1)
+                curntStep.vacResultMin = Math.Round(minVac.Max(indexStart, indexEnd), 1)
 
                 ''Average vac
                 total = 0
@@ -391,26 +403,26 @@
                     Next
                 Next
 
-                curntStep.vacResult("Avg") = Math.Round(total / addCnt, 1)
+                curntStep.vacResultAvg = Math.Round(total / addCnt, 1)
 
                 'Check vacuum for passing
-                If Math.Abs(curntStep.vacSet("SetPoint")) = Math.Abs(curntStep.vacSet("NegTol")) Then
-                    If curntStep.vacResult("Min") > curntStep.vacSet("SetPoint") + curntStep.vacSet("PosTol") Then curntStep.vacPass = False
-                ElseIf Math.Abs(curntStep.vacSet("SetPoint")) = Math.Abs(curntStep.vacSet("PosTol")) Then
-                    If curntStep.vacResult("Max") < curntStep.vacSet("SetPoint") + curntStep.vacSet("NegTol") Then curntStep.vacPass = False
+                If Math.Abs(curntStep.vacSetPoint) = Math.Abs(curntStep.vacNegTol) Then
+                    If curntStep.vacResultMin > curntStep.vacSetPoint + curntStep.vacPosTol Then curntStep.vacPass = False
+                ElseIf Math.Abs(curntStep.vacSetPoint) = Math.Abs(curntStep.vacPosTol) Then
+                    If curntStep.vacResultMax < curntStep.vacSetPoint + curntStep.vacNegTol Then curntStep.vacPass = False
                 Else
-                    If curntStep.vacResult("Min") > curntStep.vacSet("SetPoint") + curntStep.vacSet("PosTol") Then curntStep.vacPass = False
-                    If curntStep.vacResult("Max") < curntStep.vacSet("SetPoint") + curntStep.vacSet("NegTol") Then curntStep.vacPass = False
-                End If
+                    If curntStep.vacResultMin > curntStep.vacSetPoint + curntStep.vacPosTol Then curntStep.vacPass = False
+                    If curntStep.vacResultMax < curntStep.vacSetPoint + curntStep.vacNegTol Then curntStep.vacPass = False
+                                    End If
 
-            Else
+                    Else
                 curntStep.vacPass = True
             End If
 
 
 
             'Check for all passing
-            If curntStep.vacPass And curntStep.tempPass And curntStep.tempRampPass And curntStep.pressurePass And curntStep.pressureRampPass And curntStep.stepTerminate Then
+            If curntStep.vacPass And curntStep.tempPass And curntStep.tempRampPass And curntStep.pressurePass And curntStep.pressureRampPass And curntStep.stepTerminate And curntStep.timePass Then
                 curntStep.stepPass = True
             Else
                 curntStep.stepPass = False
@@ -438,42 +450,42 @@
 
                 'If not the last step and the termination type is time check to see if the remaining time needs to be passed to the next step.
                 If UBound(curePro.CureSteps) <> currentStep Then
-                    If curePro.CureSteps(currentStep).termCond1("Type") = "Time" Then
-                        If curePro.CureSteps(currentStep).termCond1("Modifier") = "Pass" Then
+                    If curePro.CureSteps(currentStep).termCond1Type = "Time" Then
+                        If curePro.CureSteps(currentStep).termCond1Modifier = "Pass" Then
                             Dim timeToPass As Double = 0
-                            timeToPass = curePro.CureSteps(currentStep).termCond1("Goal") - (dateArr(curePro.CureSteps(currentStep).stepEnd) - dateArr(curePro.CureSteps(currentStep).stepStart)).TotalMinutes
+                            timeToPass = curePro.CureSteps(currentStep).termCond1Goal - (dateArr(curePro.CureSteps(currentStep).stepEnd) - dateArr(curePro.CureSteps(currentStep).stepStart)).TotalMinutes
                             If timeToPass < 0 Then timeToPass = 0
 
-                            If curePro.CureSteps(currentStep + 1).termCond1("Type") = "Time" Then
-                                curePro.CureSteps(currentStep + 1).termCond1("Goal") = timeToPass
-                            ElseIf curePro.CureSteps(currentStep + 1).termCond2("Type") = "Time" Then
-                                curePro.CureSteps(currentStep + 1).termCond2("Goal") = timeToPass
+                            If curePro.CureSteps(currentStep + 1).termCond1Type = "Time" Then
+                                curePro.CureSteps(currentStep + 1).termCond1Goal = timeToPass
+                            ElseIf curePro.CureSteps(currentStep + 1).termCond2Type = "Time" Then
+                                curePro.CureSteps(currentStep + 1).termCond2Goal = timeToPass
                             Else
                                 Throw New Exception("No 'Time' terminating condition to pass time to on step " & curePro.CureSteps(currentStep + 1).stepName)
                             End If
                         End If
                     End If
-                    If curePro.CureSteps(currentStep).termCond2("Type") = "Time" Then
-                        If curePro.CureSteps(currentStep).termCond2("Modifier") = "Pass" Then
+                    If curePro.CureSteps(currentStep).termCond2Type = "Time" Then
+                        If curePro.CureSteps(currentStep).termCond2Modifier = "Pass" Then
                             Dim timeToPass As Double = 0
-                            timeToPass = curePro.CureSteps(currentStep).termCond2("Goal") - (dateArr(curePro.CureSteps(currentStep).stepEnd) - dateArr(curePro.CureSteps(currentStep).stepStart)).TotalMinutes
+                            timeToPass = curePro.CureSteps(currentStep).termCond2Goal - (dateArr(curePro.CureSteps(currentStep).stepEnd) - dateArr(curePro.CureSteps(currentStep).stepStart)).TotalMinutes
                             If timeToPass < 0 Then timeToPass = 0
 
-                            If curePro.CureSteps(currentStep + 1).termCond1("Type") = "Time" Then
-                                curePro.CureSteps(currentStep + 1).termCond1("Goal") = timeToPass
-                            ElseIf curePro.CureSteps(currentStep + 1).termCond2("Type") = "Time" Then
-                                curePro.CureSteps(currentStep + 1).termCond2("Goal") = timeToPass
+                            If curePro.CureSteps(currentStep + 1).termCond1Type = "Time" Then
+                                curePro.CureSteps(currentStep + 1).termCond1Goal = timeToPass
+                            ElseIf curePro.CureSteps(currentStep + 1).termCond2Type = "Time" Then
+                            curePro.CureSteps(currentStep + 1).termCond2Goal = timeToPass
                             Else
                                 Throw New Exception("No 'Time' terminating condition to pass time to on step " & curePro.CureSteps(currentStep + 1).stepName)
-                            End If
                         End If
                     End If
+                End If
                 End If
 
                 'If the last step has completed then exit the loop and set cure end to the end of this step
                 If UBound(curePro.CureSteps) = currentStep Then
                     cureEnd = curePro.CureSteps(currentStep).stepEnd
-                    dateValues("endTime") = dateArr(curePro.CureSteps(currentStep).stepEnd)
+                    cureEndTime = dateArr(curePro.CureSteps(currentStep).stepEnd)
                     currentStep += 1
                     Exit For
                 End If
@@ -502,8 +514,8 @@
 
     Function meetTerms(cureStep As CureStep, currentStep As Integer) As Boolean
 
-        Dim pass1 As Boolean = termTest(cureStep.termCond1, currentStep, cureStep)
-        Dim pass2 As Boolean = termTest(cureStep.termCond2, currentStep, cureStep)
+        Dim pass1 As Boolean = termTest(cureStep.termCond1Type, cureStep.termCond1Condition, cureStep.termCond1Goal, cureStep.termCond1Modifier, currentStep, cureStep)
+        Dim pass2 As Boolean = termTest(cureStep.termCond2Type, cureStep.termCond2Condition, cureStep.termCond2Goal, cureStep.termCond2Modifier, currentStep, cureStep)
 
         If cureStep.termCondOper = "OR" Then
             If pass1 Or pass2 Then
@@ -521,75 +533,75 @@
         Return False
     End Function
 
-    Function termTest(termCond As Dictionary(Of String, Object), currentStep As Integer, cureStep As CureStep) As Boolean
-        If termCond("Type") = "None" Then
+    Function termTest(termCondType As String, termCondCondition As String, termCondGoal As Double, termCondModifier As Object, currentStep As Integer, cureStep As CureStep) As Boolean
+        If termCondType = "None" Then
             Return True
 
-        ElseIf termCond("Type") = "Time" Then
+        ElseIf termCondType = "Time" Then
             Dim stepDuration As TimeSpan = dateArr(currentStep) - dateArr(cureStep.stepStart)
 
-            If termCond("Condition") = "GREATER" Then
-                If stepDuration.TotalMinutes > termCond("Goal") Then
+            If termCondCondition = "GREATER" Then
+                If stepDuration.TotalMinutes > termCondGoal Then
                     Return True
                 End If
             Else
                 Throw New Exception("Terminating condition Condition for step " & cureStep.stepName & " is not valid")
             End If
 
-        ElseIf termCond("Type") = "Temp" Then
+        ElseIf termCondType = "Temp" Then
 
-            If termCond("Condition") = "GREATER" Then
-                If termCond("Modifier") = "Lag" Then
-                    If lagTC.values(currentStep) > termCond("Goal") Then
+            If termCondCondition = "GREATER" Then
+                If termCondModifier = "Lag" Then
+                    If lagTC.values(currentStep) > termCondGoal Then
                         Return True
                     End If
-                ElseIf termCond("Modifier") = "Lead" Then
-                    If leadTC.values(currentStep) > termCond("Goal") Then
+                ElseIf termCondModifier = "Lead" Then
+                    If leadTC.values(currentStep) > termCondGoal Then
                         Return True
                     End If
-                ElseIf termCond("Modifier") = "Air" Then
-                    If vessel_TC.values(currentStep) > termCond("Goal") Then
+                ElseIf termCondModifier = "Air" Then
+                    If vessel_TC.values(currentStep) > termCondGoal Then
                         Return True
                     End If
                 Else
-                    Throw New Exception("Terminating condition Modifier for step " & cureStep.stepName & " is not valid")
+                    Throw New Exception("Terminating condition Modifier For Step " & cureStep.stepName & " Is Not valid")
                 End If
 
-            ElseIf termCond("Condition") = "LESS" Then
-                If termCond("Modifier") = "Lag" Then
-                    If lagTC.values(currentStep) < termCond("Goal") Then
+            ElseIf termCondCondition = "LESS" Then
+                If termCondModifier = "Lag" Then
+                    If lagTC.values(currentStep) < termCondGoal Then
                         Return True
                     End If
-                ElseIf termCond("Modifier") = "Lead" Then
-                    If leadTC.values(currentStep) < termCond("Goal") Then
+                ElseIf termCondModifier = "Lead" Then
+                    If leadTC.values(currentStep) < termCondGoal Then
                         Return True
                     End If
-                ElseIf termCond("Modifier") = "Air" Then
-                    If vessel_TC.values(currentStep) < termCond("Goal") Then
+                ElseIf termCondModifier = "Air" Then
+                    If vessel_TC.values(currentStep) < termCondGoal Then
                         Return True
                     End If
                 Else
-                    Throw New Exception("Terminating condition Modifier for step " & cureStep.stepName & " is not valid")
+                    Throw New Exception("Terminating condition Modifier For Step " & cureStep.stepName & " Is Not valid")
+                End If
+            Else
+                Throw New Exception("Terminating condition Condition For Step " & cureStep.stepName & " Is Not valid")
+            End If
+
+        ElseIf termCondType = "Press" Then
+            If termCondCondition = "GREATER" Then
+                If vesselPress.values(currentStep) > termCondGoal Then
+                    Return True
+                End If
+            ElseIf termCondCondition = "LESS" Then
+
+                If vesselPress.values(currentStep) < termCondGoal Then
+                    Return True
                 End If
             Else
                 Throw New Exception("Terminating condition Condition for step " & cureStep.stepName & " is not valid")
             End If
 
-        ElseIf termCond("Type") = "Press" Then
-            If termCond("Condition") = "GREATER" Then
-                If vesselPress.values(currentStep) > termCond("Goal") Then
-                    Return True
-                End If
-            ElseIf termCond("Condition") = "LESS" Then
-
-                If vesselPress.values(currentStep) < termCond("Goal") Then
-                    Return True
-                End If
-            Else
-                Throw New Exception("Terminating condition Condition for step " & cureStep.stepName & " is not valid")
-            End If
-
-            'ElseIf termCond("Type") = "Vac" Then
+            'ElseIf termCondType") = "Vac" Then
             'Might need this???
         Else
             Throw New Exception("Terminating condition type for step " & cureStep.stepName & " is not valid")
@@ -615,8 +627,8 @@
                 currentPress = 0
             End If
 
-            If leadTC.values(i) > start_end_temp Or currentPress > start_end_press And dateValues("startTime") = Nothing Then
-                dateValues("startTime") = dateArr(i)
+            If leadTC.values(i) > start_end_temp Or currentPress > start_end_press And cureStartTime = Nothing Then
+                cureStartTime = dateArr(i)
                 cureStart = i
                 Exit For
             End If
@@ -624,7 +636,7 @@
 
         'If the start time wasn't triggered then the cure starts at 0
         If cureStart = 0 Then
-            dateValues("startTime") = dateArr(0)
+            cureStartTime = dateArr(0)
         End If
 
 
@@ -655,7 +667,7 @@
 
             If runStart = True Then
                 If leadTC.values(i) < start_end_temp And currentPress < start_end_press Then
-                    dateValues("endTime") = dateArr(i)
+                    cureEndTime = dateArr(i)
                     cureEnd = i
                     Exit For
                 End If
@@ -664,7 +676,7 @@
 
         'If cureEnd didn't get set then the end of data is the end
         If cureEnd = 0 Then
-            dateValues("endTime") = dateArr(dataCnt)
+            cureEndTime = dateArr(dataCnt)
             cureEnd = dataCnt
         End If
 
@@ -929,8 +941,8 @@
         DataPath = String.Empty
 
         'Reset dateValues to null values
-        dateValues("startTime") = Nothing
-        dateValues("endTime") = Nothing
+        cureStartTime = Nothing
+        cureEndTime = Nothing
 
         curePro = Nothing
         curePro = New CureProfile()

@@ -160,14 +160,17 @@ Public Class ExcelOutput
                 Dim endTime As Double = (checkToOutput.dateArr(currentStep.stepEnd) - checkToOutput.dateArr(checkToOutput.cureStart)).TotalMinutes
 
                 Dim endStr As String = ""
+                Dim durationStr As String = ""
                 If currentStep.stepTerminate = False Then
                     endStr = "Failed to Terminate"
+                    durationStr = ""
                 Else
                     endStr = "Finish: " & endTime.ToString("0.0") & " min"
+                    durationStr = vbNewLine & "Duration: " & endTime - startTime & " min"
                 End If
 
 
-                mainSheet.Cells(curRow, 1) = currentStep.stepName & vbNewLine & "(" & stepPass & ")" & vbNewLine & "Start: " & startTime.ToString("0.0") & " min" & vbNewLine & endStr
+                mainSheet.Cells(curRow, 1) = currentStep.stepName & vbNewLine & "(" & stepPass & ")" & vbNewLine & "Start: " & startTime.ToString("0.0") & " min" & vbNewLine & endStr & durationStr
 
                 formatFont(mainSheet.Cells(curRow, 1), currentStep.stepName, 14, True, False, False)
 
@@ -178,10 +181,19 @@ Public Class ExcelOutput
                 End If
 
                 formatFont(mainSheet.Cells(curRow, 1), "Start: " & startTime.ToString("0.0") & " min", 9, False, False, False)
-                formatFont(mainSheet.Cells(curRow, 1), endStr, 9, False, False, False)
+
 
                 If currentStep.stepTerminate = False Then
                     formatFont(mainSheet.Cells(curRow, 1), endStr, 9, False, False, False, Color.Red)
+                Else
+                    formatFont(mainSheet.Cells(curRow, 1), endStr, 9, False, False, False)
+
+                    If currentStep.timePass Then
+                        formatFont(mainSheet.Cells(curRow, 1), durationStr, 9, False, False, False)
+                    Else
+                        formatFont(mainSheet.Cells(curRow, 1), durationStr, 9, False, False, False, Color.Red)
+                    End If
+
                 End If
             End If
 
@@ -196,46 +208,46 @@ Public Class ExcelOutput
 
 
 
-            If checkToOutput.curePro.checkTemp And currentStep.tempSet("SetPoint") <> -1 Then
-                If Math.Abs(currentStep.tempSet("SetPoint")) = Math.Abs(currentStep.tempSet("NegTol")) Then
-                    tempStr = "Temperature: Max " & currentStep.tempSet("SetPoint") + currentStep.tempSet("PosTol") & "°F"
-                ElseIf Math.Abs(currentStep.tempSet("SetPoint")) = Math.Abs(currentStep.tempSet("PosTol")) Then
-                    tempStr = "Temperature: Min " & currentStep.tempSet("SetPoint") + currentStep.tempSet("NegTol") & "°F"
+            If checkToOutput.curePro.checkTemp And currentStep.tempSetPoint <> -1 Then
+                If Math.Abs(currentStep.tempSetPoint) = Math.Abs(currentStep.tempNegTol) Then
+                    tempStr = "Temperature Max " & currentStep.tempSetPoint + currentStep.tempPosTol & "°F"
+                ElseIf Math.Abs(currentStep.tempSetPoint) = Math.Abs(currentStep.tempPosTol) Then
+                    tempStr = "Temperature Min " & currentStep.tempSetPoint + currentStep.tempNegTol & "°F"
                 Else
 
-                    tempStr = "Temperature: " & currentStep.tempSet("SetPoint") & "°F " & plusMinusVal(currentStep.tempSet("PosTol"), currentStep.tempSet("NegTol")) & "°F"
+                    tempStr = "Temperature " & currentStep.tempSetPoint & "°F " & plusMinusVal(currentStep.tempPosTol, currentStep.tempNegTol) & "°F"
                 End If
-                tempStr = tempStr & vbNewLine
+            tempStr = tempStr & vbNewLine
 
-                If currentStep.tempSet("RampRate") <> 0 Then
-                    tempRmpStr = "Temp. Ramp: " & currentStep.tempSet("RampRate") & "°F/min " & plusMinusVal(currentStep.tempSet("RampPosTol"), currentStep.tempSet("RampNegTol")) & "°F/min"
+                If currentStep.tempRampRate <> 0 Then
+                    tempRmpStr = "Temp. Ramp " & currentStep.tempRampRate & "°F/min " & plusMinusVal(currentStep.tempRampPosTol, currentStep.tempRampNegTol) & "°F/min"
                     tempRmpStr = tempRmpStr & vbNewLine
                 End If
             End If
 
-            If checkToOutput.curePro.checkPressure And currentStep.pressureSet("SetPoint") <> -1 Then
-                If Math.Abs(currentStep.pressureSet("SetPoint")) = Math.Abs(currentStep.pressureSet("NegTol")) Then
-                    pressStr = "Pressure: Max " & currentStep.pressureSet("SetPoint") + currentStep.pressureSet("PosTol") & " psi"
-                ElseIf Math.Abs(currentStep.pressureSet("SetPoint")) = Math.Abs(currentStep.pressureSet("PosTol")) Then
-                    pressStr = "Pressure Min " & currentStep.pressureSet("SetPoint") + currentStep.pressureSet("NegTol") & " psi"
+            If checkToOutput.curePro.checkPressure And currentStep.pressureSetPoint <> -1 Then
+                If Math.Abs(currentStep.pressureSetPoint) = Math.Abs(currentStep.pressureNegTol) Then
+                    pressStr = "Pressure: Max " & currentStep.pressureSetPoint + currentStep.pressurePosTol & " psi"
+                ElseIf Math.Abs(currentStep.pressureSetPoint) = Math.Abs(currentStep.pressurePosTol) Then
+                    pressStr = "Pressure Min " & currentStep.pressureSetPoint + currentStep.pressureNegTol & " psi"
                 Else
-                    pressStr = pressStr & "Pressure: " & currentStep.pressureSet("SetPoint") & " psi " & plusMinusVal(currentStep.pressureSet("PosTol"), currentStep.pressureSet("NegTol")) & " psi"
+                    pressStr = pressStr & "Pressure:  " & currentStep.pressureSetPoint & " psi " & plusMinusVal(currentStep.pressurePosTol, currentStep.pressureNegTol) & " psi"
                 End If
                 pressStr = pressStr & vbNewLine
 
-                If currentStep.pressureSet("RampRate") <> 0 Then
-                    pressRmpStr = pressRmpStr & "Pressure Ramp: " & currentStep.pressureSet("RampRate") & " psi/min " & plusMinusVal(currentStep.pressureSet("RampPosTol"), currentStep.pressureSet("RampNegTol")) & " psi/min"
+                If currentStep.pressureRampRate <> 0 Then
+                    pressRmpStr = pressRmpStr & "Pressure Ramp " & currentStep.pressureRampRate & " psi/min " & plusMinusVal(currentStep.pressureRampPosTol, currentStep.pressureRampNegTol) & " psi/min"
                     pressRmpStr = pressRmpStr & vbNewLine
                 End If
             End If
 
-            If checkToOutput.curePro.checkVac And currentStep.vacSet("SetPoint") <> -1 Then
-                If Math.Abs(currentStep.vacSet("SetPoint")) = Math.Abs(currentStep.vacSet("NegTol")) Then
-                    vacStr = "Vacuum: Min " & currentStep.vacSet("SetPoint") + currentStep.vacSet("PosTol") & " inHg"
-                ElseIf Math.Abs(currentStep.vacSet("SetPoint")) = Math.Abs(currentStep.vacSet("PosTol")) Then
-                    vacStr = "Vacuum: Max " & currentStep.vacSet("SetPoint") + currentStep.vacSet("NegTol") & " inHg"
+            If checkToOutput.curePro.checkVac And currentStep.vacSetPoint <> -1 Then
+                If Math.Abs(currentStep.vacSetPoint) = Math.Abs(currentStep.vacNegTol) Then
+                    vacStr = "Vacuum Min " & currentStep.vacSetPoint + currentStep.vacPosTol & " inHg"
+                ElseIf Math.Abs(currentStep.vacSetPoint) = Math.Abs(currentStep.vacPosTol) Then
+                    vacStr = "Vacuum: Max " & currentStep.vacSetPoint + currentStep.vacNegTol & " inHg"
                 Else
-                    vacStr = vacStr & "Vacuum: " & currentStep.vacSet("SetPoint") & " inHg " & plusMinusVal(currentStep.vacSet("PosTol"), currentStep.vacSet("NegTol")) & " inHg"
+                    vacStr = vacStr & "Vacuum:  " & currentStep.vacSetPoint & " inHg " & plusMinusVal(currentStep.vacPosTol, currentStep.vacNegTol) & " inHg"
                 End If
                 vacStr = vacStr & vbNewLine
             End If
@@ -247,13 +259,13 @@ Public Class ExcelOutput
 
 
 
-            Dim term1Str As String = termToStr(currentStep.termCond1, currentStep)
+            Dim term1Str As String = termToStr(currentStep.termCond1Type, currentStep.termCond1Condition, currentStep.termCond1Goal, currentStep.termCond1Modifier, currentStep)
             Dim term2Str As String = ""
 
-            If currentStep.termCond2("Type") <> "None" Then
+            If currentStep.termCond2Type <> "None" Then
                 term2Str = term2Str & currentStep.termCondOper
                 term2Str = term2Str & vbNewLine
-                term2Str = term2Str & termToStr(currentStep.termCond2, currentStep)
+                term2Str = term2Str & termToStr(currentStep.termCond2Type, currentStep.termCond2Condition, currentStep.termCond2Goal, currentStep.termCond2Modifier, currentStep)
             End If
 
             cell2 = cell2 & term1Str
@@ -287,8 +299,8 @@ Public Class ExcelOutput
 
             'Fill out cell 3
             If currentStep.hardFail Then
-                mainSheet.Cells(curRow, 7) = "Failed to Reach Step"
-                formatFont(mainSheet.Cells(curRow, 7), "Failed to Reach Step", 11, True,, True, Color.Red)
+                mainSheet.Cells(curRow, 7) = "Failed To Reach Step"
+                formatFont(mainSheet.Cells(curRow, 7), "Failed To Reach Step", 11, True,, True, Color.Red)
             Else
                 Dim cell3 As String = ""
 
@@ -298,7 +310,7 @@ Public Class ExcelOutput
                 pressRmpStr = ""
                 vacStr = ""
 
-                If checkToOutput.curePro.checkTemp And currentStep.tempSet("SetPoint") <> -1 Then
+                If checkToOutput.curePro.checkTemp And currentStep.tempSetPoint <> -1 Then
                     tempStr = "Temperature (°F)" & vbNewLine
 
 
@@ -306,21 +318,21 @@ Public Class ExcelOutput
 
 
 
-                    If Math.Abs(currentStep.tempSet("SetPoint")) = Math.Abs(currentStep.tempSet("NegTol")) Then
-                        tempStr = tempStr & "Max: " & String.Format("{0}", Math.Round(currentStep.tempResult("Max"), 0)) & vbNewLine
-                    ElseIf Math.Abs(currentStep.tempSet("SetPoint")) = Math.Abs(currentStep.tempSet("PosTol")) Then
-                        tempStr = tempStr & "Min: " & String.Format("{0}", Math.Round(currentStep.tempResult("Min"), 0)) & vbNewLine
+                    If Math.Abs(currentStep.tempSetPoint) = Math.Abs(currentStep.tempNegTol) Then
+                        tempStr = tempStr & "Max " & String.Format("{0}", Math.Round(currentStep.tempResultMax, 0)) & vbNewLine
+                    ElseIf Math.Abs(currentStep.tempSetPoint) = Math.Abs(currentStep.tempPosTol) Then
+                        tempStr = tempStr & "Min " & String.Format("{0}", Math.Round(currentStep.tempResultMin, 0)) & vbNewLine
                     Else
-                        tempStr = tempStr & "Max: " & String.Format("{0}", Math.Round(currentStep.tempResult("Max"), 0))
-                        tempStr = tempStr & " | Min: " & String.Format("{0}", Math.Round(currentStep.tempResult("Min"), 0))
-                        tempStr = tempStr & "  | Avg: " & String.Format("{0}", Math.Round(currentStep.tempResult("Avg"), 0)) & vbNewLine
+                        tempStr = tempStr & "Max " & String.Format("{0}", Math.Round(currentStep.tempResultMax, 0))
+                        tempStr = tempStr & " | Min " & String.Format("{0}", Math.Round(currentStep.tempResultMin, 0))
+                        tempStr = tempStr & "  | Avg " & String.Format("{0}", Math.Round(currentStep.tempResultAvg, 0)) & vbNewLine
                     End If
 
-                    If currentStep.tempSet("RampRate") <> 0 Then
+                    If currentStep.tempRampRate <> 0 Then
                         tempRmpStr = "Temp. Ramp (°F/min)" & vbNewLine
-                        tempRmpStr = tempRmpStr & "Max: " & String.Format("{0:0.0}", Math.Round(currentStep.tempResult("MaxRamp"), 1))
-                        tempRmpStr = tempRmpStr & " | Min: " & String.Format("{0:0.0}", Math.Round(currentStep.tempResult("MinRamp"), 1))
-                        'tempRmpStr = tempRmpStr & "  | Avg: " & String.Format("{0:0.0}", Math.Round(currentStep.tempResult("AvgRamp"), 1)) & vbNewLine
+                        tempRmpStr = tempRmpStr & "Max " & String.Format("{00.0}", Math.Round(currentStep.tempResultMaxRamp, 1))
+                        tempRmpStr = tempRmpStr & " | Min " & String.Format("{0: 0.0}", Math.Round(currentStep.tempResultMinRamp, 1))
+                        'tempRmpStr = tempRmpStr & "  | Avg " & String.Format("{0:  0.0}", Math.Round(currentStep.tempResultAvgRamp, 1)) & vbNewLine
                     End If
 
 
@@ -330,38 +342,38 @@ Public Class ExcelOutput
 
                 End If
 
-                If checkToOutput.curePro.checkPressure And currentStep.pressureSet("SetPoint") <> -1 Then
+                If checkToOutput.curePro.checkPressure And currentStep.pressureSetPoint <> -1 Then
                     pressStr = "Pressure (psi)" & vbNewLine
 
-                    If Math.Abs(currentStep.pressureSet("SetPoint")) = Math.Abs(currentStep.pressureSet("NegTol")) Then
-                        pressStr = pressStr & "Max: " & String.Format("{0:0.0}", Math.Round(currentStep.pressureResult("Max"), 1)) & vbNewLine
-                    ElseIf Math.Abs(currentStep.pressureSet("SetPoint")) = Math.Abs(currentStep.pressureSet("PosTol")) Then
-                        pressStr = "Min: " & String.Format("{0:0.0}", Math.Round(currentStep.pressureResult("Min"), 1)) & vbNewLine
+                    If Math.Abs(currentStep.pressureSetPoint) = Math.Abs(currentStep.pressureNegTol) Then
+                        pressStr = pressStr & "Max " & String.Format("{00.0}", Math.Round(currentStep.pressureResultMax, 1)) & vbNewLine
+                    ElseIf Math.Abs(currentStep.pressureSetPoint) = Math.Abs(currentStep.pressurePosTol) Then
+                        pressStr = "Min " & String.Format("{00.0}", Math.Round(currentStep.pressureResultMin, 1)) & vbNewLine
                     Else
-                        pressStr = pressStr & "Max: " & String.Format("{0:0.0}", Math.Round(currentStep.pressureResult("Max"), 1))
-                        pressStr = pressStr & " | Min: " & String.Format("{0:0.0}", Math.Round(currentStep.pressureResult("Min"), 1))
-                        pressStr = pressStr & " | Avg: " & String.Format("{0:0.0}", Math.Round(currentStep.pressureResult("Avg"), 1)) & vbNewLine
+                        pressStr = pressStr & "Max " & String.Format("{00.0}", Math.Round(currentStep.pressureResultMax, 1))
+                        pressStr = pressStr & " | Min " & String.Format("{00.0}", Math.Round(currentStep.pressureResultMin, 1))
+                        pressStr = pressStr & " | Avg " & String.Format("{00.0}", Math.Round(currentStep.pressureResultAvg, 1)) & vbNewLine
                     End If
 
-                    If currentStep.pressureSet("RampRate") <> 0 Then
+                    If currentStep.pressureRampRate <> 0 Then
                         pressRmpStr = "Pressure Ramp (psi/min)" & vbNewLine
-                        pressRmpStr = pressRmpStr & "Max: " & String.Format("{0:0.0}", Math.Round(currentStep.pressureResult("MaxRamp"), 1))
-                        pressRmpStr = pressRmpStr & " | Min: " & String.Format("{0:0.0}", Math.Round(currentStep.pressureResult("MinRamp"), 1))
-                        'pressRmpStr = pressRmpStr & "  | Avg: " & String.Format("{0:0.0}", Math.Round(currentStep.pressureResult("AvgRamp"), 1)) & vbNewLine
+                        pressRmpStr = pressRmpStr & "Max " & String.Format("{00.0}", Math.Round(currentStep.pressureResultMaxRamp, 1))
+                        pressRmpStr = pressRmpStr & " | Min " & String.Format("{0: 0.0}", Math.Round(currentStep.pressureResultMinRamp, 1))
+                        'pressRmpStr = pressRmpStr & "  | Avg " & String.Format("{0:  0.0}", Math.Round(currentStep.pressureResultAvgRamp, 1)) & vbNewLine
                     End If
                 End If
 
-                If checkToOutput.curePro.checkVac And currentStep.vacSet("SetPoint") <> -1 Then
+                If checkToOutput.curePro.checkVac And currentStep.vacSetPoint <> -1 Then
                     vacStr = "Vacuum (inHg)" & vbNewLine
 
-                    If Math.Abs(currentStep.vacSet("SetPoint")) = Math.Abs(currentStep.vacSet("NegTol")) Then
-                        vacStr = vacStr & "Min: " & String.Format("{0:0.0}", Math.Round(currentStep.vacResult("Min"), 1)) & vbNewLine
-                    ElseIf Math.Abs(currentStep.vacSet("SetPoint")) = Math.Abs(currentStep.vacSet("PosTol")) Then
-                        vacStr = vacStr & "Max: " & String.Format("{0:0.0}", Math.Round(currentStep.vacResult("Max"), 1)) & vbNewLine
+                    If Math.Abs(currentStep.vacSetPoint) = Math.Abs(currentStep.vacNegTol) Then
+                        vacStr = vacStr & "Min " & String.Format("{00.0}", Math.Round(currentStep.vacResultMin, 1)) & vbNewLine
+                    ElseIf Math.Abs(currentStep.vacSetPoint) = Math.Abs(currentStep.vacPosTol) Then
+                        vacStr = vacStr & "Max " & String.Format("{00.0}", Math.Round(currentStep.vacResultMax, 1)) & vbNewLine
                     Else
-                        vacStr = vacStr & "Max: " & String.Format("{0:0.0}", Math.Round(currentStep.vacResult("Min"), 1))
-                        vacStr = vacStr & " | Min: " & String.Format("{0:0.0}", Math.Round(currentStep.vacResult("Max"), 1))
-                        vacStr = vacStr & " | Avg: " & String.Format("{0:0.0}", Math.Round(currentStep.vacResult("Avg"), 1)) & vbNewLine
+                        vacStr = vacStr & "Max " & String.Format("{00.0}", Math.Round(currentStep.vacResultMin, 1))
+                        vacStr = vacStr & " | Min " & String.Format("{00.0}", Math.Round(currentStep.vacResultMax, 1))
+                        vacStr = vacStr & " | Avg " & String.Format("{00.0}", Math.Round(currentStep.vacResultAvg, 1)) & vbNewLine
                     End If
 
                 End If
@@ -369,23 +381,23 @@ Public Class ExcelOutput
                 cell3 = cell3 & tempStr & tempRmpStr & pressStr & pressRmpStr & vacStr
 
 
-                If Strings.Right(cell3, 1) = vbLf Then
-                    cell3 = Strings.Left(cell3, Len(cell3) - 1)
-                End If
+            If Strings.Right(cell3, 1) = vbLf Then
+                cell3 = Strings.Left(cell3, Len(cell3) - 1)
+            End If
 
-                mainSheet.Cells(curRow, 7) = cell3
+            mainSheet.Cells(curRow, 7) = cell3
 
-                'Format cell 3
+            'Format cell 3
 
-                If currentStep.tempPass Then
-                    formatFont(mainSheet.Cells(curRow, 7), tempStr, 9)
-                    formatFont(mainSheet.Cells(curRow, 7), "Temperature (°F)", 11, True,,,, False)
-                Else
-                    formatFont(mainSheet.Cells(curRow, 7), tempStr, 9,,, True, Color.Red)
-                    formatFont(mainSheet.Cells(curRow, 7), "Temperature (°F)", 11, True,, True, Color.Red, False)
-                End If
+            If currentStep.tempPass Then
+                formatFont(mainSheet.Cells(curRow, 7), tempStr, 9)
+                formatFont(mainSheet.Cells(curRow, 7), "Temperature (°F)", 11, True,,,, False)
+            Else
+                formatFont(mainSheet.Cells(curRow, 7), tempStr, 9,,, True, Color.Red)
+                formatFont(mainSheet.Cells(curRow, 7), "Temperature (°F)", 11, True,, True, Color.Red, False)
+            End If
 
-                If currentStep.tempSet("RampRate") <> 0 Then
+                If currentStep.tempRampRate <> 0 Then
                     If currentStep.tempRampPass Then
                         formatFont(mainSheet.Cells(curRow, 7), tempRmpStr, 9)
                         formatFont(mainSheet.Cells(curRow, 7), "Temp. Ramp (°F/min)", 11, True,,,, False)
@@ -396,14 +408,14 @@ Public Class ExcelOutput
                 End If
 
                 If currentStep.pressurePass Then
-                    formatFont(mainSheet.Cells(curRow, 7), pressStr, 9)
-                    formatFont(mainSheet.Cells(curRow, 7), "Pressure (psi)", 11, True,,,, False)
-                Else
-                    formatFont(mainSheet.Cells(curRow, 7), pressStr, 9,,, True, Color.Red)
-                    formatFont(mainSheet.Cells(curRow, 7), "Pressure (psi)", 11, True,, True, Color.Red, False)
-                End If
+                        formatFont(mainSheet.Cells(curRow, 7), pressStr, 9)
+                        formatFont(mainSheet.Cells(curRow, 7), "Pressure (psi)", 11, True,,,, False)
+                    Else
+                        formatFont(mainSheet.Cells(curRow, 7), pressStr, 9,,, True, Color.Red)
+                        formatFont(mainSheet.Cells(curRow, 7), "Pressure (psi)", 11, True,, True, Color.Red, False)
+                    End If
 
-                If currentStep.pressureSet("RampRate") <> 0 Then
+                If currentStep.pressureRampRate <> 0 Then
                     If currentStep.pressureRampPass Then
                         formatFont(mainSheet.Cells(curRow, 7), pressRmpStr, 9)
                         formatFont(mainSheet.Cells(curRow, 7), "Pressure Ramp (psi/min)", 11, True,,,, False)
@@ -414,16 +426,16 @@ Public Class ExcelOutput
                 End If
 
                 If currentStep.vacPass Then
-                    formatFont(mainSheet.Cells(curRow, 7), vacStr, 9)
-                    formatFont(mainSheet.Cells(curRow, 7), "Vacuum (inHg)", 11, True,,,, False)
-                Else
-                    formatFont(mainSheet.Cells(curRow, 7), vacStr, 9,,, True, Color.Red)
-                    formatFont(mainSheet.Cells(curRow, 7), "Vacuum (inHg)", 11, True,, True, Color.Red, False)
+                        formatFont(mainSheet.Cells(curRow, 7), vacStr, 9)
+                        formatFont(mainSheet.Cells(curRow, 7), "Vacuum (inHg)", 11, True,,,, False)
+                    Else
+                        formatFont(mainSheet.Cells(curRow, 7), vacStr, 9,,, True, Color.Red)
+                        formatFont(mainSheet.Cells(curRow, 7), "Vacuum (inHg)", 11, True,, True, Color.Red, False)
+                    End If
                 End If
-            End If
 
-            'Set row height
-            Dim rowCount As Integer = 0
+                'Set row height
+                Dim rowCount As Integer = 0
 
             If mainSheet.Cells(curRow, 1).Value.ToString.Split(vbNewLine).Length > rowCount Then rowCount = mainSheet.Cells(curRow, 1).Value.ToString.Split(vbNewLine).Length
             If mainSheet.Cells(curRow, 3).Value.ToString.Split(vbNewLine).Length > rowCount Then rowCount = mainSheet.Cells(curRow, 3).Value.ToString.Split(vbNewLine).Length
@@ -627,8 +639,8 @@ Public Class ExcelOutput
         outputExcelVal(infoSht, "headerCount", checkToOutput.headerCount, cRow)
         outputExcelVal(infoSht, "cureStart", checkToOutput.cureStart, cRow)
         outputExcelVal(infoSht, "cureEnd", checkToOutput.cureEnd, cRow)
-        outputExcelVal(infoSht, "startTime", checkToOutput.dateValues("startTime"), cRow)
-        outputExcelVal(infoSht, "endTime", checkToOutput.dateValues("endTime"), cRow)
+        outputExcelVal(infoSht, "startTime", checkToOutput.cureStartTime, cRow)
+        outputExcelVal(infoSht, "endTime", checkToOutput.cureEndTime, cRow)
         outputExcelVal(infoSht, "machType", checkToOutput.machType, cRow)
 
         If checkToOutput.curePro.checkTemp Then
@@ -826,49 +838,49 @@ Public Class ExcelOutput
         cNum += 1
     End Sub
 
-    Function termToStr(termCond As Dictionary(Of String, Object), currentStep As CureStep) As String
+    Function termToStr(termCondType As String, termCondCondition As String, termCondGoal As Double, termCondModifier As Object, currentStep As CureStep) As String
 
         Dim currentStr As String = ""
 
-        If termCond("Type") = "None" Then
+        If termCondType = "None" Then
             Return ""
 
 
-        ElseIf termCond("Type") = "Time" Then
-            If termCond("Modifier") = "Recieve" Then
+        ElseIf termCondType = "Time" Then
+            If termCondModifier = "Recieve" Then
                 currentStr = currentStr & "Time continued from previous step."
             Else
-                currentStr = currentStr & "After " & termCond("Goal") & " min"
+                currentStr = currentStr & "After " & termCondGoal & " min"
             End If
 
             currentStr = currentStr & vbNewLine
 
 
-        ElseIf termCond("Type") = "Temp" Then
-            currentStr = currentStr & termCond("Modifier")
+        ElseIf termCondType = "Temp" Then
+            currentStr = currentStr & termCondModifier
 
-            If termCond("Condition") = "GREATER" Then
+            If termCondCondition = "GREATER" Then
                 currentStr = currentStr & " > "
-            ElseIf termCond("Condition") = "LESS" Then
+            ElseIf termCondCondition = "LESS" Then
                 currentStr = currentStr & " < "
             Else
                 Throw New Exception("Unknown termination condition for temp on " & currentStep.stepName)
             End If
 
-            currentStr = currentStr & termCond("Goal") & "°F"
+            currentStr = currentStr & termCondGoal & "°F"
             currentStr = currentStr & vbNewLine
 
 
-        ElseIf termCond("Type") = "Press" Then
-            If termCond("Condition") = "GREATER" Then
+        ElseIf termCondType = "Press" Then
+            If termCondCondition = "GREATER" Then
                 currentStr = currentStr & " > "
-            ElseIf termCond("Condition") = "LESS" Then
+            ElseIf termCondCondition = "LESS" Then
                 currentStr = currentStr & " < "
             Else
                 Throw New Exception("Unknown termination condition for temp on " & currentStep.stepName)
             End If
 
-            currentStr = currentStr & termCond("Goal") & " psi"
+            currentStr = currentStr & termCondGoal & " psi"
             currentStr = currentStr & vbNewLine
         End If
 

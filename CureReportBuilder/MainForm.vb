@@ -3,6 +3,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Data.SqlClient
 Imports System.Threading
+Imports System.Text.RegularExpressions
 
 Public Class MainForm
 
@@ -16,6 +17,7 @@ Public Class MainForm
 
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
         Dim vers As Version = My.Application.Info.Version
         Me.Text = "Cure Report Builder " & vers.Major & "." & vers.Minor & "." & vers.Build
 
@@ -48,6 +50,7 @@ Public Class MainForm
 
         'Call batchRun()
     End Sub
+
 
     Function getEpicorData(jobNum As Integer) As DataRow
 
@@ -107,7 +110,8 @@ Public Class MainForm
         Dim threadArr() As Thread = Nothing
 
         For i = 0 To UBound(toRunList)
-            threadArr.AddValArr(New System.Threading.Thread(Sub() runCureCheckFromParamFile(1)))
+            Dim currentVal As String = toRunList(i)
+            threadArr.AddValArr(New System.Threading.Thread(Sub() runCureCheckFromParamFile(currentVal)))
             threadArr(i).Start()
         Next
 
@@ -125,7 +129,7 @@ Public Class MainForm
 
     End Sub
 
-    Sub runCureCheckFromParamFile(test As Integer)
+    Sub runCureCheckFromParamFile(runParamNam As String)
         Dim cureCheck As CureCheck = New CureCheck
 
         'Check if cure param file exists
@@ -134,9 +138,14 @@ Public Class MainForm
 
         'Set cure
 
+
+
         'Find data file
 
         'Load in data file
+        'If multiple are found try both and see which one has better results
+
+
 
         'If Epicor was loaded then Input cure parameters
         'Else try to get Epicor values
