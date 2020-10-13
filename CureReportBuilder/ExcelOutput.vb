@@ -658,7 +658,7 @@ Public Class ExcelOutput
 
         outputExcelVal(infoSht, "cureProfileDate", checkToOutput.curePro.fileEditDate, cRow)
 
-        outputExcelVal(infoSht, "checkToOutput.curePro", checkToOutput.curePro.newSerializeCure, cRow)
+        outputExcelVal(infoSht, "checkToOutput.curePro", checkToOutput.curePro.SerializeCure, cRow)
 
 
 

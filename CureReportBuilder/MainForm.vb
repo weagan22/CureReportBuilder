@@ -444,7 +444,7 @@ Public Class MainForm
         mainCureCheck = New CureCheck
 
         If Not cureProfiles Is Nothing Then
-            mainCureCheck.curePro.newDeserializeCure(cureProfiles(Combo_CureProfile.SelectedIndex).newSerializeCure)
+            mainCureCheck.curePro.DeserializeCure(cureProfiles(Combo_CureProfile.SelectedIndex).SerializeCure)
         End If
 
 
@@ -470,7 +470,7 @@ Public Class MainForm
         Dim i As Integer
         For i = 0 To UBound(cureProfiles)
             Dim outputWriter As IO.StreamWriter = New System.IO.StreamWriter(inPath & "/" & cureProfiles(i).Name & ".cprof")
-            outputWriter.Write(cureProfiles(i).newSerializeCure)
+            outputWriter.Write(cureProfiles(i).SerializeCure)
             outputWriter.Close()
         Next
 
@@ -522,7 +522,7 @@ Public Class MainForm
                     cureProfiles(UBound(cureProfiles)) = New CureProfile()
                 End If
 
-                cureProfiles(UBound(cureProfiles)).newDeserializeCure(cureDef(i))
+                cureProfiles(UBound(cureProfiles)).DeserializeCure(cureDef(i))
                 cureProfiles(UBound(cureProfiles)).fileEditDate = IO.File.GetLastWriteTime(inPath)
                 Combo_CureProfile.Items.Add(cureProfiles(UBound(cureProfiles)).Name)
                 Combo_CureProfileEdit.Items.Add(cureProfiles(UBound(cureProfiles)).Name)
