@@ -85,10 +85,10 @@
             Dim total As Double = 0
             Dim addCnt As Integer = 0
 
-            Dim stepDuration As Double = (dateArr(UBound(dateArr)) - dateArr(0)).TotalMinutes / dataCnt
+            Dim dataStepDuration As Double = (dateArr(UBound(dateArr)) - dateArr(0)).TotalMinutes / dataCnt
 
             'Check step time length
-            If curntStep.stepDuration <> -1 Or curntStep.stepDuration <> 0 Then
+            If curntStep.stepDuration > 0 Then
                 If (dateArr(curntStep.stepStart) - dateArr(curntStep.stepStart)).TotalMinutes > curntStep.stepDuration Then
                     curntStep.timePass = False
                 End If
@@ -102,13 +102,13 @@
                 ''Max temp
                 If Not firstStep Then
                     If curePro.CureSteps(i - 1).tempRampRate < 0 Then
-                        indexStart = indexStart + Math.Abs(Math.Round(curePro.CureSteps(i - 1).tempRampRate / stepDuration, 0))
+                        indexStart = indexStart + Math.Abs(Math.Round(curePro.CureSteps(i - 1).tempRampRate / dataStepDuration, 0))
                     End If
                 End If
 
                 If Not lastStep Then
                     If curePro.CureSteps(i + 1).tempRampRate > 0 Then
-                        indexEnd = indexEnd - Math.Abs(Math.Round(curePro.CureSteps(i + 1).tempRampRate / stepDuration, 0))
+                        indexEnd = indexEnd - Math.Abs(Math.Round(curePro.CureSteps(i + 1).tempRampRate / dataStepDuration, 0))
                     End If
                 End If
 
@@ -127,13 +127,13 @@
 
                 If Not firstStep Then
                     If curePro.CureSteps(i - 1).tempRampRate > 0 Then
-                        indexStart = indexStart + Math.Abs(Math.Round(curePro.CureSteps(i - 1).tempRampRate / stepDuration, 0))
+                        indexStart = indexStart + Math.Abs(Math.Round(curePro.CureSteps(i - 1).tempRampRate / dataStepDuration, 0))
                     End If
                 End If
 
                 If Not lastStep Then
                     If curePro.CureSteps(i + 1).tempRampRate < 0 Then
-                        indexEnd = indexEnd - Math.Abs(Math.Round(curePro.CureSteps(i + 1).tempRampRate / stepDuration, 0))
+                        indexEnd = indexEnd - Math.Abs(Math.Round(curePro.CureSteps(i + 1).tempRampRate / dataStepDuration, 0))
                     End If
                 End If
 
@@ -273,13 +273,13 @@
 
                 If Not firstStep Then
                     If curePro.CureSteps(i - 1).pressureRampRate < 0 Then
-                        indexStart = indexStart + Math.Abs(Math.Round(curePro.CureSteps(i - 1).pressureRampRate / stepDuration, 0))
+                        indexStart = indexStart + Math.Abs(Math.Round(curePro.CureSteps(i - 1).pressureRampRate / dataStepDuration, 0))
                     End If
                 End If
 
                 If Not lastStep Then
                     If curePro.CureSteps(i + 1).pressureRampRate > 0 Then
-                        indexEnd = indexEnd - Math.Abs(Math.Round(curePro.CureSteps(i + 1).pressureRampRate / stepDuration, 0))
+                        indexEnd = indexEnd - Math.Abs(Math.Round(curePro.CureSteps(i + 1).pressureRampRate / dataStepDuration, 0))
                     End If
                 End If
 
@@ -297,14 +297,14 @@
                             indexEnd = curntStep.stepEnd
                             If Not firstStep Then
                                 If curePro.CureSteps(i - 1).pressureRampRate > 0 Then
-                                    indexStart = indexStart + Math.Abs(Math.Round(curePro.CureSteps(i - 1).pressureRampRate / stepDuration, 0))
-                                End If
+                        indexStart = indexStart + Math.Abs(Math.Round(curePro.CureSteps(i - 1).pressureRampRate / dataStepDuration, 0))
+                    End If
                             End If
 
                             If Not lastStep Then
                                 If curePro.CureSteps(i + 1).pressureRampRate < 0 Then
-                                    indexEnd = indexEnd - Math.Abs(Math.Round(curePro.CureSteps(i + 1).pressureRampRate / stepDuration, 0))
-                                End If
+                        indexEnd = indexEnd - Math.Abs(Math.Round(curePro.CureSteps(i + 1).pressureRampRate / dataStepDuration, 0))
+                    End If
 
                             End If
 

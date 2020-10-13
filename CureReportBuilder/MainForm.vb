@@ -38,8 +38,6 @@ Public Class MainForm
         '    Me.Timer1.Enabled = True
         'End If
 
-
-
         Try
             Call loadCureProfiles(Txt_CureProfilesPath.Text)
         Catch ex As Exception
@@ -54,7 +52,7 @@ Public Class MainForm
 
     Function getEpicorData(jobNum As Integer) As DataRow
 
-        If Len(jobNum.ToString) <> 6 Then
+        If Len(jobNum.ToString) <> 6 And System.Text.RegularExpressions.Regex.IsMatch(jobNum.ToString, "^[0-9]+$") Then
             Throw New Exception("Job number for Epicor must be a 6 digit number.")
         End If
 
@@ -77,7 +75,7 @@ Public Class MainForm
                 ASM.QtyPer 
             FROM Erp.JobAsmbl ASM
             LEFT JOIN Erp.JobHead JOB ON JOB.JobNum = ASM.JobNum
-            INNER JOIN Erp.JobOper OP ON OP.JobNum = ASM.JobNum AND ASM.AssemblySeq = OP.AssemblySeq AND OP.OpCode = 'AUTOCURE'
+            INNER JOIN Erp.JobOper OP ON OP.JobNum = ASM.JobNum AND ASM.AssemblySeq = OP.AssemblySeq AND OP.OpCode = 'LAYUP'
             WHERE JOB.JobNum = '" + jobNum.ToString + "'", db)
 
         adapter.Fill(queryResult)
@@ -446,7 +444,7 @@ Public Class MainForm
         mainCureCheck = New CureCheck
 
         If Not cureProfiles Is Nothing Then
-            mainCureCheck.curePro.deserializeCure(cureProfiles(Combo_CureProfile.SelectedIndex).serializeCure)
+            mainCureCheck.curePro.newDeserializeCure(cureProfiles(Combo_CureProfile.SelectedIndex).newSerializeCure)
         End If
 
 
@@ -467,17 +465,16 @@ Public Class MainForm
 
 #Region "Cure profile inport/export"
     Sub outputCureProfiles(inPath As String)
-        Dim outputWriter As IO.StreamWriter = New System.IO.StreamWriter(inPath)
+
 
         Dim i As Integer
         For i = 0 To UBound(cureProfiles)
-            outputWriter.Write(cureProfiles(i).serializeCure)
-            If i < UBound(cureProfiles) Then
-                outputWriter.Write("~&&&~" & vbNewLine)
-            End If
+            Dim outputWriter As IO.StreamWriter = New System.IO.StreamWriter(inPath & "/" & cureProfiles(i).Name & ".cprof")
+            outputWriter.Write(cureProfiles(i).newSerializeCure)
+            outputWriter.Close()
         Next
 
-        outputWriter.Close()
+
     End Sub
 
     Sub loadCureProfiles(inPath As String)
@@ -525,7 +522,7 @@ Public Class MainForm
                     cureProfiles(UBound(cureProfiles)) = New CureProfile()
                 End If
 
-                cureProfiles(UBound(cureProfiles)).deserializeCure(cureDef(i))
+                cureProfiles(UBound(cureProfiles)).newDeserializeCure(cureDef(i))
                 cureProfiles(UBound(cureProfiles)).fileEditDate = IO.File.GetLastWriteTime(inPath)
                 Combo_CureProfile.Items.Add(cureProfiles(UBound(cureProfiles)).Name)
                 Combo_CureProfileEdit.Items.Add(cureProfiles(UBound(cureProfiles)).Name)
@@ -736,7 +733,6 @@ Public Class MainForm
         Me.Close()
     End Sub
 
-
     Private Sub Combo_CureProfileEdit_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Combo_CureProfileEdit.SelectedIndexChanged
 
         If cureProfiles(Combo_CureProfileEdit.SelectedIndex).Name <> Combo_CureProfileEdit.Text Then
@@ -745,8 +741,6 @@ Public Class MainForm
 
         Combo_CureProfile.SelectedIndex = Combo_CureProfileEdit.SelectedIndex
     End Sub
-
-
 
     Function numericCheck(sender As Object)
         If Not IsNumeric(sender.Text) Then
@@ -1104,6 +1098,8 @@ Public Class MainForm
         End If
     End Sub
 
+#End Region
+
     Private Sub Txt_JobNumber_TextChanged(sender As Object, e As EventArgs) Handles Txt_JobNumber.TextChanged
         If Len(Txt_JobNumber.Text) = 6 And System.Text.RegularExpressions.Regex.IsMatch(Txt_JobNumber.Text, "^[0-9]+$") Then
             Try
@@ -1127,7 +1123,7 @@ Public Class MainForm
 
 
 
-#End Region
+
 
 
 End Class

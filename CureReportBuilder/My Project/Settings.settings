@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="CureProfilePath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">S:\Engineering\Functional Groups\Composites\Macros\CureReportFiles\Cure Profiles</Value>
+      <Value Profile="(Default)">S:\Engineering\Functional Groups\Composites\Macros\CureReportFiles\Cure Profiles_NewStyle</Value>
     </Setting>
     <Setting Name="ReportTemplatePath" Type="System.String" Scope="User">
       <Value Profile="(Default)">S:\Engineering\Functional Groups\Composites\Macros\CureReportFiles\Cure Report_Template.xlsx</Value>

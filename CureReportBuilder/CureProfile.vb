@@ -63,102 +63,111 @@ Public Class CureProfile
         CureSteps(0) = New CureStep()
     End Sub
 
-    Public Sub deserializeCure(defString As String)
+    'Public Sub deserializeCure(defString As String)
 
-        defString = Replace(Trim(defString), vbTab, "")
+    '    defString = Replace(Trim(defString), vbTab, "")
 
-        Dim readtext As New IO.StringReader(defString)
+    '    Dim readtext As New IO.StringReader(defString)
 
-        If Left(defString, 1) = vbCr Then
-            readtext.ReadLine()
-        End If
+    '    If Left(defString, 1) = vbCr Then
+    '        readtext.ReadLine()
+    '    End If
 
-        If readtext.ReadLine <> "<Cure>" Then Throw New Exception("deserializeCure unrecognized data type")
+    '    If readtext.ReadLine <> "<Cure>" Then Throw New Exception("deserializeCure unrecognized data type")
 
-        inputValue(Name, readtext.ReadLine)
-        inputValue(cureDoc, readtext.ReadLine)
-        inputValue(cureDocRev, readtext.ReadLine)
+    '    inputValue(Name, readtext.ReadLine)
+    '    inputValue(cureDoc, readtext.ReadLine)
+    '    inputValue(cureDocRev, readtext.ReadLine)
 
-        inputValue(checkTemp, readtext.ReadLine)
-        inputValue(checkPressure, readtext.ReadLine)
-        inputValue(checkVac, readtext.ReadLine)
+    '    inputValue(checkTemp, readtext.ReadLine)
+    '    inputValue(checkPressure, readtext.ReadLine)
+    '    inputValue(checkVac, readtext.ReadLine)
 
-        If Trim(readtext.ReadLine) <> "<Steps>" Then Throw New Exception("deserializeCure unrecognized data type")
+    '    If Trim(readtext.ReadLine) <> "<Steps>" Then Throw New Exception("deserializeCure unrecognized data type")
 
-        Dim stepCount As Integer = 0
-        inputValue(stepCount, readtext.ReadLine)
+    '    Dim stepCount As Integer = 0
+    '    inputValue(stepCount, readtext.ReadLine)
 
-        Dim i As Integer
-        For i = 1 To stepCount
-            addCureStep()
-        Next
+    '    Dim i As Integer
+    '    For i = 1 To stepCount
+    '        addCureStep()
+    '    Next
 
-        For i = 0 To stepCount
-            Dim exStep As CureStep = CureSteps(i)
+    '    For i = 0 To stepCount
+    '        Dim exStep As CureStep = CureSteps(i)
 
-            If Trim(readtext.ReadLine) <> "<Step" & i & ">" Then Throw New Exception("deserializeCure unrecognized data type")
-            inputValue(exStep.stepName, readtext.ReadLine)
-            inputValue(exStep.stepDuration, readtext.ReadLine)
-            If Trim(readtext.ReadLine) <> "<pressureSet>" Then Throw New Exception("deserializeCure unrecognized data type")
-            inputValue(exStep.pressureSetPoint, readtext.ReadLine)
-            inputValue(exStep.pressurePosTol, readtext.ReadLine)
-            inputValue(exStep.pressureNegTol, readtext.ReadLine)
-            inputValue(exStep.pressureRampRate, readtext.ReadLine)
-            inputValue(exStep.pressureRampPosTol, readtext.ReadLine)
-            inputValue(exStep.pressureRampNegTol, readtext.ReadLine)
-            If Trim(readtext.ReadLine) <> "</pressureSet>" Then Throw New Exception("deserializeCure unrecognized data type")
+    '        If Trim(readtext.ReadLine) <> "<Step" & i & ">" Then Throw New Exception("deserializeCure unrecognized data type")
+    '        inputValue(exStep.stepName, readtext.ReadLine)
+    '        'inputValue(exStep.stepDuration, readtext.ReadLine)
+    '        If Trim(readtext.ReadLine) <> "<pressureSet>" Then Throw New Exception("deserializeCure unrecognized data type")
+    '        inputValue(exStep.pressureSetPoint, readtext.ReadLine)
+    '        inputValue(exStep.pressurePosTol, readtext.ReadLine)
+    '        inputValue(exStep.pressureNegTol, readtext.ReadLine)
+    '        inputValue(exStep.pressureRampRate, readtext.ReadLine)
+    '        inputValue(exStep.pressureRampPosTol, readtext.ReadLine)
+    '        inputValue(exStep.pressureRampNegTol, readtext.ReadLine)
+    '        If Trim(readtext.ReadLine) <> "</pressureSet>" Then Throw New Exception("deserializeCure unrecognized data type")
 
-            If Trim(readtext.ReadLine) <> "<tempSet>" Then Throw New Exception("deserializeCure unrecognized data type")
-            inputValue(exStep.tempSetPoint, readtext.ReadLine)
-            inputValue(exStep.tempPosTol, readtext.ReadLine)
-            inputValue(exStep.tempNegTol, readtext.ReadLine)
-            inputValue(exStep.tempRampRate, readtext.ReadLine)
-            inputValue(exStep.tempRampPosTol, readtext.ReadLine)
-            inputValue(exStep.tempRampNegTol, readtext.ReadLine)
-            If Trim(readtext.ReadLine) <> "</tempSet>" Then Throw New Exception("deserializeCure unrecognized data type")
+    '        If Trim(readtext.ReadLine) <> "<tempSet>" Then Throw New Exception("deserializeCure unrecognized data type")
+    '        inputValue(exStep.tempSetPoint, readtext.ReadLine)
+    '        inputValue(exStep.tempPosTol, readtext.ReadLine)
+    '        inputValue(exStep.tempNegTol, readtext.ReadLine)
+    '        inputValue(exStep.tempRampRate, readtext.ReadLine)
+    '        inputValue(exStep.tempRampPosTol, readtext.ReadLine)
+    '        inputValue(exStep.tempRampNegTol, readtext.ReadLine)
+    '        If Trim(readtext.ReadLine) <> "</tempSet>" Then Throw New Exception("deserializeCure unrecognized data type")
 
-            If Trim(readtext.ReadLine) <> "<vacSet>" Then Throw New Exception("deserializeCure unrecognized data type")
-            inputValue(exStep.vacSetPoint, readtext.ReadLine)
-            inputValue(exStep.vacPosTol, readtext.ReadLine)
-            inputValue(exStep.vacNegTol, readtext.ReadLine)
-            inputValue(exStep.vacRampRate, readtext.ReadLine)
-            inputValue(exStep.vacRampPosTol, readtext.ReadLine)
-            inputValue(exStep.vacRampNegTol, readtext.ReadLine)
-            If Trim(readtext.ReadLine) <> "</vacSet>" Then Throw New Exception("deserializeCure unrecognized data type")
+    '        If Trim(readtext.ReadLine) <> "<vacSet>" Then Throw New Exception("deserializeCure unrecognized data type")
+    '        inputValue(exStep.vacSetPoint, readtext.ReadLine)
+    '        inputValue(exStep.vacPosTol, readtext.ReadLine)
+    '        inputValue(exStep.vacNegTol, readtext.ReadLine)
+    '        inputValue(exStep.vacRampRate, readtext.ReadLine)
+    '        inputValue(exStep.vacRampPosTol, readtext.ReadLine)
+    '        inputValue(exStep.vacRampNegTol, readtext.ReadLine)
+    '        If Trim(readtext.ReadLine) <> "</vacSet>" Then Throw New Exception("deserializeCure unrecognized data type")
 
-            If Trim(readtext.ReadLine) <> "<termCond1>" Then Throw New Exception("deserializeCure unrecognized data type")
-            inputValue(exStep.termCond1Type, readtext.ReadLine)
-            inputValue(exStep.termCond1Condition, readtext.ReadLine)
-            inputValue(exStep.termCond1Goal, readtext.ReadLine)
-            inputValue(exStep.termCond1Modifier, readtext.ReadLine)
-            If Trim(readtext.ReadLine) <> "</termCond1>" Then Throw New Exception("deserializeCure unrecognized data type")
+    '        If Trim(readtext.ReadLine) <> "<termCond1>" Then Throw New Exception("deserializeCure unrecognized data type")
+    '        inputValue(exStep.termCond1Type, readtext.ReadLine)
+    '        inputValue(exStep.termCond1Condition, readtext.ReadLine)
+    '        inputValue(exStep.termCond1Goal, readtext.ReadLine)
+    '        inputValue(exStep.termCond1Modifier, readtext.ReadLine)
+    '        If Trim(readtext.ReadLine) <> "</termCond1>" Then Throw New Exception("deserializeCure unrecognized data type")
 
-            If Trim(readtext.ReadLine) <> "<termCond2>" Then Throw New Exception("deserializeCure unrecognized data type")
-            inputValue(exStep.termCond2Type, readtext.ReadLine)
-            inputValue(exStep.termCond2Condition, readtext.ReadLine)
-            inputValue(exStep.termCond2Goal, readtext.ReadLine)
-            inputValue(exStep.termCond2Modifier, readtext.ReadLine)
-            If Trim(readtext.ReadLine) <> "</termCond2>" Then Throw New Exception("deserializeCure unrecognized data type")
+    '        If Trim(readtext.ReadLine) <> "<termCond2>" Then Throw New Exception("deserializeCure unrecognized data type")
+    '        inputValue(exStep.termCond2Type, readtext.ReadLine)
+    '        inputValue(exStep.termCond2Condition, readtext.ReadLine)
+    '        inputValue(exStep.termCond2Goal, readtext.ReadLine)
+    '        inputValue(exStep.termCond2Modifier, readtext.ReadLine)
+    '        If Trim(readtext.ReadLine) <> "</termCond2>" Then Throw New Exception("deserializeCure unrecognized data type")
 
-            If Trim(readtext.ReadLine) <> "<termCondOper>" Then Throw New Exception("deserializeCure unrecognized data type")
-            inputValue(exStep.termCondOper, readtext.ReadLine)
-            If Trim(readtext.ReadLine) <> "</termCondOper>" Then Throw New Exception("deserializeCure unrecognized data type")
+    '        If Trim(readtext.ReadLine) <> "<termCondOper>" Then Throw New Exception("deserializeCure unrecognized data type")
+    '        inputValue(exStep.termCondOper, readtext.ReadLine)
+    '        If Trim(readtext.ReadLine) <> "</termCondOper>" Then Throw New Exception("deserializeCure unrecognized data type")
 
-            If Trim(readtext.ReadLine) <> "</Step" & i & ">" Then Throw New Exception("deserializeCure unrecognized data type")
-        Next
+    '        If Trim(readtext.ReadLine) <> "</Step" & i & ">" Then Throw New Exception("deserializeCure unrecognized data type")
+    '    Next
 
-        If Trim(readtext.ReadLine) <> "</Steps>" Then Throw New Exception("deserializeCure unrecognized data type")
-        If Trim(readtext.ReadLine) <> "</Cure>" Then Throw New Exception("deserializeCure unrecognized data type")
+    '    If Trim(readtext.ReadLine) <> "</Steps>" Then Throw New Exception("deserializeCure unrecognized data type")
+    '    If Trim(readtext.ReadLine) <> "</Cure>" Then Throw New Exception("deserializeCure unrecognized data type")
 
-    End Sub
+    'End Sub
 
-    Sub inputValue(ByRef inVariable As Object, inStr As String)
-        Dim values() As String
-        values = Split(inStr, ",")
-        If UBound(values) = 1 Then
-            inVariable = values(1)
-        End If
-    End Sub
+    'Sub inputValue(ByRef inVariable As Object, inStr As String)
+    '    Dim values() As String
+    '    values = Split(inStr, ",")
+    '    If UBound(values) = 1 Then
+    '        If TypeName(inVariable) = "Double" Then
+    '            If values(1) = "" Then
+    '                inVariable = -1
+    '            Else
+    '                inVariable = values(1)
+    '            End If
+    '        Else
+    '            inVariable = values(1)
+    '        End If
+
+    '    End If
+    'End Sub
 
     Public Sub newDeserializeCure(defString As String)
 
@@ -190,40 +199,40 @@ Public Class CureProfile
             exStep.stepDuration = xmlStyleValRet("stepDuration", thisStepTxt)
 
             Dim pressureSetTxt As String = xmlStyleValRet("pressureSet", thisStepTxt)
-            exStep.pressureSetPoint = xmlStyleValRet("pressureSetPoint", pressureSetTxt)
-            exStep.pressurePosTol = xmlStyleValRet("pressurePosTol", pressureSetTxt)
-            exStep.pressureNegTol = xmlStyleValRet("pressureNegTol", pressureSetTxt)
-            exStep.pressureRampRate = xmlStyleValRet("pressureRampRate", pressureSetTxt)
-            exStep.pressureRampPosTol = xmlStyleValRet("pressureRampPosTol", pressureSetTxt)
-            exStep.pressureRampNegTol = xmlStyleValRet("pressureRampNegTol", pressureSetTxt)
+            exStep.pressureSetPoint = xmlStyleValRet("setPoint", pressureSetTxt)
+            exStep.pressurePosTol = xmlStyleValRet("PosTol", pressureSetTxt)
+            exStep.pressureNegTol = xmlStyleValRet("NegTol", pressureSetTxt)
+            exStep.pressureRampRate = xmlStyleValRet("RampRate", pressureSetTxt)
+            exStep.pressureRampPosTol = xmlStyleValRet("RampPosTol", pressureSetTxt)
+            exStep.pressureRampNegTol = xmlStyleValRet("RampNegTol", pressureSetTxt)
 
             Dim tempSetTxt As String = xmlStyleValRet("tempSet", thisStepTxt)
-            exStep.tempSetPoint = xmlStyleValRet("tempSetPoint", tempSetTxt)
-            exStep.tempPosTol = xmlStyleValRet("tempPosTol", tempSetTxt)
-            exStep.tempNegTol = xmlStyleValRet("tempNegTol", tempSetTxt)
-            exStep.tempRampRate = xmlStyleValRet("tempRampRate", tempSetTxt)
-            exStep.tempRampPosTol = xmlStyleValRet("tempRampPosTol", tempSetTxt)
-            exStep.tempRampNegTol = xmlStyleValRet("tempRampNegTol", tempSetTxt)
+            exStep.tempSetPoint = xmlStyleValRet("setPoint", tempSetTxt)
+            exStep.tempPosTol = xmlStyleValRet("PosTol", tempSetTxt)
+            exStep.tempNegTol = xmlStyleValRet("NegTol", tempSetTxt)
+            exStep.tempRampRate = xmlStyleValRet("RampRate", tempSetTxt)
+            exStep.tempRampPosTol = xmlStyleValRet("RampPosTol", tempSetTxt)
+            exStep.tempRampNegTol = xmlStyleValRet("RampNegTol", tempSetTxt)
 
             Dim vacSetTxt As String = xmlStyleValRet("vacSet", thisStepTxt)
-            exStep.vacSetPoint = xmlStyleValRet("vacSetPoint", vacSetTxt)
-            exStep.vacPosTol = xmlStyleValRet("vacPosTol", vacSetTxt)
-            exStep.vacNegTol = xmlStyleValRet("vacNegTol", vacSetTxt)
-            exStep.vacRampRate = xmlStyleValRet("vacRampRate", vacSetTxt)
-            exStep.vacRampPosTol = xmlStyleValRet("vacRampPosTol", vacSetTxt)
-            exStep.vacRampNegTol = xmlStyleValRet("vacRampNegTol", vacSetTxt)
+            exStep.vacSetPoint = xmlStyleValRet("SetPoint", vacSetTxt)
+            exStep.vacPosTol = xmlStyleValRet("PosTol", vacSetTxt)
+            exStep.vacNegTol = xmlStyleValRet("NegTol", vacSetTxt)
+            exStep.vacRampRate = xmlStyleValRet("RampRate", vacSetTxt)
+            exStep.vacRampPosTol = xmlStyleValRet("RampPosTol", vacSetTxt)
+            exStep.vacRampNegTol = xmlStyleValRet("RampNegTol", vacSetTxt)
 
             Dim termCond1Txt As String = xmlStyleValRet("termCond1", thisStepTxt)
-            exStep.termCond1Type = xmlStyleValRet("termCond1Type", termCond1Txt)
-            exStep.termCond1Condition = xmlStyleValRet("termCond1Condition", termCond1Txt)
-            exStep.termCond1Goal = xmlStyleValRet("termCond1Goal", termCond1Txt)
-            exStep.termCond1Modifier = xmlStyleValRet("termCond1Modifier", termCond1Txt)
+            exStep.termCond1Type = xmlStyleValRet("Type", termCond1Txt)
+            exStep.termCond1Condition = xmlStyleValRet("Condition", termCond1Txt)
+            exStep.termCond1Goal = xmlStyleValRet("Goal", termCond1Txt)
+            exStep.termCond1Modifier = xmlStyleValRet("Modifier", termCond1Txt)
 
             Dim termCond2Txt As String = xmlStyleValRet("termCond2", thisStepTxt)
-            exStep.termCond2Type = xmlStyleValRet("termCond2Type", termCond2Txt)
-            exStep.termCond2Condition = xmlStyleValRet("termCond2Condition", termCond2Txt)
-            exStep.termCond2Goal = xmlStyleValRet("termCond2Goal", termCond2Txt)
-            exStep.termCond2Modifier = xmlStyleValRet("termCond2Modifier", termCond2Txt)
+            exStep.termCond2Type = xmlStyleValRet("Type", termCond2Txt)
+            exStep.termCond2Condition = xmlStyleValRet("Condition", termCond2Txt)
+            exStep.termCond2Goal = xmlStyleValRet("Goal", termCond2Txt)
+            exStep.termCond2Modifier = xmlStyleValRet("Modifier", termCond2Txt)
 
             exStep.termCondOper = xmlStyleValRet("termCondOper", thisStepTxt)
 
@@ -252,88 +261,88 @@ Public Class CureProfile
         End Try
     End Function
 
-    Public Function serializeCure() As String
-        Dim retSer As String = ""
+    'Public Function serializeCure() As String
+    '    Dim retSer As String = ""
 
-        addToSer("<Cure>", retSer)
+    '    addToSer("<Cure>", retSer)
 
-        addToSer("Name," & Name, retSer, 1)
-        addToSer("cureDoc," & cureDoc, retSer, 1)
-        addToSer("cureDocRev," & cureDocRev, retSer, 1)
+    '    addToSer("Name," & Name, retSer, 1)
+    '    addToSer("cureDoc," & cureDoc, retSer, 1)
+    '    addToSer("cureDocRev," & cureDocRev, retSer, 1)
 
-        addToSer("checkTemp," & checkTemp, retSer, 1)
-        addToSer("checkPressure," & checkPressure, retSer, 1)
-        addToSer("checkVac," & checkVac, retSer, 1)
+    '    addToSer("checkTemp," & checkTemp, retSer, 1)
+    '    addToSer("checkPressure," & checkPressure, retSer, 1)
+    '    addToSer("checkVac," & checkVac, retSer, 1)
 
 
-        addToSer("<Steps>", retSer, 1)
-        addToSer("stepCount," & UBound(CureSteps), retSer, 2)
+    '    addToSer("<Steps>", retSer, 1)
+    '    addToSer("stepCount," & UBound(CureSteps), retSer, 2)
 
-        Dim i As Integer
-        For i = 0 To UBound(CureSteps)
+    '    Dim i As Integer
+    '    For i = 0 To UBound(CureSteps)
 
-            Dim exStep As CureStep = CureSteps(i)
+    '        Dim exStep As CureStep = CureSteps(i)
 
-            addToSer("<Step" & i & ">", retSer, 2)
+    '        addToSer("<Step" & i & ">", retSer, 2)
 
-            addToSer("stepName, " & exStep.stepName, retSer, 3)
+    '        addToSer("stepName, " & exStep.stepName, retSer, 3)
 
-            addToSer("stepDuration, " & exStep.stepDuration, retSer, 3)
+    '        'addToSer("stepDuration, " & exStep.stepDuration, retSer, 3)
 
-            addToSer("<" & "pressureSet" & ">", retSer, 3)
-            addToSer("setPoint," & exStep.pressureSetPoint, retSer, 4)
-            addToSer("PosTol," & exStep.pressurePosTol, retSer, 4)
-            addToSer("NegTol," & exStep.pressureNegTol, retSer, 4)
-            addToSer("RampRate," & exStep.pressureRampRate, retSer, 4)
-            addToSer("RampPosTol," & exStep.pressureRampPosTol, retSer, 4)
-            addToSer("RampNegTol," & exStep.pressureRampNegTol, retSer, 4)
-            addToSer("</" & "pressureSet" & ">", retSer, 3)
+    '        addToSer("<" & "pressureSet" & ">", retSer, 3)
+    '        addToSer("setPoint," & exStep.pressureSetPoint, retSer, 4)
+    '        addToSer("PosTol," & exStep.pressurePosTol, retSer, 4)
+    '        addToSer("NegTol," & exStep.pressureNegTol, retSer, 4)
+    '        addToSer("RampRate," & exStep.pressureRampRate, retSer, 4)
+    '        addToSer("RampPosTol," & exStep.pressureRampPosTol, retSer, 4)
+    '        addToSer("RampNegTol," & exStep.pressureRampNegTol, retSer, 4)
+    '        addToSer("</" & "pressureSet" & ">", retSer, 3)
 
-            addToSer("<" & "tempSet" & ">", retSer, 3)
-            addToSer("setPoint," & exStep.tempSetPoint, retSer, 4)
-            addToSer("PosTol," & exStep.tempPosTol, retSer, 4)
-            addToSer("NegTol," & exStep.tempNegTol, retSer, 4)
-            addToSer("RampRate," & exStep.tempRampRate, retSer, 4)
-            addToSer("RampPosTol," & exStep.tempRampPosTol, retSer, 4)
-            addToSer("RampNegTol," & exStep.tempRampNegTol, retSer, 4)
-            addToSer("</" & "tempSet" & ">", retSer, 3)
+    '        addToSer("<" & "tempSet" & ">", retSer, 3)
+    '        addToSer("setPoint," & exStep.tempSetPoint, retSer, 4)
+    '        addToSer("PosTol," & exStep.tempPosTol, retSer, 4)
+    '        addToSer("NegTol," & exStep.tempNegTol, retSer, 4)
+    '        addToSer("RampRate," & exStep.tempRampRate, retSer, 4)
+    '        addToSer("RampPosTol," & exStep.tempRampPosTol, retSer, 4)
+    '        addToSer("RampNegTol," & exStep.tempRampNegTol, retSer, 4)
+    '        addToSer("</" & "tempSet" & ">", retSer, 3)
 
-            addToSer("<" & "vacSet" & ">", retSer, 3)
-            addToSer("setPoint," & exStep.vacSetPoint, retSer, 4)
-            addToSer("PosTol," & exStep.vacPosTol, retSer, 4)
-            addToSer("NegTol," & exStep.vacNegTol, retSer, 4)
-            addToSer("RampRate," & exStep.vacRampRate, retSer, 4)
-            addToSer("RampPosTol," & exStep.vacRampPosTol, retSer, 4)
-            addToSer("RampNegTol," & exStep.vacRampNegTol, retSer, 4)
-            addToSer("</" & "vacSet" & ">", retSer, 3)
+    '        addToSer("<" & "vacSet" & ">", retSer, 3)
+    '        addToSer("setPoint," & exStep.vacSetPoint, retSer, 4)
+    '        addToSer("PosTol," & exStep.vacPosTol, retSer, 4)
+    '        addToSer("NegTol," & exStep.vacNegTol, retSer, 4)
+    '        addToSer("RampRate," & exStep.vacRampRate, retSer, 4)
+    '        addToSer("RampPosTol," & exStep.vacRampPosTol, retSer, 4)
+    '        addToSer("RampNegTol," & exStep.vacRampNegTol, retSer, 4)
+    '        addToSer("</" & "vacSet" & ">", retSer, 3)
 
-            addToSer("<" & "termCond1" & ">", retSer, 3)
-            addToSer("Type," & exStep.termCond1Type, retSer, 4)
-            addToSer("Condition," & exStep.termCond1Condition, retSer, 4)
-            addToSer("Goal," & exStep.termCond1Goal, retSer, 4)
-            addToSer("Modifier," & exStep.termCond1Modifier, retSer, 4)
-            addToSer("</" & "termCond1" & ">", retSer, 3)
+    '        addToSer("<" & "termCond1" & ">", retSer, 3)
+    '        addToSer("Type," & exStep.termCond1Type, retSer, 4)
+    '        addToSer("Condition," & exStep.termCond1Condition, retSer, 4)
+    '        addToSer("Goal," & exStep.termCond1Goal, retSer, 4)
+    '        addToSer("Modifier," & exStep.termCond1Modifier, retSer, 4)
+    '        addToSer("</" & "termCond1" & ">", retSer, 3)
 
-            addToSer("<" & "termCond2" & ">", retSer, 3)
-            addToSer("Type," & exStep.termCond2Type, retSer, 4)
-            addToSer("Condition," & exStep.termCond2Condition, retSer, 4)
-            addToSer("Goal," & exStep.termCond2Goal, retSer, 4)
-            addToSer("Modifier," & exStep.termCond2Modifier, retSer, 4)
-            addToSer("</" & "termCond2" & ">", retSer, 3)
+    '        addToSer("<" & "termCond2" & ">", retSer, 3)
+    '        addToSer("Type," & exStep.termCond2Type, retSer, 4)
+    '        addToSer("Condition," & exStep.termCond2Condition, retSer, 4)
+    '        addToSer("Goal," & exStep.termCond2Goal, retSer, 4)
+    '        addToSer("Modifier," & exStep.termCond2Modifier, retSer, 4)
+    '        addToSer("</" & "termCond2" & ">", retSer, 3)
 
-            addToSer("<" & "termCondOper" & ">", retSer, 3)
-            addToSer("termCondOper," & exStep.termCondOper, retSer, 4)
-            addToSer("</" & "termCondOper" & ">", retSer, 3)
+    '        addToSer("<" & "termCondOper" & ">", retSer, 3)
+    '        addToSer("termCondOper," & exStep.termCondOper, retSer, 4)
+    '        addToSer("</" & "termCondOper" & ">", retSer, 3)
 
-            addToSer("</Step" & i & ">", retSer, 2)
-        Next
+    '        addToSer("</Step" & i & ">", retSer, 2)
+    '    Next
 
-        addToSer("</Steps>", retSer, 1)
+    '    addToSer("</Steps>", retSer, 1)
 
-        addToSer("</Cure>", retSer)
+    '    addToSer("</Cure>", retSer)
 
-        Return retSer
-    End Function
+    '    Return retSer
+    'End Function
 
     Public Function newSerializeCure() As String
         Dim retSer As String = ""
