@@ -529,10 +529,12 @@
 
                 'If the last step has completed then exit the loop and set cure end to the end of this step
                 If UBound(curePro.CureSteps) = currentStep Then
-                    cureEnd = curePro.CureSteps(currentStep).stepEnd
-                    cureEndTime = dateArr(curePro.CureSteps(currentStep).stepEnd)
-                    currentStep += 1
-                    Exit For
+                    If cureEnd < curePro.CureSteps(currentStep).stepEnd Then
+                        cureEnd = curePro.CureSteps(currentStep).stepEnd
+                        cureEndTime = dateArr(curePro.CureSteps(currentStep).stepEnd)
+                        currentStep += 1
+                        Exit For
+                    End If
                 End If
 
                 currentStep += 1
@@ -725,8 +727,9 @@
 
         If cureEnd <> dataCnt Then
             For i = cureEnd + 1 To dataCnt
-                If leadTC.values(i) > start_end_temp Then
-                    MsgBox("Temperature rose above " & start_end_temp & "°F after the cure completed. Check data for deviation.", vbExclamation, "Temperature Error")
+                If leadTC.values(i) > start_end_temp Or vesselPress.values(i) > start_end_press Then
+                    'MsgBox("Temperature rose above " & start_end_temp & "°F after the cure completed. Check data for deviation.", vbExclamation, "Temperature Error")
+                    cureEnd = dataCnt
                     curePro.curePass = False
                     Exit For
                 End If
