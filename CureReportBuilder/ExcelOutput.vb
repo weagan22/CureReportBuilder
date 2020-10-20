@@ -188,7 +188,7 @@ Public Class ExcelOutput
                 Else
                     formatFont(mainSheet.Cells(curRow, 1), endStr, 9, False, False, False)
 
-                    If currentStep.timePass Then
+                    If currentStep.timeLimitPass Then
                         formatFont(mainSheet.Cells(curRow, 1), durationStr, 9, False, False, False)
                     Else
                         formatFont(mainSheet.Cells(curRow, 1), durationStr, 9, False, False, False, Color.Red)
@@ -330,8 +330,8 @@ Public Class ExcelOutput
 
                     If currentStep.tempSet.RampRate <> 0 Then
                         tempRmpStr = "Temp. Ramp (°F/min)" & vbNewLine
-                        tempRmpStr = tempRmpStr & "Max " & String.Format("{00.0}", Math.Round(currentStep.tempResult.MaxRamp, 1))
-                        tempRmpStr = tempRmpStr & " | Min " & String.Format("{0: 0.0}", Math.Round(currentStep.tempResult.MinRamp, 1))
+                        tempRmpStr = tempRmpStr & "Max " & String.Format("{0:0.0}", Math.Round(currentStep.tempResult.MaxRamp, 1))
+                        tempRmpStr = tempRmpStr & " | Min " & String.Format("{0:0.0}", Math.Round(currentStep.tempResult.MinRamp, 1)) & vbNewLine
                         'tempRmpStr = tempRmpStr & "  | Avg " & String.Format("{0:  0.0}", Math.Round(currentStep.tempResult.AvgRamp, 1)) & vbNewLine
                     End If
 
@@ -346,20 +346,20 @@ Public Class ExcelOutput
                     pressStr = "Pressure (psi)" & vbNewLine
 
                     If Math.Abs(currentStep.pressureSet.SetPoint) = Math.Abs(currentStep.pressureSet.NegTol) Then
-                        pressStr = pressStr & "Max " & String.Format("{00.0}", Math.Round(currentStep.pressureResult.Max, 1)) & vbNewLine
+                        pressStr = pressStr & "Max " & String.Format("{0:0.0}", Math.Round(currentStep.pressureResult.Max, 1)) & vbNewLine
                     ElseIf Math.Abs(currentStep.pressureSet.SetPoint) = Math.Abs(currentStep.pressureSet.PosTol) Then
-                        pressStr = "Min " & String.Format("{00.0}", Math.Round(currentStep.pressureResult.Min, 1)) & vbNewLine
+                        pressStr = "Min " & String.Format("{0:0.0}", Math.Round(currentStep.pressureResult.Min, 1)) & vbNewLine
                     Else
-                        pressStr = pressStr & "Max " & String.Format("{00.0}", Math.Round(currentStep.pressureResult.Max, 1))
-                        pressStr = pressStr & " | Min " & String.Format("{00.0}", Math.Round(currentStep.pressureResult.Min, 1))
-                        pressStr = pressStr & " | Avg " & String.Format("{00.0}", Math.Round(currentStep.pressureResult.Avg, 1)) & vbNewLine
+                        pressStr = pressStr & "Max " & String.Format("{0:0.0}", Math.Round(currentStep.pressureResult.Max, 1))
+                        pressStr = pressStr & " | Min " & String.Format("{0:0.0}", Math.Round(currentStep.pressureResult.Min, 1))
+                        pressStr = pressStr & " | Avg " & String.Format("{0:0.0}", Math.Round(currentStep.pressureResult.Avg, 1)) & vbNewLine
                     End If
 
                     If currentStep.pressureSet.RampRate <> 0 Then
                         pressRmpStr = "Pressure Ramp (psi/min)" & vbNewLine
-                        pressRmpStr = pressRmpStr & "Max " & String.Format("{00.0}", Math.Round(currentStep.pressureResult.MaxRamp, 1))
-                        pressRmpStr = pressRmpStr & " | Min " & String.Format("{0: 0.0}", Math.Round(currentStep.pressureResult.MinRamp, 1))
-                        'pressRmpStr = pressRmpStr & "  | Avg " & String.Format("{0:  0.0}", Math.Round(currentStep.pressureResult.AvgRamp, 1)) & vbNewLine
+                        pressRmpStr = pressRmpStr & "Max " & String.Format("{0:0.0}", Math.Round(currentStep.pressureResult.MaxRamp, 1))
+                        pressRmpStr = pressRmpStr & " | Min " & String.Format("{0:0.0}", Math.Round(currentStep.pressureResult.MinRamp, 1)) & vbNewLine
+                        'pressRmpStr = pressRmpStr & "  | Avg " & String.Format("{0:0.0}", Math.Round(currentStep.pressureResult.AvgRamp, 1)) & vbNewLine
                     End If
                 End If
 
@@ -380,22 +380,25 @@ Public Class ExcelOutput
 
                 cell3 = cell3 & tempStr & tempRmpStr & pressStr & pressRmpStr & vacStr
 
+                If currentStep.soakStepPass Then
+                    cell3 = cell3 & "Total Soak Exceeded Minimum Time" & vbNewLine
+                End If
 
-            If Strings.Right(cell3, 1) = vbLf Then
-                cell3 = Strings.Left(cell3, Len(cell3) - 1)
-            End If
+                If Strings.Right(cell3, 1) = vbLf Then
+                    cell3 = Strings.Left(cell3, Len(cell3) - 1)
+                End If
 
-            mainSheet.Cells(curRow, 7) = cell3
+                mainSheet.Cells(curRow, 7) = cell3
 
-            'Format cell 3
+                'Format cell 3
 
-            If currentStep.tempPass Then
-                formatFont(mainSheet.Cells(curRow, 7), tempStr, 9)
-                formatFont(mainSheet.Cells(curRow, 7), "Temperature (°F)", 11, True,,,, False)
-            Else
-                formatFont(mainSheet.Cells(curRow, 7), tempStr, 9,,, True, Color.Red)
-                formatFont(mainSheet.Cells(curRow, 7), "Temperature (°F)", 11, True,, True, Color.Red, False)
-            End If
+                If currentStep.tempPass Then
+                    formatFont(mainSheet.Cells(curRow, 7), tempStr, 9)
+                    formatFont(mainSheet.Cells(curRow, 7), "Temperature (°F)", 11, True,,,, False)
+                Else
+                    formatFont(mainSheet.Cells(curRow, 7), tempStr, 9,,, True, Color.Red)
+                    formatFont(mainSheet.Cells(curRow, 7), "Temperature (°F)", 11, True,, True, Color.Red, False)
+                End If
 
                 If currentStep.tempSet.RampRate <> 0 Then
                     If currentStep.tempRampPass Then
@@ -408,12 +411,12 @@ Public Class ExcelOutput
                 End If
 
                 If currentStep.pressurePass Then
-                        formatFont(mainSheet.Cells(curRow, 7), pressStr, 9)
-                        formatFont(mainSheet.Cells(curRow, 7), "Pressure (psi)", 11, True,,,, False)
-                    Else
-                        formatFont(mainSheet.Cells(curRow, 7), pressStr, 9,,, True, Color.Red)
-                        formatFont(mainSheet.Cells(curRow, 7), "Pressure (psi)", 11, True,, True, Color.Red, False)
-                    End If
+                    formatFont(mainSheet.Cells(curRow, 7), pressStr, 9)
+                    formatFont(mainSheet.Cells(curRow, 7), "Pressure (psi)", 11, True,,,, False)
+                Else
+                    formatFont(mainSheet.Cells(curRow, 7), pressStr, 9,,, True, Color.Red)
+                    formatFont(mainSheet.Cells(curRow, 7), "Pressure (psi)", 11, True,, True, Color.Red, False)
+                End If
 
                 If currentStep.pressureSet.RampRate <> 0 Then
                     If currentStep.pressureRampPass Then
@@ -426,16 +429,16 @@ Public Class ExcelOutput
                 End If
 
                 If currentStep.vacPass Then
-                        formatFont(mainSheet.Cells(curRow, 7), vacStr, 9)
-                        formatFont(mainSheet.Cells(curRow, 7), "Vacuum (inHg)", 11, True,,,, False)
-                    Else
-                        formatFont(mainSheet.Cells(curRow, 7), vacStr, 9,,, True, Color.Red)
-                        formatFont(mainSheet.Cells(curRow, 7), "Vacuum (inHg)", 11, True,, True, Color.Red, False)
-                    End If
+                    formatFont(mainSheet.Cells(curRow, 7), vacStr, 9)
+                    formatFont(mainSheet.Cells(curRow, 7), "Vacuum (inHg)", 11, True,,,, False)
+                Else
+                    formatFont(mainSheet.Cells(curRow, 7), vacStr, 9,,, True, Color.Red)
+                    formatFont(mainSheet.Cells(curRow, 7), "Vacuum (inHg)", 11, True,, True, Color.Red, False)
                 End If
+            End If
 
-                'Set row height
-                Dim rowCount As Integer = 0
+            'Set row height
+            Dim rowCount As Integer = 0
 
             If mainSheet.Cells(curRow, 1).Value.ToString.Split(vbNewLine).Length > rowCount Then rowCount = mainSheet.Cells(curRow, 1).Value.ToString.Split(vbNewLine).Length
             If mainSheet.Cells(curRow, 3).Value.ToString.Split(vbNewLine).Length > rowCount Then rowCount = mainSheet.Cells(curRow, 3).Value.ToString.Split(vbNewLine).Length

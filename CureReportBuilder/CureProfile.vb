@@ -283,7 +283,8 @@ Public Class CureStep
     Public vacPass As Boolean = True
     Public pressureRampPass As Boolean = True
     Public tempRampPass As Boolean = True
-    Public timePass As Boolean = True
+    Public timeLimitPass As Boolean = True
+    Public soakStepPass As Boolean = False
 
     Public stepPass As Boolean = False
     Public hardFail As Boolean = False
