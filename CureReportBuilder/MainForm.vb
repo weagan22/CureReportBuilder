@@ -61,7 +61,6 @@ Public Class MainForm
         Dim db As SqlConnection = New SqlConnection("Data Source = MAUI; Initial Catalog=EpicorERP; User ID = Reporting; Password=$ystima1; Integrated Security=false; trusted_connection=false;")
 
         db.Open()
-        'Dim adapter As SqlDataAdapter = New SqlDataAdapter("SELECT * FROM Erp.JobAsmbl WHERE JobNum = '" + jobNum.ToString + "' AND AssemblySeq = 1", db)
         Dim adapter As SqlDataAdapter = New SqlDataAdapter(
             "SELECT 
                 Job.ProjectID, 
@@ -74,8 +73,8 @@ Public Class MainForm
                 ASM.Description, 
                 ASM.QtyPer 
             FROM Erp.JobAsmbl ASM
-            LEFT JOIN Erp.JobHead JOB ON JOB.JobNum = ASM.JobNum
-            INNER JOIN Erp.JobOper OP ON OP.JobNum = ASM.JobNum AND ASM.AssemblySeq = OP.AssemblySeq AND OP.OpCode = 'LAYUP'
+                LEFT JOIN Erp.JobHead JOB ON JOB.JobNum = ASM.JobNum
+                INNER JOIN Erp.JobOper OP ON OP.JobNum = ASM.JobNum AND ASM.AssemblySeq = OP.AssemblySeq AND OP.OpCode = 'LAYUP'
             WHERE JOB.JobNum = '" + jobNum.ToString + "'", db)
 
         adapter.Fill(queryResult)
@@ -548,6 +547,7 @@ Public Class MainForm
         End If
 
         Try
+            Call errorReset()
             Call mainCureCheck.loadCSVin(Txt_FilePath.Text)
             If System.Text.RegularExpressions.Regex.Match(Txt_FilePath.Text, "\d{6}").Value <> "" Then
                 Txt_JobNumber.Text = System.Text.RegularExpressions.Regex.Match(Txt_FilePath.Text, "\d{6}").Value
@@ -560,8 +560,6 @@ Public Class MainForm
             If mainCureCheck.machType = "Omega" Then
                 Box_DataRecorder.Visible = True
             End If
-
-
 
             Call mainCureCheck.loadCureData()
 

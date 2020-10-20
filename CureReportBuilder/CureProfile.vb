@@ -94,28 +94,28 @@ Public Class CureProfile
             exStep.stepDuration = xmlStyleValRet("stepDuration", thisStepTxt)
 
             Dim pressureSetTxt As String = xmlStyleValRet("pressureSet", thisStepTxt)
-            exStep.pressureSetPoint = xmlStyleValRet("setPoint", pressureSetTxt)
-            exStep.pressurePosTol = xmlStyleValRet("PosTol", pressureSetTxt)
-            exStep.pressureNegTol = xmlStyleValRet("NegTol", pressureSetTxt)
-            exStep.pressureRampRate = xmlStyleValRet("RampRate", pressureSetTxt)
-            exStep.pressureRampPosTol = xmlStyleValRet("RampPosTol", pressureSetTxt)
-            exStep.pressureRampNegTol = xmlStyleValRet("RampNegTol", pressureSetTxt)
+            exStep.pressureSet.SetPoint = xmlStyleValRet("setPoint", pressureSetTxt)
+            exStep.pressureSet.PosTol = xmlStyleValRet("PosTol", pressureSetTxt)
+            exStep.pressureSet.NegTol = xmlStyleValRet("NegTol", pressureSetTxt)
+            exStep.pressureSet.RampRate = xmlStyleValRet("RampRate", pressureSetTxt)
+            exStep.pressureSet.RampPosTol = xmlStyleValRet("RampPosTol", pressureSetTxt)
+            exStep.pressureSet.RampNegTol = xmlStyleValRet("RampNegTol", pressureSetTxt)
 
             Dim tempSetTxt As String = xmlStyleValRet("tempSet", thisStepTxt)
-            exStep.tempSetPoint = xmlStyleValRet("setPoint", tempSetTxt)
-            exStep.tempPosTol = xmlStyleValRet("PosTol", tempSetTxt)
-            exStep.tempNegTol = xmlStyleValRet("NegTol", tempSetTxt)
-            exStep.tempRampRate = xmlStyleValRet("RampRate", tempSetTxt)
-            exStep.tempRampPosTol = xmlStyleValRet("RampPosTol", tempSetTxt)
-            exStep.tempRampNegTol = xmlStyleValRet("RampNegTol", tempSetTxt)
+            exStep.tempSet.SetPoint = xmlStyleValRet("setPoint", tempSetTxt)
+            exStep.tempSet.PosTol = xmlStyleValRet("PosTol", tempSetTxt)
+            exStep.tempSet.NegTol = xmlStyleValRet("NegTol", tempSetTxt)
+            exStep.tempSet.RampRate = xmlStyleValRet("RampRate", tempSetTxt)
+            exStep.tempSet.RampPosTol = xmlStyleValRet("RampPosTol", tempSetTxt)
+            exStep.tempSet.RampNegTol = xmlStyleValRet("RampNegTol", tempSetTxt)
 
             Dim vacSetTxt As String = xmlStyleValRet("vacSet", thisStepTxt)
-            exStep.vacSetPoint = xmlStyleValRet("SetPoint", vacSetTxt)
-            exStep.vacPosTol = xmlStyleValRet("PosTol", vacSetTxt)
-            exStep.vacNegTol = xmlStyleValRet("NegTol", vacSetTxt)
-            exStep.vacRampRate = xmlStyleValRet("RampRate", vacSetTxt)
-            exStep.vacRampPosTol = xmlStyleValRet("RampPosTol", vacSetTxt)
-            exStep.vacRampNegTol = xmlStyleValRet("RampNegTol", vacSetTxt)
+            exStep.vacSet.SetPoint = xmlStyleValRet("SetPoint", vacSetTxt)
+            exStep.vacSet.PosTol = xmlStyleValRet("PosTol", vacSetTxt)
+            exStep.vacSet.NegTol = xmlStyleValRet("NegTol", vacSetTxt)
+            exStep.vacSet.RampRate = xmlStyleValRet("RampRate", vacSetTxt)
+            exStep.vacSet.RampPosTol = xmlStyleValRet("RampPosTol", vacSetTxt)
+            exStep.vacSet.RampNegTol = xmlStyleValRet("RampNegTol", vacSetTxt)
 
             Dim termCond1Txt As String = xmlStyleValRet("termCond1", thisStepTxt)
             exStep.termCond1Type = xmlStyleValRet("Type", termCond1Txt)
@@ -186,30 +186,30 @@ Public Class CureProfile
             addToSer("<stepDuration>" & exStep.stepDuration & "</stepDuration>", retSer, 3)
 
             addToSer("<" & "pressureSet" & ">", retSer, 3)
-            addToSer("<setPoint>" & exStep.pressureSetPoint & "</setPoint>", retSer, 4)
-            addToSer("<PosTol>" & exStep.pressurePosTol & "</PosTol>", retSer, 4)
-            addToSer("<NegTol>" & exStep.pressureNegTol & "</NegTol>", retSer, 4)
-            addToSer("<RampRate>" & exStep.pressureRampRate & "</RampRate>", retSer, 4)
-            addToSer("<RampPosTol>" & exStep.pressureRampPosTol & "</RampPosTol>", retSer, 4)
-            addToSer("<RampNegTol>" & exStep.pressureRampNegTol & "</RampNegTol>", retSer, 4)
+            addToSer("<setPoint>" & exStep.pressureSet.SetPoint & "</setPoint>", retSer, 4)
+            addToSer("<PosTol>" & exStep.pressureSet.PosTol & "</PosTol>", retSer, 4)
+            addToSer("<NegTol>" & exStep.pressureSet.NegTol & "</NegTol>", retSer, 4)
+            addToSer("<RampRate>" & exStep.pressureSet.RampRate & "</RampRate>", retSer, 4)
+            addToSer("<RampPosTol>" & exStep.pressureSet.RampPosTol & "</RampPosTol>", retSer, 4)
+            addToSer("<RampNegTol>" & exStep.pressureSet.RampNegTol & "</RampNegTol>", retSer, 4)
             addToSer("</" & "pressureSet" & ">", retSer, 3)
 
             addToSer("<" & "tempSet" & ">", retSer, 3)
-            addToSer("<setPoint>" & exStep.tempSetPoint & "</setPoint>", retSer, 4)
-            addToSer("<PosTol>" & exStep.tempPosTol & "</PosTol>", retSer, 4)
-            addToSer("<NegTol>" & exStep.tempNegTol & "</NegTol>", retSer, 4)
-            addToSer("<RampRate>" & exStep.tempRampRate & "</RampRate>", retSer, 4)
-            addToSer("<RampPosTol>" & exStep.tempRampPosTol & "</RampPosTol>", retSer, 4)
-            addToSer("<RampNegTol>" & exStep.tempRampNegTol & "</RampNegTol>", retSer, 4)
+            addToSer("<setPoint>" & exStep.tempSet.SetPoint & "</setPoint>", retSer, 4)
+            addToSer("<PosTol>" & exStep.tempSet.PosTol & "</PosTol>", retSer, 4)
+            addToSer("<NegTol>" & exStep.tempSet.NegTol & "</NegTol>", retSer, 4)
+            addToSer("<RampRate>" & exStep.tempSet.RampRate & "</RampRate>", retSer, 4)
+            addToSer("<RampPosTol>" & exStep.tempSet.RampPosTol & "</RampPosTol>", retSer, 4)
+            addToSer("<RampNegTol>" & exStep.tempSet.RampNegTol & "</RampNegTol>", retSer, 4)
             addToSer("</" & "tempSet" & ">", retSer, 3)
 
             addToSer("<" & "vacSet" & ">", retSer, 3)
-            addToSer("<setPoint>" & exStep.vacSetPoint & "</setPoint>", retSer, 4)
-            addToSer("<PosTol>" & exStep.vacPosTol & "</PosTol>", retSer, 4)
-            addToSer("<NegTol>" & exStep.vacNegTol & "</NegTol>", retSer, 4)
-            addToSer("<RampRate>" & exStep.vacRampRate & "</RampRate>", retSer, 4)
-            addToSer("<RampPosTol>" & exStep.vacRampPosTol & "</RampPosTol>", retSer, 4)
-            addToSer("<RampNegTol>" & exStep.vacRampNegTol & "</RampNegTol>", retSer, 4)
+            addToSer("<setPoint>" & exStep.vacSet.SetPoint & "</setPoint>", retSer, 4)
+            addToSer("<PosTol>" & exStep.vacSet.PosTol & "</PosTol>", retSer, 4)
+            addToSer("<NegTol>" & exStep.vacSet.NegTol & "</NegTol>", retSer, 4)
+            addToSer("<RampRate>" & exStep.vacSet.RampRate & "</RampRate>", retSer, 4)
+            addToSer("<RampPosTol>" & exStep.vacSet.RampPosTol & "</RampPosTol>", retSer, 4)
+            addToSer("<RampNegTol>" & exStep.vacSet.RampNegTol & "</RampNegTol>", retSer, 4)
             addToSer("</" & "vacSet" & ">", retSer, 3)
 
             addToSer("<" & "termCond1" & ">", retSer, 3)
@@ -258,26 +258,9 @@ Public Class CureStep
 
     Public stepDuration As Double = -1
 
-    Public pressureSetPoint As Double = -1
-    Public pressurePosTol As Double = -1
-    Public pressureNegTol As Double = -1
-    Public pressureRampRate As Double = -1
-    Public pressureRampPosTol As Double = -1
-    Public pressureRampNegTol As Double = -1
-
-    Public tempSetPoint As Double = -1
-    Public tempPosTol As Double = -1
-    Public tempNegTol As Double = -1
-    Public tempRampRate As Double = -1
-    Public tempRampPosTol As Double = -1
-    Public tempRampNegTol As Double = -1
-
-    Public vacSetPoint As Double = -1
-    Public vacPosTol As Double = -1
-    Public vacNegTol As Double = -1
-    Public vacRampRate As Double = -1
-    Public vacRampPosTol As Double = -1
-    Public vacRampNegTol As Double = -1
+    Public pressureSet As SetValues = New SetValues
+    Public tempSet As SetValues = New SetValues
+    Public vacSet As SetValues = New SetValues
 
     Public termCond1Type As String = ""
     Public termCond1Condition As String = ""
@@ -291,27 +274,9 @@ Public Class CureStep
 
     Public termCondOper As String
 
-
-    Public pressureResultMax As Double = -1
-    Public pressureResultMin As Double = -1
-    Public pressureResultAvg As Double = -1
-    Public pressureResultMaxRamp As Double = -1
-    Public pressureResultMinRamp As Double = -1
-    Public pressureResultAvgRamp As Double = -1
-
-    Public tempResultMax As Double = -1
-    Public tempResultMin As Double = -1
-    Public tempResultAvg As Double = -1
-    Public tempResultMaxRamp As Double = -1
-    Public tempResultMinRamp As Double = -1
-    Public tempResultAvgRamp As Double = -1
-
-    Public vacResultMax As Double = -1
-    Public vacResultMin As Double = -1
-    Public vacResultAvg As Double = -1
-    Public vacResultMaxRamp As Double = -1
-    Public vacResultMinRamp As Double = -1
-    Public vacResultAvgRamp As Double = -1
+    Public pressureResult As ResultValues = New ResultValues
+    Public tempResult As ResultValues = New ResultValues
+    Public vacResult As ResultValues = New ResultValues
 
     Public pressurePass As Boolean = True
     Public tempPass As Boolean = True
@@ -329,21 +294,39 @@ Public Class CureStep
 
 
     Sub setPressure(inSetPoint As Double, inPosTol As Double, inNegTol As Double, inRampRate As Double, inRampPosTol As Double, inRampNegTol As Double)
-        pressureSetPoint = inSetPoint
-        pressurePosTol = inPosTol
-        pressureNegTol = inNegTol
-        pressureRampRate = inRampRate
-        pressureRampPosTol = inRampPosTol
-        pressureRampNegTol = inRampNegTol
+        pressureSet.SetPoint = inSetPoint
+        pressureSet.PosTol = inPosTol
+        pressureSet.NegTol = inNegTol
+        pressureSet.RampRate = inRampRate
+        pressureSet.RampPosTol = inRampPosTol
+        pressureSet.RampNegTol = inRampNegTol
     End Sub
 
     Sub setTemp(inSetPoint As Double, inPosTol As Double, inNegTol As Double, inRampRate As Double, inRampPosTol As Double, inRampNegTol As Double)
-        tempSetPoint = inSetPoint
-        tempPosTol = inPosTol
-        tempNegTol = inNegTol
-        tempRampRate = inRampRate
-        tempRampPosTol = inRampPosTol
-        tempRampNegTol = inRampNegTol
+        tempSet.SetPoint = inSetPoint
+        tempSet.PosTol = inPosTol
+        tempSet.NegTol = inNegTol
+        tempSet.RampRate = inRampRate
+        tempSet.RampPosTol = inRampPosTol
+        tempSet.RampNegTol = inRampNegTol
     End Sub
 
+End Class
+
+Public Class SetValues
+    Public SetPoint As Double = -1
+    Public PosTol As Double = -1
+    Public NegTol As Double = -1
+    Public RampRate As Double = -1
+    Public RampPosTol As Double = -1
+    Public RampNegTol As Double = -1
+End Class
+
+Public Class ResultValues
+    Public Max As Double = -1
+    Public Min As Double = -1
+    Public Avg As Double = -1
+    Public MaxRamp As Double = -1
+    Public MinRamp As Double = -1
+    Public AvgRamp As Double = -1
 End Class
