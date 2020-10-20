@@ -350,6 +350,7 @@ Public Class MainForm
         mainCureCheck.ProgramNum = Txt_ProgramNumber.Text
         mainCureCheck.PartQty = Txt_Qty.Text
         mainCureCheck.DataPath = Txt_FilePath.Text
+        mainCureCheck.completedBy = Txt_Technician.Text
 
         If mainCureCheck.machType = "Omega" Then
             mainCureCheck.equipSerialNum = Txt_DataRecorder.Text

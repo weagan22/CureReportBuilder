@@ -443,7 +443,7 @@
                         End If
                     Next
 
-                    'Check if the time in values is at least 90% of the total step time, requirment <10% out of tolerance
+                    'Check if the time in values is at least 90% of the total step time and greater than min time, requirment <10% out of tolerance
                     If (totalTime / currentStep.stepDuration) > 0.9 Then
                         If currentStep.termCond1Type = "Time" Then
                             If totalTime > currentStep.termCond1Goal Then
@@ -532,9 +532,9 @@
                     If cureEnd < curePro.CureSteps(currentStep).stepEnd Then
                         cureEnd = curePro.CureSteps(currentStep).stepEnd
                         cureEndTime = dateArr(curePro.CureSteps(currentStep).stepEnd)
-                        currentStep += 1
-                        Exit For
                     End If
+                    currentStep += 1
+                    Exit For
                 End If
 
                 currentStep += 1
@@ -990,8 +990,12 @@
         cureStartTime = Nothing
         cureEndTime = Nothing
 
-        'curePro = Nothing
-        'curePro = New CureProfile()
+
+        'Reset the loaded cure profile by serializeing and deserializing it to get rid of any loaded in results.
+        Dim cureProHolder As CureProfile = curePro
+        curePro = Nothing
+        curePro = New CureProfile()
+        curePro.DeserializeCure(cureProHolder.SerializeCure)
 
 
     End Sub

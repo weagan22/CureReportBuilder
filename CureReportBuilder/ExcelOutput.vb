@@ -87,8 +87,8 @@ Public Class ExcelOutput
         Try
             Excel.Workbooks.Open(templatePath)
         Catch ex As Exception
-            MsgBox("Failed to open Excel Report Template.")
             killExcel(excelProcID)
+            Throw New Exception("Failed to open Excel Report Template.")
             Exit Sub
         End Try
 
@@ -166,7 +166,7 @@ Public Class ExcelOutput
                     durationStr = ""
                 Else
                     endStr = "Finish: " & endTime.ToString("0.0") & " min"
-                    durationStr = vbNewLine & "Duration: " & endTime - startTime & " min"
+                    durationStr = vbNewLine & "Duration: " & String.Format("{0:0.0}", Math.Round(endTime - startTime, 1)) & " min"
                 End If
 
 
@@ -367,13 +367,13 @@ Public Class ExcelOutput
                     vacStr = "Vacuum (inHg)" & vbNewLine
 
                     If Math.Abs(currentStep.vacSet.SetPoint) = Math.Abs(currentStep.vacSet.NegTol) Then
-                        vacStr = vacStr & "Min " & String.Format("{00.0}", Math.Round(currentStep.vacResult.Min, 1)) & vbNewLine
+                        vacStr = vacStr & "Min " & String.Format("{0:0.0}", Math.Round(currentStep.vacResult.Min, 1)) & vbNewLine
                     ElseIf Math.Abs(currentStep.vacSet.SetPoint) = Math.Abs(currentStep.vacSet.PosTol) Then
-                        vacStr = vacStr & "Max " & String.Format("{00.0}", Math.Round(currentStep.vacResult.Max, 1)) & vbNewLine
+                        vacStr = vacStr & "Max " & String.Format("{0:0.0}", Math.Round(currentStep.vacResult.Max, 1)) & vbNewLine
                     Else
-                        vacStr = vacStr & "Max " & String.Format("{00.0}", Math.Round(currentStep.vacResult.Min, 1))
-                        vacStr = vacStr & " | Min " & String.Format("{00.0}", Math.Round(currentStep.vacResult.Max, 1))
-                        vacStr = vacStr & " | Avg " & String.Format("{00.0}", Math.Round(currentStep.vacResult.Avg, 1)) & vbNewLine
+                        vacStr = vacStr & "Max " & String.Format("{0:0.0}", Math.Round(currentStep.vacResult.Min, 1))
+                        vacStr = vacStr & " | Min " & String.Format("{0:0.0}", Math.Round(currentStep.vacResult.Max, 1))
+                        vacStr = vacStr & " | Avg " & String.Format("{0:0.0}", Math.Round(currentStep.vacResult.Avg, 1)) & vbNewLine
                     End If
 
                 End If
