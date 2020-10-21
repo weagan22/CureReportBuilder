@@ -87,6 +87,8 @@
 
             Dim dataStepDuration As Double = (dateArr(UBound(dateArr)) - dateArr(0)).TotalMinutes / dataCnt
 
+            currentStep.stepDuration = (dateArr(currentStep.stepEnd) - dateArr(currentStep.stepStart)).TotalMinutes
+
             'Check step time length
             If currentStep.stepDuration > 0 Then
                 If (dateArr(currentStep.stepStart) - dateArr(currentStep.stepStart)).TotalMinutes > currentStep.stepDuration Then

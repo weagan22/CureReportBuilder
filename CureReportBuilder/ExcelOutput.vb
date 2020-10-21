@@ -146,6 +146,8 @@ Public Class ExcelOutput
 
             Excel.ActiveSheet.Range(mainSheet.Cells(curRow, 1), mainSheet.Cells(curRow, 10)).VerticalAlignment = -4108
 
+            Excel.ActiveSheet.Range(mainSheet.Cells(curRow, 1), mainSheet.Cells(curRow, 10)).WrapText = True
+
             Excel.ActiveSheet.Range(mainSheet.Cells(curRow, 1), mainSheet.Cells(curRow, 10)).Borders(9).LineStyle = 1
 
             'Fill out data in cell 1
@@ -380,8 +382,22 @@ Public Class ExcelOutput
 
                 cell3 = cell3 & tempStr & tempRmpStr & pressStr & pressRmpStr & vacStr
 
+                Dim strTotalSoak As String = ""
                 If currentStep.soakStepPass Then
-                    cell3 = cell3 & "Total Soak Exceeded Minimum Time" & vbNewLine
+
+                    'Dim timeReq As Double = 0
+
+                    'If currentStep.termCond1Type = "Time" Then
+                    '    timeReq = currentStep.termCond1Goal
+                    'ElseIf currentStep.termCond2Type = "Time" Then
+                    '    If currentStep.termCond1Goal > timeReq Then
+                    '        timeReq = currentStep.termCond2Goal
+                    '    End If
+
+                    'End If
+
+                    strTotalSoak = "Cumulative Time In Tolerance" & vbNewLine & "Exceeds Requirement"
+                    cell3 = cell3 & strTotalSoak & vbNewLine
                 End If
 
                 If Strings.Right(cell3, 1) = vbLf Then
@@ -434,6 +450,10 @@ Public Class ExcelOutput
                 Else
                     formatFont(mainSheet.Cells(curRow, 7), vacStr, 9,,, True, Color.Red)
                     formatFont(mainSheet.Cells(curRow, 7), "Vacuum (inHg)", 11, True,, True, Color.Red, False)
+                End If
+
+                If currentStep.soakStepPass Then
+                    formatFont(mainSheet.Cells(curRow, 7), strTotalSoak, 9,, True, True)
                 End If
             End If
 
@@ -556,14 +576,26 @@ Public Class ExcelOutput
 
         Dim cureAcro As String = strToAcronym(checkToOutput.curePro.Name)
 
+        Dim mismatchStr As String = ""
+
+        If My.Computer.FileSystem.FileExists(outputPath & "\CureReports\ExcelReports\CureReport_" & cureAcro & "_" & checkToOutput.JobNum & ".xlsx") Or My.Computer.FileSystem.FileExists(outputPath & "\CureReports\CureReport_" & cureAcro & "_" & checkToOutput.JobNum & ".pdf") Then
+            Dim idNum As Integer = 1
+            Do While mismatchStr = ""
+                If Not My.Computer.FileSystem.FileExists(outputPath & "\CureReports\ExcelReports\CureReport_" & cureAcro & "_" & checkToOutput.JobNum & "(" & idNum & ")" & ".xlsx") And Not My.Computer.FileSystem.FileExists(outputPath & "\CureReports\CureReport_" & cureAcro & "_" & checkToOutput.JobNum & "(" & idNum & ")" & ".pdf") Then
+                    mismatchStr = "(" & idNum & ")"
+                End If
+                idNum += 1
+            Loop
+        End If
+
         Excel.DisplayAlerts = False
-        Excel.ActiveWorkbook.SaveAs(outputPath & "\CureReports\ExcelReports\CureReport_" & cureAcro & "_" & checkToOutput.JobNum & ".xlsx", 51)
+        Excel.ActiveWorkbook.SaveAs(outputPath & "\CureReports\ExcelReports\CureReport_" & cureAcro & "_" & checkToOutput.JobNum & mismatchStr & ".xlsx", 51,,, True,,,,)
         Excel.DisplayAlerts = True
 
         If checkToOutput.curePro.curePass Then
-            mainSheet.ExportAsFixedFormat(0, outputPath & "\CureReports\CureReport_" & cureAcro & "_" & checkToOutput.JobNum, 0,,,,, False,)
+            mainSheet.ExportAsFixedFormat(0, outputPath & "\CureReports\CureReport_" & cureAcro & "_" & checkToOutput.JobNum & mismatchStr, 0,,,,, False,)
         Else
-            mainSheet.ExportAsFixedFormat(0, outputPath & "\CureReports\CureReport_" & cureAcro & "_" & checkToOutput.JobNum, 0,,,,, True,)
+            mainSheet.ExportAsFixedFormat(0, outputPath & "\CureReports\CureReport_" & cureAcro & "_" & checkToOutput.JobNum & mismatchStr, 0,,,,, True,)
         End If
 
         GC.Collect()
