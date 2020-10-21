@@ -471,7 +471,7 @@
                         End If
                     Next
 
-                    'Check if the time in values is at least 90% of the total step time and greater than min time, requirment <10% out of tolerance
+                    'Check if the time in values is at least 90% of the total step time and greater than min time, requirement <10% out of tolerance
                     If (totalTime / currentStep.stepDuration) > 0.9 Then
                         If currentStep.termCond1Type = "Time" Then
                             If totalTime > currentStep.termCond1Goal Then
@@ -646,7 +646,7 @@
                     Return True
                 End If
             Else
-                Throw New Exception("Terminating condition Condition for step " & cureStep.stepName & " is not valid")
+                Throw New Exception("Terminating condition for step " & cureStep.stepName & " is not valid")
             End If
 
         ElseIf termCondType = "Temp" Then
@@ -685,7 +685,7 @@
                     Throw New Exception("Terminating condition Modifier For Step " & cureStep.stepName & " Is Not valid")
                 End If
             Else
-                Throw New Exception("Terminating condition Condition For Step " & cureStep.stepName & " Is Not valid")
+                Throw New Exception("Terminating Condition For Step " & cureStep.stepName & " Is Not valid")
             End If
 
         ElseIf termCondType = "Press" Then
@@ -699,7 +699,7 @@
                     Return True
                 End If
             Else
-                Throw New Exception("Terminating condition Condition for step " & cureStep.stepName & " is not valid")
+                Throw New Exception("Terminating Condition For Step " & cureStep.stepName & " is not valid")
             End If
 
             'ElseIf termCondType") = "Vac" Then
@@ -854,7 +854,7 @@
     End Sub
 #End Region
 
-#Region "Load in data from csv to given arrays"
+#Region "Load in data from .csv to given arrays"
     Sub loadCureData()
         Call getTime()
 
@@ -1048,7 +1048,7 @@
         cureEndTime = Nothing
 
 
-        'Reset the loaded cure profile by serializeing and deserializing it to get rid of any loaded in results.
+        'Reset the loaded cure profile by serializing and de-serializing it to get rid of any loaded in results.
         Dim cureProHolder As CureProfile = curePro
         curePro = Nothing
         curePro = New CureProfile()

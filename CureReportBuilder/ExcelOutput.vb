@@ -195,7 +195,7 @@ Public Class ExcelOutput
         Next
 
 
-        'Fill out datasheet
+        'Fill out data sheet
         Call fillDataSheet(mainSheet, dataSheet, checkToOutput)
 
 
@@ -288,7 +288,7 @@ Public Class ExcelOutput
                                    checkToOutput.cureStart,
                                    checkToOutput.cureEnd)
 
-                'Adds air Tc to the chart, seems cluttered. Add back in ny uncommenting
+                'Adds air Tc to the chart, seems cluttered. Add back in by uncommenting
                 'Call addToChart(checkToOutput,
                 '                mainSheet,
                 '                dataSheet,
@@ -401,7 +401,7 @@ Public Class ExcelOutput
                                    checkToOutput.cureStart,
                                    checkToOutput.cureEnd)
 
-                'Adds max vac to the chart, never relavent
+                'Adds max vac to the chart, never relevant
                 'Call addToChart(checkToOutput,
                 '                mainSheet,
                 '                dataSheet,
@@ -1092,7 +1092,7 @@ Public Class ExcelOutput
 
 
         ElseIf termCondType = "Time" Then
-            If termCondModifier = "Recieve" Then
+            If termCondModifier = "Receive" Then
                 currentStr = currentStr & "Time continued from previous step."
             Else
                 currentStr = currentStr & "After " & termCondGoal & " min"

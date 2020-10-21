@@ -127,7 +127,7 @@ Public Class MainForm
 
         'Get current newToRunList
 
-        'Compare with runList and and toRunList
+        'Compare with runList and toRunList
         'Add any new items to the toRunList
         'Output toRunList as it currently stands
 
@@ -472,7 +472,7 @@ Public Class MainForm
 
 
 
-#Region "Cure profile inport/export"
+#Region "Cure profile import/export"
     Sub outputCureProfiles(inPath As String)
 
 
@@ -1140,7 +1140,7 @@ End Class
 Module ArrayExtensions
 
     ''' <summary>
-    ''' Addes values of a 1D array to a 2D array. 1D array length must match 1st dimension of 2D array (if they do not match, values will not be addded).
+    ''' Adds values of a 1D array to a 2D array. 1D array length must match 1st dimension of 2D array (if they do not match, values will not be added).
     ''' </summary>
 
     <Extension()>
