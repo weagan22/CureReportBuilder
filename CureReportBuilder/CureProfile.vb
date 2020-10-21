@@ -54,7 +54,10 @@ Public Class CureProfile
         CureSteps(UBound(CureSteps)) = New CureStep()
     End Sub
 
-    Public Sub New(Optional inName As String = "", Optional inCureDoc As String = "", Optional inCureDocRev As String = "")
+    Public Sub New(Optional inName As String = "",
+                   Optional inCureDoc As String = "",
+                   Optional inCureDocRev As String = "")
+
         iName = inName
         icureDoc = inCureDoc
         icureDocRev = inCureDocRev

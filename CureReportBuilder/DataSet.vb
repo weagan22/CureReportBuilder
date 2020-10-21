@@ -9,7 +9,8 @@
         Type = inType
     End Sub
 
-    Public Sub calcRamp(stepRate As Integer, dateArr() As DateTime)
+    Public Sub calcRamp(stepRate As Integer,
+                        dateArr() As DateTime)
 
         ReDim ramp(UBound(values))
 
@@ -30,7 +31,8 @@
         Return UBound(values)
     End Function
 
-    Public Function Min(Optional indexStart As Integer = 0, Optional indexEnd As Integer = 0) As Double
+    Public Function Min(Optional indexStart As Integer = 0,
+                        Optional indexEnd As Integer = 0) As Double
 
         Dim holder As Double
 
@@ -48,7 +50,8 @@
         Return holder
     End Function
 
-    Public Function Max(Optional indexStart As Integer = 0, Optional indexEnd As Integer = 0) As Double
+    Public Function Max(Optional indexStart As Integer = 0,
+                        Optional indexEnd As Integer = 0) As Double
 
         Dim holder As Double
 
@@ -66,7 +69,8 @@
         Return holder
     End Function
 
-    Public Function Average(Optional indexStart As Integer = 0, Optional indexEnd As Integer = 0) As Double
+    Public Function Average(Optional indexStart As Integer = 0,
+                            Optional indexEnd As Integer = 0) As Double
 
         Dim total As Double = 0
         Dim addCnt As Integer = 0
@@ -82,7 +86,10 @@
         Return total / addCnt
     End Function
 
-    Public Function MinRamp(Optional indexStart As Integer = 0, Optional indexEnd As Integer = 0, Optional goal As Double = -1, Optional greatThan As Boolean = True) As Double
+    Public Function MinRamp(Optional indexStart As Integer = 0,
+                            Optional indexEnd As Integer = 0,
+                            Optional goal As Double = -1,
+                            Optional greatThan As Boolean = True) As Double
 
         Dim holder As Double
 
@@ -120,7 +127,10 @@
         Return holder
     End Function
 
-    Public Function MaxRamp(Optional indexStart As Integer = 0, Optional indexEnd As Integer = 0, Optional goal As Double = -1, Optional greatThan As Boolean = True) As Double
+    Public Function MaxRamp(Optional indexStart As Integer = 0,
+                            Optional indexEnd As Integer = 0,
+                            Optional goal As Double = -1,
+                            Optional greatThan As Boolean = True) As Double
 
         Dim holder As Double
 
@@ -158,7 +168,11 @@
         Return holder
     End Function
 
-    Public Function AverageRamp(Optional indexStart As Integer = 0, Optional indexEnd As Integer = 0, Optional goal As Double = -1, Optional rampRate As Double = 0, Optional vals() As Double = Nothing) As Double
+    Public Function AverageRamp(Optional indexStart As Integer = 0,
+                                Optional indexEnd As Integer = 0,
+                                Optional goal As Double = -1,
+                                Optional rampRate As Double = 0,
+                                Optional vals() As Double = Nothing) As Double
 
         Dim greatThan As Boolean = True
 
@@ -198,7 +212,10 @@
     End Function
 
 
-    Function LinReg(dataX() As DateTime, dataY() As Double, indexStart As Integer, indexEnd As Integer) As Double
+    Function LinReg(dataX() As DateTime,
+                    dataY() As Double,
+                    indexStart As Integer,
+                    indexEnd As Integer) As Double
 
         '**Dim'd variables are 0 by default, no need to set them if this is all you need.**
         Dim count As Long

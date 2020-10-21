@@ -2,7 +2,6 @@
 
     Public curePro As CureProfile = New CureProfile("null")
 
-    'Public partValues As New Dictionary(Of String, String) From {{"JobNum", ""}, {"PONum", ""}, {"PartNum", ""}, {"PartRev", ""}, {"PartNom", ""}, {"ProgramNum", ""}, {"PartQty", ""}, {"DataPath", ""}}
     Public JobNum As String = ""
     Public PONum As String = ""
     Public PartNum As String = ""
@@ -23,8 +22,8 @@
 
     Public cureStart As Integer = 0
     Public cureEnd As Integer = 0
+    Public overTempErr As Boolean = False
 
-    'Public dateValues As New Dictionary(Of String, DateTime) From {{"startTime", Nothing}, {"endTime", Nothing}}
     Public cureStartTime As DateTime = Nothing
     Public cureEndTime As DateTime = Nothing
 
@@ -234,7 +233,11 @@
                 For z = 0 To UBound(partTC_Arr)
                     For y = 0 To UBound(usrRunTC)
                         If partTC_Arr(z).Number = usrRunTC(y) Then
-                            total = total + partTC_Arr(z).AverageRamp(indexStart, indexEnd, currentStep.tempSet.SetPoint, currentStep.tempSet.RampRate, partTC_Arr(z).values)
+                            total = total + partTC_Arr(z).AverageRamp(indexStart,
+                                                                      indexEnd,
+                                                                      currentStep.tempSet.SetPoint,
+                                                                      currentStep.tempSet.RampRate,
+                                                                      partTC_Arr(z).values)
                             addCnt = addCnt + 1
                         End If
                     Next
@@ -352,13 +355,22 @@
                 End If
 
                 ''Max pressure ramp
-                currentStep.pressureResult.MaxRamp = Math.Round(vesselPress.MaxRamp(indexStart, indexEnd, goal, greaterThanGoal), 1)
+                currentStep.pressureResult.MaxRamp = Math.Round(vesselPress.MaxRamp(indexStart,
+                                                                                    indexEnd, goal,
+                                                                                    greaterThanGoal), 1)
 
                 ''Min pressure ramp
-                currentStep.pressureResult.MinRamp = Math.Round(vesselPress.MinRamp(indexStart, indexEnd, goal, greaterThanGoal), 1)
+                currentStep.pressureResult.MinRamp = Math.Round(vesselPress.MinRamp(indexStart,
+                                                                                    indexEnd,
+                                                                                    goal,
+                                                                                    greaterThanGoal), 1)
 
                 ''Avg pressure ramp
-                currentStep.pressureResult.AvgRamp = Math.Round(vesselPress.AverageRamp(indexStart, indexEnd, currentStep.pressureSet.SetPoint, currentStep.pressureSet.RampRate, vesselPress.values), 1)
+                currentStep.pressureResult.AvgRamp = Math.Round(vesselPress.AverageRamp(indexStart,
+                                                                                        indexEnd,
+                                                                                        currentStep.pressureSet.SetPoint,
+                                                                                        currentStep.pressureSet.RampRate,
+                                                                                        vesselPress.values), 1)
 
 
 
@@ -430,15 +442,29 @@
 
                     Dim z As Integer
                     For z = currentStep.stepStart To currentStep.stepEnd
-                        If leadTC.values(z) < currentStep.tempSet.SetPoint + currentStep.tempSet.PosTol And lagTC.values(z) > currentStep.tempSet.SetPoint + currentStep.tempSet.NegTol Or currentStep.tempSet.SetPoint = -1 Then
-                            If vesselPress.values(z) < currentStep.pressureSet.SetPoint + currentStep.pressureSet.PosTol And vesselPress.values(z) > currentStep.pressureSet.SetPoint + currentStep.pressureSet.NegTol Or currentStep.pressureSet.SetPoint = -1 Then
-                                If maxVac.values(z) > currentStep.vacSet.SetPoint + currentStep.vacSet.NegTol And minVac.values(z) < currentStep.vacSet.SetPoint + currentStep.vacSet.PosTol Or currentStep.vacSet.SetPoint = -1 Then
+                        If _
+                           leadTC.values(z) < currentStep.tempSet.SetPoint + currentStep.tempSet.PosTol _
+                           And lagTC.values(z) > currentStep.tempSet.SetPoint + currentStep.tempSet.NegTol _
+                           Or currentStep.tempSet.SetPoint = -1 Then
+
+                            If _
+                               vesselPress.values(z) < currentStep.pressureSet.SetPoint + currentStep.pressureSet.PosTol _
+                               And vesselPress.values(z) > currentStep.pressureSet.SetPoint + currentStep.pressureSet.NegTol _
+                               Or currentStep.pressureSet.SetPoint = -1 Then
+
+                                If _
+                                   maxVac.values(z) > currentStep.vacSet.SetPoint + currentStep.vacSet.NegTol _
+                                   And minVac.values(z) < currentStep.vacSet.SetPoint + currentStep.vacSet.PosTol _
+                                   Or currentStep.vacSet.SetPoint = -1 Then
+
                                     totalTime = totalTime + (dateArr(z) - dateArr(z - 1)).TotalMinutes
                                 End If
+
                             ElseIf vesselPress.values(z) > currentStep.pressureSet.SetPoint + currentStep.pressureSet.PosTol Then
                                 totalTime = 0
                                 Exit For
                             End If
+
                         ElseIf leadTC.values(z) > currentStep.tempSet.SetPoint + currentStep.tempSet.PosTol Then
                             totalTime = 0
                             Exit For
@@ -469,8 +495,17 @@
 
 
             'Check for all passing
-            If currentStep.vacPass And currentStep.tempPass And currentStep.tempRampPass And currentStep.pressurePass And currentStep.pressureRampPass And currentStep.stepTerminate And currentStep.timeLimitPass Then
+            If _
+               currentStep.vacPass _
+               And currentStep.tempPass _
+               And currentStep.tempRampPass _
+               And currentStep.pressurePass _
+               And currentStep.pressureRampPass _
+               And currentStep.stepTerminate _
+               And currentStep.timeLimitPass Then
+
                 currentStep.stepPass = True
+
             Else
                 currentStep.stepPass = False
                 curePro.curePass = False
@@ -532,8 +567,10 @@
                 'If the last step has completed then exit the loop and set cure end to the end of this step
                 If UBound(curePro.CureSteps) = currentStep Then
                     If cureEnd < curePro.CureSteps(currentStep).stepEnd Then
-                        cureEnd = curePro.CureSteps(currentStep).stepEnd
-                        cureEndTime = dateArr(curePro.CureSteps(currentStep).stepEnd)
+                        If Not overTempErr Then
+                            cureEnd = curePro.CureSteps(currentStep).stepEnd
+                            cureEndTime = dateArr(curePro.CureSteps(currentStep).stepEnd)
+                        End If
                     End If
                     currentStep += 1
                     Exit For
@@ -561,8 +598,19 @@
 
     Function meetTerms(cureStep As CureStep, currentStep As Integer) As Boolean
 
-        Dim pass1 As Boolean = termTest(cureStep.termCond1Type, cureStep.termCond1Condition, cureStep.termCond1Goal, cureStep.termCond1Modifier, currentStep, cureStep)
-        Dim pass2 As Boolean = termTest(cureStep.termCond2Type, cureStep.termCond2Condition, cureStep.termCond2Goal, cureStep.termCond2Modifier, currentStep, cureStep)
+        Dim pass1 As Boolean = termTest(cureStep.termCond1Type,
+                                        cureStep.termCond1Condition,
+                                        cureStep.termCond1Goal,
+                                        cureStep.termCond1Modifier,
+                                        currentStep,
+                                        cureStep)
+
+        Dim pass2 As Boolean = termTest(cureStep.termCond2Type,
+                                        cureStep.termCond2Condition,
+                                        cureStep.termCond2Goal,
+                                        cureStep.termCond2Modifier,
+                                        currentStep,
+                                        cureStep)
 
         If cureStep.termCondOper = "OR" Then
             If pass1 Or pass2 Then
@@ -580,7 +628,13 @@
         Return False
     End Function
 
-    Function termTest(termCondType As String, termCondCondition As String, termCondGoal As Double, termCondModifier As Object, currentStep As Integer, cureStep As CureStep) As Boolean
+    Function termTest(termCondType As String,
+                      termCondCondition As String,
+                      termCondGoal As Double,
+                      termCondModifier As Object,
+                      currentStep As Integer,
+                      cureStep As CureStep) As Boolean
+
         If termCondType = "None" Then
             Return True
 
@@ -661,7 +715,7 @@
 #Region "Derived arrays from data"
     Sub startEndTime()
         Dim start_end_temp As Double = 150
-        Dim start_end_press As Double = 5
+        Dim start_end_press As Double = 2
 
         'Get start time
         Dim i As Integer
@@ -730,7 +784,7 @@
         If cureEnd <> dataCnt Then
             For i = cureEnd + 1 To dataCnt
                 If leadTC.values(i) > start_end_temp Or vesselPress.values(i) > start_end_press Then
-                    'MsgBox("Temperature rose above " & start_end_temp & "°F after the cure completed. Check data for deviation.", vbExclamation, "Temperature Error")
+                    overTempErr = True
                     cureEnd = dataCnt
                     curePro.curePass = False
                     Exit For
@@ -975,6 +1029,7 @@
 
         cureStart = 0
         cureEnd = 0
+        overTempErr = False
 
         stepVal = 2
 
@@ -1067,7 +1122,13 @@
                                 Throw New Exception("Omega TC reader data cannot be used to check this cure profile as is contains either pressure or vacuum requirements.")
                             End If
 
-                        ElseIf currentRow(0) = "No." AndAlso InStr(currentRow(1), "Date", 0) <> 0 AndAlso InStr(currentRow(2), "Time", 0) <> 0 AndAlso InStr(currentRow(3), "Millitm", 0) <> 0 AndAlso InStr(currentRow(4), "{Air_TC}", 0) <> 0 Then
+                        ElseIf _
+                               currentRow(0) = "No." _
+                               AndAlso InStr(currentRow(1), "Date", 0) <> 0 _
+                               AndAlso InStr(currentRow(2), "Time", 0) <> 0 _
+                               AndAlso InStr(currentRow(3), "Millitm", 0) <> 0 _
+                               AndAlso InStr(currentRow(4), "{Air_TC}", 0) <> 0 Then
+
                             machType = "Autoclave"
                             headerCount = 2
                         End If

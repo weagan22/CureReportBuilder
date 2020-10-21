@@ -58,7 +58,12 @@ Public Class MainForm
 
         Dim queryResult As DataTable = New DataTable()
 
-        Dim db As SqlConnection = New SqlConnection("Data Source = MAUI; Initial Catalog=EpicorERP; User ID = Reporting; Password=$ystima1; Integrated Security=false; trusted_connection=false;")
+        Dim db As SqlConnection = New SqlConnection("Data Source = MAUI;
+                                                     Initial Catalog=EpicorERP;
+                                                     User ID = Reporting;
+                                                     Password=$ystima1;
+                                                     Integrated Security=false;
+                                                     trusted_connection=false;")
 
         db.Open()
         Dim adapter As SqlDataAdapter = New SqlDataAdapter(
@@ -93,7 +98,11 @@ Public Class MainForm
         Dim cureDataPath As String = ""
         Dim cureParamPath As String = ""
 
-        If System.IO.Directory.Exists(Txt_CureParamPath.Text) AndAlso System.IO.File.Exists(Txt_CureParamPath.Text & "\ToRunList.log") And System.IO.Directory.Exists(Txt_CureDataPath.Text) Then
+        If _
+           System.IO.Directory.Exists(Txt_CureParamPath.Text) _
+           AndAlso System.IO.File.Exists(Txt_CureParamPath.Text & "\ToRunList.log") _
+           And System.IO.Directory.Exists(Txt_CureDataPath.Text) Then
+
             cureDataPath = Txt_CureDataPath.Text
             cureParamPath = Txt_CureParamPath.Text
 
