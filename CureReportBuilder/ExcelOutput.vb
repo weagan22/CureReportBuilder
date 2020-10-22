@@ -306,13 +306,6 @@ Public Class ExcelOutput
                                    checkToOutput.cureStart,
                                    checkToOutput.cureEnd)
 
-                outputDataToColumn(dataSheet,
-                                   curCol,
-                                   "Lag TC" & vbNewLine & "(°F)",
-                                   arr2Str(checkToOutput.lagTC.values, checkToOutput, 1),
-                                   checkToOutput.cureStart,
-                                   checkToOutput.cureEnd)
-
                 addToChart(checkToOutput,
                            mainSheet,
                            dataSheet,
@@ -322,6 +315,13 @@ Public Class ExcelOutput
                            1,
                            False,
                            Color.Red)
+
+                outputDataToColumn(dataSheet,
+                                   curCol,
+                                   "Lag TC" & vbNewLine & "(°F)",
+                                   arr2Str(checkToOutput.lagTC.values, checkToOutput, 1),
+                                   checkToOutput.cureStart,
+                                   checkToOutput.cureEnd)
 
                 addToChart(checkToOutput,
                            mainSheet,
@@ -844,6 +844,8 @@ Public Class ExcelOutput
         outputExcelVal(infoSht, "RunDate", Now, cRow)
         outputExcelVal(infoSht, "comp", Environment.MachineName, cRow)
         outputExcelVal(infoSht, "compUser", Environment.UserName, cRow)
+        outputExcelVal(infoSht, "Version", My.Application.Info.Version.ToString, cRow)
+
 
         outputExcelVal(infoSht, "JobNum", checkToOutput.JobNum, cRow)
         outputExcelVal(infoSht, "PONum", checkToOutput.PONum, cRow)
