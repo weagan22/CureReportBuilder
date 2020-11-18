@@ -194,6 +194,45 @@ Public Class ExcelOutput
             curRow = curRow + 1
         Next
 
+        If checkToOutput.overTempErr Then
+            'Merge cells and center text
+            Excel.ActiveSheet.Range(mainSheet.Cells(curRow, 1), mainSheet.Cells(curRow, 10)).Merge
+            Excel.ActiveSheet.Range(mainSheet.Cells(curRow, 1), mainSheet.Cells(curRow, 10)).HorizontalAlignment = 3
+            Excel.ActiveSheet.Range(mainSheet.Cells(curRow, 1), mainSheet.Cells(curRow, 10)).VerticalAlignment = -4108
+            Excel.ActiveSheet.Range(mainSheet.Cells(curRow, 1), mainSheet.Cells(curRow, 10)).WrapText = True
+            Excel.ActiveSheet.Range(mainSheet.Cells(curRow, 1), mainSheet.Cells(curRow, 10)).Borders(9).LineStyle = 1
+
+            Dim overTempText As String = vbNewLine & "Over Temp After Completion" & vbNewLine
+
+            mainSheet.Cells(curRow, 1) = overTempText
+            formatFont(mainSheet.Cells(curRow, 1), overTempText, 11, True,, True, Color.Red, False)
+
+            'Set row height
+            Dim rowCount As Integer = mainSheet.Cells(curRow, 1).Value.ToString.Split(vbNewLine).Length
+            mainSheet.Rows(curRow).RowHeight = rowCount * 15.75
+
+            curRow = curRow + 1
+        End If
+
+        If checkToOutput.overPressErr Then
+            'Merge cells and center text
+            Excel.ActiveSheet.Range(mainSheet.Cells(curRow, 1), mainSheet.Cells(curRow, 10)).Merge
+            Excel.ActiveSheet.Range(mainSheet.Cells(curRow, 1), mainSheet.Cells(curRow, 10)).HorizontalAlignment = 3
+            Excel.ActiveSheet.Range(mainSheet.Cells(curRow, 1), mainSheet.Cells(curRow, 10)).VerticalAlignment = -4108
+            Excel.ActiveSheet.Range(mainSheet.Cells(curRow, 1), mainSheet.Cells(curRow, 10)).WrapText = True
+            Excel.ActiveSheet.Range(mainSheet.Cells(curRow, 1), mainSheet.Cells(curRow, 10)).Borders(9).LineStyle = 1
+
+            Dim overPressText As String = vbNewLine & "Over Pressure After Completion" & vbNewLine
+
+            mainSheet.Cells(curRow, 1) = overPressText
+            formatFont(mainSheet.Cells(curRow, 1), overPressText, 11, True,, True, Color.Red, False)
+
+            'Set row height
+            Dim rowCount As Integer = mainSheet.Cells(curRow, 1).Value.ToString.Split(vbNewLine).Length
+            mainSheet.Rows(curRow).RowHeight = rowCount * 15.75
+
+            curRow = curRow + 1
+        End If
 
         'Fill out data sheet
         Call fillDataSheet(mainSheet, dataSheet, checkToOutput)
