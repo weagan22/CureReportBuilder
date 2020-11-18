@@ -23,6 +23,7 @@
     Public cureStart As Integer = 0
     Public cureEnd As Integer = 0
     Public overTempErr As Boolean = False
+    Public overPressErr As Boolean = False
 
     Public cureStartTime As DateTime = Nothing
     Public cureEndTime As DateTime = Nothing
@@ -783,12 +784,22 @@
 
         If cureEnd <> dataCnt Then
             For i = cureEnd + 1 To dataCnt
-                If leadTC.values(i) > start_end_temp Or vesselPress.values(i) > start_end_press Then
+                If curePro.checkPressure Then
+                    If vesselPress.values(i) > start_end_press Then
+                        overPressErr = True
+                        cureEnd = dataCnt
+                        curePro.curePass = False
+                        Exit For
+                    End If
+                End If
+
+                If leadTC.values(i) > start_end_temp Then
                     overTempErr = True
                     cureEnd = dataCnt
                     curePro.curePass = False
                     Exit For
                 End If
+
             Next
         End If
     End Sub

@@ -209,6 +209,10 @@ Public Class ExcelOutput
             outputPath = My.Computer.FileSystem.SpecialDirectories.Desktop
         End If
 
+        If Right(outputPath, 1) = "\" Then
+            outputPath = Left(outputPath, Len(outputPath) - 1)
+        End If
+
         If Not My.Computer.FileSystem.DirectoryExists(outputPath & "\CureReports") Then
             My.Computer.FileSystem.CreateDirectory(outputPath & "\CureReports")
         End If
