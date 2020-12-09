@@ -783,7 +783,10 @@
         End If
 
         If cureEnd <> dataCnt Then
-            For i = cureEnd + 1 To dataCnt
+            'Calculates # of steps to delay before checking for repressurization of temp increasing, numerator sets the number of minutes to look at
+            Dim delayStepCnt As Integer = 5 / ((dateArr(UBound(dateArr)) - dateArr(0)).TotalMinutes / dataCnt)
+
+            For i = cureEnd + delayStepCnt To dataCnt
                 If curePro.checkPressure Then
                     If vesselPress.values(i) > start_end_press Then
                         overPressErr = True
