@@ -1020,8 +1020,7 @@ Partial Class MainForm
         Me.Txt_CureProfilesPath.Name = "Txt_CureProfilesPath"
         Me.Txt_CureProfilesPath.Size = New System.Drawing.Size(532, 20)
         Me.Txt_CureProfilesPath.TabIndex = 0
-        Me.Txt_CureProfilesPath.Text = "S:\Engineering\Functional Groups\Composites\Macros\CureReportFiles\Cure Profiles_" &
-    "NewStyle"
+        Me.Txt_CureProfilesPath.Text = "S:\Engineering\Functional Groups\Composites\Macros\CureReportFiles\Cure Profiles"
         '
         'Btn_LoadProfileFiles
         '

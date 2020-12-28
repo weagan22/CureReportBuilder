@@ -56,8 +56,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("S:\Engineering\Functional Groups\Composites\Macros\CureReportFiles\Cure Profiles_"& _ 
-            "NewStyle")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("S:\Engineering\Functional Groups\Composites\Macros\CureReportFiles\Cure Profiles")>  _
         Public Property CureProfilePath() As String
             Get
                 Return CType(Me("CureProfilePath"),String)
