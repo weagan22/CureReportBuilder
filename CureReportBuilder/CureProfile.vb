@@ -44,7 +44,7 @@ Public Class CureProfile
         End Set
     End Property
 
-    Sub addCureStep()
+    Sub addCureStep(Optional newStepName As String = "")
         If CureSteps Is Nothing Then
             ReDim CureSteps(0)
         Else
@@ -52,6 +52,67 @@ Public Class CureProfile
         End If
 
         CureSteps(UBound(CureSteps)) = New CureStep()
+        CureSteps(UBound(CureSteps)).stepName = newStepName
+    End Sub
+
+    Sub RemoveCureStep(Optional index As Integer = 0)
+        'If index > UBound(CureSteps) Then
+        '    index = UBound(CureSteps)
+        'ElseIf index < 0 Then
+        '    index = 0
+        'End If
+
+        Dim newCureSteps() As CureStep = Nothing
+
+        For i = 0 To UBound(CureSteps)
+            If i <> index Then
+                If newCureSteps Is Nothing Then
+                    ReDim newCureSteps(0)
+                Else
+                    ReDim Preserve newCureSteps(UBound(newCureSteps) + 1)
+                End If
+
+                newCureSteps(UBound(newCureSteps)) = CureSteps(i)
+            End If
+        Next
+
+        CureSteps = newCureSteps
+    End Sub
+
+    Sub MoveStepUp(selIndex As Integer)
+        Dim holder As CureStep
+
+        If selIndex <> 0 Then
+            holder = CureSteps(selIndex - 1)
+            CureSteps(selIndex - 1) = CureSteps(selIndex)
+            CureSteps(selIndex) = holder
+        Else
+            holder = CureSteps(0)
+
+            For i = 0 To UBound(CureSteps) - 1
+                CureSteps(i) = CureSteps(i + 1)
+            Next
+
+            CureSteps(UBound(CureSteps)) = holder
+        End If
+    End Sub
+
+    Sub MoveStepDown(selIndex As Integer)
+        Dim holder As CureStep
+
+        If selIndex <> UBound(CureSteps) Then
+            holder = CureSteps(selIndex + 1)
+            CureSteps(selIndex + 1) = CureSteps(selIndex)
+            CureSteps(selIndex) = holder
+        Else
+            holder = CureSteps(UBound(CureSteps))
+
+            For i = UBound(CureSteps) To 1 Step -1
+                CureSteps(i) = CureSteps(i - 1)
+            Next
+
+            CureSteps(0) = holder
+        End If
     End Sub
 
     Public Sub New(Optional inName As String = "",

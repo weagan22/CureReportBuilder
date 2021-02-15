@@ -28,6 +28,7 @@ Partial Class MainForm
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.LoadCureProfilesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
@@ -98,10 +99,40 @@ Partial Class MainForm
         Me.Txt_CureProfilesPath = New System.Windows.Forms.TextBox()
         Me.Btn_LoadProfileFiles = New System.Windows.Forms.Button()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
-        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.GrpBox_CureDefEdit = New System.Windows.Forms.GroupBox()
+        Me.Btn_RemoveStepEdit = New System.Windows.Forms.Button()
+        Me.Btn_AddStepEdit = New System.Windows.Forms.Button()
+        Me.Btn_MoveStepDownEdit = New System.Windows.Forms.Button()
+        Me.Btn_MoveStepUpEdit = New System.Windows.Forms.Button()
+        Me.List_StepsEdit = New System.Windows.Forms.ListBox()
+        Me.Grp_StepSettingsEdit = New System.Windows.Forms.GroupBox()
+        Me.Box_TermOper = New System.Windows.Forms.GroupBox()
+        Me.Combo_TermOper = New System.Windows.Forms.ComboBox()
+        Me.Box_Term2 = New System.Windows.Forms.GroupBox()
+        Me.Box_Term2Mod = New System.Windows.Forms.GroupBox()
+        Me.Combo_Term2Mod = New System.Windows.Forms.ComboBox()
+        Me.Box_Term2Goal = New System.Windows.Forms.GroupBox()
+        Me.Txt_Term2Goal = New System.Windows.Forms.TextBox()
+        Me.Box_Term2Cond = New System.Windows.Forms.GroupBox()
+        Me.Combo_Term2Cond = New System.Windows.Forms.ComboBox()
+        Me.Box_Term2Type = New System.Windows.Forms.GroupBox()
+        Me.Combo_Term2Type = New System.Windows.Forms.ComboBox()
+        Me.Box_Term1 = New System.Windows.Forms.GroupBox()
+        Me.Box_Term1Mod = New System.Windows.Forms.GroupBox()
+        Me.Combo_Term1Mod = New System.Windows.Forms.ComboBox()
+        Me.Box_Term1Goal = New System.Windows.Forms.GroupBox()
+        Me.Txt_Term1Goal = New System.Windows.Forms.TextBox()
+        Me.Box_Term1Cond = New System.Windows.Forms.GroupBox()
+        Me.Combo_Term1Cond = New System.Windows.Forms.ComboBox()
+        Me.Box_Term1Type = New System.Windows.Forms.GroupBox()
+        Me.Combo_Term1Type = New System.Windows.Forms.ComboBox()
+        Me.Box_DurationEdit = New System.Windows.Forms.GroupBox()
+        Me.Box_DurationValueEdit = New System.Windows.Forms.GroupBox()
+        Me.Txt_DurationEdit = New System.Windows.Forms.TextBox()
+        Me.Chk_DurationDisabled = New System.Windows.Forms.CheckBox()
         Me.Box_vacStepEdit = New System.Windows.Forms.GroupBox()
-        Me.Check_vacMinEdit = New System.Windows.Forms.CheckBox()
-        Me.Check_vacMaxEdit = New System.Windows.Forms.CheckBox()
+        Me.Label_VacMaxOnlyEdit = New System.Windows.Forms.Label()
+        Me.Label_VacMinOnlyEdit = New System.Windows.Forms.Label()
         Me.Check_vacStepEdit = New System.Windows.Forms.CheckBox()
         Me.Box_vacNegTolEdit = New System.Windows.Forms.GroupBox()
         Me.Txt_vacNegTolEdit = New System.Windows.Forms.TextBox()
@@ -110,8 +141,8 @@ Partial Class MainForm
         Me.Box_vacSetEdit = New System.Windows.Forms.GroupBox()
         Me.Txt_vacSetEdit = New System.Windows.Forms.TextBox()
         Me.Box_pressureStepEdit = New System.Windows.Forms.GroupBox()
-        Me.Check_pressureMinEdit = New System.Windows.Forms.CheckBox()
-        Me.Check_pressureMaxEdit = New System.Windows.Forms.CheckBox()
+        Me.Label_PressureMinOnlyEdit = New System.Windows.Forms.Label()
+        Me.Label_PressureMaxOnlyEdit = New System.Windows.Forms.Label()
         Me.Check_pressureStepEdit = New System.Windows.Forms.CheckBox()
         Me.Box_pressureRampNegTolEdit = New System.Windows.Forms.GroupBox()
         Me.Txt_pressureRampNegTolEdit = New System.Windows.Forms.TextBox()
@@ -126,8 +157,8 @@ Partial Class MainForm
         Me.Box_pressureSetEdit = New System.Windows.Forms.GroupBox()
         Me.Txt_pressureSetEdit = New System.Windows.Forms.TextBox()
         Me.Box_tempStepEdit = New System.Windows.Forms.GroupBox()
-        Me.Check_tempMinEdit = New System.Windows.Forms.CheckBox()
-        Me.Check_tempMaxEdit = New System.Windows.Forms.CheckBox()
+        Me.Label_TempMinOnlyEdit = New System.Windows.Forms.Label()
+        Me.Label_TempMaxOnlyEdit = New System.Windows.Forms.Label()
         Me.Check_tempStepEdit = New System.Windows.Forms.CheckBox()
         Me.Box_TempRampNegTolEdit = New System.Windows.Forms.GroupBox()
         Me.Txt_TempRampNegTolEdit = New System.Windows.Forms.TextBox()
@@ -143,18 +174,22 @@ Partial Class MainForm
         Me.Txt_TempSetEdit = New System.Windows.Forms.TextBox()
         Me.Box_StepNameEdit = New System.Windows.Forms.GroupBox()
         Me.Txt_StepNameEdit = New System.Windows.Forms.TextBox()
-        Me.Box_CheckEdit = New System.Windows.Forms.GroupBox()
-        Me.Check_Vac = New System.Windows.Forms.CheckBox()
-        Me.Check_TempEdit = New System.Windows.Forms.CheckBox()
-        Me.Check_PressureEdit = New System.Windows.Forms.CheckBox()
         Me.Box_CureNameEdit = New System.Windows.Forms.GroupBox()
         Me.Txt_CureNameEdit = New System.Windows.Forms.TextBox()
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
-        Me.Txt_DocRevEdit = New System.Windows.Forms.TextBox()
+        Me.Box_CheckEdit = New System.Windows.Forms.GroupBox()
+        Me.Check_VacEdit = New System.Windows.Forms.CheckBox()
+        Me.Check_TempEdit = New System.Windows.Forms.CheckBox()
+        Me.Check_PressureEdit = New System.Windows.Forms.CheckBox()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.Txt_CureDocEdit = New System.Windows.Forms.TextBox()
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.Combo_CureProfileEdit = New System.Windows.Forms.ComboBox()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.Txt_DocRevEdit = New System.Windows.Forms.TextBox()
+        Me.Grp_CurePathEdit = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel11 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Txt_CurePathEdit = New System.Windows.Forms.TextBox()
+        Me.Btn_CureLoadEdit = New System.Windows.Forms.Button()
+        Me.Btn_SaveEdit = New System.Windows.Forms.Button()
+        Me.Btn_CloseEdit = New System.Windows.Forms.Button()
         Me.OpenCSVFileDialog = New System.Windows.Forms.OpenFileDialog()
         Me.OpenCureProfileFileDialog = New System.Windows.Forms.OpenFileDialog()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
@@ -201,7 +236,21 @@ Partial Class MainForm
         Me.Box_CureProfiles.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
         Me.TabPage3.SuspendLayout()
-        Me.GroupBox4.SuspendLayout()
+        Me.GrpBox_CureDefEdit.SuspendLayout()
+        Me.Grp_StepSettingsEdit.SuspendLayout()
+        Me.Box_TermOper.SuspendLayout()
+        Me.Box_Term2.SuspendLayout()
+        Me.Box_Term2Mod.SuspendLayout()
+        Me.Box_Term2Goal.SuspendLayout()
+        Me.Box_Term2Cond.SuspendLayout()
+        Me.Box_Term2Type.SuspendLayout()
+        Me.Box_Term1.SuspendLayout()
+        Me.Box_Term1Mod.SuspendLayout()
+        Me.Box_Term1Goal.SuspendLayout()
+        Me.Box_Term1Cond.SuspendLayout()
+        Me.Box_Term1Type.SuspendLayout()
+        Me.Box_DurationEdit.SuspendLayout()
+        Me.Box_DurationValueEdit.SuspendLayout()
         Me.Box_vacStepEdit.SuspendLayout()
         Me.Box_vacNegTolEdit.SuspendLayout()
         Me.Box_vacPosTolEdit.SuspendLayout()
@@ -221,11 +270,12 @@ Partial Class MainForm
         Me.Box_TempPosTolEdit.SuspendLayout()
         Me.Box_TempSetEdit.SuspendLayout()
         Me.Box_StepNameEdit.SuspendLayout()
-        Me.Box_CheckEdit.SuspendLayout()
         Me.Box_CureNameEdit.SuspendLayout()
-        Me.GroupBox2.SuspendLayout()
+        Me.Box_CheckEdit.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
-        Me.GroupBox1.SuspendLayout()
+        Me.GroupBox2.SuspendLayout()
+        Me.Grp_CurePathEdit.SuspendLayout()
+        Me.TableLayoutPanel11.SuspendLayout()
         Me.SuspendLayout()
         '
         'MenuStrip1
@@ -233,29 +283,35 @@ Partial Class MainForm
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(800, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(1152, 24)
         Me.MenuStrip1.TabIndex = 0
         Me.MenuStrip1.Text = "MenuStrip1"
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ExitToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LoadCureProfilesToolStripMenuItem, Me.ExitToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
         Me.FileToolStripMenuItem.Text = "File"
         '
+        'LoadCureProfilesToolStripMenuItem
+        '
+        Me.LoadCureProfilesToolStripMenuItem.Name = "LoadCureProfilesToolStripMenuItem"
+        Me.LoadCureProfilesToolStripMenuItem.Size = New System.Drawing.Size(170, 22)
+        Me.LoadCureProfilesToolStripMenuItem.Text = "Load Cure Profiles"
+        '
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(93, 22)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(170, 22)
         Me.ExitToolStripMenuItem.Text = "Exit"
         '
         'StatusStrip1
         '
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 526)
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 823)
         Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Size = New System.Drawing.Size(800, 22)
+        Me.StatusStrip1.Size = New System.Drawing.Size(1152, 22)
         Me.StatusStrip1.TabIndex = 1
         '
         'ToolStripStatusLabel1
@@ -273,7 +329,7 @@ Partial Class MainForm
         Me.TabControl1.Location = New System.Drawing.Point(0, 24)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(800, 502)
+        Me.TabControl1.Size = New System.Drawing.Size(1152, 799)
         Me.TabControl1.TabIndex = 2
         '
         'TabPage1
@@ -282,9 +338,9 @@ Partial Class MainForm
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(792, 476)
+        Me.TabPage1.Size = New System.Drawing.Size(1144, 773)
         Me.TabPage1.TabIndex = 0
-        Me.TabPage1.Text = "Run Cure"
+        Me.TabPage1.Text = "Run Cure Check"
         Me.TabPage1.UseVisualStyleBackColor = True
         '
         'TableLayoutPanel7
@@ -304,7 +360,7 @@ Partial Class MainForm
         Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60.0!))
         Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60.0!))
-        Me.TableLayoutPanel7.Size = New System.Drawing.Size(786, 470)
+        Me.TableLayoutPanel7.Size = New System.Drawing.Size(1138, 767)
         Me.TableLayoutPanel7.TabIndex = 13
         '
         'Box_CureDataLocation
@@ -315,7 +371,7 @@ Partial Class MainForm
         Me.Box_CureDataLocation.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Box_CureDataLocation.Location = New System.Drawing.Point(23, 153)
         Me.Box_CureDataLocation.Name = "Box_CureDataLocation"
-        Me.Box_CureDataLocation.Size = New System.Drawing.Size(760, 54)
+        Me.Box_CureDataLocation.Size = New System.Drawing.Size(1112, 54)
         Me.Box_CureDataLocation.TabIndex = 0
         Me.Box_CureDataLocation.TabStop = False
         Me.Box_CureDataLocation.Text = "Cure Data Location"
@@ -332,7 +388,7 @@ Partial Class MainForm
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(754, 35)
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(1106, 35)
         Me.TableLayoutPanel1.TabIndex = 2
         '
         'Txt_FilePath
@@ -341,7 +397,7 @@ Partial Class MainForm
         Me.Txt_FilePath.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Txt_FilePath.Location = New System.Drawing.Point(3, 7)
         Me.Txt_FilePath.Name = "Txt_FilePath"
-        Me.Txt_FilePath.Size = New System.Drawing.Size(673, 20)
+        Me.Txt_FilePath.Size = New System.Drawing.Size(1025, 20)
         Me.Txt_FilePath.TabIndex = 2
         Me.Txt_FilePath.Text = "File path..."
         '
@@ -349,7 +405,7 @@ Partial Class MainForm
         '
         Me.Btn_OpenFile.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Btn_OpenFile.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Btn_OpenFile.Location = New System.Drawing.Point(682, 3)
+        Me.Btn_OpenFile.Location = New System.Drawing.Point(1034, 3)
         Me.Btn_OpenFile.Name = "Btn_OpenFile"
         Me.Btn_OpenFile.Size = New System.Drawing.Size(69, 29)
         Me.Btn_OpenFile.TabIndex = 3
@@ -367,7 +423,7 @@ Partial Class MainForm
         Me.Box_RunParams.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Box_RunParams.Location = New System.Drawing.Point(23, 213)
         Me.Box_RunParams.Name = "Box_RunParams"
-        Me.Box_RunParams.Size = New System.Drawing.Size(760, 194)
+        Me.Box_RunParams.Size = New System.Drawing.Size(1112, 491)
         Me.Box_RunParams.TabIndex = 13
         Me.Box_RunParams.TabStop = False
         '
@@ -643,11 +699,11 @@ Partial Class MainForm
         Me.Box_RunLine.Controls.Add(Me.Box_Technician, 0, 0)
         Me.Box_RunLine.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Box_RunLine.Enabled = False
-        Me.Box_RunLine.Location = New System.Drawing.Point(23, 413)
+        Me.Box_RunLine.Location = New System.Drawing.Point(23, 710)
         Me.Box_RunLine.Name = "Box_RunLine"
         Me.Box_RunLine.RowCount = 1
         Me.Box_RunLine.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.Box_RunLine.Size = New System.Drawing.Size(760, 54)
+        Me.Box_RunLine.Size = New System.Drawing.Size(1112, 54)
         Me.Box_RunLine.TabIndex = 14
         '
         'Btn_Run
@@ -655,9 +711,9 @@ Partial Class MainForm
         Me.Btn_Run.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Btn_Run.FlatAppearance.BorderSize = 2
         Me.Btn_Run.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.Btn_Run.Location = New System.Drawing.Point(588, 3)
+        Me.Btn_Run.Location = New System.Drawing.Point(859, 3)
         Me.Btn_Run.Name = "Btn_Run"
-        Me.Btn_Run.Size = New System.Drawing.Size(169, 48)
+        Me.Btn_Run.Size = New System.Drawing.Size(250, 48)
         Me.Btn_Run.TabIndex = 12
         Me.Btn_Run.Text = "Run Output"
         Me.Btn_Run.UseVisualStyleBackColor = True
@@ -666,7 +722,7 @@ Partial Class MainForm
         '
         Me.Box_Technician.Anchor = System.Windows.Forms.AnchorStyles.Right
         Me.Box_Technician.Controls.Add(Me.Txt_Technician)
-        Me.Box_Technician.Location = New System.Drawing.Point(421, 5)
+        Me.Box_Technician.Location = New System.Drawing.Point(692, 5)
         Me.Box_Technician.Name = "Box_Technician"
         Me.Box_Technician.Size = New System.Drawing.Size(161, 44)
         Me.Box_Technician.TabIndex = 10
@@ -696,7 +752,7 @@ Partial Class MainForm
         Me.TableLayoutPanel6.Name = "TableLayoutPanel6"
         Me.TableLayoutPanel6.RowCount = 1
         Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel6.Size = New System.Drawing.Size(760, 144)
+        Me.TableLayoutPanel6.Size = New System.Drawing.Size(1112, 144)
         Me.TableLayoutPanel6.TabIndex = 15
         '
         'Box_CureProfChoice
@@ -705,7 +761,7 @@ Partial Class MainForm
         Me.Box_CureProfChoice.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Box_CureProfChoice.Location = New System.Drawing.Point(3, 3)
         Me.Box_CureProfChoice.Name = "Box_CureProfChoice"
-        Me.Box_CureProfChoice.Size = New System.Drawing.Size(414, 138)
+        Me.Box_CureProfChoice.Size = New System.Drawing.Size(766, 138)
         Me.Box_CureProfChoice.TabIndex = 11
         Me.Box_CureProfChoice.TabStop = False
         '
@@ -721,7 +777,7 @@ Partial Class MainForm
         Me.TableLayoutPanel3.RowCount = 2
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel3.Size = New System.Drawing.Size(408, 119)
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(760, 119)
         Me.TableLayoutPanel3.TabIndex = 12
         '
         'Box_CureProfile
@@ -731,7 +787,7 @@ Partial Class MainForm
         Me.Box_CureProfile.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.5!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Underline), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Box_CureProfile.Location = New System.Drawing.Point(3, 3)
         Me.Box_CureProfile.Name = "Box_CureProfile"
-        Me.Box_CureProfile.Size = New System.Drawing.Size(402, 53)
+        Me.Box_CureProfile.Size = New System.Drawing.Size(754, 53)
         Me.Box_CureProfile.TabIndex = 7
         Me.Box_CureProfile.TabStop = False
         Me.Box_CureProfile.Text = "Cure Profile"
@@ -744,7 +800,7 @@ Partial Class MainForm
         Me.Combo_CureProfile.FormattingEnabled = True
         Me.Combo_CureProfile.Location = New System.Drawing.Point(6, 16)
         Me.Combo_CureProfile.Name = "Combo_CureProfile"
-        Me.Combo_CureProfile.Size = New System.Drawing.Size(390, 21)
+        Me.Combo_CureProfile.Size = New System.Drawing.Size(742, 21)
         Me.Combo_CureProfile.TabIndex = 1
         '
         'TableLayoutPanel4
@@ -759,14 +815,14 @@ Partial Class MainForm
         Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
         Me.TableLayoutPanel4.RowCount = 1
         Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel4.Size = New System.Drawing.Size(402, 54)
+        Me.TableLayoutPanel4.Size = New System.Drawing.Size(754, 54)
         Me.TableLayoutPanel4.TabIndex = 8
         '
         'Box_DocRev
         '
         Me.Box_DocRev.Controls.Add(Me.Txt_DocRev)
         Me.Box_DocRev.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Box_DocRev.Location = New System.Drawing.Point(345, 3)
+        Me.Box_DocRev.Location = New System.Drawing.Point(697, 3)
         Me.Box_DocRev.Name = "Box_DocRev"
         Me.Box_DocRev.Size = New System.Drawing.Size(54, 48)
         Me.Box_DocRev.TabIndex = 3
@@ -790,7 +846,7 @@ Partial Class MainForm
         Me.Box_CureDoc.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Box_CureDoc.Location = New System.Drawing.Point(3, 3)
         Me.Box_CureDoc.Name = "Box_CureDoc"
-        Me.Box_CureDoc.Size = New System.Drawing.Size(336, 48)
+        Me.Box_CureDoc.Size = New System.Drawing.Size(688, 48)
         Me.Box_CureDoc.TabIndex = 3
         Me.Box_CureDoc.TabStop = False
         Me.Box_CureDoc.Text = "Document"
@@ -801,7 +857,7 @@ Partial Class MainForm
         Me.Txt_CureDoc.Enabled = False
         Me.Txt_CureDoc.Location = New System.Drawing.Point(3, 16)
         Me.Txt_CureDoc.Name = "Txt_CureDoc"
-        Me.Txt_CureDoc.Size = New System.Drawing.Size(330, 20)
+        Me.Txt_CureDoc.Size = New System.Drawing.Size(682, 20)
         Me.Txt_CureDoc.TabIndex = 1
         Me.Txt_CureDoc.TabStop = False
         Me.Txt_CureDoc.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
@@ -809,7 +865,7 @@ Partial Class MainForm
         'PictureBox1
         '
         Me.PictureBox1.Image = Global.CureReportBuilder.My.Resources.Resources.Systima_Composites_2018
-        Me.PictureBox1.Location = New System.Drawing.Point(443, 3)
+        Me.PictureBox1.Location = New System.Drawing.Point(795, 3)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(294, 138)
         Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
@@ -827,7 +883,7 @@ Partial Class MainForm
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(792, 476)
+        Me.TabPage2.Size = New System.Drawing.Size(1144, 773)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Settings"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -1034,72 +1090,394 @@ Partial Class MainForm
         '
         'TabPage3
         '
-        Me.TabPage3.Controls.Add(Me.GroupBox4)
-        Me.TabPage3.Controls.Add(Me.Box_CheckEdit)
-        Me.TabPage3.Controls.Add(Me.Box_CureNameEdit)
-        Me.TabPage3.Controls.Add(Me.GroupBox2)
-        Me.TabPage3.Controls.Add(Me.GroupBox3)
-        Me.TabPage3.Controls.Add(Me.GroupBox1)
+        Me.TabPage3.Controls.Add(Me.GrpBox_CureDefEdit)
+        Me.TabPage3.Controls.Add(Me.Grp_CurePathEdit)
         Me.TabPage3.Location = New System.Drawing.Point(4, 22)
         Me.TabPage3.Name = "TabPage3"
-        Me.TabPage3.Size = New System.Drawing.Size(792, 476)
+        Me.TabPage3.Size = New System.Drawing.Size(1144, 773)
         Me.TabPage3.TabIndex = 2
-        Me.TabPage3.Text = "CureProfileEdit"
+        Me.TabPage3.Text = "Cure Profile Edit"
         Me.TabPage3.UseVisualStyleBackColor = True
         '
-        'GroupBox4
+        'GrpBox_CureDefEdit
         '
-        Me.GroupBox4.Controls.Add(Me.Box_vacStepEdit)
-        Me.GroupBox4.Controls.Add(Me.Box_pressureStepEdit)
-        Me.GroupBox4.Controls.Add(Me.Box_tempStepEdit)
-        Me.GroupBox4.Controls.Add(Me.Box_StepNameEdit)
-        Me.GroupBox4.Location = New System.Drawing.Point(8, 113)
-        Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(776, 360)
-        Me.GroupBox4.TabIndex = 18
-        Me.GroupBox4.TabStop = False
-        Me.GroupBox4.Text = "GroupBox4"
+        Me.GrpBox_CureDefEdit.Controls.Add(Me.Btn_RemoveStepEdit)
+        Me.GrpBox_CureDefEdit.Controls.Add(Me.Btn_AddStepEdit)
+        Me.GrpBox_CureDefEdit.Controls.Add(Me.Btn_MoveStepDownEdit)
+        Me.GrpBox_CureDefEdit.Controls.Add(Me.Btn_MoveStepUpEdit)
+        Me.GrpBox_CureDefEdit.Controls.Add(Me.List_StepsEdit)
+        Me.GrpBox_CureDefEdit.Controls.Add(Me.Grp_StepSettingsEdit)
+        Me.GrpBox_CureDefEdit.Controls.Add(Me.Box_CureNameEdit)
+        Me.GrpBox_CureDefEdit.Controls.Add(Me.Box_CheckEdit)
+        Me.GrpBox_CureDefEdit.Controls.Add(Me.GroupBox3)
+        Me.GrpBox_CureDefEdit.Controls.Add(Me.GroupBox2)
+        Me.GrpBox_CureDefEdit.Enabled = False
+        Me.GrpBox_CureDefEdit.Location = New System.Drawing.Point(8, 78)
+        Me.GrpBox_CureDefEdit.Name = "GrpBox_CureDefEdit"
+        Me.GrpBox_CureDefEdit.Size = New System.Drawing.Size(1114, 674)
+        Me.GrpBox_CureDefEdit.TabIndex = 20
+        Me.GrpBox_CureDefEdit.TabStop = False
+        Me.GrpBox_CureDefEdit.Text = "Cure Definition"
+        '
+        'Btn_RemoveStepEdit
+        '
+        Me.Btn_RemoveStepEdit.Location = New System.Drawing.Point(18, 332)
+        Me.Btn_RemoveStepEdit.Name = "Btn_RemoveStepEdit"
+        Me.Btn_RemoveStepEdit.Size = New System.Drawing.Size(75, 23)
+        Me.Btn_RemoveStepEdit.TabIndex = 25
+        Me.Btn_RemoveStepEdit.Text = "Remove"
+        Me.Btn_RemoveStepEdit.UseVisualStyleBackColor = True
+        '
+        'Btn_AddStepEdit
+        '
+        Me.Btn_AddStepEdit.Location = New System.Drawing.Point(18, 303)
+        Me.Btn_AddStepEdit.Name = "Btn_AddStepEdit"
+        Me.Btn_AddStepEdit.Size = New System.Drawing.Size(75, 23)
+        Me.Btn_AddStepEdit.TabIndex = 24
+        Me.Btn_AddStepEdit.Text = "Add"
+        Me.Btn_AddStepEdit.UseVisualStyleBackColor = True
+        '
+        'Btn_MoveStepDownEdit
+        '
+        Me.Btn_MoveStepDownEdit.Location = New System.Drawing.Point(99, 332)
+        Me.Btn_MoveStepDownEdit.Name = "Btn_MoveStepDownEdit"
+        Me.Btn_MoveStepDownEdit.Size = New System.Drawing.Size(75, 23)
+        Me.Btn_MoveStepDownEdit.TabIndex = 23
+        Me.Btn_MoveStepDownEdit.Text = "Down"
+        Me.Btn_MoveStepDownEdit.UseVisualStyleBackColor = True
+        '
+        'Btn_MoveStepUpEdit
+        '
+        Me.Btn_MoveStepUpEdit.Location = New System.Drawing.Point(99, 303)
+        Me.Btn_MoveStepUpEdit.Name = "Btn_MoveStepUpEdit"
+        Me.Btn_MoveStepUpEdit.Size = New System.Drawing.Size(75, 23)
+        Me.Btn_MoveStepUpEdit.TabIndex = 22
+        Me.Btn_MoveStepUpEdit.Text = "Up"
+        Me.Btn_MoveStepUpEdit.UseVisualStyleBackColor = True
+        '
+        'List_StepsEdit
+        '
+        Me.List_StepsEdit.FormattingEnabled = True
+        Me.List_StepsEdit.Location = New System.Drawing.Point(180, 303)
+        Me.List_StepsEdit.Name = "List_StepsEdit"
+        Me.List_StepsEdit.Size = New System.Drawing.Size(120, 95)
+        Me.List_StepsEdit.TabIndex = 21
+        '
+        'Grp_StepSettingsEdit
+        '
+        Me.Grp_StepSettingsEdit.Controls.Add(Me.Box_TermOper)
+        Me.Grp_StepSettingsEdit.Controls.Add(Me.Box_Term2)
+        Me.Grp_StepSettingsEdit.Controls.Add(Me.Box_Term1)
+        Me.Grp_StepSettingsEdit.Controls.Add(Me.Box_DurationEdit)
+        Me.Grp_StepSettingsEdit.Controls.Add(Me.Box_vacStepEdit)
+        Me.Grp_StepSettingsEdit.Controls.Add(Me.Box_pressureStepEdit)
+        Me.Grp_StepSettingsEdit.Controls.Add(Me.Box_tempStepEdit)
+        Me.Grp_StepSettingsEdit.Controls.Add(Me.Box_StepNameEdit)
+        Me.Grp_StepSettingsEdit.Location = New System.Drawing.Point(318, 19)
+        Me.Grp_StepSettingsEdit.Name = "Grp_StepSettingsEdit"
+        Me.Grp_StepSettingsEdit.Size = New System.Drawing.Size(776, 649)
+        Me.Grp_StepSettingsEdit.TabIndex = 18
+        Me.Grp_StepSettingsEdit.TabStop = False
+        Me.Grp_StepSettingsEdit.Text = "Step Settings"
+        '
+        'Box_TermOper
+        '
+        Me.Box_TermOper.Controls.Add(Me.Combo_TermOper)
+        Me.Box_TermOper.Location = New System.Drawing.Point(324, 478)
+        Me.Box_TermOper.Name = "Box_TermOper"
+        Me.Box_TermOper.Size = New System.Drawing.Size(150, 50)
+        Me.Box_TermOper.TabIndex = 24
+        Me.Box_TermOper.TabStop = False
+        Me.Box_TermOper.Text = "Terminating Operator"
+        '
+        'Combo_TermOper
+        '
+        Me.Combo_TermOper.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Combo_TermOper.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.Combo_TermOper.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Combo_TermOper.FormattingEnabled = True
+        Me.Combo_TermOper.Items.AddRange(New Object() {"AND", "OR"})
+        Me.Combo_TermOper.Location = New System.Drawing.Point(5, 14)
+        Me.Combo_TermOper.Name = "Combo_TermOper"
+        Me.Combo_TermOper.Size = New System.Drawing.Size(124, 21)
+        Me.Combo_TermOper.TabIndex = 20
+        '
+        'Box_Term2
+        '
+        Me.Box_Term2.Controls.Add(Me.Box_Term2Mod)
+        Me.Box_Term2.Controls.Add(Me.Box_Term2Goal)
+        Me.Box_Term2.Controls.Add(Me.Box_Term2Cond)
+        Me.Box_Term2.Controls.Add(Me.Box_Term2Type)
+        Me.Box_Term2.Location = New System.Drawing.Point(545, 363)
+        Me.Box_Term2.Name = "Box_Term2"
+        Me.Box_Term2.Size = New System.Drawing.Size(190, 260)
+        Me.Box_Term2.TabIndex = 23
+        Me.Box_Term2.TabStop = False
+        Me.Box_Term2.Text = "Term Condition 2"
+        '
+        'Box_Term2Mod
+        '
+        Me.Box_Term2Mod.Controls.Add(Me.Combo_Term2Mod)
+        Me.Box_Term2Mod.Location = New System.Drawing.Point(6, 184)
+        Me.Box_Term2Mod.Name = "Box_Term2Mod"
+        Me.Box_Term2Mod.Size = New System.Drawing.Size(126, 58)
+        Me.Box_Term2Mod.TabIndex = 24
+        Me.Box_Term2Mod.TabStop = False
+        Me.Box_Term2Mod.Text = "Modifier"
+        '
+        'Combo_Term2Mod
+        '
+        Me.Combo_Term2Mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Combo_Term2Mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.Combo_Term2Mod.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Combo_Term2Mod.FormattingEnabled = True
+        Me.Combo_Term2Mod.Items.AddRange(New Object() {"Lag", "Lead", "Air"})
+        Me.Combo_Term2Mod.Location = New System.Drawing.Point(5, 18)
+        Me.Combo_Term2Mod.Name = "Combo_Term2Mod"
+        Me.Combo_Term2Mod.Size = New System.Drawing.Size(100, 21)
+        Me.Combo_Term2Mod.TabIndex = 20
+        '
+        'Box_Term2Goal
+        '
+        Me.Box_Term2Goal.Controls.Add(Me.Txt_Term2Goal)
+        Me.Box_Term2Goal.Location = New System.Drawing.Point(6, 135)
+        Me.Box_Term2Goal.Name = "Box_Term2Goal"
+        Me.Box_Term2Goal.Size = New System.Drawing.Size(129, 43)
+        Me.Box_Term2Goal.TabIndex = 23
+        Me.Box_Term2Goal.TabStop = False
+        Me.Box_Term2Goal.Text = "Goal"
+        '
+        'Txt_Term2Goal
+        '
+        Me.Txt_Term2Goal.Location = New System.Drawing.Point(6, 19)
+        Me.Txt_Term2Goal.Name = "Txt_Term2Goal"
+        Me.Txt_Term2Goal.Size = New System.Drawing.Size(100, 20)
+        Me.Txt_Term2Goal.TabIndex = 0
+        Me.Txt_Term2Goal.Text = "0"
+        Me.Txt_Term2Goal.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Box_Term2Cond
+        '
+        Me.Box_Term2Cond.Controls.Add(Me.Combo_Term2Cond)
+        Me.Box_Term2Cond.Location = New System.Drawing.Point(6, 71)
+        Me.Box_Term2Cond.Name = "Box_Term2Cond"
+        Me.Box_Term2Cond.Size = New System.Drawing.Size(126, 58)
+        Me.Box_Term2Cond.TabIndex = 22
+        Me.Box_Term2Cond.TabStop = False
+        Me.Box_Term2Cond.Text = "Condition"
+        '
+        'Combo_Term2Cond
+        '
+        Me.Combo_Term2Cond.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Combo_Term2Cond.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.Combo_Term2Cond.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Combo_Term2Cond.FormattingEnabled = True
+        Me.Combo_Term2Cond.Items.AddRange(New Object() {"GREATER", "LESS"})
+        Me.Combo_Term2Cond.Location = New System.Drawing.Point(5, 18)
+        Me.Combo_Term2Cond.Name = "Combo_Term2Cond"
+        Me.Combo_Term2Cond.Size = New System.Drawing.Size(100, 21)
+        Me.Combo_Term2Cond.TabIndex = 20
+        '
+        'Box_Term2Type
+        '
+        Me.Box_Term2Type.Controls.Add(Me.Combo_Term2Type)
+        Me.Box_Term2Type.Location = New System.Drawing.Point(6, 19)
+        Me.Box_Term2Type.Name = "Box_Term2Type"
+        Me.Box_Term2Type.Size = New System.Drawing.Size(118, 50)
+        Me.Box_Term2Type.TabIndex = 21
+        Me.Box_Term2Type.TabStop = False
+        Me.Box_Term2Type.Text = "Type"
+        '
+        'Combo_Term2Type
+        '
+        Me.Combo_Term2Type.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Combo_Term2Type.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.Combo_Term2Type.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Combo_Term2Type.FormattingEnabled = True
+        Me.Combo_Term2Type.Items.AddRange(New Object() {"None", "Time", "Temp", "Press"})
+        Me.Combo_Term2Type.Location = New System.Drawing.Point(5, 14)
+        Me.Combo_Term2Type.Name = "Combo_Term2Type"
+        Me.Combo_Term2Type.Size = New System.Drawing.Size(92, 21)
+        Me.Combo_Term2Type.TabIndex = 20
+        '
+        'Box_Term1
+        '
+        Me.Box_Term1.Controls.Add(Me.Box_Term1Mod)
+        Me.Box_Term1.Controls.Add(Me.Box_Term1Goal)
+        Me.Box_Term1.Controls.Add(Me.Box_Term1Cond)
+        Me.Box_Term1.Controls.Add(Me.Box_Term1Type)
+        Me.Box_Term1.Location = New System.Drawing.Point(51, 363)
+        Me.Box_Term1.Name = "Box_Term1"
+        Me.Box_Term1.Size = New System.Drawing.Size(190, 260)
+        Me.Box_Term1.TabIndex = 22
+        Me.Box_Term1.TabStop = False
+        Me.Box_Term1.Text = "Term Condition 1"
+        '
+        'Box_Term1Mod
+        '
+        Me.Box_Term1Mod.Controls.Add(Me.Combo_Term1Mod)
+        Me.Box_Term1Mod.Location = New System.Drawing.Point(6, 184)
+        Me.Box_Term1Mod.Name = "Box_Term1Mod"
+        Me.Box_Term1Mod.Size = New System.Drawing.Size(126, 58)
+        Me.Box_Term1Mod.TabIndex = 24
+        Me.Box_Term1Mod.TabStop = False
+        Me.Box_Term1Mod.Text = "Modifier"
+        '
+        'Combo_Term1Mod
+        '
+        Me.Combo_Term1Mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Combo_Term1Mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.Combo_Term1Mod.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Combo_Term1Mod.FormattingEnabled = True
+        Me.Combo_Term1Mod.Items.AddRange(New Object() {"Lag", "Lead", "Air"})
+        Me.Combo_Term1Mod.Location = New System.Drawing.Point(5, 18)
+        Me.Combo_Term1Mod.Name = "Combo_Term1Mod"
+        Me.Combo_Term1Mod.Size = New System.Drawing.Size(100, 21)
+        Me.Combo_Term1Mod.TabIndex = 20
+        '
+        'Box_Term1Goal
+        '
+        Me.Box_Term1Goal.Controls.Add(Me.Txt_Term1Goal)
+        Me.Box_Term1Goal.Location = New System.Drawing.Point(6, 135)
+        Me.Box_Term1Goal.Name = "Box_Term1Goal"
+        Me.Box_Term1Goal.Size = New System.Drawing.Size(129, 43)
+        Me.Box_Term1Goal.TabIndex = 23
+        Me.Box_Term1Goal.TabStop = False
+        Me.Box_Term1Goal.Text = "Goal"
+        '
+        'Txt_Term1Goal
+        '
+        Me.Txt_Term1Goal.Location = New System.Drawing.Point(6, 19)
+        Me.Txt_Term1Goal.Name = "Txt_Term1Goal"
+        Me.Txt_Term1Goal.Size = New System.Drawing.Size(100, 20)
+        Me.Txt_Term1Goal.TabIndex = 0
+        Me.Txt_Term1Goal.Text = "0"
+        Me.Txt_Term1Goal.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Box_Term1Cond
+        '
+        Me.Box_Term1Cond.Controls.Add(Me.Combo_Term1Cond)
+        Me.Box_Term1Cond.Location = New System.Drawing.Point(6, 71)
+        Me.Box_Term1Cond.Name = "Box_Term1Cond"
+        Me.Box_Term1Cond.Size = New System.Drawing.Size(126, 58)
+        Me.Box_Term1Cond.TabIndex = 22
+        Me.Box_Term1Cond.TabStop = False
+        Me.Box_Term1Cond.Text = "Condition"
+        '
+        'Combo_Term1Cond
+        '
+        Me.Combo_Term1Cond.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Combo_Term1Cond.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.Combo_Term1Cond.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Combo_Term1Cond.FormattingEnabled = True
+        Me.Combo_Term1Cond.Items.AddRange(New Object() {"GREATER", "LESS"})
+        Me.Combo_Term1Cond.Location = New System.Drawing.Point(5, 18)
+        Me.Combo_Term1Cond.Name = "Combo_Term1Cond"
+        Me.Combo_Term1Cond.Size = New System.Drawing.Size(100, 21)
+        Me.Combo_Term1Cond.TabIndex = 20
+        '
+        'Box_Term1Type
+        '
+        Me.Box_Term1Type.Controls.Add(Me.Combo_Term1Type)
+        Me.Box_Term1Type.Location = New System.Drawing.Point(6, 19)
+        Me.Box_Term1Type.Name = "Box_Term1Type"
+        Me.Box_Term1Type.Size = New System.Drawing.Size(118, 50)
+        Me.Box_Term1Type.TabIndex = 21
+        Me.Box_Term1Type.TabStop = False
+        Me.Box_Term1Type.Text = "Type"
+        '
+        'Combo_Term1Type
+        '
+        Me.Combo_Term1Type.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Combo_Term1Type.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.Combo_Term1Type.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Combo_Term1Type.FormattingEnabled = True
+        Me.Combo_Term1Type.Items.AddRange(New Object() {"Time", "Temp", "Press"})
+        Me.Combo_Term1Type.Location = New System.Drawing.Point(5, 14)
+        Me.Combo_Term1Type.Name = "Combo_Term1Type"
+        Me.Combo_Term1Type.Size = New System.Drawing.Size(92, 21)
+        Me.Combo_Term1Type.TabIndex = 20
+        '
+        'Box_DurationEdit
+        '
+        Me.Box_DurationEdit.Controls.Add(Me.Box_DurationValueEdit)
+        Me.Box_DurationEdit.Controls.Add(Me.Chk_DurationDisabled)
+        Me.Box_DurationEdit.Location = New System.Drawing.Point(285, 71)
+        Me.Box_DurationEdit.Name = "Box_DurationEdit"
+        Me.Box_DurationEdit.Size = New System.Drawing.Size(189, 94)
+        Me.Box_DurationEdit.TabIndex = 19
+        Me.Box_DurationEdit.TabStop = False
+        Me.Box_DurationEdit.Text = "Max Duration"
+        '
+        'Box_DurationValueEdit
+        '
+        Me.Box_DurationValueEdit.Controls.Add(Me.Txt_DurationEdit)
+        Me.Box_DurationValueEdit.Location = New System.Drawing.Point(39, 45)
+        Me.Box_DurationValueEdit.Name = "Box_DurationValueEdit"
+        Me.Box_DurationValueEdit.Size = New System.Drawing.Size(129, 43)
+        Me.Box_DurationValueEdit.TabIndex = 18
+        Me.Box_DurationValueEdit.TabStop = False
+        Me.Box_DurationValueEdit.Text = "Duration (min)"
+        '
+        'Txt_DurationEdit
+        '
+        Me.Txt_DurationEdit.Location = New System.Drawing.Point(6, 19)
+        Me.Txt_DurationEdit.Name = "Txt_DurationEdit"
+        Me.Txt_DurationEdit.Size = New System.Drawing.Size(100, 20)
+        Me.Txt_DurationEdit.TabIndex = 0
+        Me.Txt_DurationEdit.Text = "-1"
+        Me.Txt_DurationEdit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Chk_DurationDisabled
+        '
+        Me.Chk_DurationDisabled.AutoSize = True
+        Me.Chk_DurationDisabled.Location = New System.Drawing.Point(7, 19)
+        Me.Chk_DurationDisabled.Name = "Chk_DurationDisabled"
+        Me.Chk_DurationDisabled.Size = New System.Drawing.Size(67, 17)
+        Me.Chk_DurationDisabled.TabIndex = 0
+        Me.Chk_DurationDisabled.Text = "Disabled"
+        Me.Chk_DurationDisabled.UseVisualStyleBackColor = True
         '
         'Box_vacStepEdit
         '
-        Me.Box_vacStepEdit.Controls.Add(Me.Check_vacMinEdit)
-        Me.Box_vacStepEdit.Controls.Add(Me.Check_vacMaxEdit)
+        Me.Box_vacStepEdit.Controls.Add(Me.Label_VacMaxOnlyEdit)
+        Me.Box_vacStepEdit.Controls.Add(Me.Label_VacMinOnlyEdit)
         Me.Box_vacStepEdit.Controls.Add(Me.Check_vacStepEdit)
         Me.Box_vacStepEdit.Controls.Add(Me.Box_vacNegTolEdit)
         Me.Box_vacStepEdit.Controls.Add(Me.Box_vacPosTolEdit)
         Me.Box_vacStepEdit.Controls.Add(Me.Box_vacSetEdit)
-        Me.Box_vacStepEdit.Location = New System.Drawing.Point(278, 121)
+        Me.Box_vacStepEdit.Location = New System.Drawing.Point(276, 187)
         Me.Box_vacStepEdit.Name = "Box_vacStepEdit"
         Me.Box_vacStepEdit.Size = New System.Drawing.Size(225, 213)
         Me.Box_vacStepEdit.TabIndex = 18
         Me.Box_vacStepEdit.TabStop = False
         Me.Box_vacStepEdit.Text = "Vacuum Step"
         '
-        'Check_vacMinEdit
+        'Label_VacMaxOnlyEdit
         '
-        Me.Check_vacMinEdit.AutoSize = True
-        Me.Check_vacMinEdit.Location = New System.Drawing.Point(7, 68)
-        Me.Check_vacMinEdit.Name = "Check_vacMinEdit"
-        Me.Check_vacMinEdit.Size = New System.Drawing.Size(67, 17)
-        Me.Check_vacMinEdit.TabIndex = 24
-        Me.Check_vacMinEdit.Text = "Min Only"
-        Me.Check_vacMinEdit.UseVisualStyleBackColor = True
+        Me.Label_VacMaxOnlyEdit.AutoSize = True
+        Me.Label_VacMaxOnlyEdit.ForeColor = System.Drawing.SystemColors.Highlight
+        Me.Label_VacMaxOnlyEdit.Location = New System.Drawing.Point(54, 84)
+        Me.Label_VacMaxOnlyEdit.Name = "Label_VacMaxOnlyEdit"
+        Me.Label_VacMaxOnlyEdit.Size = New System.Drawing.Size(51, 13)
+        Me.Label_VacMaxOnlyEdit.TabIndex = 26
+        Me.Label_VacMaxOnlyEdit.Text = "Max Only"
+        Me.Label_VacMaxOnlyEdit.Visible = False
         '
-        'Check_vacMaxEdit
+        'Label_VacMinOnlyEdit
         '
-        Me.Check_vacMaxEdit.AutoSize = True
-        Me.Check_vacMaxEdit.Location = New System.Drawing.Point(7, 45)
-        Me.Check_vacMaxEdit.Name = "Check_vacMaxEdit"
-        Me.Check_vacMaxEdit.Size = New System.Drawing.Size(70, 17)
-        Me.Check_vacMaxEdit.TabIndex = 23
-        Me.Check_vacMaxEdit.Text = "Max Only"
-        Me.Check_vacMaxEdit.UseVisualStyleBackColor = True
+        Me.Label_VacMinOnlyEdit.AutoSize = True
+        Me.Label_VacMinOnlyEdit.ForeColor = System.Drawing.SystemColors.Highlight
+        Me.Label_VacMinOnlyEdit.Location = New System.Drawing.Point(54, 129)
+        Me.Label_VacMinOnlyEdit.Name = "Label_VacMinOnlyEdit"
+        Me.Label_VacMinOnlyEdit.Size = New System.Drawing.Size(48, 13)
+        Me.Label_VacMinOnlyEdit.TabIndex = 25
+        Me.Label_VacMinOnlyEdit.Text = "Min Only"
+        Me.Label_VacMinOnlyEdit.Visible = False
         '
         'Check_vacStepEdit
         '
         Me.Check_vacStepEdit.AutoSize = True
-        Me.Check_vacStepEdit.Checked = True
-        Me.Check_vacStepEdit.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Check_vacStepEdit.Location = New System.Drawing.Point(7, 20)
         Me.Check_vacStepEdit.Name = "Check_vacStepEdit"
         Me.Check_vacStepEdit.Size = New System.Drawing.Size(57, 17)
@@ -1124,6 +1502,7 @@ Partial Class MainForm
         Me.Txt_vacNegTolEdit.Size = New System.Drawing.Size(100, 20)
         Me.Txt_vacNegTolEdit.TabIndex = 0
         Me.Txt_vacNegTolEdit.Text = "-50"
+        Me.Txt_vacNegTolEdit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Box_vacPosTolEdit
         '
@@ -1142,6 +1521,7 @@ Partial Class MainForm
         Me.Txt_vacPosTolEdit.Size = New System.Drawing.Size(100, 20)
         Me.Txt_vacPosTolEdit.TabIndex = 0
         Me.Txt_vacPosTolEdit.Text = "50"
+        Me.Txt_vacPosTolEdit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Box_vacSetEdit
         '
@@ -1160,11 +1540,12 @@ Partial Class MainForm
         Me.Txt_vacSetEdit.Size = New System.Drawing.Size(100, 20)
         Me.Txt_vacSetEdit.TabIndex = 0
         Me.Txt_vacSetEdit.Text = "500"
+        Me.Txt_vacSetEdit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Box_pressureStepEdit
         '
-        Me.Box_pressureStepEdit.Controls.Add(Me.Check_pressureMinEdit)
-        Me.Box_pressureStepEdit.Controls.Add(Me.Check_pressureMaxEdit)
+        Me.Box_pressureStepEdit.Controls.Add(Me.Label_PressureMinOnlyEdit)
+        Me.Box_pressureStepEdit.Controls.Add(Me.Label_PressureMaxOnlyEdit)
         Me.Box_pressureStepEdit.Controls.Add(Me.Check_pressureStepEdit)
         Me.Box_pressureStepEdit.Controls.Add(Me.Box_pressureRampNegTolEdit)
         Me.Box_pressureStepEdit.Controls.Add(Me.Box_pressureRampPosTolEdit)
@@ -1179,31 +1560,31 @@ Partial Class MainForm
         Me.Box_pressureStepEdit.TabStop = False
         Me.Box_pressureStepEdit.Text = "Pressure Step"
         '
-        'Check_pressureMinEdit
+        'Label_PressureMinOnlyEdit
         '
-        Me.Check_pressureMinEdit.AutoSize = True
-        Me.Check_pressureMinEdit.Location = New System.Drawing.Point(7, 68)
-        Me.Check_pressureMinEdit.Name = "Check_pressureMinEdit"
-        Me.Check_pressureMinEdit.Size = New System.Drawing.Size(67, 17)
-        Me.Check_pressureMinEdit.TabIndex = 24
-        Me.Check_pressureMinEdit.Text = "Min Only"
-        Me.Check_pressureMinEdit.UseVisualStyleBackColor = True
+        Me.Label_PressureMinOnlyEdit.AutoSize = True
+        Me.Label_PressureMinOnlyEdit.ForeColor = System.Drawing.SystemColors.Highlight
+        Me.Label_PressureMinOnlyEdit.Location = New System.Drawing.Point(54, 78)
+        Me.Label_PressureMinOnlyEdit.Name = "Label_PressureMinOnlyEdit"
+        Me.Label_PressureMinOnlyEdit.Size = New System.Drawing.Size(48, 13)
+        Me.Label_PressureMinOnlyEdit.TabIndex = 26
+        Me.Label_PressureMinOnlyEdit.Text = "Min Only"
+        Me.Label_PressureMinOnlyEdit.Visible = False
         '
-        'Check_pressureMaxEdit
+        'Label_PressureMaxOnlyEdit
         '
-        Me.Check_pressureMaxEdit.AutoSize = True
-        Me.Check_pressureMaxEdit.Location = New System.Drawing.Point(7, 45)
-        Me.Check_pressureMaxEdit.Name = "Check_pressureMaxEdit"
-        Me.Check_pressureMaxEdit.Size = New System.Drawing.Size(70, 17)
-        Me.Check_pressureMaxEdit.TabIndex = 23
-        Me.Check_pressureMaxEdit.Text = "Max Only"
-        Me.Check_pressureMaxEdit.UseVisualStyleBackColor = True
+        Me.Label_PressureMaxOnlyEdit.AutoSize = True
+        Me.Label_PressureMaxOnlyEdit.ForeColor = System.Drawing.SystemColors.Highlight
+        Me.Label_PressureMaxOnlyEdit.Location = New System.Drawing.Point(51, 123)
+        Me.Label_PressureMaxOnlyEdit.Name = "Label_PressureMaxOnlyEdit"
+        Me.Label_PressureMaxOnlyEdit.Size = New System.Drawing.Size(51, 13)
+        Me.Label_PressureMaxOnlyEdit.TabIndex = 25
+        Me.Label_PressureMaxOnlyEdit.Text = "Max Only"
+        Me.Label_PressureMaxOnlyEdit.Visible = False
         '
         'Check_pressureStepEdit
         '
         Me.Check_pressureStepEdit.AutoSize = True
-        Me.Check_pressureStepEdit.Checked = True
-        Me.Check_pressureStepEdit.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Check_pressureStepEdit.Location = New System.Drawing.Point(7, 20)
         Me.Check_pressureStepEdit.Name = "Check_pressureStepEdit"
         Me.Check_pressureStepEdit.Size = New System.Drawing.Size(57, 17)
@@ -1228,6 +1609,7 @@ Partial Class MainForm
         Me.Txt_pressureRampNegTolEdit.Size = New System.Drawing.Size(100, 20)
         Me.Txt_pressureRampNegTolEdit.TabIndex = 0
         Me.Txt_pressureRampNegTolEdit.Text = "0"
+        Me.Txt_pressureRampNegTolEdit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Box_pressureRampPosTolEdit
         '
@@ -1246,6 +1628,7 @@ Partial Class MainForm
         Me.Txt_pressureRampPosTolEdit.Size = New System.Drawing.Size(100, 20)
         Me.Txt_pressureRampPosTolEdit.TabIndex = 0
         Me.Txt_pressureRampPosTolEdit.Text = "0"
+        Me.Txt_pressureRampPosTolEdit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Box_pressureRampEdit
         '
@@ -1264,6 +1647,7 @@ Partial Class MainForm
         Me.Txt_pressureRampEdit.Size = New System.Drawing.Size(100, 20)
         Me.Txt_pressureRampEdit.TabIndex = 0
         Me.Txt_pressureRampEdit.Text = "0"
+        Me.Txt_pressureRampEdit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Box_pressureNegTolEdit
         '
@@ -1282,6 +1666,7 @@ Partial Class MainForm
         Me.Txt_pressureNegTolEdit.Size = New System.Drawing.Size(100, 20)
         Me.Txt_pressureNegTolEdit.TabIndex = 0
         Me.Txt_pressureNegTolEdit.Text = "-50"
+        Me.Txt_pressureNegTolEdit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Box_pressurePosTolEdit
         '
@@ -1300,6 +1685,7 @@ Partial Class MainForm
         Me.Txt_pressurePosTolEdit.Size = New System.Drawing.Size(100, 20)
         Me.Txt_pressurePosTolEdit.TabIndex = 0
         Me.Txt_pressurePosTolEdit.Text = "50"
+        Me.Txt_pressurePosTolEdit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Box_pressureSetEdit
         '
@@ -1318,11 +1704,12 @@ Partial Class MainForm
         Me.Txt_pressureSetEdit.Size = New System.Drawing.Size(100, 20)
         Me.Txt_pressureSetEdit.TabIndex = 0
         Me.Txt_pressureSetEdit.Text = "500"
+        Me.Txt_pressureSetEdit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Box_tempStepEdit
         '
-        Me.Box_tempStepEdit.Controls.Add(Me.Check_tempMinEdit)
-        Me.Box_tempStepEdit.Controls.Add(Me.Check_tempMaxEdit)
+        Me.Box_tempStepEdit.Controls.Add(Me.Label_TempMinOnlyEdit)
+        Me.Box_tempStepEdit.Controls.Add(Me.Label_TempMaxOnlyEdit)
         Me.Box_tempStepEdit.Controls.Add(Me.Check_tempStepEdit)
         Me.Box_tempStepEdit.Controls.Add(Me.Box_TempRampNegTolEdit)
         Me.Box_tempStepEdit.Controls.Add(Me.Box_TempRampPosTolEdit)
@@ -1337,31 +1724,31 @@ Partial Class MainForm
         Me.Box_tempStepEdit.TabStop = False
         Me.Box_tempStepEdit.Text = "Temperature Step"
         '
-        'Check_tempMinEdit
+        'Label_TempMinOnlyEdit
         '
-        Me.Check_tempMinEdit.AutoSize = True
-        Me.Check_tempMinEdit.Location = New System.Drawing.Point(7, 68)
-        Me.Check_tempMinEdit.Name = "Check_tempMinEdit"
-        Me.Check_tempMinEdit.Size = New System.Drawing.Size(67, 17)
-        Me.Check_tempMinEdit.TabIndex = 24
-        Me.Check_tempMinEdit.Text = "Min Only"
-        Me.Check_tempMinEdit.UseVisualStyleBackColor = True
+        Me.Label_TempMinOnlyEdit.AutoSize = True
+        Me.Label_TempMinOnlyEdit.ForeColor = System.Drawing.SystemColors.Highlight
+        Me.Label_TempMinOnlyEdit.Location = New System.Drawing.Point(66, 83)
+        Me.Label_TempMinOnlyEdit.Name = "Label_TempMinOnlyEdit"
+        Me.Label_TempMinOnlyEdit.Size = New System.Drawing.Size(48, 13)
+        Me.Label_TempMinOnlyEdit.TabIndex = 24
+        Me.Label_TempMinOnlyEdit.Text = "Min Only"
+        Me.Label_TempMinOnlyEdit.Visible = False
         '
-        'Check_tempMaxEdit
+        'Label_TempMaxOnlyEdit
         '
-        Me.Check_tempMaxEdit.AutoSize = True
-        Me.Check_tempMaxEdit.Location = New System.Drawing.Point(7, 45)
-        Me.Check_tempMaxEdit.Name = "Check_tempMaxEdit"
-        Me.Check_tempMaxEdit.Size = New System.Drawing.Size(70, 17)
-        Me.Check_tempMaxEdit.TabIndex = 23
-        Me.Check_tempMaxEdit.Text = "Max Only"
-        Me.Check_tempMaxEdit.UseVisualStyleBackColor = True
+        Me.Label_TempMaxOnlyEdit.AutoSize = True
+        Me.Label_TempMaxOnlyEdit.ForeColor = System.Drawing.SystemColors.Highlight
+        Me.Label_TempMaxOnlyEdit.Location = New System.Drawing.Point(63, 128)
+        Me.Label_TempMaxOnlyEdit.Name = "Label_TempMaxOnlyEdit"
+        Me.Label_TempMaxOnlyEdit.Size = New System.Drawing.Size(51, 13)
+        Me.Label_TempMaxOnlyEdit.TabIndex = 23
+        Me.Label_TempMaxOnlyEdit.Text = "Max Only"
+        Me.Label_TempMaxOnlyEdit.Visible = False
         '
         'Check_tempStepEdit
         '
         Me.Check_tempStepEdit.AutoSize = True
-        Me.Check_tempStepEdit.Checked = True
-        Me.Check_tempStepEdit.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Check_tempStepEdit.Location = New System.Drawing.Point(7, 20)
         Me.Check_tempStepEdit.Name = "Check_tempStepEdit"
         Me.Check_tempStepEdit.Size = New System.Drawing.Size(87, 17)
@@ -1386,6 +1773,7 @@ Partial Class MainForm
         Me.Txt_TempRampNegTolEdit.Size = New System.Drawing.Size(100, 20)
         Me.Txt_TempRampNegTolEdit.TabIndex = 0
         Me.Txt_TempRampNegTolEdit.Text = "0"
+        Me.Txt_TempRampNegTolEdit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Box_TempRampPosTolEdit
         '
@@ -1404,6 +1792,7 @@ Partial Class MainForm
         Me.Txt_TempRampPosTolEdit.Size = New System.Drawing.Size(100, 20)
         Me.Txt_TempRampPosTolEdit.TabIndex = 0
         Me.Txt_TempRampPosTolEdit.Text = "0"
+        Me.Txt_TempRampPosTolEdit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Box_TempRampEdit
         '
@@ -1422,6 +1811,7 @@ Partial Class MainForm
         Me.Txt_TempRampEdit.Size = New System.Drawing.Size(100, 20)
         Me.Txt_TempRampEdit.TabIndex = 0
         Me.Txt_TempRampEdit.Text = "0"
+        Me.Txt_TempRampEdit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Box_TempNegTolEdit
         '
@@ -1440,6 +1830,7 @@ Partial Class MainForm
         Me.Txt_TempNegTolEdit.Size = New System.Drawing.Size(100, 20)
         Me.Txt_TempNegTolEdit.TabIndex = 0
         Me.Txt_TempNegTolEdit.Text = "-50"
+        Me.Txt_TempNegTolEdit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Box_TempPosTolEdit
         '
@@ -1458,6 +1849,7 @@ Partial Class MainForm
         Me.Txt_TempPosTolEdit.Size = New System.Drawing.Size(100, 20)
         Me.Txt_TempPosTolEdit.TabIndex = 0
         Me.Txt_TempPosTolEdit.Text = "50"
+        Me.Txt_TempPosTolEdit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Box_TempSetEdit
         '
@@ -1476,11 +1868,12 @@ Partial Class MainForm
         Me.Txt_TempSetEdit.Size = New System.Drawing.Size(100, 20)
         Me.Txt_TempSetEdit.TabIndex = 0
         Me.Txt_TempSetEdit.Text = "500"
+        Me.Txt_TempSetEdit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Box_StepNameEdit
         '
         Me.Box_StepNameEdit.Controls.Add(Me.Txt_StepNameEdit)
-        Me.Box_StepNameEdit.Location = New System.Drawing.Point(291, 40)
+        Me.Box_StepNameEdit.Location = New System.Drawing.Point(302, 20)
         Me.Box_StepNameEdit.Name = "Box_StepNameEdit"
         Me.Box_StepNameEdit.Size = New System.Drawing.Size(151, 46)
         Me.Box_StepNameEdit.TabIndex = 12
@@ -1493,53 +1886,12 @@ Partial Class MainForm
         Me.Txt_StepNameEdit.Name = "Txt_StepNameEdit"
         Me.Txt_StepNameEdit.Size = New System.Drawing.Size(139, 20)
         Me.Txt_StepNameEdit.TabIndex = 11
-        '
-        'Box_CheckEdit
-        '
-        Me.Box_CheckEdit.Controls.Add(Me.Check_Vac)
-        Me.Box_CheckEdit.Controls.Add(Me.Check_TempEdit)
-        Me.Box_CheckEdit.Controls.Add(Me.Check_PressureEdit)
-        Me.Box_CheckEdit.Location = New System.Drawing.Point(584, 9)
-        Me.Box_CheckEdit.Name = "Box_CheckEdit"
-        Me.Box_CheckEdit.Size = New System.Drawing.Size(118, 100)
-        Me.Box_CheckEdit.TabIndex = 15
-        Me.Box_CheckEdit.TabStop = False
-        Me.Box_CheckEdit.Text = "Check"
-        '
-        'Check_Vac
-        '
-        Me.Check_Vac.AutoSize = True
-        Me.Check_Vac.Location = New System.Drawing.Point(20, 65)
-        Me.Check_Vac.Name = "Check_Vac"
-        Me.Check_Vac.Size = New System.Drawing.Size(65, 17)
-        Me.Check_Vac.TabIndex = 16
-        Me.Check_Vac.Text = "Vacuum"
-        Me.Check_Vac.UseVisualStyleBackColor = True
-        '
-        'Check_TempEdit
-        '
-        Me.Check_TempEdit.AutoSize = True
-        Me.Check_TempEdit.Location = New System.Drawing.Point(20, 19)
-        Me.Check_TempEdit.Name = "Check_TempEdit"
-        Me.Check_TempEdit.Size = New System.Drawing.Size(86, 17)
-        Me.Check_TempEdit.TabIndex = 15
-        Me.Check_TempEdit.Text = "Temperature"
-        Me.Check_TempEdit.UseVisualStyleBackColor = True
-        '
-        'Check_PressureEdit
-        '
-        Me.Check_PressureEdit.AutoSize = True
-        Me.Check_PressureEdit.Location = New System.Drawing.Point(20, 42)
-        Me.Check_PressureEdit.Name = "Check_PressureEdit"
-        Me.Check_PressureEdit.Size = New System.Drawing.Size(67, 17)
-        Me.Check_PressureEdit.TabIndex = 14
-        Me.Check_PressureEdit.Text = "Pressure"
-        Me.Check_PressureEdit.UseVisualStyleBackColor = True
+        Me.Txt_StepNameEdit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Box_CureNameEdit
         '
         Me.Box_CureNameEdit.Controls.Add(Me.Txt_CureNameEdit)
-        Me.Box_CureNameEdit.Location = New System.Drawing.Point(385, 10)
+        Me.Box_CureNameEdit.Location = New System.Drawing.Point(6, 24)
         Me.Box_CureNameEdit.Name = "Box_CureNameEdit"
         Me.Box_CureNameEdit.Size = New System.Drawing.Size(213, 58)
         Me.Box_CureNameEdit.TabIndex = 13
@@ -1552,11 +1904,79 @@ Partial Class MainForm
         Me.Txt_CureNameEdit.Name = "Txt_CureNameEdit"
         Me.Txt_CureNameEdit.Size = New System.Drawing.Size(183, 20)
         Me.Txt_CureNameEdit.TabIndex = 11
+        Me.Txt_CureNameEdit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Box_CheckEdit
+        '
+        Me.Box_CheckEdit.Controls.Add(Me.Check_VacEdit)
+        Me.Box_CheckEdit.Controls.Add(Me.Check_TempEdit)
+        Me.Box_CheckEdit.Controls.Add(Me.Check_PressureEdit)
+        Me.Box_CheckEdit.Location = New System.Drawing.Point(101, 164)
+        Me.Box_CheckEdit.Name = "Box_CheckEdit"
+        Me.Box_CheckEdit.Size = New System.Drawing.Size(118, 100)
+        Me.Box_CheckEdit.TabIndex = 15
+        Me.Box_CheckEdit.TabStop = False
+        Me.Box_CheckEdit.Text = "Check"
+        '
+        'Check_VacEdit
+        '
+        Me.Check_VacEdit.AutoSize = True
+        Me.Check_VacEdit.Checked = True
+        Me.Check_VacEdit.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Check_VacEdit.Location = New System.Drawing.Point(20, 65)
+        Me.Check_VacEdit.Name = "Check_VacEdit"
+        Me.Check_VacEdit.Size = New System.Drawing.Size(65, 17)
+        Me.Check_VacEdit.TabIndex = 16
+        Me.Check_VacEdit.Text = "Vacuum"
+        Me.Check_VacEdit.UseVisualStyleBackColor = True
+        '
+        'Check_TempEdit
+        '
+        Me.Check_TempEdit.AutoSize = True
+        Me.Check_TempEdit.Checked = True
+        Me.Check_TempEdit.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Check_TempEdit.Location = New System.Drawing.Point(20, 19)
+        Me.Check_TempEdit.Name = "Check_TempEdit"
+        Me.Check_TempEdit.Size = New System.Drawing.Size(86, 17)
+        Me.Check_TempEdit.TabIndex = 15
+        Me.Check_TempEdit.Text = "Temperature"
+        Me.Check_TempEdit.UseVisualStyleBackColor = True
+        '
+        'Check_PressureEdit
+        '
+        Me.Check_PressureEdit.AutoSize = True
+        Me.Check_PressureEdit.Checked = True
+        Me.Check_PressureEdit.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Check_PressureEdit.Location = New System.Drawing.Point(20, 42)
+        Me.Check_PressureEdit.Name = "Check_PressureEdit"
+        Me.Check_PressureEdit.Size = New System.Drawing.Size(67, 17)
+        Me.Check_PressureEdit.TabIndex = 14
+        Me.Check_PressureEdit.Text = "Pressure"
+        Me.Check_PressureEdit.UseVisualStyleBackColor = True
+        '
+        'GroupBox3
+        '
+        Me.GroupBox3.Controls.Add(Me.Txt_CureDocEdit)
+        Me.GroupBox3.Location = New System.Drawing.Point(6, 91)
+        Me.GroupBox3.Name = "GroupBox3"
+        Me.GroupBox3.Size = New System.Drawing.Size(297, 48)
+        Me.GroupBox3.TabIndex = 10
+        Me.GroupBox3.TabStop = False
+        Me.GroupBox3.Text = "Defining Document"
+        '
+        'Txt_CureDocEdit
+        '
+        Me.Txt_CureDocEdit.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Txt_CureDocEdit.Location = New System.Drawing.Point(3, 16)
+        Me.Txt_CureDocEdit.Name = "Txt_CureDocEdit"
+        Me.Txt_CureDocEdit.Size = New System.Drawing.Size(291, 20)
+        Me.Txt_CureDocEdit.TabIndex = 1
+        Me.Txt_CureDocEdit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'GroupBox2
         '
         Me.GroupBox2.Controls.Add(Me.Txt_DocRevEdit)
-        Me.GroupBox2.Location = New System.Drawing.Point(317, 59)
+        Me.GroupBox2.Location = New System.Drawing.Point(9, 148)
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.Size = New System.Drawing.Size(54, 48)
         Me.GroupBox2.TabIndex = 9
@@ -1572,46 +1992,75 @@ Partial Class MainForm
         Me.Txt_DocRevEdit.TabIndex = 1
         Me.Txt_DocRevEdit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
-        'GroupBox3
+        'Grp_CurePathEdit
         '
-        Me.GroupBox3.Controls.Add(Me.Txt_CureDocEdit)
-        Me.GroupBox3.Location = New System.Drawing.Point(8, 59)
-        Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(297, 48)
-        Me.GroupBox3.TabIndex = 10
-        Me.GroupBox3.TabStop = False
-        Me.GroupBox3.Text = "Document"
+        Me.Grp_CurePathEdit.AutoSize = True
+        Me.Grp_CurePathEdit.Controls.Add(Me.TableLayoutPanel11)
+        Me.Grp_CurePathEdit.Location = New System.Drawing.Point(8, 14)
+        Me.Grp_CurePathEdit.Name = "Grp_CurePathEdit"
+        Me.Grp_CurePathEdit.Size = New System.Drawing.Size(819, 57)
+        Me.Grp_CurePathEdit.TabIndex = 19
+        Me.Grp_CurePathEdit.TabStop = False
+        Me.Grp_CurePathEdit.Text = "Cure Profile"
         '
-        'Txt_CureDocEdit
+        'TableLayoutPanel11
         '
-        Me.Txt_CureDocEdit.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Txt_CureDocEdit.Location = New System.Drawing.Point(3, 16)
-        Me.Txt_CureDocEdit.Name = "Txt_CureDocEdit"
-        Me.Txt_CureDocEdit.Size = New System.Drawing.Size(291, 20)
-        Me.Txt_CureDocEdit.TabIndex = 1
-        Me.Txt_CureDocEdit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.TableLayoutPanel11.ColumnCount = 4
+        Me.TableLayoutPanel11.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel11.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 118.0!))
+        Me.TableLayoutPanel11.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 107.0!))
+        Me.TableLayoutPanel11.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 104.0!))
+        Me.TableLayoutPanel11.Controls.Add(Me.Txt_CurePathEdit, 0, 0)
+        Me.TableLayoutPanel11.Controls.Add(Me.Btn_CureLoadEdit, 1, 0)
+        Me.TableLayoutPanel11.Controls.Add(Me.Btn_SaveEdit, 2, 0)
+        Me.TableLayoutPanel11.Controls.Add(Me.Btn_CloseEdit, 3, 0)
+        Me.TableLayoutPanel11.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel11.Location = New System.Drawing.Point(3, 16)
+        Me.TableLayoutPanel11.Name = "TableLayoutPanel11"
+        Me.TableLayoutPanel11.RowCount = 1
+        Me.TableLayoutPanel11.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel11.Size = New System.Drawing.Size(813, 38)
+        Me.TableLayoutPanel11.TabIndex = 2
         '
-        'GroupBox1
+        'Txt_CurePathEdit
         '
-        Me.GroupBox1.Controls.Add(Me.Combo_CureProfileEdit)
-        Me.GroupBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.5!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Underline), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox1.Location = New System.Drawing.Point(8, 3)
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(363, 53)
-        Me.GroupBox1.TabIndex = 8
-        Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "Cure Profile"
+        Me.Txt_CurePathEdit.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Txt_CurePathEdit.Location = New System.Drawing.Point(3, 9)
+        Me.Txt_CurePathEdit.Name = "Txt_CurePathEdit"
+        Me.Txt_CurePathEdit.Size = New System.Drawing.Size(478, 20)
+        Me.Txt_CurePathEdit.TabIndex = 0
         '
-        'Combo_CureProfileEdit
+        'Btn_CureLoadEdit
         '
-        Me.Combo_CureProfileEdit.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Combo_CureProfileEdit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.Combo_CureProfileEdit.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Combo_CureProfileEdit.FormattingEnabled = True
-        Me.Combo_CureProfileEdit.Location = New System.Drawing.Point(6, 16)
-        Me.Combo_CureProfileEdit.Name = "Combo_CureProfileEdit"
-        Me.Combo_CureProfileEdit.Size = New System.Drawing.Size(351, 21)
-        Me.Combo_CureProfileEdit.TabIndex = 6
+        Me.Btn_CureLoadEdit.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Btn_CureLoadEdit.Location = New System.Drawing.Point(487, 3)
+        Me.Btn_CureLoadEdit.Name = "Btn_CureLoadEdit"
+        Me.Btn_CureLoadEdit.Size = New System.Drawing.Size(112, 32)
+        Me.Btn_CureLoadEdit.TabIndex = 1
+        Me.Btn_CureLoadEdit.Text = "Open"
+        Me.Btn_CureLoadEdit.UseVisualStyleBackColor = True
+        '
+        'Btn_SaveEdit
+        '
+        Me.Btn_SaveEdit.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Btn_SaveEdit.Enabled = False
+        Me.Btn_SaveEdit.Location = New System.Drawing.Point(605, 3)
+        Me.Btn_SaveEdit.Name = "Btn_SaveEdit"
+        Me.Btn_SaveEdit.Size = New System.Drawing.Size(101, 32)
+        Me.Btn_SaveEdit.TabIndex = 2
+        Me.Btn_SaveEdit.Text = "Save"
+        Me.Btn_SaveEdit.UseVisualStyleBackColor = True
+        '
+        'Btn_CloseEdit
+        '
+        Me.Btn_CloseEdit.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Btn_CloseEdit.Enabled = False
+        Me.Btn_CloseEdit.Location = New System.Drawing.Point(712, 3)
+        Me.Btn_CloseEdit.Name = "Btn_CloseEdit"
+        Me.Btn_CloseEdit.Size = New System.Drawing.Size(98, 32)
+        Me.Btn_CloseEdit.TabIndex = 3
+        Me.Btn_CloseEdit.Text = "Close"
+        Me.Btn_CloseEdit.UseVisualStyleBackColor = True
         '
         'OpenCSVFileDialog
         '
@@ -1633,7 +2082,7 @@ Partial Class MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(800, 548)
+        Me.ClientSize = New System.Drawing.Size(1152, 845)
         Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.MenuStrip1)
@@ -1705,7 +2154,26 @@ Partial Class MainForm
         Me.TableLayoutPanel2.ResumeLayout(False)
         Me.TableLayoutPanel2.PerformLayout()
         Me.TabPage3.ResumeLayout(False)
-        Me.GroupBox4.ResumeLayout(False)
+        Me.TabPage3.PerformLayout()
+        Me.GrpBox_CureDefEdit.ResumeLayout(False)
+        Me.Grp_StepSettingsEdit.ResumeLayout(False)
+        Me.Box_TermOper.ResumeLayout(False)
+        Me.Box_Term2.ResumeLayout(False)
+        Me.Box_Term2Mod.ResumeLayout(False)
+        Me.Box_Term2Goal.ResumeLayout(False)
+        Me.Box_Term2Goal.PerformLayout()
+        Me.Box_Term2Cond.ResumeLayout(False)
+        Me.Box_Term2Type.ResumeLayout(False)
+        Me.Box_Term1.ResumeLayout(False)
+        Me.Box_Term1Mod.ResumeLayout(False)
+        Me.Box_Term1Goal.ResumeLayout(False)
+        Me.Box_Term1Goal.PerformLayout()
+        Me.Box_Term1Cond.ResumeLayout(False)
+        Me.Box_Term1Type.ResumeLayout(False)
+        Me.Box_DurationEdit.ResumeLayout(False)
+        Me.Box_DurationEdit.PerformLayout()
+        Me.Box_DurationValueEdit.ResumeLayout(False)
+        Me.Box_DurationValueEdit.PerformLayout()
         Me.Box_vacStepEdit.ResumeLayout(False)
         Me.Box_vacStepEdit.PerformLayout()
         Me.Box_vacNegTolEdit.ResumeLayout(False)
@@ -1744,15 +2212,17 @@ Partial Class MainForm
         Me.Box_TempSetEdit.PerformLayout()
         Me.Box_StepNameEdit.ResumeLayout(False)
         Me.Box_StepNameEdit.PerformLayout()
-        Me.Box_CheckEdit.ResumeLayout(False)
-        Me.Box_CheckEdit.PerformLayout()
         Me.Box_CureNameEdit.ResumeLayout(False)
         Me.Box_CureNameEdit.PerformLayout()
-        Me.GroupBox2.ResumeLayout(False)
-        Me.GroupBox2.PerformLayout()
+        Me.Box_CheckEdit.ResumeLayout(False)
+        Me.Box_CheckEdit.PerformLayout()
         Me.GroupBox3.ResumeLayout(False)
         Me.GroupBox3.PerformLayout()
-        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox2.ResumeLayout(False)
+        Me.GroupBox2.PerformLayout()
+        Me.Grp_CurePathEdit.ResumeLayout(False)
+        Me.TableLayoutPanel11.ResumeLayout(False)
+        Me.TableLayoutPanel11.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1825,8 +2295,6 @@ Partial Class MainForm
     Friend WithEvents Txt_DocRevEdit As TextBox
     Friend WithEvents GroupBox3 As GroupBox
     Friend WithEvents Txt_CureDocEdit As TextBox
-    Friend WithEvents GroupBox1 As GroupBox
-    Friend WithEvents Combo_CureProfileEdit As ComboBox
     Friend WithEvents Box_tempStepEdit As GroupBox
     Friend WithEvents Box_TempRampNegTolEdit As GroupBox
     Friend WithEvents Txt_TempRampNegTolEdit As TextBox
@@ -1841,7 +2309,7 @@ Partial Class MainForm
     Friend WithEvents Box_TempSetEdit As GroupBox
     Friend WithEvents Txt_TempSetEdit As TextBox
     Friend WithEvents Box_CheckEdit As GroupBox
-    Friend WithEvents Check_Vac As CheckBox
+    Friend WithEvents Check_VacEdit As CheckBox
     Friend WithEvents Check_TempEdit As CheckBox
     Friend WithEvents Check_PressureEdit As CheckBox
     Friend WithEvents Box_CureNameEdit As GroupBox
@@ -1849,11 +2317,7 @@ Partial Class MainForm
     Friend WithEvents Box_StepNameEdit As GroupBox
     Friend WithEvents Txt_StepNameEdit As TextBox
     Friend WithEvents Check_tempStepEdit As CheckBox
-    Friend WithEvents Check_tempMinEdit As CheckBox
-    Friend WithEvents Check_tempMaxEdit As CheckBox
     Friend WithEvents Box_pressureStepEdit As GroupBox
-    Friend WithEvents Check_pressureMinEdit As CheckBox
-    Friend WithEvents Check_pressureMaxEdit As CheckBox
     Friend WithEvents Check_pressureStepEdit As CheckBox
     Friend WithEvents Box_pressureRampNegTolEdit As GroupBox
     Friend WithEvents Txt_pressureRampNegTolEdit As TextBox
@@ -1867,10 +2331,8 @@ Partial Class MainForm
     Friend WithEvents Txt_pressurePosTolEdit As TextBox
     Friend WithEvents Box_pressureSetEdit As GroupBox
     Friend WithEvents Txt_pressureSetEdit As TextBox
-    Friend WithEvents GroupBox4 As GroupBox
+    Friend WithEvents Grp_StepSettingsEdit As GroupBox
     Friend WithEvents Box_vacStepEdit As GroupBox
-    Friend WithEvents Check_vacMinEdit As CheckBox
-    Friend WithEvents Check_vacMaxEdit As CheckBox
     Friend WithEvents Check_vacStepEdit As CheckBox
     Friend WithEvents Box_vacNegTolEdit As GroupBox
     Friend WithEvents Txt_vacNegTolEdit As TextBox
@@ -1890,4 +2352,47 @@ Partial Class MainForm
     Friend WithEvents GroupBox6 As GroupBox
     Friend WithEvents Txt_RunInterval As TextBox
     Friend WithEvents Timer1 As Timer
+    Friend WithEvents LoadCureProfilesToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents Grp_CurePathEdit As GroupBox
+    Friend WithEvents TableLayoutPanel11 As TableLayoutPanel
+    Friend WithEvents Txt_CurePathEdit As TextBox
+    Friend WithEvents Btn_CureLoadEdit As Button
+    Friend WithEvents Btn_SaveEdit As Button
+    Friend WithEvents Btn_CloseEdit As Button
+    Friend WithEvents GrpBox_CureDefEdit As GroupBox
+    Friend WithEvents List_StepsEdit As ListBox
+    Friend WithEvents Btn_MoveStepDownEdit As Button
+    Friend WithEvents Btn_MoveStepUpEdit As Button
+    Friend WithEvents Btn_RemoveStepEdit As Button
+    Friend WithEvents Btn_AddStepEdit As Button
+    Friend WithEvents Box_DurationEdit As GroupBox
+    Friend WithEvents Box_DurationValueEdit As GroupBox
+    Friend WithEvents Txt_DurationEdit As TextBox
+    Friend WithEvents Chk_DurationDisabled As CheckBox
+    Friend WithEvents Combo_Term1Type As ComboBox
+    Friend WithEvents Box_Term1 As GroupBox
+    Friend WithEvents Box_Term1Type As GroupBox
+    Friend WithEvents Box_Term1Cond As GroupBox
+    Friend WithEvents Combo_Term1Cond As ComboBox
+    Friend WithEvents Box_Term1Mod As GroupBox
+    Friend WithEvents Combo_Term1Mod As ComboBox
+    Friend WithEvents Box_Term1Goal As GroupBox
+    Friend WithEvents Txt_Term1Goal As TextBox
+    Friend WithEvents Box_TermOper As GroupBox
+    Friend WithEvents Combo_TermOper As ComboBox
+    Friend WithEvents Box_Term2 As GroupBox
+    Friend WithEvents Box_Term2Mod As GroupBox
+    Friend WithEvents Combo_Term2Mod As ComboBox
+    Friend WithEvents Box_Term2Goal As GroupBox
+    Friend WithEvents Txt_Term2Goal As TextBox
+    Friend WithEvents Box_Term2Cond As GroupBox
+    Friend WithEvents Combo_Term2Cond As ComboBox
+    Friend WithEvents Box_Term2Type As GroupBox
+    Friend WithEvents Combo_Term2Type As ComboBox
+    Friend WithEvents Label_TempMinOnlyEdit As Label
+    Friend WithEvents Label_TempMaxOnlyEdit As Label
+    Friend WithEvents Label_VacMaxOnlyEdit As Label
+    Friend WithEvents Label_VacMinOnlyEdit As Label
+    Friend WithEvents Label_PressureMinOnlyEdit As Label
+    Friend WithEvents Label_PressureMaxOnlyEdit As Label
 End Class

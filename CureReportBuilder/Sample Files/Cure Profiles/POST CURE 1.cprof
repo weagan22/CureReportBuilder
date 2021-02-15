@@ -1,137 +1,134 @@
 <Cure>
-	Name,POST CURE 1
-	cureDoc,SPS-201
-	cureDocRev,B
-	checkTemp,True
-	checkPressure,False
-	checkVac,False
+	<Name>POST CURE 1</Name>
+	<cureDoc>SPS-201</cureDoc>
+	<cureDocRev>B</cureDocRev>
+	<checkTemp>True</checkTemp>
+	<checkPressure>False</checkPressure>
+	<checkVac>False</checkVac>
 	<Steps>
-		stepCount,2
+		<stepCount>2</stepCount>
 		<Step0>
-			stepName,Ramp Up
+			<stepName>Ramp Up</stepName>
+			<stepDuration>-1</stepDuration>
 			<pressureSet>
-				setPoint,0
-				PosTol,0
-				NegTol,0
-				RampRate,0
-				RampPosTol,0
-				RampNegTol,0
+				<setPoint>0</setPoint>
+				<PosTol>0</PosTol>
+				<NegTol>0</NegTol>
+				<RampRate>0</RampRate>
+				<RampPosTol>0</RampPosTol>
+				<RampNegTol>0</RampNegTol>
 			</pressureSet>
 			<tempSet>
-				setPoint,410
-				PosTol,30
-				NegTol,-410
-				RampRate,3
-				RampPosTol,0
-				RampNegTol,-6
+				<setPoint>410</setPoint>
+				<PosTol>30</PosTol>
+				<NegTol>-410</NegTol>
+				<RampRate>3</RampRate>
+				<RampPosTol>0</RampPosTol>
+				<RampNegTol>-6</RampNegTol>
 			</tempSet>
 			<vacSet>
-				setPoint,0
-				PosTol,0
-				NegTol,0
-				RampRate,0
-				RampPosTol,0
-				RampNegTol,0
+				<setPoint>0</setPoint>
+				<PosTol>0</PosTol>
+				<NegTol>0</NegTol>
+				<RampRate>0</RampRate>
+				<RampPosTol>0</RampPosTol>
+				<RampNegTol>0</RampNegTol>
 			</vacSet>
 			<termCond1>
-				Type,Temp
-				Condition,GREATER
-				Goal,410
-				Modifier,Lag
+				<Type>Temp</Type>
+				<Condition>GREATER</Condition>
+				<Goal>410</Goal>
+				<Modifier>Lag</Modifier>
 			</termCond1>
 			<termCond2>
-				Type,None
-				Condition,
-				Goal,0
-				Modifier,0
+				<Type>None</Type>
+				<Condition></Condition>
+				<Goal>0</Goal>
+				<Modifier>0</Modifier>
 			</termCond2>
-			<termCondOper>
-				termCondOper,AND
-			</termCondOper>
+			<termCondOper>AND</termCondOper>
 		</Step0>
 		<Step1>
-			stepName,Dwell 
+			<stepName>Dwell </stepName>
+			<stepDuration>-1</stepDuration>
 			<pressureSet>
-				setPoint,0
-				PosTol,0
-				NegTol,0
-				RampRate,0
-				RampPosTol,0
-				RampNegTol,0
+				<setPoint>0</setPoint>
+				<PosTol>0</PosTol>
+				<NegTol>0</NegTol>
+				<RampRate>0</RampRate>
+				<RampPosTol>0</RampPosTol>
+				<RampNegTol>0</RampNegTol>
 			</pressureSet>
 			<tempSet>
-				setPoint,420
-				PosTol,20
-				NegTol,-10
-				RampRate,0
-				RampPosTol,0
-				RampNegTol,0
+				<setPoint>420</setPoint>
+				<PosTol>20</PosTol>
+				<NegTol>-10</NegTol>
+				<RampRate>0</RampRate>
+				<RampPosTol>0</RampPosTol>
+				<RampNegTol>0</RampNegTol>
 			</tempSet>
 			<vacSet>
-				setPoint,0
-				PosTol,0
-				NegTol,0
-				RampRate,0
-				RampPosTol,0
-				RampNegTol,0
+				<setPoint>0</setPoint>
+				<PosTol>0</PosTol>
+				<NegTol>0</NegTol>
+				<RampRate>0</RampRate>
+				<RampPosTol>0</RampPosTol>
+				<RampNegTol>0</RampNegTol>
 			</vacSet>
 			<termCond1>
-				Type,Time
-				Condition,GREATER
-				Goal,60
-				Modifier,
+				<Type>Time</Type>
+				<Condition>GREATER</Condition>
+				<Goal>60</Goal>
+				<Modifier></Modifier>
 			</termCond1>
 			<termCond2>
-				Type,Temp
-				Condition,LESS
-				Goal,410
-				Modifier,Lag
+				<Type>Temp</Type>
+				<Condition>LESS</Condition>
+				<Goal>410</Goal>
+				<Modifier>Lag</Modifier>
 			</termCond2>
-			<termCondOper>
-				termCondOper,AND
-			</termCondOper>
+			<termCondOper>AND</termCondOper>
 		</Step1>
 		<Step2>
-			stepName,Ramp Down
+			<stepName>Ramp Down</stepName>
+			<stepDuration>-1</stepDuration>
 			<pressureSet>
-				setPoint,0
-				PosTol,0
-				NegTol,0
-				RampRate,0
-				RampPosTol,0
-				RampNegTol,0
+				<setPoint>0</setPoint>
+				<PosTol>0</PosTol>
+				<NegTol>0</NegTol>
+				<RampRate>0</RampRate>
+				<RampPosTol>0</RampPosTol>
+				<RampNegTol>0</RampNegTol>
 			</pressureSet>
 			<tempSet>
-				setPoint,150
-				PosTol,290
-				NegTol,-150
-				RampRate,-3
-				RampPosTol,6
-				RampNegTol,0
+				<setPoint>150</setPoint>
+				<PosTol>290</PosTol>
+				<NegTol>-150</NegTol>
+				<RampRate>-3</RampRate>
+				<RampPosTol>6</RampPosTol>
+				<RampNegTol>0</RampNegTol>
 			</tempSet>
 			<vacSet>
-				setPoint,0
-				PosTol,0
-				NegTol,0
-				RampRate,0
-				RampPosTol,0
-				RampNegTol,0
+				<setPoint>0</setPoint>
+				<PosTol>0</PosTol>
+				<NegTol>0</NegTol>
+				<RampRate>0</RampRate>
+				<RampPosTol>0</RampPosTol>
+				<RampNegTol>0</RampNegTol>
 			</vacSet>
 			<termCond1>
-				Type,Temp
-				Condition,LESS
-				Goal,150
-				Modifier,Lead
+				<Type>Temp</Type>
+				<Condition>LESS</Condition>
+				<Goal>150</Goal>
+				<Modifier>Lead</Modifier>
 			</termCond1>
 			<termCond2>
-				Type,None
-				Condition,0
-				Goal,0
-				Modifier,0
+				<Type>None</Type>
+				<Condition>0</Condition>
+				<Goal>0</Goal>
+				<Modifier>0</Modifier>
 			</termCond2>
-			<termCondOper>
-				termCondOper,AND
-			</termCondOper>
+			<termCondOper>AND</termCondOper>
 		</Step2>
 	</Steps>
 </Cure>

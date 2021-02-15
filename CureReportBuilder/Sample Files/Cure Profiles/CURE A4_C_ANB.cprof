@@ -1,27 +1,27 @@
 <Cure>
-	<Name>CURE A3</Name>
+	<Name>CURE A4_C</Name>
 	<cureDoc>SPS-201</cureDoc>
-	<cureDocRev>B</cureDocRev>
+	<cureDocRev>C</cureDocRev>
 	<checkTemp>True</checkTemp>
 	<checkPressure>True</checkPressure>
 	<checkVac>True</checkVac>
 	<Steps>
-		<stepCount>6</stepCount>
+		<stepCount>5</stepCount>
 		<Step0>
 			<stepName>Temp Ramp</stepName>
 			<stepDuration>-1</stepDuration>
 			<pressureSet>
-				<setPoint>-1</setPoint>
-				<PosTol>0</PosTol>
-				<NegTol>0</NegTol>
-				<RampRate>0</RampRate>
-				<RampPosTol>0</RampPosTol>
-				<RampNegTol>0</RampNegTol>
+				<setPoint>70</setPoint>
+				<PosTol>20</PosTol>
+				<NegTol>-70</NegTol>
+				<RampRate>1.5</RampRate>
+				<RampPosTol>1</RampPosTol>
+				<RampNegTol>-1</RampNegTol>
 			</pressureSet>
 			<tempSet>
-				<setPoint>180</setPoint>
+				<setPoint>205</setPoint>
 				<PosTol>40</PosTol>
-				<NegTol>-180</NegTol>
+				<NegTol>-205</NegTol>
 				<RampRate>5</RampRate>
 				<RampPosTol>0</RampPosTol>
 				<RampNegTol>-10</RampNegTol>
@@ -37,7 +37,7 @@
 			<termCond1>
 				<Type>Temp</Type>
 				<Condition>GREATER</Condition>
-				<Goal>180</Goal>
+				<Goal>205</Goal>
 				<Modifier>Lag</Modifier>
 			</termCond1>
 			<termCond2>
@@ -52,15 +52,15 @@
 			<stepName>Temp Hold</stepName>
 			<stepDuration>-1</stepDuration>
 			<pressureSet>
-				<setPoint>-1</setPoint>
-				<PosTol>0</PosTol>
-				<NegTol>0</NegTol>
+				<setPoint>70</setPoint>
+				<PosTol>20</PosTol>
+				<NegTol>-70</NegTol>
 				<RampRate>0</RampRate>
 				<RampPosTol>0</RampPosTol>
 				<RampNegTol>0</RampNegTol>
 			</pressureSet>
 			<tempSet>
-				<setPoint>200</setPoint>
+				<setPoint>225</setPoint>
 				<PosTol>20</PosTol>
 				<NegTol>-20</NegTol>
 				<RampRate>0</RampRate>
@@ -78,8 +78,8 @@
 			<termCond1>
 				<Type>Time</Type>
 				<Condition>GREATER</Condition>
-				<Goal>20</Goal>
-				<Modifier>Pass</Modifier>
+				<Goal>60</Goal>
+				<Modifier>-1</Modifier>
 			</termCond1>
 			<termCond2>
 				<Type>Press</Type>
@@ -87,50 +87,9 @@
 				<Goal>2</Goal>
 				<Modifier>0</Modifier>
 			</termCond2>
-			<termCondOper>AND</termCondOper>
+			<termCondOper>OR</termCondOper>
 		</Step1>
 		<Step2>
-			<stepName>Ramp Pressure</stepName>
-			<stepDuration>-1</stepDuration>
-			<pressureSet>
-				<setPoint>70</setPoint>
-				<PosTol>20</PosTol>
-				<NegTol>-70</NegTol>
-				<RampRate>1.5</RampRate>
-				<RampPosTol>1</RampPosTol>
-				<RampNegTol>-1</RampNegTol>
-			</pressureSet>
-			<tempSet>
-				<setPoint>200</setPoint>
-				<PosTol>20</PosTol>
-				<NegTol>-20</NegTol>
-				<RampRate>0</RampRate>
-				<RampPosTol>0</RampPosTol>
-				<RampNegTol>0</RampNegTol>
-			</tempSet>
-			<vacSet>
-				<setPoint>-15</setPoint>
-				<PosTol>0</PosTol>
-				<NegTol>-15</NegTol>
-				<RampRate>0</RampRate>
-				<RampPosTol>0</RampPosTol>
-				<RampNegTol>0</RampNegTol>
-			</vacSet>
-			<termCond1>
-				<Type>Time</Type>
-				<Condition>GREATER</Condition>
-				<Goal>0</Goal>
-				<Modifier>Receive</Modifier>
-			</termCond1>
-			<termCond2>
-				<Type>Temp</Type>
-				<Condition>GREATER</Condition>
-				<Goal>220</Goal>
-				<Modifier>Lead</Modifier>
-			</termCond2>
-			<termCondOper>AND</termCondOper>
-		</Step2>
-		<Step3>
 			<stepName>Ramp Up</stepName>
 			<stepDuration>-1</stepDuration>
 			<pressureSet>
@@ -142,10 +101,10 @@
 				<RampNegTol>0</RampNegTol>
 			</pressureSet>
 			<tempSet>
-				<setPoint>295</setPoint>
+				<setPoint>345</setPoint>
 				<PosTol>25</PosTol>
-				<NegTol>-295</NegTol>
-				<RampRate>3</RampRate>
+				<NegTol>-345</NegTol>
+				<RampRate>5</RampRate>
 				<RampPosTol>0</RampPosTol>
 				<RampNegTol>-6</RampNegTol>
 			</tempSet>
@@ -160,7 +119,7 @@
 			<termCond1>
 				<Type>Temp</Type>
 				<Condition>GREATER</Condition>
-				<Goal>295</Goal>
+				<Goal>345</Goal>
 				<Modifier>Lag</Modifier>
 			</termCond1>
 			<termCond2>
@@ -170,8 +129,8 @@
 				<Modifier>0</Modifier>
 			</termCond2>
 			<termCondOper>AND</termCondOper>
-		</Step3>
-		<Step4>
+		</Step2>
+		<Step3>
 			<stepName>Dwell</stepName>
 			<stepDuration>-1</stepDuration>
 			<pressureSet>
@@ -183,7 +142,7 @@
 				<RampNegTol>0</RampNegTol>
 			</pressureSet>
 			<tempSet>
-				<setPoint>300</setPoint>
+				<setPoint>350</setPoint>
 				<PosTol>20</PosTol>
 				<NegTol>-5</NegTol>
 				<RampRate>0</RampRate>
@@ -191,9 +150,9 @@
 				<RampNegTol>0</RampNegTol>
 			</tempSet>
 			<vacSet>
-				<setPoint>0</setPoint>
-				<PosTol>10</PosTol>
-				<NegTol>-31</NegTol>
+				<setPoint>-15</setPoint>
+				<PosTol>0</PosTol>
+				<NegTol>-15</NegTol>
 				<RampRate>0</RampRate>
 				<RampPosTol>0</RampPosTol>
 				<RampNegTol>0</RampNegTol>
@@ -201,18 +160,18 @@
 			<termCond1>
 				<Type>Temp</Type>
 				<Condition>LESS</Condition>
-				<Goal>295</Goal>
+				<Goal>345</Goal>
 				<Modifier>Lag</Modifier>
 			</termCond1>
 			<termCond2>
 				<Type>Time</Type>
 				<Condition>GREATER</Condition>
-				<Goal>60</Goal>
+				<Goal>120</Goal>
 				<Modifier>0</Modifier>
 			</termCond2>
 			<termCondOper>AND</termCondOper>
-		</Step4>
-		<Step5>
+		</Step3>
+		<Step4>
 			<stepName>Ramp Down</stepName>
 			<stepDuration>-1</stepDuration>
 			<pressureSet>
@@ -225,16 +184,16 @@
 			</pressureSet>
 			<tempSet>
 				<setPoint>150</setPoint>
-				<PosTol>170</PosTol>
+				<PosTol>220</PosTol>
 				<NegTol>-150</NegTol>
 				<RampRate>-5</RampRate>
 				<RampPosTol>10</RampPosTol>
 				<RampNegTol>0</RampNegTol>
 			</tempSet>
 			<vacSet>
-				<setPoint>0</setPoint>
-				<PosTol>10</PosTol>
-				<NegTol>-31</NegTol>
+				<setPoint>-1</setPoint>
+				<PosTol>0</PosTol>
+				<NegTol>0</NegTol>
 				<RampRate>0</RampRate>
 				<RampPosTol>0</RampPosTol>
 				<RampNegTol>0</RampNegTol>
@@ -252,8 +211,8 @@
 				<Modifier>0</Modifier>
 			</termCond2>
 			<termCondOper>AND</termCondOper>
-		</Step5>
-		<Step6>
+		</Step4>
+		<Step5>
 			<stepName>Ramp Down Pressure</stepName>
 			<stepDuration>-1</stepDuration>
 			<pressureSet>
@@ -293,6 +252,6 @@
 				<Modifier>0</Modifier>
 			</termCond2>
 			<termCondOper>AND</termCondOper>
-		</Step6>
+		</Step5>
 	</Steps>
 </Cure>

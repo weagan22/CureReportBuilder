@@ -15,7 +15,7 @@ Option Explicit On
 Namespace My
     
     <Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.3.0.0"),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.6.0.0"),  _
      Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
     Partial Friend NotInheritable Class MySettings
         Inherits Global.System.Configuration.ApplicationSettingsBase
@@ -56,7 +56,8 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("S:\Engineering\Functional Groups\Composites\Macros\CureReportFiles\Cure Profiles")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("C:\Users\Will Eagan\Source\repos\CureReportBuilder\CureReportBuilder\Sample Files"& _ 
+            "\Cure Profiles")>  _
         Public Property CureProfilePath() As String
             Get
                 Return CType(Me("CureProfilePath"),String)
@@ -68,8 +69,8 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("S:\Engineering\Functional Groups\Composites\Macros\CureReportFiles\Cure Report_Te"& _ 
-            "mplate.xlsx")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("C:\Users\Will Eagan\Source\repos\CureReportBuilder\CureReportBuilder\Sample Files"& _ 
+            "\Cure Report_Template.xlsx")>  _
         Public Property ReportTemplatePath() As String
             Get
                 Return CType(Me("ReportTemplatePath"),String)

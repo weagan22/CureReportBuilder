@@ -1,27 +1,27 @@
 <Cure>
-	<Name>CURE A1</Name>
+	<Name>CURE A2</Name>
 	<cureDoc>SPS-201</cureDoc>
 	<cureDocRev>B</cureDocRev>
 	<checkTemp>True</checkTemp>
 	<checkPressure>True</checkPressure>
 	<checkVac>True</checkVac>
 	<Steps>
-		<stepCount>4</stepCount>
+		<stepCount>3</stepCount>
 		<Step0>
 			<stepName>Ramp Up</stepName>
 			<stepDuration>-1</stepDuration>
 			<pressureSet>
-				<setPoint>70</setPoint>
+				<setPoint>40</setPoint>
 				<PosTol>20</PosTol>
-				<NegTol>-70</NegTol>
+				<NegTol>-40</NegTol>
 				<RampRate>1.5</RampRate>
 				<RampPosTol>1</RampPosTol>
 				<RampNegTol>-1</RampNegTol>
 			</pressureSet>
 			<tempSet>
-				<setPoint>345</setPoint>
+				<setPoint>270</setPoint>
 				<PosTol>25</PosTol>
-				<NegTol>-345</NegTol>
+				<NegTol>-270</NegTol>
 				<RampRate>5</RampRate>
 				<RampPosTol>0</RampPosTol>
 				<RampNegTol>-5</RampNegTol>
@@ -37,63 +37,22 @@
 			<termCond1>
 				<Type>Temp</Type>
 				<Condition>GREATER</Condition>
-				<Goal>345</Goal>
+				<Goal>270</Goal>
 				<Modifier>Lag</Modifier>
 			</termCond1>
 			<termCond2>
 				<Type>Press</Type>
 				<Condition>GREATER</Condition>
-				<Goal>70</Goal>
+				<Goal>40</Goal>
 				<Modifier>0</Modifier>
 			</termCond2>
 			<termCondOper>AND</termCondOper>
 		</Step0>
 		<Step1>
-			<stepName>Dwell W/Vac</stepName>
-			<stepDuration>-1</stepDuration>
-			<pressureSet>
-				<setPoint>80</setPoint>
-				<PosTol>10</PosTol>
-				<NegTol>-10</NegTol>
-				<RampRate>0</RampRate>
-				<RampPosTol>0</RampPosTol>
-				<RampNegTol>0</RampNegTol>
-			</pressureSet>
-			<tempSet>
-				<setPoint>350</setPoint>
-				<PosTol>20</PosTol>
-				<NegTol>-5</NegTol>
-				<RampRate>0</RampRate>
-				<RampPosTol>0</RampPosTol>
-				<RampNegTol>0</RampNegTol>
-			</tempSet>
-			<vacSet>
-				<setPoint>-15</setPoint>
-				<PosTol>0</PosTol>
-				<NegTol>-15</NegTol>
-				<RampRate>0</RampRate>
-				<RampPosTol>0</RampPosTol>
-				<RampNegTol>0</RampNegTol>
-			</vacSet>
-			<termCond1>
-				<Type>Time</Type>
-				<Condition>GREATER</Condition>
-				<Goal>20</Goal>
-				<Modifier>0</Modifier>
-			</termCond1>
-			<termCond2>
-				<Type>None</Type>
-				<Condition></Condition>
-				<Goal>-1</Goal>
-				<Modifier></Modifier>
-			</termCond2>
-			<termCondOper>AND</termCondOper>
-		</Step1>
-		<Step2>
 			<stepName>Dwell</stepName>
 			<stepDuration>-1</stepDuration>
 			<pressureSet>
-				<setPoint>80</setPoint>
+				<setPoint>50</setPoint>
 				<PosTol>10</PosTol>
 				<NegTol>-10</NegTol>
 				<RampRate>0</RampRate>
@@ -101,7 +60,7 @@
 				<RampNegTol>0</RampNegTol>
 			</pressureSet>
 			<tempSet>
-				<setPoint>350</setPoint>
+				<setPoint>275</setPoint>
 				<PosTol>20</PosTol>
 				<NegTol>-5</NegTol>
 				<RampRate>0</RampRate>
@@ -119,22 +78,22 @@
 			<termCond1>
 				<Type>Temp</Type>
 				<Condition>LESS</Condition>
-				<Goal>345</Goal>
+				<Goal>270</Goal>
 				<Modifier>Lag</Modifier>
 			</termCond1>
 			<termCond2>
 				<Type>Time</Type>
 				<Condition>GREATER</Condition>
-				<Goal>100</Goal>
+				<Goal>120</Goal>
 				<Modifier>0</Modifier>
 			</termCond2>
 			<termCondOper>AND</termCondOper>
-		</Step2>
-		<Step3>
+		</Step1>
+		<Step2>
 			<stepName>Ramp Down</stepName>
 			<stepDuration>-1</stepDuration>
 			<pressureSet>
-				<setPoint>80</setPoint>
+				<setPoint>50</setPoint>
 				<PosTol>10</PosTol>
 				<NegTol>-10</NegTol>
 				<RampRate>0</RampRate>
@@ -143,7 +102,7 @@
 			</pressureSet>
 			<tempSet>
 				<setPoint>150</setPoint>
-				<PosTol>220</PosTol>
+				<PosTol>145</PosTol>
 				<NegTol>-150</NegTol>
 				<RampRate>-5</RampRate>
 				<RampPosTol>10</RampPosTol>
@@ -170,13 +129,13 @@
 				<Modifier>0</Modifier>
 			</termCond2>
 			<termCondOper>AND</termCondOper>
-		</Step3>
-		<Step4>
+		</Step2>
+		<Step3>
 			<stepName>Ramp Down Pressure</stepName>
 			<stepDuration>-1</stepDuration>
 			<pressureSet>
 				<setPoint>0</setPoint>
-				<PosTol>90</PosTol>
+				<PosTol>60</PosTol>
 				<NegTol>0</NegTol>
 				<RampRate>-10</RampRate>
 				<RampPosTol>15</RampPosTol>
@@ -211,6 +170,6 @@
 				<Modifier>0</Modifier>
 			</termCond2>
 			<termCondOper>AND</termCondOper>
-		</Step4>
+		</Step3>
 	</Steps>
 </Cure>

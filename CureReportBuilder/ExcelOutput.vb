@@ -8,8 +8,6 @@ Public Class ExcelOutput
 
     Dim excelProcID As Integer
 
-    'Dim checkToOutput As CureCheck = New CureCheck
-
     Sub formatFont(inCell As Object,
                    checkStr As String,
                    Optional fontSize As Double = 11,
@@ -511,7 +509,6 @@ Public Class ExcelOutput
         Next
     End Sub
 
-
     Sub fillCell1(currentStep As CureStep, mainSheet As Excel.Worksheet, checkToOutput As CureCheck, ByRef curRow As Integer)
         If currentStep.hardFail Then
             mainSheet.Cells(curRow, 1) = currentStep.stepName
@@ -677,7 +674,6 @@ Public Class ExcelOutput
         formatFont(mainSheet.Cells(curRow, 3), term1Str, 9,, True)
         formatFont(mainSheet.Cells(curRow, 3), term2Str, 9,, True)
     End Sub
-
 
     Sub fillCell3(currentStep As CureStep, mainSheet As Excel.Worksheet, checkToOutput As CureCheck, ByRef curRow As Integer)
 
@@ -1067,7 +1063,6 @@ Public Class ExcelOutput
         mainSheet.Shapes.Item("StepChart").ZOrder(1) 'Microsoft.Office.Core.MsoZOrderCmd.msoSendToBack)
 
     End Sub
-
 
     Function arr2Str(Of T)(inArr() As T,
                            checkToOutput As CureCheck,

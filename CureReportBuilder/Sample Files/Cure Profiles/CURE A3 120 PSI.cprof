@@ -1,5 +1,5 @@
 <Cure>
-	<Name>CURE A3</Name>
+	<Name>CURE A3 120 PSI</Name>
 	<cureDoc>SPS-201</cureDoc>
 	<cureDocRev>B</cureDocRev>
 	<checkTemp>True</checkTemp>
@@ -93,9 +93,9 @@
 			<stepName>Ramp Pressure</stepName>
 			<stepDuration>-1</stepDuration>
 			<pressureSet>
-				<setPoint>70</setPoint>
+				<setPoint>110</setPoint>
 				<PosTol>20</PosTol>
-				<NegTol>-70</NegTol>
+				<NegTol>-110</NegTol>
 				<RampRate>1.5</RampRate>
 				<RampPosTol>1</RampPosTol>
 				<RampNegTol>-1</RampNegTol>
@@ -134,9 +134,9 @@
 			<stepName>Ramp Up</stepName>
 			<stepDuration>-1</stepDuration>
 			<pressureSet>
-				<setPoint>70</setPoint>
+				<setPoint>110</setPoint>
 				<PosTol>20</PosTol>
-				<NegTol>-70</NegTol>
+				<NegTol>-110</NegTol>
 				<RampRate>0</RampRate>
 				<RampPosTol>0</RampPosTol>
 				<RampNegTol>0</RampNegTol>
@@ -166,7 +166,7 @@
 			<termCond2>
 				<Type>Press</Type>
 				<Condition>GREATER</Condition>
-				<Goal>70</Goal>
+				<Goal>110</Goal>
 				<Modifier>0</Modifier>
 			</termCond2>
 			<termCondOper>AND</termCondOper>
@@ -175,7 +175,7 @@
 			<stepName>Dwell</stepName>
 			<stepDuration>-1</stepDuration>
 			<pressureSet>
-				<setPoint>80</setPoint>
+				<setPoint>120</setPoint>
 				<PosTol>10</PosTol>
 				<NegTol>-10</NegTol>
 				<RampRate>0</RampRate>
@@ -216,7 +216,7 @@
 			<stepName>Ramp Down</stepName>
 			<stepDuration>-1</stepDuration>
 			<pressureSet>
-				<setPoint>80</setPoint>
+				<setPoint>120</setPoint>
 				<PosTol>10</PosTol>
 				<NegTol>-10</NegTol>
 				<RampRate>0</RampRate>
@@ -258,7 +258,7 @@
 			<stepDuration>-1</stepDuration>
 			<pressureSet>
 				<setPoint>5</setPoint>
-				<PosTol>85</PosTol>
+				<PosTol>125</PosTol>
 				<NegTol>-5</NegTol>
 				<RampRate>-5</RampRate>
 				<RampPosTol>10</RampPosTol>
