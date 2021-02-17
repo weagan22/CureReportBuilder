@@ -21,7 +21,8 @@ Public Class MainForm
 
         Call errorReset()
 
-        'TabControl1.TabPages.Remove(TabPage3)
+        TabControl1.TabPages.Remove(TabPage1)
+        TabControl1.TabPages.Remove(TabPage2)
 
         Txt_Technician.Text = Replace(Environment.UserName, ".", " ")
         Txt_CureProfilesPath.Text = My.Settings.CureProfilePath
@@ -36,11 +37,11 @@ Public Class MainForm
         '    Me.Timer1.Enabled = True
         'End If
 
-        Try
-            Call loadCureProfiles(Txt_CureProfilesPath.Text)
-        Catch ex As Exception
-            If MsgBox(ex.Message, vbOKCancel, "Cure Profiles: Path Error") = vbCancel Then Me.Close()
-        End Try
+        'Try
+        '    Call loadCureProfiles(Txt_CureProfilesPath.Text)
+        'Catch ex As Exception
+        '    If MsgBox(ex.Message, vbOKCancel, "Cure Profiles: Path Error") = vbCancel Then Me.Close()
+        'End Try
 
         Me.Show()
 
@@ -751,7 +752,7 @@ Public Class MainForm
 
 #Region "Cure Editor"
     Public profileEditFS As IO.FileStream = Nothing
-    Public loadedEditProfile As CureProfile = Nothing
+    Public loadedEditProfile As CureProfile = New CureProfile()
     Public Property Txt_CureDocrevEdit As Object
     Public loadedStepIndex As Integer = -1
 
@@ -830,7 +831,7 @@ Public Class MainForm
     End Sub
 
     Sub EditorReset()
-        If Not profileEditFS Is Nothing And Not loadedEditProfile Is Nothing Then
+        If Not profileEditFS Is Nothing Then
             profileEditFS.Position = 0
 
             Dim reader As IO.StreamReader = New IO.StreamReader(profileEditFS)
@@ -851,7 +852,7 @@ Public Class MainForm
         End If
 
         profileEditFS = Nothing
-        loadedEditProfile = Nothing
+        loadedEditProfile = New CureProfile()
         loadedStepIndex = -1
         Btn_CloseEdit.Enabled = False
         Btn_SaveEdit.Enabled = False
@@ -904,9 +905,11 @@ Public Class MainForm
         If Not Check_TempEdit.Checked Then
             Check_tempStepEdit.Checked = False
             Box_tempStepEdit.Enabled = False
+            loadedEditProfile.checkTemp = False
         Else
             Check_tempStepEdit.Checked = True
             Box_tempStepEdit.Enabled = True
+            loadedEditProfile.checkTemp = True
         End If
     End Sub
 
@@ -915,9 +918,11 @@ Public Class MainForm
         If Not Check_PressureEdit.Checked Then
             Check_pressureStepEdit.Checked = False
             Box_pressureStepEdit.Enabled = False
+            loadedEditProfile.checkPressure = False
         Else
             Check_pressureStepEdit.Checked = True
             Box_pressureStepEdit.Enabled = True
+            loadedEditProfile.checkPressure = True
         End If
     End Sub
 
@@ -926,9 +931,11 @@ Public Class MainForm
         If Not Check_VacEdit.Checked Then
             Check_vacStepEdit.Checked = False
             Box_vacStepEdit.Enabled = False
+            loadedEditProfile.checkVac = False
         Else
             Check_vacStepEdit.Checked = True
             Box_vacStepEdit.Enabled = True
+            loadedEditProfile.checkVac = True
         End If
     End Sub
 
@@ -1762,7 +1769,103 @@ Public Class MainForm
     End Sub
 
 #End Region
+    Private Sub Btn_CureStepTextEdit_Click(sender As Object, e As EventArgs) Handles Btn_CureStepTextEdit.Click
+        Label_CureStepTextEdit.Text = Step2String(loadedEditProfile, loadedStepIndex)
+    End Sub
 
+    Function Step2String(inCureProfile As CureProfile, stepIndex As Integer) As String
+        Dim cell2 As String = ""
+
+        Dim tempStr As String = ""
+        Dim tempRmpStr As String = ""
+        Dim pressStr As String = ""
+        Dim pressRmpStr As String = ""
+        Dim vacStr As String = ""
+
+        Dim currentStep As CureStep = inCureProfile.CureSteps(stepIndex)
+
+        If inCureProfile.checkTemp And currentStep.tempSet.SetPoint <> -1 Then
+            If Math.Abs(currentStep.tempSet.SetPoint) = Math.Abs(currentStep.tempSet.NegTol) Then
+                tempStr = "Temperature Max " & currentStep.tempSet.SetPoint + currentStep.tempSet.PosTol & "°F"
+            ElseIf Math.Abs(currentStep.tempSet.SetPoint) = Math.Abs(currentStep.tempSet.PosTol) Then
+                tempStr = "Temperature Min " & currentStep.tempSet.SetPoint + currentStep.tempSet.NegTol & "°F"
+            Else
+
+                tempStr = "Temperature " & currentStep.tempSet.SetPoint & "°F " &
+                          ExcelOutput.plusMinusVal(currentStep.tempSet.PosTol, currentStep.tempSet.NegTol) & "°F"
+            End If
+            tempStr = tempStr & vbNewLine
+
+            If currentStep.tempSet.RampRate <> 0 Then
+                tempRmpStr = "Temp. Ramp " & currentStep.tempSet.RampRate & "°F/min " &
+                             ExcelOutput.plusMinusVal(currentStep.tempSet.RampPosTol, currentStep.tempSet.RampNegTol) & "°F/min"
+                tempRmpStr = tempRmpStr & vbNewLine
+            End If
+        End If
+
+        If inCureProfile.checkPressure And currentStep.pressureSet.SetPoint <> -1 Then
+            If Math.Abs(currentStep.pressureSet.SetPoint) = Math.Abs(currentStep.pressureSet.NegTol) Then
+                pressStr = "Pressure: Max " & currentStep.pressureSet.SetPoint + currentStep.pressureSet.PosTol & " psi"
+            ElseIf Math.Abs(currentStep.pressureSet.SetPoint) = Math.Abs(currentStep.pressureSet.PosTol) Then
+                pressStr = "Pressure Min " & currentStep.pressureSet.SetPoint + currentStep.pressureSet.NegTol & " psi"
+            Else
+                pressStr = pressStr & "Pressure:  " & currentStep.pressureSet.SetPoint & " psi " &
+                           ExcelOutput.plusMinusVal(currentStep.pressureSet.PosTol, currentStep.pressureSet.NegTol) & " psi"
+            End If
+            pressStr = pressStr & vbNewLine
+
+            If currentStep.pressureSet.RampRate <> 0 Then
+                pressRmpStr = pressRmpStr & "Pressure Ramp " & currentStep.pressureSet.RampRate & " psi/min " &
+                              ExcelOutput.plusMinusVal(currentStep.pressureSet.RampPosTol, currentStep.pressureSet.RampNegTol) & " psi/min"
+                pressRmpStr = pressRmpStr & vbNewLine
+            End If
+        End If
+
+        If inCureProfile.checkVac And currentStep.vacSet.SetPoint <> -1 Then
+            If Math.Abs(currentStep.vacSet.SetPoint) = Math.Abs(currentStep.vacSet.NegTol) Then
+                vacStr = "Vacuum Min " & currentStep.vacSet.SetPoint + currentStep.vacSet.PosTol & " inHg"
+            ElseIf Math.Abs(currentStep.vacSet.SetPoint) = Math.Abs(currentStep.vacSet.PosTol) Then
+                vacStr = "Vacuum: Max " & currentStep.vacSet.SetPoint + currentStep.vacSet.NegTol & " inHg"
+            Else
+                vacStr = vacStr & "Vacuum:  " & currentStep.vacSet.SetPoint & " inHg " &
+                         ExcelOutput.plusMinusVal(currentStep.vacSet.PosTol, currentStep.vacSet.NegTol) & " inHg"
+            End If
+            vacStr = vacStr & vbNewLine
+        End If
+
+        cell2 = cell2 & tempStr & tempRmpStr & pressStr & pressRmpStr & vacStr
+
+        cell2 = cell2 & "Terminate"
+        cell2 = cell2 & vbNewLine
+
+
+
+        Dim term1Str As String = ExcelOutput.termToStr(currentStep.termCond1Type,
+                                           currentStep.termCond1Condition,
+                                           currentStep.termCond1Goal,
+                                           currentStep.termCond1Modifier,
+                                           currentStep)
+        Dim term2Str As String = ""
+
+        If currentStep.termCond2Type <> "None" Then
+            term2Str = term2Str & currentStep.termCondOper
+            term2Str = term2Str & vbNewLine
+            term2Str = term2Str & ExcelOutput.termToStr(currentStep.termCond2Type,
+                                            currentStep.termCond2Condition,
+                                            currentStep.termCond2Goal,
+                                            currentStep.termCond2Modifier,
+                                            currentStep)
+        End If
+
+        cell2 = cell2 & term1Str
+        cell2 = cell2 & term2Str
+
+        If Strings.Right(cell2, 1) = vbLf Then
+            cell2 = Strings.Left(cell2, Len(cell2) - 1)
+        End If
+
+        Return cell2
+    End Function
 #End Region
 End Class
 

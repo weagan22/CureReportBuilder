@@ -933,7 +933,7 @@ Public Class ExcelOutput
         cRow += 1
     End Sub
 
-    Function plusMinusVal(plusVal As Double, minusVal As Double) As String
+    Shared Function plusMinusVal(plusVal As Double, minusVal As Double) As String
         Dim optionNeg As String = ""
 
         If minusVal = 0 Then
@@ -1119,7 +1119,7 @@ Public Class ExcelOutput
         cNum += 1
     End Sub
 
-    Function termToStr(termCondType As String,
+    Shared Function termToStr(termCondType As String,
                        termCondCondition As String,
                        termCondGoal As Double,
                        termCondModifier As Object,
