@@ -9,7 +9,8 @@
         Type = inType
     End Sub
 
-    Public Sub calcRamp(stepRate As Integer)
+    Public Sub calcRamp(stepRate As Integer,
+                        dateArr() As DateTime)
 
         ReDim ramp(UBound(values))
 
@@ -22,7 +23,7 @@
             Dim endVal As Integer = i + (stepRate \ 2)
             If endVal > UBound(values) Then endVal = UBound(values)
 
-            ramp(i) = LinReg(MainForm.dateArr, values, startVal, endVal)
+            ramp(i) = LinReg(dateArr, values, startVal, endVal)
         Next
     End Sub
 
@@ -30,7 +31,8 @@
         Return UBound(values)
     End Function
 
-    Public Function Min(Optional indexStart As Integer = 0, Optional indexEnd As Integer = 0) As Double
+    Public Function Min(Optional indexStart As Integer = 0,
+                        Optional indexEnd As Integer = 0) As Double
 
         Dim holder As Double
 
@@ -48,7 +50,8 @@
         Return holder
     End Function
 
-    Public Function Max(Optional indexStart As Integer = 0, Optional indexEnd As Integer = 0) As Double
+    Public Function Max(Optional indexStart As Integer = 0,
+                        Optional indexEnd As Integer = 0) As Double
 
         Dim holder As Double
 
@@ -66,7 +69,8 @@
         Return holder
     End Function
 
-    Public Function Average(Optional indexStart As Integer = 0, Optional indexEnd As Integer = 0) As Double
+    Public Function Average(Optional indexStart As Integer = 0,
+                            Optional indexEnd As Integer = 0) As Double
 
         Dim total As Double = 0
         Dim addCnt As Integer = 0
@@ -82,45 +86,76 @@
         Return total / addCnt
     End Function
 
-    Public Function MinRamp(Optional indexStart As Integer = 0, Optional indexEnd As Integer = 0, Optional goal As Double = -1, Optional greatThan As Boolean = True) As Double
+    Public Function MinRamp(dateArr() As DateTime,
+                            Optional indexStart As Integer = 0,
+                            Optional indexEnd As Integer = 0,
+                            Optional goal As Double = -1,
+                            Optional greatThan As Boolean = True) As Double
 
         Dim holder As Double
 
         If indexEnd = 0 Then indexEnd = Count()
 
-        Dim i As Integer
-        For i = indexStart To indexEnd
-            If goal = -1 Then
-                If i = indexStart Then
-                    holder = ramp(i)
-                ElseIf ramp(i) < holder Then
-                    holder = ramp(i)
-                End If
-            Else
+        'Min ramp is calculated as the average ramp rate of the values while they are under/over the goal
+        'Calculate when the values enter the goal
+        If goal <> -1 Then
+            Dim i As Integer
+            For i = indexStart To indexEnd
                 If greatThan Then
-                    If values(i) < goal Then
-                        If i = indexStart Then
-                            holder = ramp(i)
-                        ElseIf ramp(i) < holder Then
-                            holder = ramp(i)
-                        End If
+                    If values(i) > goal Then
+                        indexEnd = i
+                        Exit For
                     End If
                 Else
-                    If values(i) > goal Then
-                        If i = indexStart Then
-                            holder = ramp(i)
-                        ElseIf ramp(i) < holder Then
-                            holder = ramp(i)
-                        End If
+                    If values(i) < goal Then
+                        indexEnd = i
+                        Exit For
                     End If
                 End If
-            End If
-        Next
+            Next
+        End If
+
+        'Calculate the slot of the values
+        holder = LinReg(dateArr, values, indexStart, indexEnd)
+
+
+        'Old style min ramp calculates the min observed instantaneous ramp 
+        'Dim i As Integer
+        'For i = indexStart To indexEnd
+        '    If goal = -1 Then
+        '        If i = indexStart Then
+        '            holder = ramp(i)
+        '        ElseIf ramp(i) < holder Then
+        '            holder = ramp(i)
+        '        End If
+        '    Else
+        '        If greatThan Then
+        '            If values(i) < goal Then
+        '                If i = indexStart Then
+        '                    holder = ramp(i)
+        '                ElseIf ramp(i) < holder Then
+        '                    holder = ramp(i)
+        '                End If
+        '            End If
+        '        Else
+        '            If values(i) > goal Then
+        '                If i = indexStart Then
+        '                    holder = ramp(i)
+        '                ElseIf ramp(i) < holder Then
+        '                    holder = ramp(i)
+        '                End If
+        '            End If
+        '        End If
+        '    End If
+        'Next
 
         Return holder
     End Function
 
-    Public Function MaxRamp(Optional indexStart As Integer = 0, Optional indexEnd As Integer = 0, Optional goal As Double = -1, Optional greatThan As Boolean = True) As Double
+    Public Function MaxRamp(Optional indexStart As Integer = 0,
+                            Optional indexEnd As Integer = 0,
+                            Optional goal As Double = -1,
+                            Optional greatThan As Boolean = True) As Double
 
         Dim holder As Double
 
@@ -158,7 +193,19 @@
         Return holder
     End Function
 
-    Public Function AverageRamp(Optional indexStart As Integer = 0, Optional indexEnd As Integer = 0) As Double
+    Public Function AverageRamp(Optional indexStart As Integer = 0,
+                                Optional indexEnd As Integer = 0,
+                                Optional goal As Double = -1,
+                                Optional rampRate As Double = 0,
+                                Optional vals() As Double = Nothing) As Double
+
+        Dim greatThan As Boolean = True
+
+        If rampRate > 0 Then
+            greatThan = True
+        Else
+            greatThan = False
+        End If
 
         Dim total As Double = 0
         Dim addCnt As Integer = 0
@@ -167,15 +214,33 @@
 
         Dim i As Integer
         For i = indexStart To indexEnd
-            total = total + ramp(i)
-            addCnt = addCnt + 1
+            If goal = -1 Then
+                total = total + ramp(i)
+                addCnt = addCnt + 1
+            Else
+                If greatThan Then
+                    If vals(i) < goal Then
+                        total = total + ramp(i)
+                        addCnt = addCnt + 1
+                    End If
+                Else
+                    If vals(i) > goal Then
+                        total = total + ramp(i)
+                        addCnt = addCnt + 1
+                    End If
+                End If
+            End If
+
         Next
 
         Return total / addCnt
     End Function
 
 
-    Function LinReg(dataX() As DateTime, dataY() As Double, indexStart As Integer, indexEnd As Integer) As Double
+    Function LinReg(dataX() As DateTime,
+                    dataY() As Double,
+                    indexStart As Integer,
+                    indexEnd As Integer) As Double
 
         '**Dim'd variables are 0 by default, no need to set them if this is all you need.**
         Dim count As Long

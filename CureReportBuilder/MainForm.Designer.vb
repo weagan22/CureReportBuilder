@@ -860,7 +860,7 @@ Partial Class MainForm
         Me.GroupBox5.Size = New System.Drawing.Size(646, 57)
         Me.GroupBox5.TabIndex = 5
         Me.GroupBox5.TabStop = False
-        Me.GroupBox5.Text = "Cure Param Path"
+        Me.GroupBox5.Text = "Cure Parameters Path"
         Me.GroupBox5.Visible = False
         '
         'TableLayoutPanel10
