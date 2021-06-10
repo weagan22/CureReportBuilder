@@ -100,7 +100,10 @@ Partial Class MainForm
         Me.Btn_LoadProfileFiles = New System.Windows.Forms.Button()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.GrpBox_CureDefEdit = New System.Windows.Forms.GroupBox()
+        Me.Group_StepTextEdit = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel12 = New System.Windows.Forms.TableLayoutPanel()
         Me.Label_CureStepTextEdit = New System.Windows.Forms.Label()
+        Me.Btn_CureStepTextEdit = New System.Windows.Forms.Button()
         Me.Btn_RemoveStepEdit = New System.Windows.Forms.Button()
         Me.Btn_AddStepEdit = New System.Windows.Forms.Button()
         Me.Btn_MoveStepDownEdit = New System.Windows.Forms.Button()
@@ -194,8 +197,6 @@ Partial Class MainForm
         Me.OpenCSVFileDialog = New System.Windows.Forms.OpenFileDialog()
         Me.OpenCureProfileFileDialog = New System.Windows.Forms.OpenFileDialog()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.Btn_CureStepTextEdit = New System.Windows.Forms.Button()
-        Me.Group_StepTextEdit = New System.Windows.Forms.GroupBox()
         Me.MenuStrip1.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
         Me.TabControl1.SuspendLayout()
@@ -240,6 +241,8 @@ Partial Class MainForm
         Me.TableLayoutPanel2.SuspendLayout()
         Me.TabPage3.SuspendLayout()
         Me.GrpBox_CureDefEdit.SuspendLayout()
+        Me.Group_StepTextEdit.SuspendLayout()
+        Me.TableLayoutPanel12.SuspendLayout()
         Me.Grp_StepSettingsEdit.SuspendLayout()
         Me.Box_TermOper.SuspendLayout()
         Me.Box_Term2.SuspendLayout()
@@ -279,7 +282,6 @@ Partial Class MainForm
         Me.GroupBox2.SuspendLayout()
         Me.Grp_CurePathEdit.SuspendLayout()
         Me.TableLayoutPanel11.SuspendLayout()
-        Me.Group_StepTextEdit.SuspendLayout()
         Me.SuspendLayout()
         '
         'MenuStrip1
@@ -1124,16 +1126,50 @@ Partial Class MainForm
         Me.GrpBox_CureDefEdit.TabStop = False
         Me.GrpBox_CureDefEdit.Text = "Cure Definition"
         '
+        'Group_StepTextEdit
+        '
+        Me.Group_StepTextEdit.Controls.Add(Me.TableLayoutPanel12)
+        Me.Group_StepTextEdit.Location = New System.Drawing.Point(42, 432)
+        Me.Group_StepTextEdit.Name = "Group_StepTextEdit"
+        Me.Group_StepTextEdit.Size = New System.Drawing.Size(239, 218)
+        Me.Group_StepTextEdit.TabIndex = 28
+        Me.Group_StepTextEdit.TabStop = False
+        Me.Group_StepTextEdit.Text = "Step to Text"
+        '
+        'TableLayoutPanel12
+        '
+        Me.TableLayoutPanel12.ColumnCount = 1
+        Me.TableLayoutPanel12.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel12.Controls.Add(Me.Label_CureStepTextEdit, 0, 1)
+        Me.TableLayoutPanel12.Controls.Add(Me.Btn_CureStepTextEdit, 0, 0)
+        Me.TableLayoutPanel12.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel12.Location = New System.Drawing.Point(3, 16)
+        Me.TableLayoutPanel12.Name = "TableLayoutPanel12"
+        Me.TableLayoutPanel12.RowCount = 2
+        Me.TableLayoutPanel12.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.57286!))
+        Me.TableLayoutPanel12.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 85.42714!))
+        Me.TableLayoutPanel12.Size = New System.Drawing.Size(233, 199)
+        Me.TableLayoutPanel12.TabIndex = 0
+        '
         'Label_CureStepTextEdit
         '
-        Me.Label_CureStepTextEdit.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label_CureStepTextEdit.AutoSize = True
-        Me.Label_CureStepTextEdit.Location = New System.Drawing.Point(43, 65)
+        Me.Label_CureStepTextEdit.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label_CureStepTextEdit.Location = New System.Drawing.Point(3, 28)
         Me.Label_CureStepTextEdit.Name = "Label_CureStepTextEdit"
-        Me.Label_CureStepTextEdit.Size = New System.Drawing.Size(122, 13)
+        Me.Label_CureStepTextEdit.Size = New System.Drawing.Size(227, 171)
         Me.Label_CureStepTextEdit.TabIndex = 26
         Me.Label_CureStepTextEdit.Text = "Label_CureStepTextEdit"
         Me.Label_CureStepTextEdit.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Btn_CureStepTextEdit
+        '
+        Me.Btn_CureStepTextEdit.Location = New System.Drawing.Point(3, 3)
+        Me.Btn_CureStepTextEdit.Name = "Btn_CureStepTextEdit"
+        Me.Btn_CureStepTextEdit.Size = New System.Drawing.Size(75, 22)
+        Me.Btn_CureStepTextEdit.TabIndex = 27
+        Me.Btn_CureStepTextEdit.Text = "Update"
+        Me.Btn_CureStepTextEdit.UseVisualStyleBackColor = True
         '
         'Btn_RemoveStepEdit
         '
@@ -2094,26 +2130,6 @@ Partial Class MainForm
         '
         Me.Timer1.Interval = 100000
         '
-        'Btn_CureStepTextEdit
-        '
-        Me.Btn_CureStepTextEdit.Location = New System.Drawing.Point(11, 21)
-        Me.Btn_CureStepTextEdit.Name = "Btn_CureStepTextEdit"
-        Me.Btn_CureStepTextEdit.Size = New System.Drawing.Size(75, 23)
-        Me.Btn_CureStepTextEdit.TabIndex = 27
-        Me.Btn_CureStepTextEdit.Text = "Update"
-        Me.Btn_CureStepTextEdit.UseVisualStyleBackColor = True
-        '
-        'Group_StepTextEdit
-        '
-        Me.Group_StepTextEdit.Controls.Add(Me.Btn_CureStepTextEdit)
-        Me.Group_StepTextEdit.Controls.Add(Me.Label_CureStepTextEdit)
-        Me.Group_StepTextEdit.Location = New System.Drawing.Point(42, 432)
-        Me.Group_StepTextEdit.Name = "Group_StepTextEdit"
-        Me.Group_StepTextEdit.Size = New System.Drawing.Size(239, 218)
-        Me.Group_StepTextEdit.TabIndex = 28
-        Me.Group_StepTextEdit.TabStop = False
-        Me.Group_StepTextEdit.Text = "Step to Text"
-        '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -2192,6 +2208,9 @@ Partial Class MainForm
         Me.TabPage3.ResumeLayout(False)
         Me.TabPage3.PerformLayout()
         Me.GrpBox_CureDefEdit.ResumeLayout(False)
+        Me.Group_StepTextEdit.ResumeLayout(False)
+        Me.TableLayoutPanel12.ResumeLayout(False)
+        Me.TableLayoutPanel12.PerformLayout()
         Me.Grp_StepSettingsEdit.ResumeLayout(False)
         Me.Box_TermOper.ResumeLayout(False)
         Me.Box_Term2.ResumeLayout(False)
@@ -2259,8 +2278,6 @@ Partial Class MainForm
         Me.Grp_CurePathEdit.ResumeLayout(False)
         Me.TableLayoutPanel11.ResumeLayout(False)
         Me.TableLayoutPanel11.PerformLayout()
-        Me.Group_StepTextEdit.ResumeLayout(False)
-        Me.Group_StepTextEdit.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -2436,4 +2453,5 @@ Partial Class MainForm
     Friend WithEvents Label_CureStepTextEdit As Label
     Friend WithEvents Btn_CureStepTextEdit As Button
     Friend WithEvents Group_StepTextEdit As GroupBox
+    Friend WithEvents TableLayoutPanel12 As TableLayoutPanel
 End Class

@@ -13,6 +13,11 @@ Public Class MainForm
 
     Public autoclaveSNum As New Dictionary(Of String, Integer) From {{"Controller", 2601}, {"Air TC1", 2600}, {"Air TC2", 2603}, {"PT", 2599}, {"VT1", 2593}, {"VT2", 2598}, {"VT3", 2595}, {"VT4", 2594}, {"VT5", 2597}, {"VT6", 2596}}
 
+    Dim TurnOffTempEditHandlers As Boolean = False
+    Dim TurnOffVacEditHandlers As Boolean = False
+    Dim TurnOffPressEditHandlers As Boolean = False
+    Dim TurnOffDurationEditHandlers As Boolean = False
+    Dim TurnOffTermEditHandlers As Boolean = False
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -1094,17 +1099,41 @@ Public Class MainForm
 
         Combo_TermOper.SelectedItem = selStep.termCondOper
 
+
+
+        TempStateCheck()
+        VacStateCheck()
+        PressureStateCheck()
+        DurationStateCheck()
+
+
+
+        'Set time to "Receive" if the last step has a Time "Pass" modifier
+        'Me.Refresh()
+        If selIndex <> 0 Then
+            If loadedEditProfile.CureSteps(selIndex - 1).termCond1Type = "Time" And
+                loadedEditProfile.CureSteps(selIndex - 1).termCond1Modifier = "Pass" Or
+                loadedEditProfile.CureSteps(selIndex - 1).termCond2Type = "Time" And
+                loadedEditProfile.CureSteps(selIndex - 1).termCond2Modifier = "Pass" Then
+
+                If selStep.termCond1Type = "Time" Then
+                    Combo_Term1Mod.SelectedItem = "Receive"
+                ElseIf selStep.termCond2Type = "Time" Then
+                    Combo_Term2Mod.SelectedItem = "Receive"
+                End If
+
+            End If
+        End If
+
+
+
         Call RemoveTempHandlers(True)
         Call RemoveVacHandlers(True)
         Call RemovePressureHandlers(True)
         Call RemoveDurationHandlers(True)
         Call RemoveTermHandlers(True)
 
-        TempStateCheck()
-        VacStateCheck()
-        PressureStateCheck()
-        Me.Refresh()
-        DurationStateCheck()
+
     End Sub
 
     Sub SetStepValues()
@@ -1158,6 +1187,8 @@ Public Class MainForm
 
 #Region "Temp step intelligence"
     Private Sub Check_tempStepEdit_CheckedChanged(sender As Object, e As EventArgs) Handles Check_tempStepEdit.CheckedChanged
+        If TurnOffTempEditHandlers Then Return
+
         Call RemoveTempHandlers()
 
         If Not Check_tempStepEdit.Checked Then
@@ -1174,26 +1205,32 @@ Public Class MainForm
     End Sub
 
     Private Sub Txt_TempSetEdit_TextChanged(sender As Object, e As EventArgs) Handles Txt_TempSetEdit.TextChanged
+        If TurnOffTempEditHandlers Then Return
         Call TempStateCheck()
     End Sub
 
     Private Sub Txt_TempPosTolEdit_TextChanged(sender As Object, e As EventArgs) Handles Txt_TempPosTolEdit.TextChanged
+        If TurnOffTempEditHandlers Then Return
         Call TempStateCheck()
     End Sub
 
     Private Sub Txt_TempNegTolEdit_TextChanged(sender As Object, e As EventArgs) Handles Txt_TempNegTolEdit.TextChanged
+        If TurnOffTempEditHandlers Then Return
         Call TempStateCheck()
     End Sub
 
     Private Sub Txt_TempRampEdit_TextChanged(sender As Object, e As EventArgs) Handles Txt_TempRampEdit.TextChanged
+        If TurnOffTempEditHandlers Then Return
         Call TempStateCheck()
     End Sub
 
     Private Sub Txt_TempRampPosTolEdit_TextChanged(sender As Object, e As EventArgs) Handles Txt_TempRampPosTolEdit.TextChanged
+        If TurnOffTempEditHandlers Then Return
         Call TempStateCheck()
     End Sub
 
     Private Sub Txt_TempRampNegTolEdit_TextChanged(sender As Object, e As EventArgs) Handles Txt_TempRampNegTolEdit.TextChanged
+        If TurnOffTempEditHandlers Then Return
         Call TempStateCheck()
     End Sub
 
@@ -1288,17 +1325,19 @@ Public Class MainForm
     End Sub
 
 
-    Sub RemoveTempHandlers(Optional Invert As Boolean = False)
-        If Not Invert Then
-            RemoveHandler Txt_TempSetEdit.TextChanged, AddressOf Txt_TempSetEdit_TextChanged
-            RemoveHandler Txt_TempPosTolEdit.TextChanged, AddressOf Txt_TempPosTolEdit_TextChanged
-            RemoveHandler Txt_TempNegTolEdit.TextChanged, AddressOf Txt_TempNegTolEdit_TextChanged
-            RemoveHandler Txt_TempRampEdit.TextChanged, AddressOf Txt_TempRampEdit_TextChanged
+    Sub RemoveTempHandlers(Optional TurnOn As Boolean = False)
+        If Not TurnOn Then
+            TurnOffTempEditHandlers = True
+            'RemoveHandler Txt_TempSetEdit.TextChanged, AddressOf Txt_TempSetEdit_TextChanged
+            'RemoveHandler Txt_TempPosTolEdit.TextChanged, AddressOf Txt_TempPosTolEdit_TextChanged
+            'RemoveHandler Txt_TempNegTolEdit.TextChanged, AddressOf Txt_TempNegTolEdit_TextChanged
+            'RemoveHandler Txt_TempRampEdit.TextChanged, AddressOf Txt_TempRampEdit_TextChanged
         Else
-            AddHandler Txt_TempSetEdit.TextChanged, AddressOf Txt_TempSetEdit_TextChanged
-            AddHandler Txt_TempPosTolEdit.TextChanged, AddressOf Txt_TempPosTolEdit_TextChanged
-            AddHandler Txt_TempNegTolEdit.TextChanged, AddressOf Txt_TempNegTolEdit_TextChanged
-            AddHandler Txt_TempRampEdit.TextChanged, AddressOf Txt_TempRampEdit_TextChanged
+            TurnOffTempEditHandlers = False
+            'AddHandler Txt_TempSetEdit.TextChanged, AddressOf Txt_TempSetEdit_TextChanged
+            'AddHandler Txt_TempPosTolEdit.TextChanged, AddressOf Txt_TempPosTolEdit_TextChanged
+            'AddHandler Txt_TempNegTolEdit.TextChanged, AddressOf Txt_TempNegTolEdit_TextChanged
+            'AddHandler Txt_TempRampEdit.TextChanged, AddressOf Txt_TempRampEdit_TextChanged
         End If
 
     End Sub
@@ -1306,6 +1345,8 @@ Public Class MainForm
 
 #Region "Pressure step intelligence"
     Private Sub Check_pressureStepEdit_CheckedChanged(sender As Object, e As EventArgs) Handles Check_pressureStepEdit.CheckedChanged
+        If TurnOffPressEditHandlers Then Return
+
         Call RemovePressureHandlers()
 
         If Not Check_pressureStepEdit.Checked Then
@@ -1322,26 +1363,32 @@ Public Class MainForm
     End Sub
 
     Private Sub Txt_PressureSetEdit_TextChanged(sender As Object, e As EventArgs) Handles Txt_pressureSetEdit.TextChanged
+        If TurnOffPressEditHandlers Then Return
         Call PressureStateCheck()
     End Sub
 
     Private Sub Txt_PressurePosTolEdit_TextChanged(sender As Object, e As EventArgs) Handles Txt_pressurePosTolEdit.TextChanged
+        If TurnOffPressEditHandlers Then Return
         Call PressureStateCheck()
     End Sub
 
     Private Sub Txt_PressureNegTolEdit_TextChanged(sender As Object, e As EventArgs) Handles Txt_pressureNegTolEdit.TextChanged
+        If TurnOffPressEditHandlers Then Return
         Call PressureStateCheck()
     End Sub
 
     Private Sub Txt_PressureRampEdit_TextChanged(sender As Object, e As EventArgs) Handles Txt_pressureRampEdit.TextChanged
+        If TurnOffPressEditHandlers Then Return
         Call PressureStateCheck()
     End Sub
 
     Private Sub Txt_PressureRampPosTolEdit_TextChanged(sender As Object, e As EventArgs) Handles Txt_pressureRampPosTolEdit.TextChanged
+        If TurnOffPressEditHandlers Then Return
         Call PressureStateCheck()
     End Sub
 
     Private Sub Txt_PressureRampNegTolEdit_TextChanged(sender As Object, e As EventArgs) Handles Txt_pressureRampNegTolEdit.TextChanged
+        If TurnOffPressEditHandlers Then Return
         Call PressureStateCheck()
     End Sub
 
@@ -1432,17 +1479,19 @@ Public Class MainForm
     End Sub
 
 
-    Sub RemovePressureHandlers(Optional Invert As Boolean = False)
-        If Not Invert Then
-            RemoveHandler Txt_pressureSetEdit.TextChanged, AddressOf Txt_PressureSetEdit_TextChanged
-            RemoveHandler Txt_pressurePosTolEdit.TextChanged, AddressOf Txt_PressurePosTolEdit_TextChanged
-            RemoveHandler Txt_pressureNegTolEdit.TextChanged, AddressOf Txt_PressureNegTolEdit_TextChanged
-            RemoveHandler Txt_pressureRampEdit.TextChanged, AddressOf Txt_PressureRampEdit_TextChanged
+    Sub RemovePressureHandlers(Optional TurnOn As Boolean = False)
+        If Not TurnOn Then
+            TurnOffPressEditHandlers = True
+            'RemoveHandler Txt_pressureSetEdit.TextChanged, AddressOf Txt_PressureSetEdit_TextChanged
+            'RemoveHandler Txt_pressurePosTolEdit.TextChanged, AddressOf Txt_PressurePosTolEdit_TextChanged
+            'RemoveHandler Txt_pressureNegTolEdit.TextChanged, AddressOf Txt_PressureNegTolEdit_TextChanged
+            'RemoveHandler Txt_pressureRampEdit.TextChanged, AddressOf Txt_PressureRampEdit_TextChanged
         Else
-            AddHandler Txt_pressureSetEdit.TextChanged, AddressOf Txt_PressureSetEdit_TextChanged
-            AddHandler Txt_pressurePosTolEdit.TextChanged, AddressOf Txt_PressurePosTolEdit_TextChanged
-            AddHandler Txt_pressureNegTolEdit.TextChanged, AddressOf Txt_PressureNegTolEdit_TextChanged
-            AddHandler Txt_pressureRampEdit.TextChanged, AddressOf Txt_PressureRampEdit_TextChanged
+            TurnOffPressEditHandlers = False
+            'AddHandler Txt_pressureSetEdit.TextChanged, AddressOf Txt_PressureSetEdit_TextChanged
+            'AddHandler Txt_pressurePosTolEdit.TextChanged, AddressOf Txt_PressurePosTolEdit_TextChanged
+            'AddHandler Txt_pressureNegTolEdit.TextChanged, AddressOf Txt_PressureNegTolEdit_TextChanged
+            'AddHandler Txt_pressureRampEdit.TextChanged, AddressOf Txt_PressureRampEdit_TextChanged
         End If
 
     End Sub
@@ -1450,6 +1499,8 @@ Public Class MainForm
 
 #Region "Vacuum step intelligence"
     Private Sub Check_VacStepEdit_CheckedChanged(sender As Object, e As EventArgs) Handles Check_vacStepEdit.CheckedChanged
+        If TurnOffVacEditHandlers Then Return
+
         Call RemoveVacHandlers()
 
         If Not Check_vacStepEdit.Checked Then
@@ -1466,14 +1517,17 @@ Public Class MainForm
     End Sub
 
     Private Sub Txt_VacSetEdit_TextChanged(sender As Object, e As EventArgs) Handles Txt_vacSetEdit.TextChanged
+        If TurnOffVacEditHandlers Then Return
         Call VacStateCheck()
     End Sub
 
     Private Sub Txt_VacPosTolEdit_TextChanged(sender As Object, e As EventArgs) Handles Txt_vacPosTolEdit.TextChanged
+        If TurnOffVacEditHandlers Then Return
         Call VacStateCheck()
     End Sub
 
     Private Sub Txt_VacNegTolEdit_TextChanged(sender As Object, e As EventArgs) Handles Txt_vacNegTolEdit.TextChanged
+        If TurnOffVacEditHandlers Then Return
         Call VacStateCheck()
     End Sub
 
@@ -1544,15 +1598,17 @@ Public Class MainForm
     End Sub
 
 
-    Sub RemoveVacHandlers(Optional Invert As Boolean = False)
-        If Not Invert Then
-            RemoveHandler Txt_vacSetEdit.TextChanged, AddressOf Txt_VacSetEdit_TextChanged
-            RemoveHandler Txt_vacPosTolEdit.TextChanged, AddressOf Txt_VacPosTolEdit_TextChanged
-            RemoveHandler Txt_vacNegTolEdit.TextChanged, AddressOf Txt_VacNegTolEdit_TextChanged
+    Sub RemoveVacHandlers(Optional TurnOn As Boolean = False)
+        If Not TurnOn Then
+            TurnOffVacEditHandlers = True
+            'RemoveHandler Txt_vacSetEdit.TextChanged, AddressOf Txt_VacSetEdit_TextChanged
+            'RemoveHandler Txt_vacPosTolEdit.TextChanged, AddressOf Txt_VacPosTolEdit_TextChanged
+            'RemoveHandler Txt_vacNegTolEdit.TextChanged, AddressOf Txt_VacNegTolEdit_TextChanged
         Else
-            AddHandler Txt_vacSetEdit.TextChanged, AddressOf Txt_VacSetEdit_TextChanged
-            AddHandler Txt_vacPosTolEdit.TextChanged, AddressOf Txt_VacPosTolEdit_TextChanged
-            AddHandler Txt_vacNegTolEdit.TextChanged, AddressOf Txt_VacNegTolEdit_TextChanged
+            TurnOffVacEditHandlers = False
+            'AddHandler Txt_vacSetEdit.TextChanged, AddressOf Txt_VacSetEdit_TextChanged
+            'AddHandler Txt_vacPosTolEdit.TextChanged, AddressOf Txt_VacPosTolEdit_TextChanged
+            'AddHandler Txt_vacNegTolEdit.TextChanged, AddressOf Txt_VacNegTolEdit_TextChanged
         End If
 
     End Sub
@@ -1560,6 +1616,8 @@ Public Class MainForm
 
 #Region "Duration step intelligence"
     Private Sub Chk_DurationDisabled_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_DurationDisabled.CheckedChanged
+        If TurnOffDurationEditHandlers Then Return
+
         Call RemoveDurationHandlers()
 
         If Not Chk_DurationDisabled.Checked Then
@@ -1574,6 +1632,8 @@ Public Class MainForm
     End Sub
 
     Private Sub Txt_DurationEdit_TextChanged(sender As Object, e As EventArgs) Handles Txt_DurationEdit.TextChanged
+        If TurnOffDurationEditHandlers Then Return
+
         Call RemoveDurationHandlers()
 
         If NumericTxtBoxCheck(Txt_DurationEdit) Then
@@ -1594,14 +1654,15 @@ Public Class MainForm
         End If
     End Sub
 
-    Sub RemoveDurationHandlers(Optional Invert As Boolean = False)
-        If Not Invert Then
-            RemoveHandler Chk_DurationDisabled.CheckedChanged, AddressOf Chk_DurationDisabled_CheckedChanged
-            RemoveHandler Txt_DurationEdit.TextChanged, AddressOf Txt_DurationEdit_TextChanged
-
+    Sub RemoveDurationHandlers(Optional TurnOn As Boolean = False)
+        If Not TurnOn Then
+            TurnOffDurationEditHandlers = True
+            'RemoveHandler Chk_DurationDisabled.CheckedChanged, AddressOf Chk_DurationDisabled_CheckedChanged
+            'RemoveHandler Txt_DurationEdit.TextChanged, AddressOf Txt_DurationEdit_TextChanged
         Else
-            AddHandler Chk_DurationDisabled.CheckedChanged, AddressOf Chk_DurationDisabled_CheckedChanged
-            AddHandler Txt_DurationEdit.TextChanged, AddressOf Txt_DurationEdit_TextChanged
+            TurnOffDurationEditHandlers = False
+            'AddHandler Chk_DurationDisabled.CheckedChanged, AddressOf Chk_DurationDisabled_CheckedChanged
+            'AddHandler Txt_DurationEdit.TextChanged, AddressOf Txt_DurationEdit_TextChanged
         End If
 
     End Sub
@@ -1611,6 +1672,8 @@ Public Class MainForm
 #Region "Terminating step intelligence"
 
     Private Sub Combo_Term1Type_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Combo_Term1Type.SelectedIndexChanged
+        If TurnOffTermEditHandlers Then Return
+
         Call TermComboBoxOptionsUpdate()
 
         Call RemoveTermHandlers()
@@ -1634,6 +1697,8 @@ Public Class MainForm
     End Sub
 
     Private Sub Txt_Term1Goal_TextChanged(sender As Object, e As EventArgs) Handles Txt_Term1Goal.TextChanged
+        If TurnOffTermEditHandlers Then Return
+
         Call RemoveTermHandlers()
 
         If NumericTxtBoxCheck(Txt_Term1Goal) Then
@@ -1646,6 +1711,8 @@ Public Class MainForm
     End Sub
 
     Private Sub Combo_Term2Type_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Combo_Term2Type.SelectedIndexChanged
+        If TurnOffTermEditHandlers Then Return
+
         Call TermComboBoxOptionsUpdate()
 
         Call RemoveTermHandlers()
@@ -1673,6 +1740,7 @@ Public Class MainForm
     End Sub
 
     Private Sub Txt_Term2Goal_TextChanged(sender As Object, e As EventArgs) Handles Txt_Term2Goal.TextChanged
+        If TurnOffTermEditHandlers Then Return
         Call RemoveTermHandlers()
 
         If NumericTxtBoxCheck(Txt_Term2Goal) Then
@@ -1693,6 +1761,7 @@ Public Class MainForm
             Combo_Term1Mod.Items.Clear()
             Combo_Term1Mod.Items.Add("None")
             Combo_Term1Mod.Items.Add("Pass")
+            Combo_Term1Mod.Items.Add("Receive")
 
         ElseIf Combo_Term1Type.SelectedItem = "Temp" Then
             Combo_Term1Cond.Enabled = True
@@ -1726,6 +1795,7 @@ Public Class MainForm
             Combo_Term2Mod.Items.Clear()
             Combo_Term2Mod.Items.Add("None")
             Combo_Term2Mod.Items.Add("Pass")
+            Combo_Term2Mod.Items.Add("Receive")
 
         ElseIf Combo_Term2Type.SelectedItem = "Temp" Then
             Combo_Term2Cond.Enabled = True
@@ -1752,18 +1822,20 @@ Public Class MainForm
 
     End Sub
 
-    Sub RemoveTermHandlers(Optional Invert As Boolean = False)
-        If Not Invert Then
-            RemoveHandler Combo_Term1Type.SelectedIndexChanged, AddressOf Combo_Term1Type_SelectedIndexChanged
-            RemoveHandler Txt_Term1Goal.TextChanged, AddressOf Txt_Term1Goal_TextChanged
-            RemoveHandler Combo_Term2Type.SelectedIndexChanged, AddressOf Combo_Term2Type_SelectedIndexChanged
-            RemoveHandler Txt_Term2Goal.TextChanged, AddressOf Txt_Term2Goal_TextChanged
+    Sub RemoveTermHandlers(Optional TurnOn As Boolean = False)
+        If Not TurnOn Then
+            TurnOffTermEditHandlers = True
+            'RemoveHandler Combo_Term1Type.SelectedIndexChanged, AddressOf Combo_Term1Type_SelectedIndexChanged
+            'RemoveHandler Txt_Term1Goal.TextChanged, AddressOf Txt_Term1Goal_TextChanged
+            'RemoveHandler Combo_Term2Type.SelectedIndexChanged, AddressOf Combo_Term2Type_SelectedIndexChanged
+            'RemoveHandler Txt_Term2Goal.TextChanged, AddressOf Txt_Term2Goal_TextChanged
 
         Else
-            AddHandler Combo_Term1Type.SelectedIndexChanged, AddressOf Combo_Term1Type_SelectedIndexChanged
-            AddHandler Txt_Term1Goal.TextChanged, AddressOf Txt_Term1Goal_TextChanged
-            AddHandler Combo_Term2Type.SelectedIndexChanged, AddressOf Combo_Term2Type_SelectedIndexChanged
-            AddHandler Txt_Term2Goal.TextChanged, AddressOf Txt_Term2Goal_TextChanged
+            TurnOffTermEditHandlers = False
+            'AddHandler Combo_Term1Type.SelectedIndexChanged, AddressOf Combo_Term1Type_SelectedIndexChanged
+            'AddHandler Txt_Term1Goal.TextChanged, AddressOf Txt_Term1Goal_TextChanged
+            'AddHandler Combo_Term2Type.SelectedIndexChanged, AddressOf Combo_Term2Type_SelectedIndexChanged
+            'AddHandler Txt_Term2Goal.TextChanged, AddressOf Txt_Term2Goal_TextChanged
         End If
 
     End Sub
@@ -1866,6 +1938,9 @@ Public Class MainForm
 
         Return cell2
     End Function
+
+
+
 #End Region
 End Class
 

@@ -167,6 +167,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
-    <PreBuildEvent>"%25ProgramFiles(x86)%25\Microsoft Visual Studio\2017\Community\Common7\IDE\TextTransform.exe" -a !!BuildConfiguration!$(Configuration) "$(ProjectDir)\My Project\AssemblyInfo.tt"</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
 </Project>
