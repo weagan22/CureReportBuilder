@@ -86,8 +86,7 @@
         Return total / addCnt
     End Function
 
-    Public Function MinRamp(dateArr() As DateTime,
-                            Optional indexStart As Integer = 0,
+    Public Function MinRamp(Optional indexStart As Integer = 0,
                             Optional indexEnd As Integer = 0,
                             Optional goal As Double = -1,
                             Optional greatThan As Boolean = True) As Double
@@ -96,58 +95,34 @@
 
         If indexEnd = 0 Then indexEnd = Count()
 
-        'Min ramp is calculated as the average ramp rate of the values while they are under/over the goal
-        'Calculate when the values enter the goal
-        If goal <> -1 Then
-            Dim i As Integer
-            For i = indexStart To indexEnd
+        Dim i As Integer
+        For i = indexStart To indexEnd
+            If goal = -1 Then
+                If i = indexStart Then
+                    holder = ramp(i)
+                ElseIf ramp(i) < holder Then
+                    holder = ramp(i)
+                End If
+            Else
                 If greatThan Then
-                    If values(i) > goal Then
-                        indexEnd = i
-                        Exit For
+                    If values(i) < goal Then
+                        If i = indexStart Then
+                            holder = ramp(i)
+                        ElseIf ramp(i) < holder Then
+                            holder = ramp(i)
+                        End If
                     End If
                 Else
-                    If values(i) < goal Then
-                        indexEnd = i
-                        Exit For
+                    If values(i) > goal Then
+                        If i = indexStart Then
+                            holder = ramp(i)
+                        ElseIf ramp(i) < holder Then
+                            holder = ramp(i)
+                        End If
                     End If
                 End If
-            Next
-        End If
-
-        'Calculate the slot of the values
-        holder = LinReg(dateArr, values, indexStart, indexEnd)
-
-
-        'Old style min ramp calculates the min observed instantaneous ramp 
-        'Dim i As Integer
-        'For i = indexStart To indexEnd
-        '    If goal = -1 Then
-        '        If i = indexStart Then
-        '            holder = ramp(i)
-        '        ElseIf ramp(i) < holder Then
-        '            holder = ramp(i)
-        '        End If
-        '    Else
-        '        If greatThan Then
-        '            If values(i) < goal Then
-        '                If i = indexStart Then
-        '                    holder = ramp(i)
-        '                ElseIf ramp(i) < holder Then
-        '                    holder = ramp(i)
-        '                End If
-        '            End If
-        '        Else
-        '            If values(i) > goal Then
-        '                If i = indexStart Then
-        '                    holder = ramp(i)
-        '                ElseIf ramp(i) < holder Then
-        '                    holder = ramp(i)
-        '                End If
-        '            End If
-        '        End If
-        '    End If
-        'Next
+            End If
+        Next
 
         Return holder
     End Function

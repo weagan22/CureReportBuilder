@@ -215,10 +215,14 @@
                 For z = 0 To UBound(partTC_Arr)
                     For y = 0 To UBound(usrRunTC)
                         If partTC_Arr(z).Number = usrRunTC(y) Then
+                            Dim calcRamp As Double = partTC_Arr(z).MinRamp(indexStart,
+                                                                           indexEnd,
+                                                                           goal,
+                                                                           greaterThanGoal)
                             If holder = 0 Then
-                                holder = partTC_Arr(z).MinRamp(dateArr, indexStart, indexEnd, goal, greaterThanGoal)
-                            ElseIf partTC_Arr(z).MinRamp(dateArr, indexStart, indexEnd, goal, greaterThanGoal) < holder Then
-                                holder = partTC_Arr(z).MinRamp(dateArr, indexStart, indexEnd, goal, greaterThanGoal)
+                                holder = calcRamp
+                            ElseIf calcRamp < holder Then
+                                holder = calcRamp
                             End If
                         End If
                     Next
@@ -361,8 +365,7 @@
                                                                                     greaterThanGoal), 1)
 
                 ''Min pressure ramp
-                currentStep.pressureResult.MinRamp = Math.Round(vesselPress.MinRamp(dateArr,
-                                                                                    indexStart,
+                currentStep.pressureResult.MinRamp = Math.Round(vesselPress.MinRamp(indexStart,
                                                                                     indexEnd,
                                                                                     goal,
                                                                                     greaterThanGoal), 1)
