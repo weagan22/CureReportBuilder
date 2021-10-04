@@ -896,6 +896,8 @@
                 searchVal = "Channel "
             ElseIf machType = "Autoclave" Then
                 searchVal = "{Part_"
+            ElseIf machType = "Watlow" Then
+                searchVal = "Monitor_TC_"
             Else
                 searchVal = "TC"
             End If
@@ -995,6 +997,10 @@
         ElseIf machType = "Autoclave" Then
             For i = headerRow + headerCount To UBound(loadedDataSet, 2)
                 dateArr.AddValArr(Convert.ToDateTime(loadedDataSet(1, i) & " " & loadedDataSet(2, i) & "." & loadedDataSet(3, i)))
+            Next
+        ElseIf machType = "Watlow" Then
+            For i = headerRow + headerCount To UBound(loadedDataSet, 2)
+                dateArr.AddValArr(Convert.ToDateTime(loadedDataSet(0, i) & " " & loadedDataSet(1, i)))
             Next
         ElseIf machType = "Unknown" Then
             Dim dateFnd As Boolean = False
@@ -1100,7 +1106,7 @@
                                 Exit Sub
                             End If
 
-                            'Stop input if first or second item isn't a date/time after 6 lines
+                            'Stop input if first or second item isn't a date/time after the header has been located
                             If Not loadedDataSet Is Nothing AndAlso headerSet = True Then
                                 If Not IsDate(currentRow(0)) And Not IsDate(currentRow(1)) Then
                                     Call setHeaderRow()
@@ -1149,6 +1155,23 @@
 
                             machType = "Autoclave"
                             headerCount = 2
+
+                        ElseIf _
+                               currentRow(0) = "Date (MDY)" _
+                               AndAlso InStr(currentRow(1), "Time", 0) <> 0 _
+                               AndAlso InStr(currentRow(2), "Air_Temp_TC (Deg F)", 0) <> 0 _
+                               AndAlso InStr(currentRow(3), "Monitor_TC_1 (Deg F)", 0) <> 0 _
+                               AndAlso InStr(currentRow(4), "Monitor_TC_2 (Deg F)", 0) <> 0 Then
+
+                            machType = "Watlow"
+                            headerCount = 1
+
+                            If curePro.Name = "null" Then
+                                curePro.checkPressure = False
+                                curePro.checkVac = False
+                            ElseIf curePro.checkPressure <> False And curePro.checkVac <> False Then
+                                Throw New Exception("Watlow reader data cannot be used to check this cure profile as is contains either pressure or vacuum requirements.")
+                            End If
                         End If
 
                     Catch ex As Microsoft.VisualBasic.FileIO.MalformedLineException

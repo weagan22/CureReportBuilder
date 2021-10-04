@@ -262,7 +262,7 @@ Public Class MainForm
     '            paramIndex += 1
 
 
-    '            If machType = "Omega" Then
+    '            If machType = "Omega" Or machType = "Watlow" Then
     '                cureProStr = Split(cureParameters(paramIndex), ">")
     '                If cureProStr(0) <> "<equipSerialNum" Then Throw New Exception()
     '                equipSerialNum = cureProStr(1)
@@ -361,7 +361,7 @@ Public Class MainForm
         mainCureCheck.DataPath = Txt_FilePath.Text
         mainCureCheck.completedBy = Txt_Technician.Text
 
-        If mainCureCheck.machType = "Omega" Then
+        If mainCureCheck.machType = "Omega" Or mainCureCheck.machType = "Watlow" Then
             mainCureCheck.equipSerialNum = Txt_DataRecorder.Text
         End If
 
@@ -567,7 +567,7 @@ Public Class MainForm
                 Txt_DataRecorder.Text = System.Text.RegularExpressions.Regex.Match(Txt_FilePath.Text, "S(\d{4})").Value
             End If
 
-            If mainCureCheck.machType = "Omega" Then
+            If mainCureCheck.machType = "Omega" Or mainCureCheck.machType = "Watlow" Then
                 Box_DataRecorder.Visible = True
             End If
 
