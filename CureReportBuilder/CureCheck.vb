@@ -447,20 +447,18 @@
 
                     Dim z As Integer
                     For z = currentStep.stepStart To currentStep.stepEnd
-                        If _
+
+                        If Not curePro.checkTemp OrElse currentStep.tempSet.SetPoint = -1 OrElse
                            leadTC.values(z) < currentStep.tempSet.SetPoint + currentStep.tempSet.PosTol _
-                           And lagTC.values(z) > currentStep.tempSet.SetPoint + currentStep.tempSet.NegTol _
-                           Or currentStep.tempSet.SetPoint = -1 Then
+                           And lagTC.values(z) > currentStep.tempSet.SetPoint + currentStep.tempSet.NegTol Then
 
-                            If _
+                            If Not curePro.checkPressure OrElse currentStep.pressureSet.SetPoint = -1 OrElse
                                vesselPress.values(z) < currentStep.pressureSet.SetPoint + currentStep.pressureSet.PosTol _
-                               And vesselPress.values(z) > currentStep.pressureSet.SetPoint + currentStep.pressureSet.NegTol _
-                               Or currentStep.pressureSet.SetPoint = -1 Then
+                               And vesselPress.values(z) > currentStep.pressureSet.SetPoint + currentStep.pressureSet.NegTol Then
 
-                                If _
+                                If Not curePro.checkVac OrElse currentStep.vacSet.SetPoint = -1 OrElse
                                    maxVac.values(z) > currentStep.vacSet.SetPoint + currentStep.vacSet.NegTol _
-                                   And minVac.values(z) < currentStep.vacSet.SetPoint + currentStep.vacSet.PosTol _
-                                   Or currentStep.vacSet.SetPoint = -1 Then
+                                   And minVac.values(z) < currentStep.vacSet.SetPoint + currentStep.vacSet.PosTol Then
 
                                     totalTime = totalTime + (dateArr(z) - dateArr(z - 1)).TotalMinutes
                                 End If
