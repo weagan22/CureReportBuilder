@@ -1095,7 +1095,7 @@
                     Try
                         currentRow = MyReader.ReadFields()
 
-                        'Only check rows with greater than 4 columns
+                        'Only check rows with greater than 3 columns
                         If UBound(currentRow) > 3 Then
 
                             'Stop input for stop line symbol in Omega files
@@ -1157,7 +1157,7 @@
                         ElseIf _
                                currentRow(0) = "Date (MDY)" _
                                AndAlso InStr(currentRow(1), "Time", 0) <> 0 _
-                               AndAlso InStr(currentRow(2), "Air_Temp_TC (Deg F)", 0) <> 0 _
+                               AndAlso InStr(currentRow(2), "Air_Temp_TC (Deg F)", 0) <> 0 Or InStr(currentRow(2), "Air_Temp_T/C (Deg F)", 0) <> 0 _
                                AndAlso InStr(currentRow(3), "Monitor_TC_1 (Deg F)", 0) <> 0 _
                                AndAlso InStr(currentRow(4), "Monitor_TC_2 (Deg F)", 0) <> 0 Then
 
