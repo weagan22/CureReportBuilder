@@ -1019,14 +1019,15 @@ Public Class ExcelOutput
         Dim valMax As Double = startDataSet.Max()
 
         If valMax > mainChart.Axes(2, axisGroup).MaximumScale Then
-            mainChart.Axes(2, axisGroup).MaximumScale = valMax + ((valMax - 100) * 0.05)
+            Dim maxVal As Double = valMax + ((valMax - 100) * 0.05)
+            mainChart.Axes(2, axisGroup).MaximumScale = 5 * CInt((maxVal / 5) + 0.5)
         End If
 
         If axisGroup = 2 Then
             mainChart.Axes(2, axisGroup).HasTitle = True
             mainChart.Axes(2, axisGroup).AxisTitle.Text = "Pressure (psi) | Vacuum (inHg)"
             mainChart.Axes(2, axisGroup).MinimumScale = -30
-            mainChart.Axes(2, axisGroup).MaximumScale = 120
+            'mainChart.Axes(2, axisGroup).MaximumScale = 120
             mainChart.Axes(2, axisGroup).MajorUnit = 10
         End If
 
