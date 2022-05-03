@@ -543,7 +543,7 @@ Public Class MainForm
     Private Sub Btn_OpenFile_Click(sender As Object, e As EventArgs) Handles Btn_OpenFile.Click
         If OpenCSVFileDialog.ShowDialog <> Windows.Forms.DialogResult.Cancel Then
             Txt_FilePath.Text = OpenCSVFileDialog.FileName
-            Call openCureFile()
+            'Call openCureFile()
         End If
     End Sub
 
