@@ -911,6 +911,7 @@
         If curePro.checkVac Then
             vac_Arr.clearArr()
             Call getDataMulti("{VacGroup_", vac_Arr, "VAC")
+            Call getDataMulti("{Vacuum_Man}", vac_Arr, "VAC")
         End If
 
         If machType = "Autoclave" Then
@@ -959,8 +960,12 @@
                         inArr(UBound(inArr)) = New DataSet(0, "")
                     End If
 
+                    If searchVal = "{Vacuum_Man}" Then
+                        inArr(UBound(inArr)).Number = 0
+                    Else
+                        inArr(UBound(inArr)).Number = Integer.Parse(System.Text.RegularExpressions.Regex.Replace(loadedDataSet(i, headerRow), "[^\d]", ""))
+                    End If
 
-                    inArr(UBound(inArr)).Number = Integer.Parse(System.Text.RegularExpressions.Regex.Replace(loadedDataSet(i, headerRow), "[^\d]", ""))
                     inArr(UBound(inArr)).Type = type
 
                     getData(i, inArr(UBound(inArr)))
