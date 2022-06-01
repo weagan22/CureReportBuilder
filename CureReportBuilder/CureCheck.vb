@@ -398,7 +398,7 @@
                     If currentStep.pressureResult.MaxRamp > currentStep.pressureSet.RampRate + currentStep.pressureSet.RampPosTol Then currentStep.pressureRampPass = False
 
                     'Override for no ramp during the step
-                    If currentStep.pressureResult.MinRamp = -1 And currentStep.pressureResult.MaxRamp = -1 Then currentStep.pressureRampPass = True
+                    If currentStep.pressureResult.MinRamp = 0 And currentStep.pressureResult.MaxRamp = 0 Then currentStep.pressureRampPass = True
                 End If
             Else
                 currentStep.pressurePass = True
