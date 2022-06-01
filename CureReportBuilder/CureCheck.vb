@@ -264,6 +264,9 @@
                 If currentStep.tempSet.RampRate <> 0 Then
                     If currentStep.tempResult.MinRamp < currentStep.tempSet.RampRate + currentStep.tempSet.RampNegTol Then currentStep.tempRampPass = False
                     If currentStep.tempResult.MaxRamp > currentStep.tempSet.RampRate + currentStep.tempSet.RampPosTol Then currentStep.tempRampPass = False
+
+                    'Override for no ramp during the step
+                    If currentStep.tempResult.MinRamp = 0 And currentStep.tempResult.MaxRamp = 0 Then currentStep.tempRampPass = True
                 End If
             Else
                 currentStep.tempPass = True
@@ -393,6 +396,9 @@
                 If currentStep.pressureSet.RampRate <> 0 Then
                     If currentStep.pressureResult.MinRamp < currentStep.pressureSet.RampRate + currentStep.pressureSet.RampNegTol Then currentStep.pressureRampPass = False
                     If currentStep.pressureResult.MaxRamp > currentStep.pressureSet.RampRate + currentStep.pressureSet.RampPosTol Then currentStep.pressureRampPass = False
+
+                    'Override for no ramp during the step
+                    If currentStep.pressureResult.MinRamp = -1 And currentStep.pressureResult.MaxRamp = -1 Then currentStep.pressureRampPass = True
                 End If
             Else
                 currentStep.pressurePass = True
