@@ -47,7 +47,7 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>systima___no_bkgrnd_5CL_icon.ico</ApplicationIcon>
+    <ApplicationIcon>ThermanIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -163,6 +163,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="systima___no_bkgrnd_5CL_icon.ico" />
+    <Content Include="ThermanIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
