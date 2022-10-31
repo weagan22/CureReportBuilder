@@ -902,6 +902,8 @@
                 searchVal = "{Part_"
             ElseIf machType = "Watlow" Then
                 searchVal = "Monitor_TC_"
+            ElseIf machType = "Watlow1" Then
+                searchVal = "Monitor_T/C_"
             Else
                 searchVal = "TC"
             End If
@@ -916,8 +918,14 @@
 
         If curePro.checkVac Then
             vac_Arr.clearArr()
-            Call getDataMulti("{VacGroup_", vac_Arr, "VAC")
-            Call getDataMulti("{Vacuum_Man}", vac_Arr, "VAC")
+            If machType = "Autoclave" Then
+                Call getDataMulti("{VacGroup_", vac_Arr, "VAC")
+                Call getDataMulti("{Vacuum_Man}", vac_Arr, "VAC")
+            ElseIf machType = "Watlow1" Then
+                Call getDataMulti("Vacuum_Sensor_", vac_Arr, "VAC")
+            End If
+
+
         End If
 
         If machType = "Autoclave" Then
@@ -1007,7 +1015,7 @@
             For i = headerRow + headerCount To UBound(loadedDataSet, 2)
                 dateArr.AddValArr(Convert.ToDateTime(loadedDataSet(1, i) & " " & loadedDataSet(2, i) & "." & loadedDataSet(3, i)))
             Next
-        ElseIf machType = "Watlow" Then
+        ElseIf machType = "Watlow" Or machType = "Watlow1" Then
             For i = headerRow + headerCount To UBound(loadedDataSet, 2)
                 dateArr.AddValArr(Convert.ToDateTime(loadedDataSet(0, i) & " " & loadedDataSet(1, i)))
             Next
@@ -1157,20 +1165,20 @@
 
                         ElseIf _
                                currentRow(0) = "No." _
-                               AndAlso InStr(currentRow(1), "Date", 0) <> 0 _
-                               AndAlso InStr(currentRow(2), "Time", 0) <> 0 _
-                               AndAlso InStr(currentRow(3), "Millitm", 0) <> 0 _
-                               AndAlso InStr(currentRow(4), "{Air_TC}", 0) <> 0 Then
+                               AndAlso currentRow(1).Contains("Date") _
+                               AndAlso currentRow(2).Contains("Time") _
+                               AndAlso currentRow(3).Contains("Millitm") _
+                               AndAlso currentRow(4).Contains("{Air_TC}") Then
 
                             machType = "Autoclave"
                             headerCount = 2
 
                         ElseIf _
-                               currentRow(0) = "Date (MDY)" _
-                               AndAlso InStr(currentRow(1), "Time", 0) <> 0 _
-                               AndAlso InStr(currentRow(2), "Air_Temp_TC (Deg F)", 0) <> 0 Or InStr(currentRow(2), "Air_Temp_T/C (Deg F)", 0) <> 0 _
-                               AndAlso InStr(currentRow(3), "Monitor_TC_1 (Deg F)", 0) <> 0 _
-                               AndAlso InStr(currentRow(4), "Monitor_TC_2 (Deg F)", 0) <> 0 Then
+                               currentRow(0).Contains("Date (MDY)") _
+                               AndAlso currentRow(1).Contains("Time") _
+                               AndAlso currentRow(2).Contains("Air_Temp_TC (Deg F)") Or currentRow(2).Contains("Air_Temp_T/C (Deg F)") _
+                               AndAlso currentRow(3).Contains("Monitor_TC_1 (Deg F)") _
+                               AndAlso currentRow(4).Contains("Monitor_TC_2 (Deg F)") Then
 
                             machType = "Watlow"
                             headerCount = 1
@@ -1178,9 +1186,27 @@
                             If curePro.Name = "null" Then
                                 curePro.checkPressure = False
                                 curePro.checkVac = False
-                            ElseIf curePro.checkPressure <> False And curePro.checkVac <> False Then
-                                Throw New Exception("Watlow reader data cannot be used to check this cure profile as is contains either pressure or vacuum requirements.")
+                            ElseIf curePro.checkPressure <> False Then
+                                Throw New Exception("Watlow reader data cannot be used to check this cure profile as is contains pressure requirements.")
                             End If
+
+                        ElseIf _
+                               currentRow(0).Contains("Date (MDY)") _
+                               AndAlso currentRow(1).Contains("Time") _
+                               AndAlso currentRow(2).Contains("Air_Temp_TC (Deg F)") Or currentRow(2).Contains("Air_Temp_T/C (Deg F)") _
+                               AndAlso currentRow(3).Contains("Monitor_T/C_1 (Deg F)") _
+                               AndAlso currentRow(4).Contains("Monitor_T/C_2 (Deg F)") Then
+
+                            machType = "Watlow1"
+                            headerCount = 1
+
+                            If curePro.Name = "null" Then
+                                curePro.checkPressure = False
+                                curePro.checkVac = False
+                            ElseIf curePro.checkPressure <> False Then
+                                Throw New Exception("Watlow reader data cannot be used to check this cure profile as is contains pressure requirements.")
+                            End If
+
                         End If
 
                     Catch ex As Microsoft.VisualBasic.FileIO.MalformedLineException

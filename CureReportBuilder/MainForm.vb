@@ -86,7 +86,15 @@ Public Class MainForm
         db.Close()
 
         If queryResult.Rows.Count = 0 Then
+            Txt_JobNumber.BackColor = Color.Salmon
+            ToolStripStatusLabel1.Text = "Job number not found in Epicor"
+            StatusStrip1.Refresh()
+
             Throw New Exception("Job number not found in Epicor")
+        Else
+            Txt_JobNumber.BackColor = Color.White
+            ToolStripStatusLabel1.Text = "Status..."
+            StatusStrip1.Refresh()
         End If
 
         Return queryResult.Rows.Item(0)
@@ -1124,7 +1132,7 @@ Public Class MainForm
                 Txt_Revision.Text = ""
                 Txt_Qty.Text = ""
                 Txt_PartDesc.Text = ""
-                MsgBox(ex.Message)
+                'MsgBox(ex.Message)
             End Try
         End If
     End Sub
