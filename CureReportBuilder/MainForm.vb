@@ -58,7 +58,7 @@ Public Class MainForm
 
         Dim queryResult As DataTable = New DataTable()
 
-        Dim db As SqlConnection = New SqlConnection("Data Source = MAUI;
+        Dim db As SqlConnection = New SqlConnection("Data Source = VM-SQL-PROD-01;
                                                      Initial Catalog=EpicorERP;
                                                      User ID = Reporting;
                                                      Password=$ystima1;
